@@ -814,3 +814,334 @@ button.home-card:active {
   .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .home-card { min-height: 175px; }
 }
+
+
+/* v6 readability + reveal-first study UI */
+body {
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.012em;
+}
+
+h1 { line-height: 1.18; }
+h2 { line-height: 1.18; }
+h3 { line-height: 1.3; }
+
+.muted {
+  line-height: 1.72;
+}
+
+.home-intro {
+  padding: 24px 2px 18px;
+}
+
+.home-intro h2 {
+  margin-bottom: 12px;
+}
+
+.home-grid {
+  gap: 14px;
+}
+
+.home-card {
+  min-height: 142px;
+  padding: 21px;
+  border-radius: 24px;
+}
+
+.home-card strong {
+  margin: 26px 48px 10px 0;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.home-card p {
+  max-width: 560px;
+  margin-right: 42px;
+  font-size: .94rem;
+  line-height: 1.65;
+}
+
+.home-index {
+  font-size: .72rem;
+  letter-spacing: .11em;
+}
+
+.word-tabs {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 7px;
+}
+
+.word-tab {
+  min-height: 50px;
+  font-size: .86rem;
+  border-radius: 13px;
+}
+
+.hero-word-card {
+  padding: 22px;
+}
+
+.word-card-top h3 {
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+
+.pronunciation-row {
+  margin: 22px 0 18px;
+  padding: 14px 15px;
+}
+
+.reveal-stack {
+  display: grid;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.reveal-card,
+.unit-reveal {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.reveal-card summary,
+.unit-reveal summary {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 16px 48px 16px 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.reveal-card summary::-webkit-details-marker,
+.unit-reveal summary::-webkit-details-marker {
+  display: none;
+}
+
+.reveal-card summary::after,
+.unit-reveal summary::after {
+  content: "+";
+  position: absolute;
+  right: 17px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.reveal-card[open] summary::after,
+.unit-reveal[open] summary::after {
+  content: "−";
+}
+
+.reveal-card summary > span,
+.unit-reveal summary > span {
+  color: var(--muted);
+  font-size: .7rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.reveal-card summary > span {
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.reveal-card summary small,
+.unit-reveal summary small,
+.tap-hint {
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 650;
+  line-height: 1.4;
+}
+
+.reveal-content {
+  padding: 0 16px 18px;
+  border-top: 1px solid var(--line);
+}
+
+.reveal-content .detail-label {
+  margin-top: 16px;
+}
+
+.lead-copy {
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.memory-line,
+.plain-box {
+  line-height: 1.65;
+}
+
+.syllabus-detail {
+  gap: 14px;
+}
+
+.semester-summary {
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.semester-summary p {
+  line-height: 1.68;
+}
+
+.course-card {
+  border-radius: 20px;
+}
+
+.course-card summary {
+  display: grid;
+  gap: 5px;
+  padding: 19px 52px 19px 19px;
+}
+
+.course-card summary strong {
+  font-size: 1.04rem;
+  line-height: 1.48;
+  letter-spacing: 0;
+}
+
+.course-content {
+  padding: 0 15px 16px;
+}
+
+.course-about {
+  margin: 15px 2px 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: .92rem;
+}
+
+.unit-reveal {
+  margin-top: 9px;
+  background: var(--surface-2);
+  border-color: transparent;
+}
+
+.unit-reveal summary {
+  padding: 14px 44px 14px 14px;
+}
+
+.unit-reveal summary strong {
+  font-size: .92rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.unit-reveal-content {
+  padding: 0 14px 15px;
+  border-top: 1px solid rgba(13,19,33,.08);
+}
+
+.unit-reveal-content p {
+  margin: 14px 0 0;
+  font-size: .91rem;
+  line-height: 1.72;
+  color: var(--text);
+}
+
+.link-stack {
+  display: grid;
+  gap: 11px;
+}
+
+.resource-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: 0 8px 26px rgba(13,19,33,.035);
+}
+
+.resource-card div {
+  min-width: 0;
+}
+
+.resource-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.resource-card strong {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.resource-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .86rem;
+  line-height: 1.6;
+}
+
+.resource-card b {
+  flex: 0 0 auto;
+  font-size: 1.2rem;
+}
+
+.resource-card:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 430px) {
+  .app-shell {
+    padding-inline: 14px;
+  }
+
+  .topbar {
+    gap: 10px;
+  }
+
+  .score-pill {
+    min-width: 66px;
+    padding-inline: 11px;
+  }
+
+  .back-btn {
+    padding-inline: 10px;
+  }
+
+  .home-card {
+    min-height: 136px;
+    padding: 19px;
+  }
+
+  .hero-word-card {
+    padding: 18px;
+  }
+
+  .pronunciation-row {
+    flex-wrap: wrap;
+  }
+
+  .pronunciation-row strong {
+    min-width: 150px;
+  }
+}
