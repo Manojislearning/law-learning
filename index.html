@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111827" />
+  <meta name="description" content="Mobile-first law learning app with flashcards, points, syllabus, exam structure and previous-year paper study." />
+  <title>Law Learning</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">3-Year LL.B Study</p>
+        <h1>Law Learning</h1>
+      </div>
+      <div class="score-pill" aria-label="Current score">
+        <span>PTS</span>
+        <strong id="score">0</strong>
+      </div>
+    </header>
+
+    <main>
+      <section id="simple-view" class="main-view active" aria-labelledby="simple-tab">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Tab 01</p>
+            <h2>Simple Things</h2>
+            <p class="muted">Learn common legal words one card at a time. Swipe right if you know it; left if it needs revision.</p>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat">
+            <span>Learned</span>
+            <strong id="learned-count">0</strong>
+          </article>
+          <article class="stat">
+            <span>Difficult</span>
+            <strong id="difficult-count">0</strong>
+          </article>
+          <article class="stat">
+            <span>Streak</span>
+            <strong id="streak-count">0</strong>
+          </article>
+        </div>
+
+        <div class="progress-track" aria-label="Flashcard progress">
+          <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <article id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal meaning.">
+          <div class="card-top">
+            <span id="card-number" class="chip">1 / 1</span>
+            <span id="card-status" class="chip quiet">Tap to reveal</span>
+          </div>
+          <div class="card-face">
+            <p class="eyebrow">Legal word</p>
+            <h3 id="term">Affidavit</h3>
+            <div id="answer" class="answer" hidden>
+              <p id="meaning"></p>
+              <div class="example-box">
+                <span>Example</span>
+                <p id="example"></p>
+              </div>
+            </div>
+          </div>
+          <p class="swipe-hint">← Difficult &nbsp;&nbsp; • &nbsp;&nbsp; Know it →</p>
+        </article>
+
+        <div class="flash-actions">
+          <button id="difficult-btn" class="btn secondary" type="button">← Difficult <small>+2</small></button>
+          <button id="know-btn" class="btn primary" type="button">Know it → <small>+10</small></button>
+        </div>
+
+        <div class="utility-row">
+          <button id="reset-btn" class="text-btn" type="button">Reset progress</button>
+          <button id="review-btn" class="text-btn" type="button">Review difficult cards</button>
+        </div>
+      </section>
+
+      <section id="papers-view" class="main-view" aria-labelledby="papers-tab">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Tab 02</p>
+            <h2>Previous Year Papers</h2>
+            <p class="muted">Study the syllabus, understand the exam structure, then work through questions with topic mapping.</p>
+          </div>
+        </div>
+
+        <nav class="subtabs" aria-label="Previous paper sections">
+          <button class="subtab active" data-paper-view="syllabus" type="button">Syllabus</button>
+          <button class="subtab" data-paper-view="structure" type="button">Exam Structure</button>
+          <button class="subtab" data-paper-view="questions" type="button">Questions</button>
+        </nav>
+
+        <section id="syllabus-panel" class="paper-panel active">
+          <div class="notice">
+            <strong>Starter structure</strong>
+            <p>The exact university syllabus will be loaded here once your official syllabus or college/university details are added. This avoids mixing different Karnataka LL.B schemes.</p>
+          </div>
+          <div id="subject-list" class="stack"></div>
+        </section>
+
+        <section id="structure-panel" class="paper-panel">
+          <div class="content-card">
+            <p class="eyebrow">How this section works</p>
+            <h3>Exam Structure</h3>
+            <p class="muted">For every imported paper, this area will show total marks, duration, parts/sections, choice pattern and the syllabus units tested.</p>
+          </div>
+          <div class="structure-grid">
+            <article class="content-card">
+              <span class="number-badge">A</span>
+              <h3>Paper details</h3>
+              <p>Year, semester, subject, maximum marks and exam duration.</p>
+            </article>
+            <article class="content-card">
+              <span class="number-badge">B</span>
+              <h3>Question pattern</h3>
+              <p>Part A / B / C, compulsory questions, internal choice and marks per answer.</p>
+            </article>
+            <article class="content-card">
+              <span class="number-badge">C</span>
+              <h3>Coverage</h3>
+              <p>Each question is connected to its subject, syllabus unit and legal concepts to revise.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="questions-panel" class="paper-panel">
+          <div class="paper-toolbar">
+            <label>
+              <span>Subject</span>
+              <select id="subject-filter"></select>
+            </label>
+            <label>
+              <span>Paper</span>
+              <select id="paper-filter"></select>
+            </label>
+          </div>
+
+          <div id="paper-status" class="notice">
+            <strong>No official previous-year paper imported yet</strong>
+            <p>The question system is ready. When you provide PDFs/images of your papers, questions can be added here with answers, syllabus unit, topic and required concepts.</p>
+          </div>
+
+          <div id="question-list" class="stack"></div>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-tabs" aria-label="Main navigation">
+      <button id="simple-tab" class="main-tab active" data-view="simple" type="button">
+        <span class="tab-index">01</span>
+        <span>Simple</span>
+      </button>
+      <button id="papers-tab" class="main-tab" data-view="papers" type="button">
+        <span class="tab-index">02</span>
+        <span>Papers</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
