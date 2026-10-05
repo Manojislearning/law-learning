@@ -301,276 +301,198 @@ const WORDS = [
   }
 ];
 
-const KSLU_SYLLABUS = [
-  {
-    "semester": 1,
-    "title": "1st Semester",
-    "detailAvailable": true,
-    "note": "Program structure is listed for 2024–25. The detailed Semester I course pages in the supplied PDF are headed 2018–19; Criminal Law I is updated to Bharatiya Nyaya Sanhita, 2023.",
-    "courses": [
-      {
-        "name": "Constitutional Law – I",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "Meaning and definition of Constitution; kinds of Constitution; Constitutionalism; salient features of the Indian Constitution; Preamble—meaning, scope, importance, objectives and values; Citizenship—modes of acquisition and termination."
-          },
-          {
-            "unit": "Unit II",
-            "text": "State under Article 12; judicial trends on State action; definition and meaning of law; pre- and post-Constitutional laws; doctrines of severability and eclipse; Judicial Review and Article 13; equality and social justice under Article 14."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Protective discrimination and social justice under Articles 15 and 16; judicial trends on social justice; Article 17 and untouchability; freedoms under Article 19, including speech and expression, assembly, association, movement, residence, profession, occupation, trade or business, and reasonable restrictions."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Rights of the accused under Article 20; ex-post facto law, double jeopardy and self-incrimination; rights of arrested persons and preventive detention under Article 22; right to life and personal liberty under Article 21; right against exploitation; secularism and freedom of religion, including judicial interpretation and restrictions."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Cultural and educational rights of minorities; Articles 32 and 226 and kinds of writs; right to property before 1978 and the present position; Directive Principles of State Policy; Fundamental Duties; interrelationship between Fundamental Rights and Directive Principles."
-          }
-        ]
-      },
-      {
-        "name": "Contract – I",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "Formation of contract; agreement and contract; definitions and classification; offer and acceptance; communication and revocation; essential elements; invitation to offer; tenders; consideration, nudum pactum, privity of contract and consideration, exceptions, unlawful consideration and e-contract."
-          },
-          {
-            "unit": "Unit II",
-            "text": "Capacity to contract; minor’s agreements and effects; persons of unsound mind and persons disqualified by law; free consent—coercion, undue influence, misrepresentation, fraud and mistake; legality of object; void agreements; contingent contracts."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Modes of discharge of contracts; time and place of performance; reciprocal promises; appropriation of payments; discharge by agreement, operation of law, frustration or impossibility of performance, and breach including anticipatory and actual breach."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Remedies for breach of contracts; damages, kinds of damages, remoteness and ascertainment of damages; quasi-contracts."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Specific Relief Act topics listed in the syllabus: Sections 9–16, 21, 24 and 36–42; nature of specific relief; recovery of possession; specific performance; parties who may obtain relief and against whom; discretion; rectification, cancellation, declaratory decrees, preventive relief, temporary, perpetual and mandatory injunctions."
-          }
-        ]
-      },
-      {
-        "name": "Law of Torts",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "Evolution, nature, scope and meaning of torts; tort distinguished from contract and crime; ubi jus ibi remedium; mental elements including intention, motive and malice in law and fact."
-          },
-          {
-            "unit": "Unit II",
-            "text": "General defences and vicarious liability."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Negligence; nuisance; absolute and strict liability; legal remedies, awards and remoteness of damage."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Torts against person and property: assault, battery, mayhem, false imprisonment; libel and slander; malicious prosecution, malicious civil action and abuse of legal process; domestic and other rights including marital, parental, service and contractual rights; intimidation and conspiracy; torts against property."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Consumer Protection Act, 1986 topics listed in the syllabus, including consumer, defects, deficiency in services, medical services, remedies, redressal agencies, limitation and penalties; Motor Vehicles Act, 1988 topics including no-fault liability, third-party insurance, Claims Tribunal, offences, penalties and procedure."
-          }
-        ]
-      },
-      {
-        "name": "Family Law – I: Hindu Law",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "Concept of Dharma; ancient and modern sources of Hindu Law; importance of Dharma Shastra on legislation; Mitakshara and Dayabhaga schools; application of Hindu Law."
-          },
-          {
-            "unit": "Unit II",
-            "text": "Marriage and kinship; evolution of marriage and family; law before the Hindu Marriage Act; detailed study of the Hindu Marriage Act, 1955; matrimonial remedies; maintenance and alimony; customary practices and legislative provisions concerning dowry prohibition."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Hindu undivided family; Mitakshara joint family, formation and incidents; property under both schools; Kartha—position, powers, privileges and obligations; debts; doctrine of pious obligation; partition and reunion; religious and charitable endowment."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Inheritance and succession; historical perspective; Hindu Succession Act, 1956; Stridhana and woman’s property; amendments; gifts and testamentary succession; wills."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Hindu minority and guardianship; kinds, duties and powers of guardians; Hindu Adoption and Maintenance Act, 1956; traditional maintenance rights and rights under that Act."
-          }
-        ]
-      },
-      {
-        "name": "Criminal Law – I: Bharatiya Nyaya Sanhita (BNS), 2023",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "General principles and conceptions of crime; distinction from morality and other wrongs; actus reus and mens rea; variations in liability; parties to crime; State obligation to detect and punish; historical background, extent and operation of BNS; definitions and general explanations (Ss. 2–3); gender neutrality; punishments and community service (Ss. 4–13); commutation, fine, default, solitary confinement and general exceptions (Ss. 14–44)."
-          },
-          {
-            "unit": "Unit II",
-            "text": "Inchoate crimes: abetment (Ss. 45–60), criminal conspiracy (S. 61), attempt (S. 62); offences against women including rape and other sexual offences, deceitful means, criminal force and assault; offences relating to marriage including dowry death, bigamy and cruelty; kidnapping and offences against children, with sections as listed in the syllabus."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Offences against the human body: culpable homicide, mob lynching, murder, hit-and-run and causing death by rash or negligent act; suicide-related provisions; organized crime and terrorist act; hurt and grievous hurt; wrongful restraint and confinement; criminal force and assault; kidnapping, abduction, slavery and forced labour, with sections as listed in the syllabus."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Offences against the State; acts endangering sovereignty, unity and integrity of India; election and currency offences; offences against public tranquility; offences against public justice; public nuisance; mischief and criminal trespass; forgery and property-mark offences, with sections as listed in the syllabus."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Offences against property: theft, snatching, extortion, robbery, dacoity, criminal misappropriation, criminal breach of trust, receiving stolen property and cheating; defamation, criminal intimidation, insult and annoyance, with sections as listed in the syllabus."
-          }
-        ]
-      },
-      {
-        "name": "English (for students writing examinations in Kannada)",
-        "units": [
-          {
-            "unit": "Unit I",
-            "text": "Law and Lawyers — M. K. Gandhi."
-          },
-          {
-            "unit": "Unit II",
-            "text": "Articles; parts of speech and usage; error identification; types and transformation of sentences; change of voice; reported speech; idioms; legal words and their usage."
-          },
-          {
-            "unit": "Unit III",
-            "text": "Applied writing: paragraph writing; report/press report; précis writing and summarizing; essay writing; cohesive devices; comprehension passages; letter writing."
-          },
-          {
-            "unit": "Unit IV",
-            "text": "Professional writing: petitions; notices; refutation; essays on legal topics; comprehension of legal content; legal words and usage; cohesive legal devices."
-          },
-          {
-            "unit": "Unit V",
-            "text": "Translation: principles of translation and exercises using legal texts and decided cases."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "semester": 2,
-    "title": "2nd Semester",
-    "detailAvailable": false,
-    "courses": [
-      {
-        "name": "Constitutional Law – II"
-      },
-      {
-        "name": "Contract – II"
-      },
-      {
-        "name": "Labour Law – I"
-      },
-      {
-        "name": "Property Law"
-      },
-      {
-        "name": "Family Law – II: Mohammedan Law & Indian Succession Act"
-      },
-      {
-        "name": "Kanoonu Kannada / Kannada Kali (for Non-Kannadiga students)"
-      }
-    ]
-  },
-  {
-    "semester": 3,
-    "title": "3rd Semester",
-    "detailAvailable": false,
-    "courses": [
-      {
-        "name": "Jurisprudence"
-      },
-      {
-        "name": "Labour Law – I"
-      },
-      {
-        "name": "Law of Taxation"
-      },
-      {
-        "name": "Criminal Law – II: Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023"
-      }
-    ]
-  },
-  {
-    "semester": 4,
-    "title": "4th Semester",
-    "detailAvailable": false,
-    "courses": [
-      {
-        "name": "Public International Law"
-      },
-      {
-        "name": "Optional-I: Human Rights Law and Practice / Insurance Law"
-      },
-      {
-        "name": "Optional-II: Banking Law / Right to Information"
-      },
-      {
-        "name": "Clinical Course-I: Professional Ethics and Professional Accounting System"
-      },
-      {
-        "name": "Clinical Course-II: Alternative Dispute Resolution Systems"
-      }
-    ]
-  },
-  {
-    "semester": 5,
-    "title": "5th Semester",
-    "detailAvailable": false,
-    "courses": [
-      {
-        "name": "Company Law"
-      },
-      {
-        "name": "Civil Procedure Code and Limitation Act"
-      },
-      {
-        "name": "Optional-III: Intellectual Property Rights-I / Penology & Victimology"
-      },
-      {
-        "name": "Optional-IV: Interpretation of Statutes and Principles of Legislation / Competition Law"
-      },
-      {
-        "name": "Clinical Course-III: Drafting, Pleading and Conveyance"
-      }
-    ]
-  },
-  {
-    "semester": 6,
-    "title": "6th Semester",
-    "detailAvailable": false,
-    "courses": [
-      {
-        "name": "Bharatiya Sakshya Adhiniyam (BSA), 2023"
-      },
-      {
-        "name": "Environmental Law"
-      },
-      {
-        "name": "Optional-V: Intellectual Property Rights-II / White Collar Crimes"
-      },
-      {
-        "name": "Optional-VI: Land Law / Law relating to International Trade Economics"
-      },
-      {
-        "name": "Clinical Course-IV: Moot Court Exercise and Internship"
-      }
-    ]
-  }
-];
+const KSLU_FIRST_SEMESTER = {
+  "title": "KSLU 3-Year LL.B · Semester I",
+  "note": "Semester I only. Course titles follow the 2024–25 program structure in your KSLU PDF. The detailed course pages supplied in the same PDF carry the older 2018–19 heading, while Criminal Law I is updated to BNS, 2023.",
+  "courses": [
+    {
+      "name": "Constitutional Law – I",
+      "about": "Constitution, constitutionalism, Fundamental Rights, constitutional remedies, Directive Principles and Fundamental Duties.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "Constitution, Preamble & Citizenship",
+          "text": "Meaning and definition of Constitution; kinds of Constitution; Constitutionalism; salient features of the Indian Constitution; Preamble—meaning, scope, importance, objectives and values; Citizenship—modes of acquisition and termination."
+        },
+        {
+          "unit": "Unit II",
+          "title": "State, Law, Judicial Review & Equality",
+          "text": "State under Article 12; judicial trends on State action; definition and meaning of law; pre- and post-Constitutional laws; doctrines of severability and eclipse; Judicial Review and Article 13; equality and social justice under Article 14."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Protective Discrimination & Article 19 Freedoms",
+          "text": "Protective discrimination and social justice under Articles 15 and 16; judicial trends on social justice; Article 17 and untouchability; freedoms under Article 19 including speech and expression, assembly, association, movement, residence, profession, occupation, trade or business, and reasonable restrictions."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "Rights of Accused, Life & Religion",
+          "text": "Rights of the accused under Article 20; ex-post facto law, double jeopardy and self-incrimination; rights of arrested persons and preventive detention under Article 22; right to life and personal liberty under Article 21; right against exploitation; secularism and freedom of religion, including judicial interpretation and restrictions."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Minority Rights, Writs, DPSP & Duties",
+          "text": "Cultural and educational rights of minorities; Articles 32 and 226 and kinds of writs; right to property before 1978 and the present position; Directive Principles of State Policy; Fundamental Duties; interrelationship between Fundamental Rights and Directive Principles."
+        }
+      ]
+    },
+    {
+      "name": "Contract – I",
+      "about": "Formation, capacity, consent, discharge, remedies and specific relief.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "Formation & Consideration",
+          "text": "Formation of contract; agreement and contract; definitions and classification; offer and acceptance; communication and revocation; essential elements; invitation to offer; tenders; consideration, nudum pactum, privity of contract and consideration, exceptions, unlawful consideration and e-contract."
+        },
+        {
+          "unit": "Unit II",
+          "title": "Capacity, Free Consent & Void Agreements",
+          "text": "Capacity to contract; minor’s agreements and effects; persons of unsound mind and persons disqualified by law; free consent—coercion, undue influence, misrepresentation, fraud and mistake; legality of object; void agreements; contingent contracts."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Performance & Discharge",
+          "text": "Modes of discharge of contracts; time and place of performance; reciprocal promises; appropriation of payments; discharge by agreement, operation of law, frustration or impossibility of performance, and breach including anticipatory and actual breach."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "Breach, Damages & Quasi-Contracts",
+          "text": "Remedies for breach of contracts; damages, kinds of damages, remoteness and ascertainment of damages; quasi-contracts."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Specific Relief & Injunctions",
+          "text": "Specific Relief Act topics listed in the syllabus: Sections 9–16, 21, 24 and 36–42; nature of specific relief; recovery of possession; specific performance; who may obtain relief and against whom; discretion; rectification, cancellation, declaratory decrees, preventive relief, temporary, perpetual and mandatory injunctions."
+        }
+      ]
+    },
+    {
+      "name": "Law of Torts",
+      "about": "Tortious liability, defences, negligence, specific torts and consumer/motor-vehicle remedies.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "Nature & Foundations of Tort",
+          "text": "Evolution, nature, scope and meaning of torts; tort distinguished from contract and crime; ubi jus ibi remedium; mental elements including intention, motive and malice in law and fact."
+        },
+        {
+          "unit": "Unit II",
+          "title": "General Defences & Vicarious Liability",
+          "text": "General defences and vicarious liability."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Negligence, Nuisance & Liability",
+          "text": "Negligence; nuisance; absolute and strict liability; legal remedies, awards and remoteness of damage."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "Torts Against Person & Property",
+          "text": "Assault, battery, mayhem, false imprisonment; libel and slander; malicious prosecution, malicious civil action and abuse of legal process; domestic and other rights including marital, parental, service and contractual rights; intimidation and conspiracy; torts against property."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Consumer & Motor Vehicle Law",
+          "text": "Consumer Protection Act, 1986 topics listed in the syllabus, including consumer, defects, deficiency in services, medical services, remedies, redressal agencies, limitation and penalties; Motor Vehicles Act, 1988 topics including no-fault liability, third-party insurance, Claims Tribunal, offences, penalties and procedure."
+        }
+      ]
+    },
+    {
+      "name": "Family Law – I: Hindu Law",
+      "about": "Sources and schools of Hindu law, marriage, joint family, succession, guardianship, adoption and maintenance.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "Sources & Schools of Hindu Law",
+          "text": "Concept of Dharma; ancient and modern sources of Hindu Law; importance of Dharma Shastra on legislation; Mitakshara and Dayabhaga schools; application of Hindu Law."
+        },
+        {
+          "unit": "Unit II",
+          "title": "Marriage & Matrimonial Remedies",
+          "text": "Marriage and kinship; evolution of marriage and family; law before the Hindu Marriage Act; detailed study of the Hindu Marriage Act, 1955; matrimonial remedies; maintenance and alimony; customary practices and legislative provisions concerning dowry prohibition."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Hindu Joint Family",
+          "text": "Hindu undivided family; Mitakshara joint family, formation and incidents; property under both schools; Kartha—position, powers, privileges and obligations; debts; doctrine of pious obligation; partition and reunion; religious and charitable endowment."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "Inheritance & Succession",
+          "text": "Inheritance and succession; historical perspective; Hindu Succession Act, 1956; Stridhana and woman’s property; amendments; gifts and testamentary succession; wills."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Guardianship, Adoption & Maintenance",
+          "text": "Hindu minority and guardianship; kinds, duties and powers of guardians; Hindu Adoption and Maintenance Act, 1956; traditional maintenance rights and rights under that Act."
+        }
+      ]
+    },
+    {
+      "name": "Criminal Law – I: Bharatiya Nyaya Sanhita (BNS), 2023",
+      "about": "General principles of crime and major offences under the Bharatiya Nyaya Sanhita, 2023.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "General Principles, Liability & Punishments",
+          "text": "General principles and conceptions of crime; distinction from morality and other wrongs; actus reus and mens rea; variations in liability; parties to crime; State obligation to detect and punish; historical background, extent and operation of BNS; definitions and general explanations (Ss. 2–3); gender neutrality; punishments and community service (Ss. 4–13); commutation, fine, default, solitary confinement and general exceptions (Ss. 14–44)."
+        },
+        {
+          "unit": "Unit II",
+          "title": "Inchoate Crimes & Offences Against Women/Children",
+          "text": "Abetment (Ss. 45–60), criminal conspiracy (S. 61), attempt (S. 62); offences against women including rape and other sexual offences, deceitful means, criminal force and assault; offences relating to marriage including dowry death, bigamy and cruelty; kidnapping and offences against children, with sections as listed in the syllabus."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Offences Against the Human Body",
+          "text": "Culpable homicide, mob lynching, murder, hit-and-run and causing death by rash or negligent act; suicide-related provisions; organized crime and terrorist act; hurt and grievous hurt; wrongful restraint and confinement; criminal force and assault; kidnapping, abduction, slavery and forced labour, with sections as listed in the syllabus."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "State, Public Tranquility & Public Justice",
+          "text": "Offences against the State; acts endangering sovereignty, unity and integrity of India; election and currency offences; offences against public tranquility; offences against public justice; public nuisance; mischief and criminal trespass; forgery and property-mark offences, with sections as listed in the syllabus."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Property Offences & Other Offences",
+          "text": "Theft, snatching, extortion, robbery, dacoity, criminal misappropriation, criminal breach of trust, receiving stolen property and cheating; defamation, criminal intimidation, insult and annoyance, with sections as listed in the syllabus."
+        }
+      ]
+    },
+    {
+      "name": "English (for students writing examinations in Kannada)",
+      "about": "Legal English, grammar, applied/professional writing and translation.",
+      "units": [
+        {
+          "unit": "Unit I",
+          "title": "Law and Lawyers",
+          "text": "Law and Lawyers — M. K. Gandhi."
+        },
+        {
+          "unit": "Unit II",
+          "title": "Grammar & Legal Vocabulary",
+          "text": "Articles; parts of speech and usage; error identification; types and transformation of sentences; change of voice; reported speech; idioms; legal words and their usage."
+        },
+        {
+          "unit": "Unit III",
+          "title": "Applied Writing",
+          "text": "Paragraph writing; report/press report; précis writing and summarizing; essay writing; cohesive devices; comprehension passages; letter writing."
+        },
+        {
+          "unit": "Unit IV",
+          "title": "Professional Writing",
+          "text": "Petitions; notices; refutation; essays on legal topics; comprehension of legal content; legal words and usage; cohesive legal devices."
+        },
+        {
+          "unit": "Unit V",
+          "title": "Translation",
+          "text": "Principles of translation and exercises using legal texts and decided cases."
+        }
+      ]
+    }
+  ]
+};
 
 const PRACTICE_QUESTIONS = [
   {
@@ -776,55 +698,28 @@ function answerQuiz(event) {
 }
 
 function renderKSLUSyllabus() {
-  var list = $("#semester-list");
   var detail = $("#syllabus-detail");
-  if (!list || !detail) return;
+  if (!detail) return;
 
-  list.innerHTML = KSLU_SYLLABUS.map(function(semester, index) {
-    return '<button class="semester-btn' + (index === 0 ? ' active' : '') +
-      '" data-semester="' + index + '" type="button">Sem ' + semester.semester + '</button>';
+  var coursesHtml = KSLU_FIRST_SEMESTER.courses.map(function(course, courseIndex) {
+    var units = course.units.map(function(unit) {
+      return '<details class="unit-reveal">' +
+        '<summary><span>' + unit.unit + '</span><strong>' + unit.title + '</strong><small>Tap to reveal topics</small></summary>' +
+        '<div class="unit-reveal-content"><p>' + unit.text + '</p></div>' +
+        '</details>';
+    }).join("");
+
+    return '<details class="course-card">' +
+      '<summary><span class="course-number">Paper ' + (courseIndex + 1) + '</span><strong>' + course.name + '</strong><small class="tap-hint">Tap to view units</small></summary>' +
+      '<div class="course-content"><p class="course-about">' + course.about + '</p>' + units + '</div>' +
+      '</details>';
   }).join("");
 
-  function showSemester(index) {
-    var semester = KSLU_SYLLABUS[index];
-    $$(".semester-btn").forEach(function(btn) {
-      btn.classList.toggle("active", Number(btn.dataset.semester) === index);
-    });
-
-    var sourceNote = semester.detailAvailable
-      ? '<p>Detailed unit content is available in the syllabus PDF supplied for Semester I.</p>'
-      : '<p>The supplied PDF lists these course titles in the 2024–25 program structure, but does not provide detailed unit-by-unit content for this semester.</p>';
-
-    var coursesHtml;
-    if (semester.detailAvailable) {
-      coursesHtml = semester.courses.map(function(course, courseIndex) {
-        var units = (course.units || []).map(function(unit) {
-          return '<div class="unit-card"><span>' + unit.unit + '</span><p>' + unit.text + '</p></div>';
-        }).join("");
-        return '<details class="course-card"' + (courseIndex === 0 ? ' open' : '') + '>' +
-          '<summary><span class="course-number">Course ' + (courseIndex + 1) + '</span><strong>' + course.name + '</strong></summary>' +
-          '<div class="course-content">' + units + '</div></details>';
-      }).join("");
-    } else {
-      coursesHtml = '<div class="course-list-only">' + semester.courses.map(function(course, courseIndex) {
-        return '<div class="course-list-row"><strong>' + (courseIndex + 1) + '.</strong> ' + course.name + '</div>';
-      }).join("") + '</div>';
-    }
-
-    detail.innerHTML =
-      '<article class="semester-summary"><p class="eyebrow">KSLU · ' + semester.title + '</p><h3>' +
-      semester.title + '</h3>' + sourceNote +
-      (semester.note ? '<p class="course-note">' + semester.note + '</p>' : '') +
-      '</article>' + coursesHtml;
-  }
-
-  $$(".semester-btn").forEach(function(button) {
-    button.addEventListener("click", function() {
-      showSemester(Number(button.dataset.semester));
-    });
-  });
-
-  showSemester(0);
+  detail.innerHTML =
+    '<article class="semester-summary"><p class="eyebrow">KSLU · Semester I only</p>' +
+    '<h3>6 Papers</h3><p>Tap a paper to open its five units. Tap an individual unit only when you want the full topic list.</p>' +
+    '<p class="course-note">' + KSLU_FIRST_SEMESTER.note + '</p></article>' +
+    coursesHtml;
 }
 
 function renderPaperFilters() {
@@ -871,7 +766,8 @@ function setupNavigation() {
     syllabus: ["KSLU · 3-Year LL.B", "Syllabus"],
     exam: ["Exam preparation", "Exam Pattern"],
     papers: ["Previous year questions", "Old Papers"],
-    notes: ["Personal study space", "Notes"]
+    notes: ["Personal study space", "Notes"],
+    links: ["Karnataka · Official resources", "Important Links"]
   };
 
   function showRoute(route) {
@@ -913,14 +809,6 @@ function setupNavigation() {
       $$(".word-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
       $$(".word-panel").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-panel"); });
       if (view === "quiz") newQuiz();
-    });
-  });
-
-  $$(".mini-tab").forEach(function(button) {
-    button.addEventListener("click", function() {
-      var view = button.dataset.learnView;
-      $$(".mini-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
-      $$(".learn-detail").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-detail"); });
     });
   });
 }
