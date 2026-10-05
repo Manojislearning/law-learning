@@ -1,4 +1,4 @@
-const CACHE = "law-learning-v4";
+const CACHE = "law-learning-v5";
 const ASSETS = [
   "./",
   "./index.html",
