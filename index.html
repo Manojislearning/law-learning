@@ -122,52 +122,55 @@
               <button id="speak-slow" class="mini-btn" type="button">Slow</button>
             </div>
 
-            <div class="reveal-stack">
-              <details class="reveal-card" open>
-                <summary>
-                  <span>Definition</span>
-                  <small>Tap to reveal</small>
-                </summary>
-                <div class="reveal-content">
-                  <p class="detail-label">Legal definition</p>
-                  <p id="word-definition" class="lead-copy"></p>
-                  <div class="memory-line">
-                    <span>Remember it as</span>
-                    <strong id="memory-hook"></strong>
-                  </div>
+            <div class="learn-switcher" role="tablist" aria-label="Word explanation sections">
+              <button class="learn-choice active" data-learn-target="definition" type="button" aria-expanded="true">
+                <span class="learn-choice-copy">
+                  <strong>Definition</strong>
+                  <small>Exact legal meaning</small>
+                </span>
+                <span class="learn-choice-icon">−</span>
+              </button>
+              <div id="definition-learn-box" class="learn-box active">
+                <p class="detail-label">Legal definition</p>
+                <p id="word-definition" class="lead-copy"></p>
+                <div class="memory-line">
+                  <span>Remember it as</span>
+                  <strong id="memory-hook"></strong>
                 </div>
-              </details>
+              </div>
 
-              <details class="reveal-card">
-                <summary>
-                  <span>Deep Learn</span>
-                  <small>Simple English</small>
-                </summary>
-                <div class="reveal-content">
-                  <p class="detail-label">Explain it like I am new to legal English</p>
-                  <p id="deep-meaning" class="lead-copy"></p>
-                  <div class="plain-box">
-                    <span>In daily words</span>
-                    <p id="daily-words"></p>
-                  </div>
+              <button class="learn-choice" data-learn-target="deep" type="button" aria-expanded="false">
+                <span class="learn-choice-copy">
+                  <strong>Deep Learn</strong>
+                  <small>Explain in simple English</small>
+                </span>
+                <span class="learn-choice-icon">+</span>
+              </button>
+              <div id="deep-learn-box" class="learn-box">
+                <p class="detail-label">Explain it like I am new to legal English</p>
+                <p id="deep-meaning" class="lead-copy"></p>
+                <div class="plain-box">
+                  <span>In daily words</span>
+                  <p id="daily-words"></p>
                 </div>
-              </details>
+              </div>
 
-              <details class="reveal-card">
-                <summary>
-                  <span>Kannada Version</span>
-                  <small>ಅರ್ಥ + ವಾಕ್ಯ</small>
-                </summary>
-                <div class="reveal-content">
-                  <p class="detail-label">Kannada study aid</p>
-                  <h4 id="kannada-meaning" class="kannada-title" lang="kn"></h4>
-                  <p id="kannada-explain" class="kannada-copy" lang="kn"></p>
-                  <div class="plain-box">
-                    <span>ವಾಕ್ಯ / Sentence</span>
-                    <p id="kannada-sentence" lang="kn"></p>
-                  </div>
+              <button class="learn-choice" data-learn-target="kannada" type="button" aria-expanded="false">
+                <span class="learn-choice-copy">
+                  <strong>Kannada Version</strong>
+                  <small>ಅರ್ಥ + ಸರಳ ವಿವರಣೆ + ವಾಕ್ಯ</small>
+                </span>
+                <span class="learn-choice-icon">+</span>
+              </button>
+              <div id="kannada-learn-box" class="learn-box">
+                <p class="detail-label">Kannada study aid</p>
+                <h4 id="kannada-meaning" class="kannada-title" lang="kn"></h4>
+                <p id="kannada-explain" class="kannada-copy" lang="kn"></p>
+                <div class="plain-box">
+                  <span>ವಾಕ್ಯ / Sentence</span>
+                  <p id="kannada-sentence" lang="kn"></p>
                 </div>
-              </details>
+              </div>
             </div>
           </article>
 
