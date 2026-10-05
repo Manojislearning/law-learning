@@ -31,7 +31,7 @@
         <div class="home-intro">
           <p class="eyebrow">KSLU · 3-Year LL.B</p>
           <h2>What do you want to study?</h2>
-          <p class="muted">Open one section at a time. The home screen stays clean as more study tools are added.</p>
+          <p class="muted">First-semester study tools. Open only what you need, then use Back to return here.</p>
         </div>
 
         <div class="home-grid">
@@ -44,19 +44,19 @@
           <button class="home-card" data-open="syllabus" type="button">
             <span class="home-index">02</span>
             <strong>Syllabus</strong>
-            <p>KSLU 3-year LL.B semester structure and detailed first-semester units.</p>
+            <p>KSLU Semester I subjects and units.</p>
             <span class="home-arrow">→</span>
           </button>
           <button class="home-card" data-open="exam" type="button">
             <span class="home-index">03</span>
             <strong>Exam Pattern</strong>
-            <p>Paper structure, marks, choices and answer strategy.</p>
+            <p>Understand how your Semester I papers are structured.</p>
             <span class="home-arrow">→</span>
           </button>
           <button class="home-card" data-open="papers" type="button">
             <span class="home-index">04</span>
             <strong>Old Papers</strong>
-            <p>Previous questions mapped to subject, unit, topic and answer approach.</p>
+            <p>Semester I questions mapped to subject and unit.</p>
             <span class="home-arrow">→</span>
           </button>
           <button class="home-card" data-open="notes" type="button">
@@ -65,10 +65,16 @@
             <p>Your quick study notes, saved locally on this device.</p>
             <span class="home-arrow">→</span>
           </button>
+          <button class="home-card links-home-card" data-open="links" type="button">
+            <span class="home-index">06</span>
+            <strong>Important Links</strong>
+            <p>Official websites worth keeping as a Karnataka law student.</p>
+            <span class="home-arrow">→</span>
+          </button>
           <article class="home-card add-card">
             <span class="home-index">+</span>
             <strong>More later</strong>
-            <p>This space is ready for cases, bare acts, revision plans or any new section you add.</p>
+            <p>Cases, bare acts, revision plans and other tools can be added here.</p>
           </article>
         </div>
       </section>
@@ -116,38 +122,52 @@
               <button id="speak-slow" class="mini-btn" type="button">Slow</button>
             </div>
 
-            <nav class="mini-tabs" aria-label="Learn word detail">
-              <button class="mini-tab active" data-learn-view="definition" type="button">Definition</button>
-              <button class="mini-tab" data-learn-view="deep" type="button">Deep Learn</button>
-              <button class="mini-tab" data-learn-view="kannada" type="button">Kannada Version</button>
-            </nav>
+            <div class="reveal-stack">
+              <details class="reveal-card" open>
+                <summary>
+                  <span>Definition</span>
+                  <small>Tap to reveal</small>
+                </summary>
+                <div class="reveal-content">
+                  <p class="detail-label">Legal definition</p>
+                  <p id="word-definition" class="lead-copy"></p>
+                  <div class="memory-line">
+                    <span>Remember it as</span>
+                    <strong id="memory-hook"></strong>
+                  </div>
+                </div>
+              </details>
 
-            <div id="definition-detail" class="learn-detail active">
-              <p class="detail-label">Legal definition</p>
-              <p id="word-definition" class="lead-copy"></p>
-              <div class="memory-line">
-                <span>Remember it as</span>
-                <strong id="memory-hook"></strong>
-              </div>
-            </div>
+              <details class="reveal-card">
+                <summary>
+                  <span>Deep Learn</span>
+                  <small>Simple English</small>
+                </summary>
+                <div class="reveal-content">
+                  <p class="detail-label">Explain it like I am new to legal English</p>
+                  <p id="deep-meaning" class="lead-copy"></p>
+                  <div class="plain-box">
+                    <span>In daily words</span>
+                    <p id="daily-words"></p>
+                  </div>
+                </div>
+              </details>
 
-            <div id="deep-detail" class="learn-detail">
-              <p class="detail-label">Explain it like I am new to legal English</p>
-              <p id="deep-meaning" class="lead-copy"></p>
-              <div class="plain-box">
-                <span>In daily words</span>
-                <p id="daily-words"></p>
-              </div>
-            </div>
-
-            <div id="kannada-detail" class="learn-detail">
-              <p class="detail-label">Kannada study aid</p>
-              <h4 id="kannada-meaning" class="kannada-title" lang="kn"></h4>
-              <p id="kannada-explain" class="kannada-copy" lang="kn"></p>
-              <div class="plain-box">
-                <span>ವಾಕ್ಯ / Sentence</span>
-                <p id="kannada-sentence" lang="kn"></p>
-              </div>
+              <details class="reveal-card">
+                <summary>
+                  <span>Kannada Version</span>
+                  <small>ಅರ್ಥ + ವಾಕ್ಯ</small>
+                </summary>
+                <div class="reveal-content">
+                  <p class="detail-label">Kannada study aid</p>
+                  <h4 id="kannada-meaning" class="kannada-title" lang="kn"></h4>
+                  <p id="kannada-explain" class="kannada-copy" lang="kn"></p>
+                  <div class="plain-box">
+                    <span>ವಾಕ್ಯ / Sentence</span>
+                    <p id="kannada-sentence" lang="kn"></p>
+                  </div>
+                </div>
+              </details>
             </div>
           </article>
 
@@ -218,16 +238,15 @@
 
       <section id="syllabus-view" class="main-view">
         <div class="section-head">
-          <p class="eyebrow">Karnataka State Law University · 2024–25</p>
-          <h2>KSLU Syllabus</h2>
-          <p class="muted">Choose a semester. Semester I includes the detailed units from the syllabus PDF you provided.</p>
+          <p class="eyebrow">KSLU · 3-Year LL.B · Semester I</p>
+          <h2>First Semester Syllabus</h2>
+          <p class="muted">Tap a subject, then tap a unit. Only Semester I from your KSLU syllabus is shown here.</p>
         </div>
 
-        <div id="semester-list" class="semester-list" aria-label="KSLU semesters"></div>
         <div id="syllabus-detail" class="syllabus-detail"></div>
       </section>
 
-      <section id="exam-view" class="main-view"> class="main-view">
+      <section id="exam-view" class="main-view">
         <div class="section-head">
           <p class="eyebrow">How the paper works</p>
           <h2>Exam Pattern</h2>
@@ -279,6 +298,50 @@
             <button id="clear-notes" class="text-btn" type="button">Clear notes</button>
           </div>
         </article>
+      </section>
+
+      <section id="links-view" class="main-view">
+        <div class="section-head">
+          <p class="eyebrow">Karnataka · Official resources</p>
+          <h2>Important Links</h2>
+          <p class="muted">Primary sources first. Use these for university notices, judgments, case status, statutes, professional rules and future enrolment/AIBE work.</p>
+        </div>
+
+        <div class="link-stack">
+          <a class="resource-card" href="https://kslu.karnataka.gov.in/" target="_blank" rel="noopener">
+            <div><span>University</span><strong>Karnataka State Law University</strong><p>Syllabus, notifications, examinations and university updates.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://judiciary.karnataka.gov.in/" target="_blank" rel="noopener">
+            <div><span>Courts</span><strong>High Court of Karnataka</strong><p>Judgments, orders, cause lists, case status, notifications and court services.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://services.ecourts.gov.in/ecourtindia_v6/" target="_blank" rel="noopener">
+            <div><span>Case research</span><strong>eCourts Services</strong><p>District and subordinate court case status, orders and CNR search.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://ksbc.org.in/" target="_blank" rel="noopener">
+            <div><span>Profession</span><strong>Karnataka State Bar Council</strong><p>Enrolment, advocate information, rules, notices and professional updates.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://kslsa.kar.nic.in/" target="_blank" rel="noopener">
+            <div><span>Legal aid</span><strong>Karnataka State Legal Services Authority</strong><p>Legal aid, Lok Adalat and access-to-justice resources.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://www.indiacode.nic.in/" target="_blank" rel="noopener">
+            <div><span>Bare Acts</span><strong>India Code</strong><p>Central Acts, sections, rules, regulations, notifications and subordinate legislation.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://www.sci.gov.in/" target="_blank" rel="noopener">
+            <div><span>Judgments</span><strong>Supreme Court of India</strong><p>Judgments, orders, case status, cause lists and court publications.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://kla.kar.nic.in/" target="_blank" rel="noopener">
+            <div><span>State lawmaking</span><strong>Karnataka Legislature</strong><p>Bills, debates, legislation, committee material and Assembly information.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://erajyapatra.karnataka.gov.in/" target="_blank" rel="noopener">
+            <div><span>Official publications</span><strong>Karnataka e-Gazette</strong><p>Official Karnataka Gazette notifications and publications.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://www.barcouncilofindia.org/" target="_blank" rel="noopener">
+            <div><span>Legal education</span><strong>Bar Council of India</strong><p>Professional standards, legal-education rules and advocate regulation.</p></div><b>↗</b>
+          </a>
+          <a class="resource-card" href="https://www.allindiabarexamination.com/" target="_blank" rel="noopener">
+            <div><span>Future qualification</span><strong>All India Bar Examination</strong><p>AIBE notifications, registration, syllabus and result information.</p></div><b>↗</b>
+          </a>
+        </div>
       </section>
     </main>
   </div>
