@@ -787,7 +787,7 @@ function renderKSLUSyllabus() {
 
   function showSemester(index) {
     var semester = KSLU_SYLLABUS[index];
-    $(".semester-btn").forEach(function(btn) {
+    $$(".semester-btn").forEach(function(btn) {
       btn.classList.toggle("active", Number(btn.dataset.semester) === index);
     });
 
@@ -818,7 +818,7 @@ function renderKSLUSyllabus() {
       '</article>' + coursesHtml;
   }
 
-  $(".semester-btn").forEach(function(button) {
+  $$(".semester-btn").forEach(function(button) {
     button.addEventListener("click", function() {
       showSemester(Number(button.dataset.semester));
     });
@@ -877,7 +877,7 @@ function setupNavigation() {
   function showRoute(route) {
     var home = route === "home";
     $("#home-view").classList.toggle("active", home);
-    $(".main-view").forEach(function(panel) {
+    $$(".main-view").forEach(function(panel) {
       panel.classList.toggle("active", !home && panel.id === route + "-view");
     });
 
@@ -894,7 +894,7 @@ function setupNavigation() {
     showRoute(route);
   }
 
-  $(".home-card[data-open]").forEach(function(button) {
+  $$(".home-card[data-open]").forEach(function(button) {
     button.addEventListener("click", function() {
       window.location.hash = button.dataset.open;
     });
@@ -907,20 +907,20 @@ function setupNavigation() {
   window.addEventListener("hashchange", routeFromHash);
   routeFromHash();
 
-  $(".word-tab").forEach(function(button) {
+  $$(".word-tab").forEach(function(button) {
     button.addEventListener("click", function() {
       var view = button.dataset.wordView;
-      $(".word-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
-      $(".word-panel").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-panel"); });
+      $$(".word-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
+      $$(".word-panel").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-panel"); });
       if (view === "quiz") newQuiz();
     });
   });
 
-  $(".mini-tab").forEach(function(button) {
+  $$(".mini-tab").forEach(function(button) {
     button.addEventListener("click", function() {
       var view = button.dataset.learnView;
-      $(".mini-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
-      $(".learn-detail").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-detail"); });
+      $$(".mini-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
+      $$(".learn-detail").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-detail"); });
     });
   });
 }
