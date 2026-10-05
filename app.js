@@ -470,7 +470,7 @@ function newQuiz() {
   var distractorIndexes = shuffle(WORDS.map(function(_, i) { return i; }).filter(function(i) { return i !== targetIndex; })).slice(0, 3);
   var choices = shuffle([targetIndex].concat(distractorIndexes));
 
-  $("#quiz-question").textContent = 'Which definition best matches “‘ + target.term + '” ?';
+  $("#quiz-question").textContent = "Which definition best matches \"" + target.term + "\"?";
   $("#quiz-feedback").hidden = true;
   $("#next-quiz").hidden = true;
 
