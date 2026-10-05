@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#111827" />
-  <meta name="description" content="Mobile-first law learning app with flashcards, points, syllabus, exam structure and previous-year paper study." />
+  <meta name="theme-color" content="#0d1321" />
+  <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
   <link rel="icon" href="./icon.svg" type="image/svg+xml" />
@@ -14,154 +14,235 @@
   <div class="app-shell">
     <header class="topbar">
       <div>
-        <p class="eyebrow">3-Year LL.B Study</p>
+        <p class="eyebrow">3-Year LL.B · Study App</p>
         <h1>Law Learning</h1>
       </div>
-      <div class="score-pill" aria-label="Current score">
+      <div class="score-pill" aria-label="Learning points">
         <span>PTS</span>
         <strong id="score">0</strong>
       </div>
     </header>
 
+    <nav class="main-tabs" aria-label="Main sections">
+      <button class="main-tab active" data-view="words" type="button">Words</button>
+      <button class="main-tab" data-view="syllabus" type="button">Syllabus</button>
+      <button class="main-tab" data-view="exam" type="button">Exam Pattern</button>
+      <button class="main-tab" data-view="papers" type="button">Old Papers</button>
+      <button class="main-tab" data-view="notes" type="button">Notes</button>
+    </nav>
+
     <main>
-      <section id="simple-view" class="main-view active" aria-labelledby="simple-tab">
-        <div class="section-head">
+      <section id="words-view" class="main-view active">
+        <div class="section-head compact">
           <div>
-            <p class="eyebrow">Tab 01</p>
-            <h2>Simple Things</h2>
-            <p class="muted">Learn common legal words one card at a time. Swipe right if you know it; left if it needs revision.</p>
+            <p class="eyebrow">Legal vocabulary</p>
+            <h2>Words</h2>
+            <p class="muted">Understand the word first. Then compare it, test it and see how it is used.</p>
           </div>
         </div>
 
-        <div class="stats-grid">
-          <article class="stat">
-            <span>Learned</span>
-            <strong id="learned-count">0</strong>
-          </article>
-          <article class="stat">
-            <span>Difficult</span>
-            <strong id="difficult-count">0</strong>
-          </article>
-          <article class="stat">
-            <span>Streak</span>
-            <strong id="streak-count">0</strong>
-          </article>
-        </div>
-
-        <div class="progress-track" aria-label="Flashcard progress">
-          <div id="progress-bar" class="progress-bar"></div>
-        </div>
-
-        <article id="flashcard" class="flashcard" tabindex="0" role="button" aria-label="Flashcard. Tap to reveal meaning.">
-          <div class="card-top">
-            <span id="card-number" class="chip">1 / 1</span>
-            <span id="card-status" class="chip quiet">Tap to reveal</span>
-          </div>
-          <div class="card-face">
-            <p class="eyebrow">Legal word</p>
-            <h3 id="term">Affidavit</h3>
-            <div id="answer" class="answer" hidden>
-              <p id="meaning"></p>
-              <div class="example-box">
-                <span>Example</span>
-                <p id="example"></p>
-              </div>
-            </div>
-          </div>
-          <p class="swipe-hint">← Difficult &nbsp;&nbsp; • &nbsp;&nbsp; Know it →</p>
-        </article>
-
-        <div class="flash-actions">
-          <button id="difficult-btn" class="btn secondary" type="button">← Difficult <small>+2</small></button>
-          <button id="know-btn" class="btn primary" type="button">Know it → <small>+10</small></button>
-        </div>
-
-        <div class="utility-row">
-          <button id="reset-btn" class="text-btn" type="button">Reset progress</button>
-          <button id="review-btn" class="text-btn" type="button">Review difficult cards</button>
-        </div>
-      </section>
-
-      <section id="papers-view" class="main-view" aria-labelledby="papers-tab">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Tab 02</p>
-            <h2>Previous Year Papers</h2>
-            <p class="muted">Study the syllabus, understand the exam structure, then work through questions with topic mapping.</p>
-          </div>
-        </div>
-
-        <nav class="subtabs" aria-label="Previous paper sections">
-          <button class="subtab active" data-paper-view="syllabus" type="button">Syllabus</button>
-          <button class="subtab" data-paper-view="structure" type="button">Exam Structure</button>
-          <button class="subtab" data-paper-view="questions" type="button">Questions</button>
+        <nav class="subtabs word-tabs" aria-label="Word learning modes">
+          <button class="word-tab active" data-word-view="learn" type="button">Learn</button>
+          <button class="word-tab" data-word-view="compare" type="button">Compare</button>
+          <button class="word-tab" data-word-view="quiz" type="button">Quiz</button>
+          <button class="word-tab" data-word-view="examples" type="button">Examples</button>
         </nav>
 
-        <section id="syllabus-panel" class="paper-panel active">
-          <div class="notice">
-            <strong>Starter structure</strong>
-            <p>The exact university syllabus will be loaded here once your official syllabus or college/university details are added. This avoids mixing different Karnataka LL.B schemes.</p>
+        <div class="word-selector">
+          <button id="prev-word" class="circle-btn" type="button" aria-label="Previous word">←</button>
+          <label class="word-select-wrap">
+            <span>Current word</span>
+            <select id="word-select"></select>
+          </label>
+          <button id="next-word" class="circle-btn" type="button" aria-label="Next word">→</button>
+        </div>
+
+        <section id="learn-panel" class="word-panel active">
+          <article class="hero-word-card">
+            <div class="word-card-top">
+              <div>
+                <p class="eyebrow">Legal word</p>
+                <h3 id="word-title">Affidavit</h3>
+              </div>
+              <button id="speak-word" class="voice-btn" type="button" aria-label="Hear word pronunciation">
+                <span class="speaker-icon">◖)))</span>
+                <span>Listen</span>
+              </button>
+            </div>
+
+            <div class="pronunciation-row">
+              <span>Pronounce</span>
+              <strong id="pronunciation">uh-FUH-duh-vit</strong>
+              <button id="speak-slow" class="mini-btn" type="button">Slow</button>
+            </div>
+
+            <nav class="mini-tabs" aria-label="Learn word detail">
+              <button class="mini-tab active" data-learn-view="definition" type="button">Definition</button>
+              <button class="mini-tab" data-learn-view="deep" type="button">Deep Learn</button>
+              <button class="mini-tab" data-learn-view="kannada" type="button">Kannada Version</button>
+            </nav>
+
+            <div id="definition-detail" class="learn-detail active">
+              <p class="detail-label">Legal definition</p>
+              <p id="word-definition" class="lead-copy"></p>
+              <div class="memory-line">
+                <span>Remember it as</span>
+                <strong id="memory-hook"></strong>
+              </div>
+            </div>
+
+            <div id="deep-detail" class="learn-detail">
+              <p class="detail-label">Explain it like I am new to legal English</p>
+              <p id="deep-meaning" class="lead-copy"></p>
+              <div class="plain-box">
+                <span>In daily words</span>
+                <p id="daily-words"></p>
+              </div>
+            </div>
+
+            <div id="kannada-detail" class="learn-detail">
+              <p class="detail-label">Kannada study aid</p>
+              <h4 id="kannada-meaning" class="kannada-title" lang="kn"></h4>
+              <p id="kannada-explain" class="kannada-copy" lang="kn"></p>
+              <div class="plain-box">
+                <span>ವಾಕ್ಯ / Sentence</span>
+                <p id="kannada-sentence" lang="kn"></p>
+              </div>
+            </div>
+          </article>
+
+          <div class="learning-actions">
+            <button id="mark-hard" class="btn secondary" type="button">Needs revision</button>
+            <button id="mark-known" class="btn primary" type="button">I know this · +10</button>
           </div>
-          <div id="subject-list" class="stack"></div>
+
+          <div class="progress-card">
+            <div>
+              <span>Learned</span>
+              <strong id="learned-count">0</strong>
+            </div>
+            <div>
+              <span>Revision</span>
+              <strong id="difficult-count">0</strong>
+            </div>
+            <div>
+              <span>Streak</span>
+              <strong id="streak-count">0</strong>
+            </div>
+          </div>
         </section>
 
-        <section id="structure-panel" class="paper-panel">
-          <div class="content-card">
-            <p class="eyebrow">How this section works</p>
-            <h3>Exam Structure</h3>
-            <p class="muted">For every imported paper, this area will show total marks, duration, parts/sections, choice pattern and the syllabus units tested.</p>
-          </div>
-          <div class="structure-grid">
-            <article class="content-card">
-              <span class="number-badge">A</span>
-              <h3>Paper details</h3>
-              <p>Year, semester, subject, maximum marks and exam duration.</p>
-            </article>
-            <article class="content-card">
-              <span class="number-badge">B</span>
-              <h3>Question pattern</h3>
-              <p>Part A / B / C, compulsory questions, internal choice and marks per answer.</p>
-            </article>
-            <article class="content-card">
-              <span class="number-badge">C</span>
-              <h3>Coverage</h3>
-              <p>Each question is connected to its subject, syllabus unit and legal concepts to revise.</p>
-            </article>
-          </div>
+        <section id="compare-panel" class="word-panel">
+          <article class="content-card">
+            <p class="eyebrow">Do not confuse these</p>
+            <div class="compare-head">
+              <h3 id="compare-a"></h3>
+              <span>vs</span>
+              <h3 id="compare-b"></h3>
+            </div>
+            <div class="compare-grid">
+              <div class="compare-side">
+                <span id="compare-a-label"></span>
+                <p id="compare-a-text"></p>
+              </div>
+              <div class="compare-side">
+                <span id="compare-b-label"></span>
+                <p id="compare-b-text"></p>
+              </div>
+            </div>
+            <div class="plain-box">
+              <span>Quick difference</span>
+              <p id="compare-rule"></p>
+            </div>
+          </article>
         </section>
 
-        <section id="questions-panel" class="paper-panel">
-          <div class="paper-toolbar">
-            <label>
-              <span>Subject</span>
-              <select id="subject-filter"></select>
-            </label>
-            <label>
-              <span>Paper</span>
-              <select id="paper-filter"></select>
-            </label>
-          </div>
+        <section id="quiz-panel" class="word-panel">
+          <article class="content-card quiz-card">
+            <p class="eyebrow">Quick check</p>
+            <h3 id="quiz-question"></h3>
+            <div id="quiz-options" class="quiz-options"></div>
+            <div id="quiz-feedback" class="quiz-feedback" hidden></div>
+            <button id="next-quiz" class="btn primary full" type="button" hidden>Next question</button>
+          </article>
+        </section>
 
-          <div id="paper-status" class="notice">
-            <strong>No official previous-year paper imported yet</strong>
-            <p>The question system is ready. When you provide PDFs/images of your papers, questions can be added here with answers, syllabus unit, topic and required concepts.</p>
+        <section id="examples-panel" class="word-panel">
+          <div class="section-head compact">
+            <p class="eyebrow">Use in context</p>
+            <h3 id="examples-title"></h3>
           </div>
-
-          <div id="question-list" class="stack"></div>
+          <div id="examples-list" class="stack"></div>
         </section>
       </section>
-    </main>
 
-    <nav class="bottom-tabs" aria-label="Main navigation">
-      <button id="simple-tab" class="main-tab active" data-view="simple" type="button">
-        <span class="tab-index">01</span>
-        <span>Simple</span>
-      </button>
-      <button id="papers-tab" class="main-tab" data-view="papers" type="button">
-        <span class="tab-index">02</span>
-        <span>Papers</span>
-      </button>
-    </nav>
+      <section id="syllabus-view" class="main-view">
+        <div class="section-head">
+          <p class="eyebrow">Course map</p>
+          <h2>Syllabus</h2>
+          <p class="muted">Subject → unit → topics. We can replace this starter map with your exact university syllabus.</p>
+        </div>
+        <div class="notice">
+          <strong>Exact syllabus pending</strong>
+          <p>These are starter subject maps, not a claim about your university's official unit numbering. Once you give me the official syllabus, this tab can become your exact checklist.</p>
+        </div>
+        <div id="subject-list" class="stack"></div>
+      </section>
+
+      <section id="exam-view" class="main-view">
+        <div class="section-head">
+          <p class="eyebrow">How the paper works</p>
+          <h2>Exam Pattern</h2>
+          <p class="muted">Keep the examination structure separate from the syllabus so you know both what to study and how it will be asked.</p>
+        </div>
+        <div class="notice">
+          <strong>Official pattern not imported yet</strong>
+          <p>When you provide the university scheme or a few previous papers, this page will show duration, total marks, parts, choices, compulsory questions and marks per question.</p>
+        </div>
+        <div class="structure-grid">
+          <article class="content-card"><span class="number-badge">01</span><h3>Duration & marks</h3><p>Exam duration, maximum marks and minimum requirements.</p></article>
+          <article class="content-card"><span class="number-badge">02</span><h3>Parts</h3><p>Part A, B, C or any other section structure used in the actual paper.</p></article>
+          <article class="content-card"><span class="number-badge">03</span><h3>Choice pattern</h3><p>How many questions are given, how many must be answered and whether any are compulsory.</p></article>
+          <article class="content-card"><span class="number-badge">04</span><h3>Answer strategy</h3><p>Recommended time and answer depth based on marks once the real scheme is imported.</p></article>
+        </div>
+      </section>
+
+      <section id="papers-view" class="main-view">
+        <div class="section-head">
+          <p class="eyebrow">Previous year questions</p>
+          <h2>Old Papers</h2>
+          <p class="muted">Each imported question will be mapped to year, paper part, syllabus unit, concepts required and an answer approach.</p>
+        </div>
+
+        <div class="paper-toolbar">
+          <label><span>Subject</span><select id="subject-filter"></select></label>
+          <label><span>Paper</span><select id="paper-filter"></select></label>
+        </div>
+
+        <div class="notice">
+          <strong>Real papers still need to be imported</strong>
+          <p>The cards below are starter practice examples only. Send your previous-year PDFs/images and I can replace them with the real paper bank.</p>
+        </div>
+        <div id="question-list" class="stack"></div>
+      </section>
+
+      <section id="notes-view" class="main-view">
+        <div class="section-head">
+          <p class="eyebrow">Your study space</p>
+          <h2>Notes</h2>
+          <p class="muted">Quick notes are stored on this device. Use them while reading words, syllabus or papers.</p>
+        </div>
+
+        <article class="content-card">
+          <label class="notes-label" for="notes-area">My law notes</label>
+          <textarea id="notes-area" rows="16" placeholder="Example: Affidavit — remember that it is a sworn written statement..."></textarea>
+          <div class="notes-footer">
+            <span id="notes-status">Saved locally on this device</span>
+            <button id="clear-notes" class="text-btn" type="button">Clear notes</button>
+          </div>
+        </article>
+      </section>
+    </main>
   </div>
 
   <script src="./app.js"></script>
