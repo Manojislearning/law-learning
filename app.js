@@ -803,12 +803,39 @@ function setupNavigation() {
   window.addEventListener("hashchange", routeFromHash);
   routeFromHash();
 
-  $$(".word-tab").forEach(function(button) {
+  $(".word-tab").forEach(function(button) {
     button.addEventListener("click", function() {
       var view = button.dataset.wordView;
-      $$(".word-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
-      $$(".word-panel").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-panel"); });
+      $(".word-tab").forEach(function(btn) { btn.classList.toggle("active", btn === button); });
+      $(".word-panel").forEach(function(panel) { panel.classList.toggle("active", panel.id === view + "-panel"); });
       if (view === "quiz") newQuiz();
+    });
+  });
+
+  $(".learn-choice").forEach(function(button) {
+    button.addEventListener("click", function() {
+      var target = button.dataset.learnTarget;
+      var alreadyOpen = button.classList.contains("active");
+
+      $(".learn-choice").forEach(function(choice) {
+        choice.classList.remove("active");
+        choice.setAttribute("aria-expanded", "false");
+        var icon = choice.querySelector(".learn-choice-icon");
+        if (icon) icon.textContent = "+";
+      });
+
+      $(".learn-box").forEach(function(box) {
+        box.classList.remove("active");
+      });
+
+      if (!alreadyOpen) {
+        button.classList.add("active");
+        button.setAttribute("aria-expanded", "true");
+        var icon = button.querySelector(".learn-choice-icon");
+        if (icon) icon.textContent = "−";
+        var box = $("#" + target + "-learn-box");
+        if (box) box.classList.add("active");
+      }
     });
   });
 }
