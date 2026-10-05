@@ -13,9 +13,12 @@
 <body>
   <div class="app-shell">
     <header class="topbar">
-      <div>
-        <p class="eyebrow">3-Year LL.B · Study App</p>
-        <h1>Law Learning</h1>
+      <div class="section-brand">
+        <button id="back-home" class="back-btn" type="button" hidden aria-label="Back to home">← Back</button>
+        <div>
+          <p id="section-kicker" class="eyebrow">3-Year LL.B · Study App</p>
+          <h1 id="section-title">Law Learning</h1>
+        </div>
       </div>
       <div class="score-pill" aria-label="Learning points">
         <span>PTS</span>
@@ -23,16 +26,53 @@
       </div>
     </header>
 
-    <nav class="main-tabs" aria-label="Main sections">
-      <button class="main-tab active" data-view="words" type="button">Words</button>
-      <button class="main-tab" data-view="syllabus" type="button">Syllabus</button>
-      <button class="main-tab" data-view="exam" type="button">Exam Pattern</button>
-      <button class="main-tab" data-view="papers" type="button">Old Papers</button>
-      <button class="main-tab" data-view="notes" type="button">Notes</button>
-    </nav>
-
     <main>
-      <section id="words-view" class="main-view active">
+      <section id="home-view" class="home-view active">
+        <div class="home-intro">
+          <p class="eyebrow">KSLU · 3-Year LL.B</p>
+          <h2>What do you want to study?</h2>
+          <p class="muted">Open one section at a time. The home screen stays clean as more study tools are added.</p>
+        </div>
+
+        <div class="home-grid">
+          <button class="home-card primary-card" data-open="words" type="button">
+            <span class="home-index">01</span>
+            <strong>Words</strong>
+            <p>Legal vocabulary, simple explanations, Kannada, pronunciation, compare and quiz.</p>
+            <span class="home-arrow">→</span>
+          </button>
+          <button class="home-card" data-open="syllabus" type="button">
+            <span class="home-index">02</span>
+            <strong>Syllabus</strong>
+            <p>KSLU 3-year LL.B semester structure and detailed first-semester units.</p>
+            <span class="home-arrow">→</span>
+          </button>
+          <button class="home-card" data-open="exam" type="button">
+            <span class="home-index">03</span>
+            <strong>Exam Pattern</strong>
+            <p>Paper structure, marks, choices and answer strategy.</p>
+            <span class="home-arrow">→</span>
+          </button>
+          <button class="home-card" data-open="papers" type="button">
+            <span class="home-index">04</span>
+            <strong>Old Papers</strong>
+            <p>Previous questions mapped to subject, unit, topic and answer approach.</p>
+            <span class="home-arrow">→</span>
+          </button>
+          <button class="home-card" data-open="notes" type="button">
+            <span class="home-index">05</span>
+            <strong>Notes</strong>
+            <p>Your quick study notes, saved locally on this device.</p>
+            <span class="home-arrow">→</span>
+          </button>
+          <article class="home-card add-card">
+            <span class="home-index">+</span>
+            <strong>More later</strong>
+            <p>This space is ready for cases, bare acts, revision plans or any new section you add.</p>
+          </article>
+        </div>
+      </section>
+      <section id="words-view" class="main-view">
         <div class="section-head compact">
           <div>
             <p class="eyebrow">Legal vocabulary</p>
@@ -178,18 +218,16 @@
 
       <section id="syllabus-view" class="main-view">
         <div class="section-head">
-          <p class="eyebrow">Course map</p>
-          <h2>Syllabus</h2>
-          <p class="muted">Subject → unit → topics. We can replace this starter map with your exact university syllabus.</p>
+          <p class="eyebrow">Karnataka State Law University · 2024–25</p>
+          <h2>KSLU Syllabus</h2>
+          <p class="muted">Choose a semester. Semester I includes the detailed units from the syllabus PDF you provided.</p>
         </div>
-        <div class="notice">
-          <strong>Exact syllabus pending</strong>
-          <p>These are starter subject maps, not a claim about your university's official unit numbering. Once you give me the official syllabus, this tab can become your exact checklist.</p>
-        </div>
-        <div id="subject-list" class="stack"></div>
+
+        <div id="semester-list" class="semester-list" aria-label="KSLU semesters"></div>
+        <div id="syllabus-detail" class="syllabus-detail"></div>
       </section>
 
-      <section id="exam-view" class="main-view">
+      <section id="exam-view" class="main-view"> class="main-view">
         <div class="section-head">
           <p class="eyebrow">How the paper works</p>
           <h2>Exam Pattern</h2>
