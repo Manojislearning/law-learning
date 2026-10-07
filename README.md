@@ -1,32 +1,46 @@
 # Law Learning
 
-Mobile-first, installable Progressive Web App (PWA) for studying law.
+Mobile-first, installable Progressive Web App (PWA) for studying law, KSLU LL.B. syllabus content and exam-oriented legal vocabulary.
 
 ## Current modules
 
-1. **Simple Things**
-   - Legal-word flashcards
-   - Tap to reveal
-   - Swipe right / Know it
-   - Swipe left / Difficult
-   - Points, streak and local progress
-   - Difficult-card review
+1. **Words — 415 total**
+   - 15 foundation legal words with full English/Kannada learning cards
+   - 400 additional exam-oriented terms
+   - 50 question-paper and answer-writing command terms
+   - General legal vocabulary
+   - Constitutional and administrative law
+   - Contract, tort and consumer law
+   - Criminal law, procedure and evidence
+   - Family law, property and civil procedure
+   - Jurisprudence and other LL.B. subjects
+   - Search across all 415 terms
+   - Definitions, exam-use guidance, quiz, pronunciation and local progress
 
-2. **Previous Year Papers**
-   - Syllabus tab
-   - Exam Structure tab
-   - Questions tab
-   - Designed to map every question to subject, paper, part, syllabus unit, topic and answer
+2. **Semester I Syllabus**
+   - KSLU 3-Year LL.B.
+   - 6 papers and 30 units currently structured in the app
+
+3. **Exam Pattern**
+   - UI ready
+   - Official examination scheme still to be imported
+
+4. **Old Papers**
+   - Filtering and question-card system ready
+   - Starter questions currently included
+   - Real previous-year question papers still to be imported
+
+5. **Notes**
+   - Device-local study notes
+
+6. **Important Links**
+   - KSLU, courts, India Code, Bar Council and other official student/legal resources
 
 ## Run locally
 
 Open `index.html` with a local web server. Service workers require HTTP/HTTPS, so for full PWA behavior use GitHub Pages or another local server.
 
-## Publish with GitHub Pages
-
-Repository → **Settings** → **Pages** → **Build and deployment** → **Deploy from a branch** → choose `main` and `/(root)`.
-
-The site will then be available at:
+## Published site
 
 `https://manojislearning.github.io/law-learning/`
 
@@ -34,6 +48,6 @@ The site will then be available at:
 
 Open the published site in Chrome → browser menu → **Install app** or **Add to Home screen**.
 
-## Next content step
+## Current content priority
 
-Add the user's official LL.B syllabus and previous-year question papers. The UI/data model is already structured so those can be inserted without redesigning the app.
+Import real KSLU previous-year papers and the official examination pattern, then map questions to syllabus unit, legal concepts, cases/statutes and answer approach.
