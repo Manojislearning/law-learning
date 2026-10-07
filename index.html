@@ -83,9 +83,34 @@
           <div>
             <p class="eyebrow">Legal vocabulary</p>
             <h2>Words</h2>
-            <p class="muted">Learn 415 legal and exam words. Search a term, understand it, then test how it belongs in an answer.</p>
+            <p class="muted">Learn 415 legal and exam words. Browse the cards below, filter by subject, or search a term.</p>
           </div>
         </div>
+
+        <section class="vocab-library" aria-label="Vocabulary card library">
+          <div class="vocab-library-head">
+            <div>
+              <span class="eyebrow">Card library</span>
+              <strong id="word-total-label">415 cards</strong>
+            </div>
+            <span id="word-filter-count" class="card-count-pill">415 shown</span>
+          </div>
+
+          <div class="vocab-filter-grid">
+            <label class="vocab-filter">
+              <span>Search cards</span>
+              <input id="card-search" type="search" autocomplete="off" placeholder="Search: mens rea, evaluate, habeas corpus…" />
+            </label>
+            <label class="vocab-filter">
+              <span>Category</span>
+              <select id="card-category">
+                <option value="All">All categories</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="word-card-grid" class="word-card-grid" aria-live="polite"></div>
+        </section>
 
         <nav class="subtabs word-tabs" aria-label="Word learning modes">
           <button class="word-tab active" data-word-view="learn" type="button">Learn</button>
