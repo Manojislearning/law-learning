@@ -349,6 +349,9 @@ function buildExamWords(rows) {
   });
 }
 
+CORE_WORDS.forEach(function(word) {
+  word.category = word.category || "Foundation";
+});
 const WORDS = CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || []));
 
 const KSLU_FIRST_SEMESTER = {
@@ -596,6 +599,83 @@ function currentWord() {
   return WORDS[state.currentWord];
 }
 
+function setupWordCardLibrary() {
+  var categorySelect = $("#card-category");
+  if (!categorySelect) return;
+
+  var categories = Array.from(new Set(WORDS.map(function(word) {
+    return word.category || "Foundation";
+  })));
+
+  categorySelect.innerHTML =
+    '<option value="All">All categories</option>' +
+    categories.map(function(category) {
+      return '<option value="' + category + '">' + category + '</option>';
+    }).join("");
+
+  var search = $("#card-search");
+  if (search) search.addEventListener("input", renderWordCards);
+  categorySelect.addEventListener("change", renderWordCards);
+
+  var grid = $("#word-card-grid");
+  if (grid) {
+    grid.addEventListener("click", function(event) {
+      var card = event.target.closest(".vocab-card");
+      if (!card) return;
+      state.currentWord = Number(card.dataset.index);
+      renderWord();
+      renderWordCards();
+      var title = $("#word-title");
+      if (title) title.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  }
+
+  renderWordCards();
+}
+
+function renderWordCards() {
+  var grid = $("#word-card-grid");
+  if (!grid) return;
+
+  var query = ($("#card-search") ? $("#card-search").value : "").trim().toLowerCase();
+  var category = $("#card-category") ? $("#card-category").value : "All";
+
+  var filtered = WORDS.map(function(word, index) {
+    return { word: word, index: index };
+  }).filter(function(item) {
+    var word = item.word;
+    var matchesCategory = category === "All" || (word.category || "Foundation") === category;
+    var haystack = [
+      word.term,
+      word.definition,
+      word.memory,
+      word.category || "Foundation"
+    ].join(" ").toLowerCase();
+    var matchesQuery = !query || haystack.indexOf(query) !== -1;
+    return matchesCategory && matchesQuery;
+  });
+
+  var count = $("#word-filter-count");
+  if (count) count.textContent = filtered.length + " shown";
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-card-state"><strong>No cards found</strong><p>Try another legal term or choose All categories.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(function(item) {
+    var word = item.word;
+    var selected = item.index === state.currentWord ? " selected" : "";
+    return '<button class="vocab-card' + selected + '" type="button" data-index="' + item.index + '">' +
+      '<span class="vocab-card-number">#' + String(item.index + 1).padStart(3, "0") + '</span>' +
+      '<span class="vocab-card-category">' + (word.category || "Foundation") + '</span>' +
+      '<strong>' + word.term + '</strong>' +
+      '<p>' + word.definition + '</p>' +
+      '<span class="vocab-card-action">Tap to study →</span>' +
+      '</button>';
+  }).join("");
+}
+
 function populateWordSelect() {
   var select = $("#word-select");
   select.innerHTML = WORDS.map(function(word, index) {
@@ -642,6 +722,7 @@ function renderWord() {
 
   renderStats();
   newQuiz();
+  renderWordCards();
   saveProgress();
 }
 
@@ -973,6 +1054,7 @@ $("#mark-hard").addEventListener("click", markHard);
 $("#next-quiz").addEventListener("click", function() { changeWord(1); newQuiz(); });
 
 populateWordSelect();
+setupWordCardLibrary();
 setupNavigation();
 renderKSLUSyllabus();
 renderPaperFilters();
