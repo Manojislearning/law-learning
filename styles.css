@@ -1291,3 +1291,164 @@ h3 { line-height: 1.3; }
     font-size: 1rem;
   }
 }
+
+
+/* v9 visible vocabulary card library */
+.vocab-library {
+  margin: 0 0 22px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.vocab-library-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.vocab-library-head .eyebrow {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.vocab-library-head strong {
+  display: block;
+  font-size: 1.15rem;
+}
+
+.card-count-pill {
+  flex: 0 0 auto;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 850;
+}
+
+.vocab-filter-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 9px;
+  margin-bottom: 14px;
+}
+
+.vocab-filter {
+  display: grid;
+  gap: 5px;
+}
+
+.vocab-filter > span {
+  margin-left: 3px;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 850;
+}
+
+.vocab-filter input,
+.vocab-filter select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: #fbfcfd;
+  color: var(--text);
+  outline: none;
+}
+
+.word-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 2px 2px 4px;
+  scrollbar-width: thin;
+}
+
+.vocab-card {
+  min-height: 164px;
+  padding: 14px;
+  display: block;
+  text-align: left;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  background: var(--surface);
+  color: var(--text);
+  touch-action: manipulation;
+}
+
+.vocab-card.selected {
+  border-color: var(--text);
+  box-shadow: 0 0 0 2px rgba(13,19,33,.08);
+}
+
+.vocab-card-number,
+.vocab-card-category {
+  display: inline-block;
+  margin: 0 5px 8px 0;
+  color: var(--muted);
+  font-size: .64rem;
+  font-weight: 850;
+  letter-spacing: .04em;
+}
+
+.vocab-card-category {
+  padding: 3px 6px;
+  border-radius: 999px;
+  background: var(--surface-2);
+}
+
+.vocab-card strong {
+  display: block;
+  margin: 4px 0 8px;
+  font-size: 1.02rem;
+  line-height: 1.28;
+}
+
+.vocab-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.48;
+}
+
+.vocab-card-action {
+  display: block;
+  margin-top: auto;
+  font-size: .72rem;
+  font-weight: 850;
+}
+
+.empty-card-state {
+  grid-column: 1 / -1;
+  padding: 24px;
+  text-align: center;
+  border: 1px dashed var(--line);
+  border-radius: 16px;
+}
+
+.empty-card-state p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+@media (max-width: 560px) {
+  .vocab-filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .word-card-grid {
+    grid-template-columns: 1fr;
+    max-height: 560px;
+  }
+
+  .vocab-card {
+    min-height: 148px;
+  }
+}
