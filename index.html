@@ -38,7 +38,7 @@
           <button class="home-card primary-card" data-open="words" type="button">
             <span class="home-index">01</span>
             <strong>Words</strong>
-            <p>Legal vocabulary, simple explanations, Kannada, pronunciation, compare and quiz.</p>
+            <p>415 legal and exam words with definitions, answer-use guidance, pronunciation, compare and quiz.</p>
             <span class="home-arrow">→</span>
           </button>
           <button class="home-card" data-open="syllabus" type="button">
@@ -83,7 +83,7 @@
           <div>
             <p class="eyebrow">Legal vocabulary</p>
             <h2>Words</h2>
-            <p class="muted">Understand the word first. Then compare it, test it and see how it is used.</p>
+            <p class="muted">Learn 415 legal and exam words. Search a term, understand it, then test how it belongs in an answer.</p>
           </div>
         </div>
 
@@ -97,11 +97,17 @@
         <div class="word-selector">
           <button id="prev-word" class="circle-btn" type="button" aria-label="Previous word">←</button>
           <label class="word-select-wrap">
-            <span>Current word</span>
+            <span>Current word · 415 total</span>
             <select id="word-select"></select>
           </label>
           <button id="next-word" class="circle-btn" type="button" aria-label="Next word">→</button>
         </div>
+
+        <label class="word-search-wrap" for="word-search">
+          <span>Search all 415 words</span>
+          <input id="word-search" list="word-search-list" type="search" autocomplete="off" placeholder="Try: critically examine, mens rea, habeas corpus…" />
+          <datalist id="word-search-list"></datalist>
+        </label>
 
         <section id="learn-panel" class="word-panel active">
           <article class="hero-word-card">
@@ -349,6 +355,10 @@
     </main>
   </div>
 
+  <script src="./exam-words-1.js"></script>
+  <script src="./exam-words-2.js"></script>
+  <script src="./exam-words-3.js"></script>
+  <script src="./exam-words-4.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
