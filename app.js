@@ -1,4 +1,4 @@
-const WORDS = [
+const CORE_WORDS = [
   {
     term: "Affidavit",
     pronunciation: "uh-FUH-duh-vit",
@@ -301,6 +301,56 @@ const WORDS = [
   }
 ];
 
+function buildExamWords(rows) {
+  var categoryTips = {
+    "Exam Skills": "Use this command word as the structure of your answer. Do exactly what it asks instead of writing everything you know.",
+    "General Legal": "Use this term to make legal reasoning precise; connect it to the relevant rule, authority and facts.",
+    "Constitution & Administrative": "Use this term with the relevant constitutional Article, doctrine and leading authority where appropriate.",
+    "Contract, Tort & Consumer": "State its elements, exceptions and remedy, then apply it to the facts where the question is problem-based.",
+    "Criminal, Procedure & Evidence": "State the legal ingredients and use the current BNS, BNSS or BSA provision where relevant, then apply it to the facts.",
+    "Family, Property & Civil Procedure": "Identify the governing statute or personal-law rule, state the conditions, and explain the legal consequence.",
+    "Jurisprudence & Other Subjects": "Define the concept precisely, explain its principle or elements, and support it with statutory or case authority where appropriate."
+  };
+
+  return rows.map(function(row) {
+    var term = row[0];
+    var definition = row[1];
+    var category = row[2];
+    var isCommand = category === "Exam Skills";
+    var examUse = categoryTips[category] || "Use the term precisely and connect it to the governing legal rule.";
+
+    return {
+      term: term,
+      pronunciation: term,
+      definition: definition,
+      memory: term + " — " + definition,
+      deep: definition + " Exam use: " + examUse,
+      daily: isCommand
+        ? term + " tells you what intellectual task the examiner expects."
+        : "Use " + term + " only when its legal meaning accurately fits the issue.",
+      kannada: "Kannada note pending",
+      kannadaExplain: "ಈ ಪದಕ್ಕೆ ಕನ್ನಡ ವಿವರಣೆ ಇನ್ನೂ ಸೇರಿಸಲಾಗಿಲ್ಲ. ಮೇಲಿನ English definition ಮತ್ತು exam use ಓದಿ.",
+      kannadaSentence: isCommand
+        ? "Exam instruction: " + term
+        : "Exam answer: use " + term + " only where the legal issue requires it.",
+      compareTerm: isCommand ? "Examiner expects" : "Answer use",
+      compareSelf: definition,
+      compareOther: examUse,
+      compareRule: isCommand
+        ? "Follow the command word exactly; it determines the depth and structure of the answer."
+        : "Define it, state the governing rule, then apply it precisely to the issue or facts.",
+      examples: [
+        isCommand
+          ? 'If a question says "' + term + '", structure the answer around that instruction.'
+          : "In an exam answer, define " + term + ", state the governing rule, and connect it to the issue or facts."
+      ],
+      category: category
+    };
+  });
+}
+
+const WORDS = CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || []));
+
 const KSLU_FIRST_SEMESTER = {
   "title": "KSLU 3-Year LL.B · Semester I",
   "note": "Semester I only. Course titles follow the 2024–25 program structure in your KSLU PDF. The detailed course pages supplied in the same PDF carry the older 2018–19 heading, while Criminal Law I is updated to BNS, 2023.",
@@ -549,14 +599,24 @@ function currentWord() {
 function populateWordSelect() {
   var select = $("#word-select");
   select.innerHTML = WORDS.map(function(word, index) {
-    return '<option value="' + index + '">' + (index + 1) + '. ' + word.term + '</option>';
+    var category = word.category ? " · " + word.category : "";
+    return '<option value="' + index + '">' + (index + 1) + '. ' + word.term + category + '</option>';
   }).join("");
   select.value = String(state.currentWord);
+
+  var searchList = $("#word-search-list");
+  if (searchList) {
+    searchList.innerHTML = WORDS.map(function(word) {
+      return '<option value="' + word.term + '"></option>';
+    }).join("");
+  }
 }
 
 function renderWord() {
   var word = currentWord();
   $("#word-select").value = String(state.currentWord);
+  var wordSearch = $("#word-search");
+  if (wordSearch) wordSearch.value = word.term;
   $("#word-title").textContent = word.term;
   $("#pronunciation").textContent = word.pronunciation;
   $("#word-definition").textContent = word.definition;
@@ -863,10 +923,47 @@ function setupNotes() {
   });
 }
 
+function selectWordBySearch(value) {
+  var query = String(value || "").trim().toLowerCase();
+  if (!query) return;
+
+  var index = WORDS.findIndex(function(word) {
+    return word.term.toLowerCase() === query;
+  });
+  if (index < 0) {
+    index = WORDS.findIndex(function(word) {
+      return word.term.toLowerCase().indexOf(query) === 0;
+    });
+  }
+  if (index < 0) {
+    index = WORDS.findIndex(function(word) {
+      return word.term.toLowerCase().indexOf(query) !== -1;
+    });
+  }
+
+  if (index >= 0) {
+    state.currentWord = index;
+    renderWord();
+  }
+}
+
 $("#word-select").addEventListener("change", function(event) {
   state.currentWord = Number(event.target.value);
   renderWord();
 });
+
+var wordSearchInput = $("#word-search");
+if (wordSearchInput) {
+  wordSearchInput.addEventListener("change", function(event) {
+    selectWordBySearch(event.target.value);
+  });
+  wordSearchInput.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      selectWordBySearch(event.target.value);
+    }
+  });
+}
 $("#prev-word").addEventListener("click", function() { changeWord(-1); });
 $("#next-word").addEventListener("click", function() { changeWord(1); });
 $("#speak-word").addEventListener("click", function() { speakCurrent(0.82); });
