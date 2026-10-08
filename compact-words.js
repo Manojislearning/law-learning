@@ -7,6 +7,37 @@
   var style = document.createElement("style");
   style.textContent = `
     #words-view > :not(.quick-words) { display: none !important; }
+    #home-view .home-card:not([data-open="words"]) { display:none !important; }
+    #home-view .home-grid { display:block; max-width:640px; margin:auto; }
+    #home-view .home-card[data-open="words"] { width:100%; }
+    @keyframes wordEnter { from {opacity:0;transform:translateY(18px) scale(.975);filter:blur(3px)} to {opacity:1;transform:translateY(0) scale(1);filter:blur(0)} }
+    @keyframes resultEnter {from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+    #quick-word-card:not([hidden]), .game-question.animated {animation:wordEnter .42s cubic-bezier(.18,.7,.2,1) both;}
+    .quick-result {animation:resultEnter .22s ease both;}
+    @media (prefers-reduced-motion:reduce) { #quick-word-card:not([hidden]),.game-question.animated,.quick-result {animation:none !important} }
+    .quick-search-wrap {display:flex;align-items:center;gap:10px;margin-bottom:18px;justify-content:flex-end;}
+    .quick-search {width:44px;min-height:38px;padding:0 11px;border-radius:14px;transition:width .3s ease;overflow:hidden;}
+    .quick-search.expanded {width:100%;}
+    .quick-search-trigger {border:0;background:none;color:var(--text);font-size:1.2rem;padding:0;cursor:pointer;min-width:20px;}
+    #quick-word-input {min-height:38px;font-size:.88rem;min-width:0;width:0;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+    .quick-search.expanded #quick-word-input {opacity:1;pointer-events:auto;width:auto;}
+    .quick-mode {display:flex;gap:8px;margin:0 0 18px;}
+    .quick-mode button {border:1px solid var(--line);border-radius:12px;background:white;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer;}
+    .quick-mode button.active {background:var(--text);color:white;}
+    #quick-game[hidden],#quick-study[hidden] {display:none!important;}
+    .game-question {padding:24px;border:1px solid var(--line);border-radius:20px;background:white;}
+    .game-meta {display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem;font-weight:750;}
+    .game-term {font-family:Georgia,serif;font-size:clamp(2rem,8vw,3.2rem);margin:23px 0;overflow-wrap:anywhere;}
+    .game-options {display:grid;gap:9px;}
+    .game-choice {padding:14px;text-align:left;background:#fafbfc;border:1px solid var(--line);border-radius:13px;font:inherit;cursor:pointer;line-height:1.45;}
+    .game-choice:disabled {cursor:default;}
+    .game-choice.correct {background:#e5f5eb;border-color:#198452;}
+    .game-choice.wrong {background:#fff0ee;border-color:#c34137;}
+    .game-feedback {min-height:30px;margin:15px 0 0;font-weight:700;}
+    .game-next {margin-top:9px;padding:12px 20px;background:var(--text);color:white;border:0;border-radius:12px;font:inherit;font-weight:750;}
+    .game-next[hidden] {display:none!important;}
+    .quick-search-wrap + #quick-word-results {margin-bottom:15px;}
+
     .quick-words { max-width: 640px; margin: 22px auto; }
     .quick-words h2 { margin: 0 0 5px; font-size: clamp(1.6rem,6vw,2.3rem); }
     .quick-words .quick-caption { color: var(--muted); font-size: .86rem; margin-bottom: 24px; }
@@ -40,14 +71,17 @@
   var shell = document.createElement("div");
   shell.className = "quick-words";
   shell.innerHTML =
-    '<h2>Legal words</h2>' +
-    '<p class="quick-caption">Search a term. Tap a result to open its card.</p>' +
-    '<div class="quick-search" role="search">' +
-      '<span class="quick-search-icon" aria-hidden="true">⌕</span>' +
+    '<h2>Words</h2>' +
+    '<p class="quick-caption">Learn one word at a time.</p>' +
+    '<div class="quick-search-wrap"><div class="quick-search" role="search">' +
+      '<button type="button" id="quick-search-toggle" class="quick-search-trigger" aria-label="Open search" aria-expanded="false">⌕</button>' +
       '<input id="quick-word-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search legal words…" aria-label="Search legal vocabulary" aria-controls="quick-word-results" aria-expanded="false">' +
       '<button id="quick-search-clear" type="button" aria-label="Clear search" hidden>×</button>' +
-    '</div>' +
+    '</div></div>' +
     '<div id="quick-word-results" role="listbox" aria-label="Matching words" hidden></div>' +
+    '<div class="quick-mode"><button type="button" id="quick-mode-game" class="active">Word game</button><button type="button" id="quick-mode-study">Learn words</button></div>' +
+    '<section id="quick-game"><div id="game-question" class="game-question"><div class="game-meta"><span>Choose the correct meaning</span><span id="game-score">0 correct</span></div><h3 class="game-term" id="game-term"></h3><div class="game-options" id="game-options"></div><p class="game-feedback" id="game-feedback" aria-live="polite"></p><button class="game-next" id="game-next" type="button" hidden>Next word →</button></div></section>' +
+    '<section id="quick-study" hidden><button class="game-next" id="quick-random" type="button">Show a word →</button></section>' +
     '<article id="quick-word-card" aria-live="polite" hidden>' +
       '<span class="quick-tag" id="quick-word-category">Legal term</span>' +
       '<h3 id="quick-word-title"></h3>' +
@@ -66,6 +100,62 @@
   var more = document.getElementById("quick-word-more");
   var clear = document.getElementById("quick-search-clear");
   var active = null;
+  var searchBox = shell.querySelector(".quick-search");
+  var searchToggle = document.getElementById("quick-search-toggle");
+  function setSearchExpanded(open) {
+    searchBox.classList.toggle("expanded", open);
+    searchToggle.setAttribute("aria-expanded", String(open));
+    searchToggle.setAttribute("aria-label", open ? "Close search" : "Open search");
+    if (open) input.focus();
+    else {input.value="";hideResults();clear.hidden=true;}
+  }
+  searchToggle.addEventListener("click",function(){setSearchExpanded(!searchBox.classList.contains("expanded"));});
+  var game = document.getElementById("quick-game");
+  var study = document.getElementById("quick-study");
+  var gameMode = document.getElementById("quick-mode-game");
+  var studyMode = document.getElementById("quick-mode-study");
+  function mode(which) {
+    game.hidden = which !== "game";
+    study.hidden = which !== "study";
+    gameMode.classList.toggle("active", which==="game");
+    studyMode.classList.toggle("active", which==="study");
+    card.hidden=true;
+  }
+  gameMode.addEventListener("click",function(){mode("game");});
+  studyMode.addEventListener("click",function(){mode("study");});
+  document.getElementById("quick-random").addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
+  var correctCount = 0, round = null;
+  try { correctCount = Number(localStorage.getItem("law-word-game-score")) || 0; } catch(e){}
+  function shuffle(a) { for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+  function nextRound() {
+    var choices = WORDS.filter(function(w){return w.term && w.definition;});
+    if(choices.length<4) return;
+    var picked = choices[Math.floor(Math.random()*choices.length)];
+    var distractors = shuffle(choices.filter(function(w){return w.term!==picked.term && w.definition!==picked.definition;})).slice(0,3);
+    round=picked;
+    document.getElementById("game-term").textContent=picked.term;
+    document.getElementById("game-score").textContent=correctCount+" correct";
+    document.getElementById("game-feedback").textContent="";
+    document.getElementById("game-next").hidden=true;
+    var options=document.getElementById("game-options");options.replaceChildren();
+    shuffle([picked].concat(distractors)).forEach(function(w){
+      var b=document.createElement("button");b.className="game-choice";b.type="button";b.textContent=w.definition;
+      b.addEventListener("click",function(){
+        if(!round) return;
+        var right=w===round;
+        if(right) { correctCount++;try{localStorage.setItem("law-word-game-score",String(correctCount));}catch(e){} }
+        options.querySelectorAll("button").forEach(function(button){button.disabled=true;if(button.textContent===picked.definition)button.classList.add("correct");});
+        if(!right)b.classList.add("wrong");
+        document.getElementById("game-feedback").textContent=right?"Correct! +1":"Not quite. The correct answer is highlighted.";
+        document.getElementById("game-score").textContent=correctCount+" correct";
+        document.getElementById("game-next").hidden=false;
+        round=null;
+      });options.appendChild(b);
+    });
+    var question=document.getElementById("game-question");question.classList.remove("animated");void question.offsetWidth;question.classList.add("animated");
+  }
+  document.getElementById("game-next").addEventListener("click",nextRound);
+  nextRound();
 
   function hideResults() {
     results.hidden = true;
@@ -86,7 +176,9 @@
     more.hidden = true;
     document.getElementById("quick-word-detail").textContent = "More details";
     document.getElementById("quick-word-detail").setAttribute("aria-expanded","false");
+    mode("study");
     card.hidden = false;
+    card.style.animation = "none"; void card.offsetWidth; card.style.animation = "";
     card.scrollIntoView({behavior:"smooth",block:"nearest"});
   }
   function search() {
