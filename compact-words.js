@@ -7,9 +7,9 @@
   var style = document.createElement("style");
   style.textContent = `
     #words-view > :not(.quick-words) { display: none !important; }
-    #home-view .home-card:not([data-open="words"]) { display:none !important; }
+    #home-view .home-card:not([data-open="words"]):not([data-open="syllabus"]) { display:none !important; }
     #home-view .home-grid { display:block; max-width:640px; margin:auto; }
-    #home-view .home-card[data-open="words"] { width:100%; }
+    #home-view .home-card[data-open="words"], #home-view .home-card[data-open="syllabus"] { width:100%; margin-bottom:12px; }
     @keyframes wordEnter { from {opacity:0;transform:translateY(18px) scale(.975);filter:blur(3px)} to {opacity:1;transform:translateY(0) scale(1);filter:blur(0)} }
     @keyframes resultEnter {from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
     #quick-word-card:not([hidden]), .game-question.animated {animation:wordEnter .42s cubic-bezier(.18,.7,.2,1) both;}
