@@ -1,15 +1,15 @@
-const CACHE = "law-learning-v23";
+const CACHE = "law-learning-v24";
 const ASSETS = [
   "./",
   "./index.html",
   "./styles.css?v=14",
-  "./app.js?v=23",
-  "./word-experience.js?v=23",
-  "./syllabus-flow.js?v=23",
-  "./subjects-library.js?v=23",
-  "./comparison-guide.js?v=23",
-  "./past-paper-data.js?v=23",
-  "./past-paper-view.js?v=23",
+  "./app.js?v=24",
+  "./word-experience.js?v=24",
+  "./syllabus-flow.js?v=24",
+  "./subjects-library.js?v=24",
+  "./comparison-guide.js?v=24",
+  "./past-paper-data.js?v=24",
+  "./past-paper-view.js?v=24",
   "./exam-words-1.js",
   "./exam-words-2.js",
   "./exam-words-3.js",
