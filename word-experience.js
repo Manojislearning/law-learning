@@ -8,7 +8,7 @@ host.insertAdjacentHTML("afterbegin",
 '<div class="word-v19"><div class="w-search"><span aria-hidden="true">⌕</span><input id="w-search" type="search" placeholder="Search legal words…" aria-label="Search legal words" autocomplete="off"><button id="w-clear" type="button" aria-label="Clear search" hidden>×</button></div><div class="w-results" id="w-results" hidden></div>'+
 '<div class="w-head"><span id="w-position"></span><button id="w-next-word" type="button">Next word →</button></div>'+
 '<div class="w-tabs"><button data-wtab="game" class="active">Game</button><button data-wtab="learn">Learn</button><button data-wtab="compare">Compare</button></div>'+
-'<div id="w-game"><div id="w-dots" class="w-dots"></div><article id="w-deck" class="w-card"></article><div class="w-nav"><button id="w-back">← Previous</button><button id="w-forward">Next card →</button></div></div>'+
+'<div id="w-game"><div class="w-scrubber"><input id="w-scrub" type="range" min="1" max="10" value="1" step="1" aria-label="Move to a lesson card"><output id="w-scrub-label" for="w-scrub">1 / 10</output></div><div id="w-dots" class="w-dots" hidden></div><article id="w-deck" class="w-card"></article><div class="w-nav"><button id="w-back">← Previous</button><button id="w-forward">Next card →</button></div></div>'+
 '<article id="w-learn" class="w-card" hidden></article><article id="w-compare" class="w-card" hidden></article>'+
 '<div id="w-review" class="w-review" hidden></div>'+
 '<div class="w-bottom"><div class="w-bottomtop"><span id="w-stats"></span><button id="w-revision">Revision (0)</button></div><div class="w-bottomactions"><button id="w-got">Got it</button><button id="w-revise">Revise later</button></div></div></div>');
@@ -195,7 +195,7 @@ function renderCompare(){
 }
 function update(){
  $("w-position").textContent="Word "+(index+1)+" / "+WORDS.length;
- var dots=$("w-dots");dots.replaceChildren();for(var j=0;j<10;j++)put(dots,"span",j<=cardIndex?"done":"");
+ var scrub=$("w-scrub");scrub.value=String(cardIndex+1);scrub.style.setProperty("--fill",((cardIndex/9)*100)+"%");$("w-scrub-label").textContent=(cardIndex+1)+" / 10";
  $("w-back").disabled=cardIndex===0;$("w-forward").textContent=cardIndex===9?"Next word →":"Next card →";
  if(typeof state!=="undefined"){$("w-stats").textContent=state.learned.size+" learned";$("w-revision").textContent="Revision ("+state.difficult.size+")";}
 }
@@ -241,17 +241,53 @@ $("w-revision").addEventListener("click",function(){
  });
 });
 
+var gestureStyle=document.createElement("style");gestureStyle.textContent="\n.w-head{display:none!important}\n.w-dots{display:none!important}\n.w-scrubber{display:flex;align-items:center;gap:15px;padding:4px 4px 12px}\n.w-scrubber input{appearance:none;-webkit-appearance:none;min-width:0;flex:1;height:7px;border:0;border-radius:999px;background:linear-gradient(90deg,#0d1321 var(--fill,0%),#d7dbe1 var(--fill,0%));cursor:pointer;touch-action:none}\n.w-scrubber input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#0d1321;border:3px solid #fff;box-shadow:0 1px 6px rgba(13,19,33,.27)}\n.w-scrubber input::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#0d1321;border:3px solid #fff;box-shadow:0 1px 6px rgba(13,19,33,.27)}\n.w-scrubber output{white-space:nowrap;min-width:48px;text-align:right;font-size:.76rem;font-weight:800;color:var(--muted)}\n.w-card{will-change:transform,opacity}\n@media (prefers-reduced-motion:no-preference){.w-card.motion{animation:none!important}}\n";document.head.appendChild(gestureStyle);
 var swipeStyle=document.createElement("style");
 swipeStyle.textContent='#home-view .home-card:not([data-open="words"]):not([data-open="syllabus"]):not([data-open="papers"]){display:none!important}#home-view .home-card[data-open="papers"]{display:block!important;width:100%;margin-bottom:12px}#w-next-word,#w-game .w-nav{display:none!important}.w-head::after{content:"Swipe left or right";font-size:.8rem;font-weight:700;color:var(--muted)}#w-deck,#w-learn,#w-compare{touch-action:pan-y}';
 document.head.appendChild(swipeStyle);
 function swipeInteractive(el){return !!(el&&el.closest('input,textarea,select,button,a,[contenteditable="true"]'));}
+var swipeChanging=false;
+function changeWithMotion(direction,action){
+ if(swipeChanging)return;
+ var element=tab==="game"?$("w-deck"):tab==="learn"?$("w-learn"):$("w-compare");
+ var less=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+ if(!element||!element.animate||less){action();return;}
+ swipeChanging=true;
+ var dx=direction<0?-100:100;
+ var outgoing=element.animate([
+  {transform:"translateX(0) rotate(0deg)",opacity:1},
+  {transform:"translateX("+dx+"px) rotate("+(direction<0?-2:2)+"deg)",opacity:0}
+ ],{duration:175,easing:"cubic-bezier(.5,0,.95,.3)",fill:"forwards"});
+ outgoing.onfinish=function(){
+  outgoing.cancel();action();
+  var incoming=tab==="game"?$("w-deck"):tab==="learn"?$("w-learn"):$("w-compare");
+  var animation=incoming.animate([
+   {transform:"translateX("+(-dx)+"px) rotate("+(direction<0?2:-2)+"deg)",opacity:0},
+   {transform:"translateX(0) rotate(0deg)",opacity:1}
+  ],{duration:250,easing:"cubic-bezier(.12,.8,.24,1)",fill:"both"});
+  animation.onfinish=function(){animation.cancel();swipeChanging=false;};
+  animation.oncancel=function(){swipeChanging=false;};
+ };
+ outgoing.oncancel=function(){swipeChanging=false;};
+}
 function moveBySwipe(direction){
- if(tab==="game"){
+ changeWithMotion(direction,function(){
+  if(tab==="game"){
    if(direction<0){if(cardIndex<9){cardIndex++;renderDeck();}else nextWord();}
    else if(cardIndex>0){cardIndex--;renderDeck();}
    else {choose((index-1+WORDS.length)%WORDS.length,"game");cardIndex=9;renderDeck();}
- }else choose((index+(direction<0?1:-1)+WORDS.length)%WORDS.length);
+  }else choose((index+(direction<0?1:-1)+WORDS.length)%WORDS.length);
+ });
 }
+$("w-scrub").addEventListener("input",function(){
+ var next=Number(this.value);$("w-scrub-label").textContent=next+" / 10";
+ this.style.setProperty("--fill",((next-1)/9*100)+"%");
+});
+$("w-scrub").addEventListener("change",function(){
+ var target=Number(this.value)-1,old=cardIndex;
+ if(target===old)return;
+ changeWithMotion(target>old?-1:1,function(){cardIndex=target;renderDeck();});
+});
 ["w-deck","w-learn","w-compare"].forEach(function(id){
  var surface=$(id),start=null;
  surface.addEventListener("touchstart",function(e){
