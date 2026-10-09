@@ -1,4 +1,4 @@
-const CACHE = "law-learning-v22";
+const CACHE = "law-learning-v23";
 const ASSETS = [
   "./",
   "./index.html",
@@ -7,16 +7,14 @@ const ASSETS = [
   "./app.js",
   "./app.js?v=14",
   "./compact-words.js",
-  "./syllabus-tree.js",
-  "./syllabus-tree.js?v=21",
   "./word-experience.js",
-  "./syllabus-learning.js",
-  "./syllabus-learning.js?v=21",
+  "./syllabus-flow.js",
+  "./syllabus-flow.js?v=23",
   "./past-paper-data.js",
   "./past-paper-data.js?v=21",
   "./past-paper-view.js",
   "./past-paper-view.js?v=21",
-  "./word-experience.js?v=22",
+  "./word-experience.js?v=23",
   "./exam-words-1.js",
   "./exam-words-2.js",
   "./exam-words-3.js",
