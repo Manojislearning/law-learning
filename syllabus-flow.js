@@ -127,6 +127,18 @@ function render(){
  }
  window.scrollTo({top:0,behavior:"auto"});
 }
-window.addEventListener("hashchange",function(){if(location.hash==="#syllabus"&&statePath.length){statePath=[];direction="forward";render();}});
+var navigatingFromSubject=false;
+window.openSyllabusUnit=function(semester,subject,unit){
+ if(semester!==1||!KSLU_FIRST_SEMESTER.courses[subject]||!KSLU_FIRST_SEMESTER.courses[subject].units[unit])return false;
+ statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:subject},{level:"unit",value:unit}];
+ direction="forward";navigatingFromSubject=true;
+ if(location.hash!=="#syllabus")location.hash="syllabus";
+ render();return true;
+};
+window.addEventListener("hashchange",function(){
+ if(location.hash!=="#syllabus")return;
+ if(navigatingFromSubject){navigatingFromSubject=false;return;}
+ if(statePath.length){statePath=[];direction="forward";render();}
+});
 render();
 })();
