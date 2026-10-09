@@ -242,7 +242,7 @@ $("w-revision").addEventListener("click",function(){
 });
 
 var swipeStyle=document.createElement("style");
-swipeStyle.textContent='#home-view .home-card:not([data-open="words"]):not([data-open="syllabus"]):not([data-open="papers"]){display:none!important}#home-view .home-card[data-open="papers"]{display:block;width:100%;margin-bottom:12px}#w-next-word,#w-game .w-nav{display:none!important}.w-head::after{content:"Swipe left or right";font-size:.8rem;font-weight:700;color:var(--muted)}#w-deck,#w-learn,#w-compare{touch-action:pan-y}';
+swipeStyle.textContent='#home-view .home-card:not([data-open="words"]):not([data-open="syllabus"]):not([data-open="papers"]){display:none!important}#home-view .home-card[data-open="papers"]{display:block!important;width:100%;margin-bottom:12px}#w-next-word,#w-game .w-nav{display:none!important}.w-head::after{content:"Swipe left or right";font-size:.8rem;font-weight:700;color:var(--muted)}#w-deck,#w-learn,#w-compare{touch-action:pan-y}';
 document.head.appendChild(swipeStyle);
 function swipeInteractive(el){return !!(el&&el.closest('input,textarea,select,button,a,[contenteditable="true"]'));}
 function moveBySwipe(direction){
