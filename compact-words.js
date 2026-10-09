@@ -1,278 +1,328 @@
-/* Search-first vocabulary interface. All terms remain in the original WORDS dataset. */
+/* Law Learning: single-word study flow. Works with existing app.js WORDS and progress. */
 (function () {
   "use strict";
   var host = document.getElementById("words-view");
-  if (!host || typeof WORDS === "undefined") return;
+  if (!host || typeof WORDS === "undefined" || !WORDS.length) return;
+  var css = document.createElement("style");
+  css.textContent = "\n#words-view > :not(.quick-words){display:none!important}\n#home-view .home-card:not([data-open=\"words\"]):not([data-open=\"syllabus\"]){display:none!important}\n#home-view .home-grid{display:block;max-width:640px;margin:auto}\n#home-view .home-card[data-open=\"words\"],#home-view .home-card[data-open=\"syllabus\"]{width:100%;margin-bottom:12px}\n.quick-words{max-width:640px;margin:12px auto;padding-bottom:124px}\n.quick-search{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:13px;min-height:43px;padding:0 12px;margin-bottom:10px;width:100%}\n.quick-search:focus-within{border-color:#8a96a8;box-shadow:0 0 0 3px rgba(13,19,33,.06)}\n.quick-search input{width:100%;flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--text);font:inherit;font-size:16px}\n.quick-search-icon{font-size:1.1rem;color:var(--muted);line-height:1}\n.search-clear{border:0;background:none;font-size:1.2rem;color:var(--muted);cursor:pointer;padding:5px}\n.quick-results{background:#fff;border:1px solid var(--line);border-radius:13px;overflow:hidden;margin-bottom:12px}\n.quick-results[hidden],.study-panel[hidden],.study-feedback[hidden],.review-list[hidden],.study-news[hidden]{display:none!important}\n.quick-result{border:0;border-bottom:1px solid var(--line);background:white;padding:12px 14px;display:flex;width:100%;align-items:center;justify-content:space-between;gap:12px;text-align:left;font:inherit;cursor:pointer;color:var(--text)}\n.quick-result:last-child{border-bottom:0}\n.quick-result:hover,.quick-result:focus-visible{background:#f3f5f8}\n.study-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:7px 0 15px}\n.study-heading span{font-size:.76rem;font-weight:750;color:var(--muted)}\n.study-heading button{border:0;background:none;color:var(--text);font:inherit;font-weight:750;font-size:.86rem;cursor:pointer;padding:8px}\n.study-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-bottom:14px}\n.study-tabs button{border:1px solid var(--line);border-radius:13px;background:#fff;min-height:44px;color:var(--text);font:inherit;font-size:.88rem;font-weight:750;cursor:pointer}\n.study-tabs button.active{background:var(--text);color:#fff}\n.study-panel{border:1px solid var(--line);background:#fff;padding:clamp(16px,4.7vw,23px);border-radius:22px;box-shadow:0 12px 35px rgba(13,19,33,.035)}\n.study-kicker{font-size:.73rem;font-weight:800;color:var(--muted);margin:0 0 15px}\n.study-term{font:500 clamp(1.8rem,8vw,3.15rem)/1.14 Georgia,serif;letter-spacing:-.025em;overflow-wrap:anywhere;margin:0 0 22px}\n.study-definition{font-size:1.02rem;line-height:1.55;margin:0 0 16px}\n.study-meta{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:800;color:var(--muted);margin:20px 0 6px}\n.study-more{font-size:.91rem;line-height:1.55;color:var(--text);margin:0}\n.study-actions{margin-top:17px;display:flex;align-items:center;gap:10px}\n.study-actions button,.mini-tabs button,.study-next{padding:10px 13px;border-radius:11px;border:1px solid var(--line);font:inherit;font-weight:750;background:#f7f8fa;color:var(--text);cursor:pointer}\n.study-news{margin-top:20px;padding-top:14px;border-top:1px solid var(--line);font-size:.84rem;line-height:1.5}\n.study-news a{color:#1d4e91;text-decoration:underline}\n.mini-tabs{display:flex;gap:8px;margin-bottom:17px}\n.mini-tabs button{padding:8px 13px;font-size:.8rem}\n.mini-tabs button.active{background:var(--text);color:white}\n.game-options{display:grid;gap:9px}\n.game-choice{display:block;width:100%;text-align:left;background:#f9fafb;border:1px solid var(--line);border-radius:13px;padding:12px 13px;font:inherit;font-size:.94rem;line-height:1.42;color:var(--text);cursor:pointer}\n.game-choice.correct{background:#eaf7ef;border-color:#408a60}\n.game-choice.wrong{background:#fff0ee;border-color:#be5a52}\n.game-choice:disabled{cursor:default}\n.study-feedback{margin:15px 0 0;font-size:.9rem;font-weight:750;line-height:1.45}\n.spell-prompt{font-size:1rem;line-height:1.5;color:var(--muted);margin:-6px 0 15px}\n.spell-mask{font-family:Georgia,serif;font-size:clamp(1.9rem,7vw,2.9rem);letter-spacing:.09em;overflow-wrap:anywhere;margin:0 0 20px}\n.spell-form{display:flex;flex-direction:column;gap:10px}\n.spell-form input{min-width:0;width:100%;min-height:46px;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:16px;letter-spacing:.12em}\n.spell-form button{align-self:start;padding:11px 16px;border-radius:12px;background:var(--text);color:white;border:0;font:inherit;font-weight:750;cursor:pointer}\n.compare-sides{display:grid;grid-template-columns:1fr 1fr;gap:10px}\n.compare-side{min-width:0;border:1px solid var(--line);border-radius:13px;padding:14px;background:#f9fafb}\n.compare-side strong{font-size:.97rem;overflow-wrap:anywhere}\n.compare-side p{margin:9px 0 0;font-size:.86rem;line-height:1.55}\n.compare-note{margin:14px 0 0;font-size:.84rem;line-height:1.5;color:var(--muted)}\n.study-bar{position:fixed;bottom:calc(10px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(calc(100% - 22px),650px);z-index:25;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.97);box-shadow:0 12px 38px rgba(13,19,33,.14);padding:10px;backdrop-filter:blur(10px)}\n.study-bar-top{display:flex;align-items:center;justify-content:space-between;margin:0 3px 7px;gap:8px}\n.study-bar-top span{font-size:.71rem;color:var(--muted);font-weight:700}\n.study-bar-top button{font-size:.76rem;font-weight:750;border:0;background:transparent;color:var(--text);padding:5px;cursor:pointer}\n.study-bar-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}\n.study-bar-actions button{min-height:43px;border:1px solid var(--text);border-radius:12px;font:inherit;font-weight:750;font-size:.9rem;cursor:pointer}\n#word-got{background:var(--text);color:#fff}\n#word-revise{background:#fff;color:var(--text)}\n.review-list{background:white;border:1px solid var(--line);border-radius:14px;padding:12px;margin-bottom:14px}\n.review-list p{font-size:.83rem;color:var(--muted);margin:4px 0 9px}\n.review-list button{display:inline-block;margin:5px;padding:8px 10px;background:#f5f6f8;border:1px solid var(--line);border-radius:9px;font:inherit;font-size:.82rem;cursor:pointer}\n@media (max-width:460px){.compare-sides{grid-template-columns:1fr}.study-panel{padding:17px}.quick-words{padding-bottom:132px}}\n@media(prefers-reduced-motion:no-preference){\n@keyframes word-rise{from{opacity:0;transform:translateY(13px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}\n.study-panel.motion{animation:word-rise .3s cubic-bezier(.2,.7,.2,1) both}\n.quick-result{animation:word-rise .16s ease both}\n}\n";
+  document.head.appendChild(css);
 
-  var style = document.createElement("style");
-  style.textContent = `
-    #words-view > :not(.quick-words) { display: none !important; }
-    #home-view .home-card:not([data-open="words"]):not([data-open="syllabus"]) { display:none !important; }
-    #home-view .home-grid { display:block; max-width:640px; margin:auto; }
-    #home-view .home-card[data-open="words"], #home-view .home-card[data-open="syllabus"] { width:100%; margin-bottom:12px; }
-    @keyframes wordEnter { from {opacity:0;transform:translateY(18px) scale(.975);filter:blur(3px)} to {opacity:1;transform:translateY(0) scale(1);filter:blur(0)} }
-    @keyframes resultEnter {from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
-    #quick-word-card:not([hidden]), .game-question.animated {animation:wordEnter .42s cubic-bezier(.18,.7,.2,1) both;}
-    .quick-result {animation:resultEnter .22s ease both;}
-    @media (prefers-reduced-motion:reduce) { #quick-word-card:not([hidden]),.game-question.animated,.quick-result {animation:none !important} }
-    .quick-search-wrap {display:block;width:100%;margin-bottom:18px;}
-    .quick-search {width:100%;min-height:40px;padding:0 12px;border-radius:13px;transition:box-shadow .2s ease;overflow:hidden;}
-    .quick-search.expanded {width:100%;box-shadow:0 0 0 2px rgba(13,19,33,.06);}
-    .quick-search-trigger {border:0;background:none;color:var(--text);font-size:1.2rem;padding:0;cursor:pointer;min-width:20px;}
-    #quick-word-input {min-height:38px;font-size:.88rem;min-width:0;width:auto;opacity:1;pointer-events:auto;transition:opacity .2s ease;}
-    .quick-search.expanded #quick-word-input {opacity:1;pointer-events:auto;width:auto;}
-    .quick-mode {display:flex;gap:8px;margin:0 0 18px;}
-    .quick-mode button {border:1px solid var(--line);border-radius:12px;background:white;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer;}
-    .quick-mode button.active {background:var(--text);color:white;}
-    #quick-game[hidden],#quick-study[hidden] {display:none!important;}
-    .game-question {padding:24px;border:1px solid var(--line);border-radius:20px;background:white;}
-    .game-meta {display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem;font-weight:750;}
-    .game-term {font-family:Georgia,serif;font-size:clamp(2rem,8vw,3.2rem);margin:23px 0;overflow-wrap:anywhere;}
-    .game-options {display:grid;gap:9px;}
-    .game-choice {padding:14px;text-align:left;background:#fafbfc;border:1px solid var(--line);border-radius:13px;font:inherit;cursor:pointer;line-height:1.45;}
-    .game-choice:disabled {cursor:default;}
-    .game-choice.correct {background:#e5f5eb;border-color:#198452;}
-    .game-choice.wrong {background:#fff0ee;border-color:#c34137;}
-    .game-feedback {min-height:30px;margin:15px 0 0;font-weight:700;}
-    .game-next {margin-top:9px;padding:12px 20px;background:var(--text);color:white;border:0;border-radius:12px;font:inherit;font-weight:750;}
-    .game-next[hidden] {display:none!important;}
-    .quick-search-wrap + #quick-word-results {margin-bottom:15px;}
-    .game-spelling {display:grid;gap:10px;}
-    .game-spelling input {height:46px;min-width:0;width:100%;border:1px solid var(--line);border-radius:12px;padding:0 13px;font:inherit;font-size:1.12rem;letter-spacing:.05em;}
-    .game-spelling button {border:0;background:var(--text);color:#fff;border-radius:12px;padding:12px;font:inherit;font-weight:700;}
-    .word-news {margin-top:17px;border-top:1px solid var(--line);padding-top:14px;font-size:.84rem;line-height:1.45;}
-    .word-news p {margin:7px 0;}
-    .word-news a {color:#1a4f9c;text-decoration:underline;}
-    @media(max-width:480px){.quick-search{width:100%;min-width:0}.quick-search-wrap{width:100%}#quick-word-input{min-width:0;font-size:16px}.quick-search-trigger{flex:none}}
+  host.insertAdjacentHTML("afterbegin",
+    '<div class="quick-words">' +
+      '<div class="quick-search"><span class="quick-search-icon" aria-hidden="true">⌕</span><input id="study-search" type="search" placeholder="Search legal words…" autocomplete="off" aria-label="Search words" aria-controls="study-results"><button class="search-clear" id="study-clear" type="button" aria-label="Clear search" hidden>×</button></div>' +
+      '<div class="quick-results" id="study-results" hidden></div>' +
+      '<div class="study-heading"><span id="study-position"></span><button id="study-next" type="button">Next word →</button></div>' +
+      '<nav class="study-tabs" aria-label="Study modes"><button data-mode="game" class="active" aria-pressed="true" type="button">Game</button><button data-mode="learn" aria-pressed="false" type="button">Learn</button><button data-mode="compare" aria-pressed="false" type="button">Compare</button></nav>' +
+      '<section id="study-game" class="study-panel" aria-label="Word game"><div class="mini-tabs"><button type="button" data-game="meaning" class="active">Meaning</button><button type="button" data-game="spelling">Spelling</button></div><p class="study-kicker" id="game-prompt"></p><h2 class="study-term" id="game-term"></h2><p id="game-clue" class="spell-prompt" hidden></p><div id="game-options" class="game-options"></div><p id="game-feedback" class="study-feedback" aria-live="polite" hidden></p></section>' +
+      '<section id="study-learn" class="study-panel" aria-label="Learn word" hidden><p class="study-kicker" id="learn-category"></p><h2 id="learn-term" class="study-term"></h2><p id="learn-definition" class="study-definition"></p><p class="study-meta">Remember</p><p class="study-more" id="learn-memory"></p><p class="study-meta">Example</p><p class="study-more" id="learn-example"></p><div class="study-actions"><button id="learn-listen" type="button">Listen ↗</button></div><div class="study-news" id="learn-news"></div></section>' +
+      '<section id="study-compare" class="study-panel" aria-label="Compare word" hidden><p class="study-kicker">Compare related terms</p><div class="compare-sides"><div class="compare-side"><strong id="compare-left-term"></strong><p id="compare-left-meaning"></p></div><div class="compare-side"><strong id="compare-right-term"></strong><p id="compare-right-meaning"></p></div></div><p class="compare-note" id="compare-rule"></p></section>' +
+      '<div class="review-list" id="study-review-list" hidden><strong>Revision list</strong><p>Select a saved word to practise again.</p><div id="study-review-terms"></div></div>' +
+      '<div class="study-bar"><div class="study-bar-top"><span id="study-progress"></span><button id="review-toggle" type="button" aria-expanded="false">Revision (0)</button></div><div class="study-bar-actions"><button id="word-got" type="button">Got it</button><button id="word-revise" type="button">Revise later</button></div></div>' +
+    '</div>'
+  );
 
+  var $ = function (id) { return document.getElementById(id); };
+  var selected = typeof state !== "undefined" && Number.isInteger(state.currentWord) && state.currentWord >= 0 && state.currentWord < WORDS.length ? state.currentWord : 0;
+  var mode = "game";
+  var gameType = "meaning";
+  var correctCount = 0;
+  var answered = { meaning: false, spelling: false };
+  var optionToken = 0;
+  try { correctCount = Number(localStorage.getItem("law-word-game-score")) || 0; } catch (e) {}
 
-    .quick-words { max-width: 640px; margin: 12px auto; }
-    .quick-words h2 { margin: 0 0 5px; font-size: clamp(1.6rem,6vw,2.3rem); }
-    .quick-words .quick-caption { color: var(--muted); font-size: .86rem; margin-bottom: 24px; }
-    .quick-search { display:flex; align-items:center; gap:10px; padding: 5px 14px; border: 1px solid var(--line); border-radius:17px; background:#fff; box-shadow:0 8px 30px rgba(13,19,33,.05); }
-    .quick-search:focus-within { border-color:#4d596d; box-shadow:0 0 0 3px rgba(13,19,33,.07); }
-    .quick-search-icon { color:var(--muted); font-size:1.2rem; }
-    #quick-word-input { flex:1; min-width:0; border:0; outline:0; min-height:51px; font:inherit; font-size:1rem; background:transparent; color:var(--text); }
-    #quick-search-clear { background:transparent; border:0; color:var(--muted); font-size:1.3rem; padding:6px; }
-    #quick-word-results { margin-top:10px; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:white; }
-    #quick-word-results[hidden], #quick-word-card[hidden], #quick-word-more[hidden] { display:none !important; }
-    .quick-result { display:flex; align-items:center; justify-content:space-between; width:100%; padding:14px 17px; border:0; border-bottom:1px solid var(--line); background:#fff; text-align:left; color:var(--text); font:inherit; }
-    .quick-result:last-child { border-bottom:0; }
-    .quick-result:hover, .quick-result:focus-visible { background:var(--surface-2); }
-    .quick-result small { color:var(--muted); font-size:.7rem; margin-left:10px; }
-    .quick-empty { padding:17px; margin:0; color:var(--muted); }
-    #quick-word-card { margin-top:22px; padding:24px; background:#fff; border:1px solid var(--line); border-radius:22px; box-shadow:var(--shadow); }
-    #quick-word-card .quick-tag { color:var(--muted); font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; }
-    #quick-word-title { font-family:Georgia,serif; font-weight:500; font-size:clamp(2rem,8vw,3.3rem); line-height:1.13; margin:8px 0 14px; overflow-wrap:anywhere; }
-    #quick-word-definition { font-size:1.07rem; line-height:1.6; margin:0 0 18px; }
-    .quick-actions { display:flex; flex-wrap:wrap; gap:8px; }
-    .quick-actions button { border:1px solid var(--line); border-radius:11px; background:#f8f9fb; padding:10px 13px; font:inherit; font-size:.85rem; cursor:pointer; }
-    .quick-actions button:hover { border-color:var(--text); }
-    #quick-word-more { margin-top:18px; padding-top:16px; border-top:1px solid var(--line); }
-    #quick-word-more p { margin:8px 0 14px; line-height:1.6; }
-    #quick-word-more .quick-label { font-size:.7rem; font-weight:800; color:var(--muted); text-transform:uppercase; }
-    .quick-footnote { margin-top:14px; font-size:.76rem; color:var(--muted); }
-    @media(max-width:480px) { .quick-words{margin:14px 0} #quick-word-card{padding:20px} }
-  `;
-  document.head.appendChild(style);
-
-  var shell = document.createElement("div");
-  shell.className = "quick-words";
-  shell.innerHTML =
-    '<div class="quick-search-wrap"><div class="quick-search" role="search">' +
-      '<span class="quick-search-trigger" aria-hidden="true">⌕</span>' +
-      '<input id="quick-word-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search legal words…" aria-label="Search legal vocabulary" aria-controls="quick-word-results" aria-expanded="false">' +
-      '<button id="quick-search-clear" type="button" aria-label="Clear search" hidden>×</button>' +
-    '</div></div>' +
-    '<div id="quick-word-results" role="listbox" aria-label="Matching words" hidden></div>' +
-    '<div class="quick-mode"><button type="button" id="quick-mode-game" class="active">Word game</button><button type="button" id="quick-mode-study">Learn words</button></div>' +
-    '<section id="quick-game"><div id="game-question" class="game-question"><div class="game-meta"><span>Choose the correct meaning</span><span id="game-score">0 correct</span></div><h3 class="game-term" id="game-term"></h3><div class="game-options" id="game-options"></div><p class="game-feedback" id="game-feedback" aria-live="polite"></p><button class="game-next" id="game-next" type="button" hidden>Next word →</button></div></section>' +
-    '<section id="quick-study" hidden><button class="game-next" id="quick-random" type="button">Next word →</button></section>' +
-    '<article id="quick-word-card" aria-live="polite" hidden>' +
-      '<span class="quick-tag" id="quick-word-category">Legal term</span>' +
-      '<h3 id="quick-word-title"></h3>' +
-      '<p id="quick-word-definition"></p>' +
-      '<div class="quick-actions"><button type="button" id="quick-word-speak">Listen</button><button type="button" id="quick-word-detail" aria-expanded="false">More details</button></div><div id="quick-word-news" class="word-news"></div>' +
-      '<div id="quick-word-more" hidden>' +
-        '<span class="quick-label">Remember</span><p id="quick-word-memory"></p>' +
-        '<span class="quick-label">Example</span><p id="quick-word-example"></p>' +
-      '</div>' +
-    '</article>';
-  host.insertBefore(shell, host.firstChild);
-
-  var input = document.getElementById("quick-word-input");
-  var results = document.getElementById("quick-word-results");
-  var card = document.getElementById("quick-word-card");
-  var more = document.getElementById("quick-word-more");
-  var clear = document.getElementById("quick-search-clear");
-  var active = null;
-  var searchBox = shell.querySelector(".quick-search");
-  var game = document.getElementById("quick-game");
-  var study = document.getElementById("quick-study");
-  var gameMode = document.getElementById("quick-mode-game");
-  var studyMode = document.getElementById("quick-mode-study");
-  function mode(which) {
-    game.hidden = which !== "game";
-    study.hidden = which !== "study";
-    gameMode.classList.toggle("active", which==="game");
-    studyMode.classList.toggle("active", which==="study");
-    card.hidden=true;
+  function word() { return WORDS[selected]; }
+  function simplify(s) { return String(s || "").trim().toLocaleLowerCase(); }
+  function arrayShuffle(list) {
+    var a = list.slice();
+    for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var v = a[i]; a[i] = a[j]; a[j] = v; }
+    return a;
   }
-  gameMode.addEventListener("click",function(){mode("game");});
-  studyMode.addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
-  document.getElementById("quick-random").addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
-  var correctCount = 0, round = null, roundNumber = 0;
-  try { correctCount = Number(localStorage.getItem("law-word-game-score")) || 0; } catch(e){}
-  function shuffle(a) { for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
-  function hideLetters(term){
-    var letters=0;
-    return Array.from(term).map(function(c,i){
-      if(!/[a-z]/i.test(c))return c;
-      letters++;
-      return i%3===1 || i%4===0 ? "＿":c;
-    }).join("");
+  function progress() {
+    return typeof state !== "undefined" ? state : null;
   }
-  var verifiedNews={
-    "Appeal":{title:"US Supreme Court to hear appeal over prolonged immigration detention",date:"15 June 2026",url:"https://www.reuters.com/world/supreme-court-hear-trump-appeal-involving-lengthy-detention-certain-immigrants-2026-06-15/",note:"A real example of an appeal challenging a lower-court decision."},
-    "Bail":{title:"US Supreme Court to review detention without bond hearings",date:"15 June 2026",url:"https://www.reuters.com/world/supreme-court-hear-trump-appeal-involving-lengthy-detention-certain-immigrants-2026-06-15/",note:"The case concerns access to release hearings, an issue closely related to bail."},
-    "Petitioner":{title:"India's Supreme Court rejects Vodafone Idea's petition",date:"19 May 2025",url:"https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/",note:"Vodafone Idea sought relief by petitioning the Supreme Court."},
-    "Petition":{title:"India's Supreme Court rejects Vodafone Idea's petition",date:"19 May 2025",url:"https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/",note:"A real-life example of a legal petition."}
-  };
-  function renderNews(word){
-    var target=document.getElementById("quick-word-news");target.replaceChildren();
-    var heading=document.createElement("strong");heading.textContent="In real news";target.appendChild(heading);
-    var data=verifiedNews[word.term];
-    var p=document.createElement("p"),link=document.createElement("a");
-    link.target="_blank";link.rel="noopener noreferrer";
-    if(data){p.textContent=data.note+" ("+data.date+")";link.href=data.url;link.textContent=data.title;}
-    else {p.textContent="Explore current reporting using this legal term.";link.href="https://news.google.com/search?q="+encodeURIComponent('"'+word.term+'" law court');link.textContent="Find news featuring "+word.term+" ↗";}
-    target.append(p,link);
+  function updateProgress() {
+    var p = progress();
+    if (!p) return;
+    $("study-progress").textContent = p.learned.size + " learned";
+    $("review-toggle").textContent = "Revision (" + p.difficult.size + ")";
+    if (typeof saveProgress === "function") saveProgress();
+    if (typeof renderStats === "function") renderStats();
   }
-  function nextRound() {
-    var choices = WORDS.filter(function(w){return w.term && w.definition;});
-    if(choices.length<4) return;
-    var picked = choices[Math.floor(Math.random()*choices.length)];
-    var distractors = shuffle(choices.filter(function(w){return w.term!==picked.term && w.definition!==picked.definition;})).slice(0,3);
-    round=picked;
-    roundNumber++;
-    var spelling=roundNumber%2===0;
-    document.getElementById("game-term").textContent=spelling ? hideLetters(picked.term) : picked.term;
-    document.querySelector(".game-meta span").textContent=spelling?"Fill in the missing letters":"Choose the correct meaning";
-    document.getElementById("game-score").textContent=correctCount+" correct";
-    document.getElementById("game-feedback").textContent="";
-    document.getElementById("game-next").hidden=true;
-    var options=document.getElementById("game-options");options.replaceChildren();
-    if(spelling){
-      var wrapper=document.createElement("form");wrapper.className="game-spelling";
-      var hint=document.createElement("p");hint.textContent=picked.definition;hint.style.margin="0 0 4px";
-      var entry=document.createElement("input");entry.type="text";entry.autocomplete="off";entry.spellcheck=false;entry.setAttribute("aria-label","Type the complete legal word");entry.placeholder="Type the complete word";
-      var check=document.createElement("button");check.type="submit";check.textContent="Check spelling";
-      wrapper.append(hint,entry,check);options.appendChild(wrapper);
-      wrapper.addEventListener("submit",function(e){
-        e.preventDefault();if(!round)return;
-        var match=entry.value.trim().replace(/\s+/g," ").toLocaleLowerCase()===picked.term.toLocaleLowerCase();
-        if(match){correctCount++;try{localStorage.setItem("law-word-game-score",String(correctCount));}catch(e){}}
-        document.getElementById("game-feedback").textContent=match?"Correct spelling! +1":"Correct spelling: "+picked.term;
-        document.getElementById("game-term").textContent=picked.term;
-        document.getElementById("game-score").textContent=correctCount+" correct";
-        entry.disabled=true;check.disabled=true;
-        document.getElementById("game-next").hidden=false;round=null;
-      });
-    }else shuffle([picked].concat(distractors)).forEach(function(w){
-      var b=document.createElement("button");b.className="game-choice";b.type="button";b.textContent=w.definition;
-      b.addEventListener("click",function(){
-        if(!round) return;
-        var right=w===round;
-        if(right) { correctCount++;try{localStorage.setItem("law-word-game-score",String(correctCount));}catch(e){} }
-        options.querySelectorAll("button").forEach(function(button){button.disabled=true;if(button.textContent===picked.definition)button.classList.add("correct");});
-        if(!right)b.classList.add("wrong");
-        document.getElementById("game-feedback").textContent=right?"Correct! +1":"Not quite. The correct answer is highlighted.";
-        document.getElementById("game-score").textContent=correctCount+" correct";
-        document.getElementById("game-next").hidden=false;
-        round=null;
-      });options.appendChild(b);
+  function animate() {
+    var visible = document.querySelector("#words-view .study-panel:not([hidden])");
+    if (!visible) return;
+    visible.classList.remove("motion");
+    void visible.offsetWidth;
+    visible.classList.add("motion");
+  }
+  function setMode(next) {
+    mode = next;
+    document.querySelectorAll("#words-view [data-mode]").forEach(function (button) {
+      var current = button.dataset.mode === next;
+      button.classList.toggle("active", current);
+      button.setAttribute("aria-pressed", String(current));
     });
-    var question=document.getElementById("game-question");question.classList.remove("animated");void question.offsetWidth;question.classList.add("animated");
+    ["game", "learn", "compare"].forEach(function (id) { $("study-" + id).hidden = id !== next; });
+    renderMode();
+    animate();
   }
-  document.getElementById("game-next").addEventListener("click",nextRound);
-  nextRound();
-
-  function hideResults() {
-    results.hidden = true;
-    results.replaceChildren();
-    input.setAttribute("aria-expanded", "false");
+  function selectWord(index, targetMode) {
+    if (!Number.isInteger(index) || index < 0 || index >= WORDS.length) return;
+    selected = index;
+    var p = progress();
+    if (p) { p.currentWord = index; updateProgress(); }
+    answered = { meaning: false, spelling: false };
+    $("study-search").value = "";
+    $("study-clear").hidden = true;
+    hideSearch();
+    $("study-position").textContent = "Word " + (selected + 1) + " of " + WORDS.length;
+    setMode(targetMode || mode);
   }
-  function openWord(index) {
-    active = WORDS[index];
-    if (!active) return;
-    document.getElementById("quick-word-category").textContent = active.category || "Legal term";
-    document.getElementById("quick-word-title").textContent = active.term;
-    document.getElementById("quick-word-definition").textContent = active.definition || active.deep || "";
-    document.getElementById("quick-word-memory").textContent = active.memory || active.daily || "";
-    document.getElementById("quick-word-example").textContent = (active.examples && active.examples[0]) || "";
-    input.value = active.term;
-    clear.hidden = false;
-    renderNews(active);
-    hideResults();
-    more.hidden = true;
-    document.getElementById("quick-word-detail").textContent = "More details";
-    document.getElementById("quick-word-detail").setAttribute("aria-expanded","false");
-    mode("study");
-    card.hidden = false;
-    card.style.animation = "none"; void card.offsetWidth; card.style.animation = "";
-    card.scrollIntoView({behavior:"smooth",block:"nearest"});
-  }
-  function search() {
-    var query = input.value.trim().toLocaleLowerCase();
-    clear.hidden = !input.value;
-    card.hidden = true;
-    active = null;
-    if (!query) { hideResults(); return; }
-    var found = WORDS.map(function(w,i){ return {word:w,index:i}; })
-      .filter(function(item){ return item.word.term.toLocaleLowerCase().includes(query); })
-      .sort(function(a,b){
-        var aa=a.word.term.toLocaleLowerCase(),bb=b.word.term.toLocaleLowerCase();
-        return Number(bb.startsWith(query))-Number(aa.startsWith(query)) || aa.localeCompare(bb);
-      }).slice(0,10);
-    results.replaceChildren();
-    if (!found.length) {
-      var empty=document.createElement("p");
-      empty.className="quick-empty";
-      empty.textContent="No matching words.";
-      results.appendChild(empty);
+  function nextWord() { selectWord((selected + 1) % WORDS.length); }
+  function hideSearch() { $("study-results").hidden = true; $("study-results").replaceChildren(); }
+  function runSearch() {
+    var query = simplify($("study-search").value);
+    $("study-clear").hidden = !query;
+    if (!query) { hideSearch(); return; }
+    var results = WORDS.map(function (w, i) { return { index: i, label: w.term }; })
+      .filter(function (item) { return simplify(item.label).includes(query); })
+      .sort(function (a, b) {
+        var pa = simplify(a.label).startsWith(query) ? 0 : 1, pb = simplify(b.label).startsWith(query) ? 0 : 1;
+        return pa - pb || a.label.localeCompare(b.label);
+      }).slice(0, 9);
+    $("study-results").replaceChildren();
+    if (!results.length) {
+      var empty = document.createElement("p");
+      empty.className = "study-more";
+      empty.style.padding = "13px";
+      empty.textContent = "No matching words.";
+      $("study-results").appendChild(empty);
     } else {
-      found.forEach(function(item) {
-        var button=document.createElement("button");
-        button.type="button"; button.className="quick-result";button.setAttribute("role","option");
-        var title=document.createElement("strong");title.textContent=item.word.term;
-        var arrow=document.createElement("span");arrow.textContent="→";arrow.setAttribute("aria-hidden","true");
-        button.append(title,arrow);
-        button.addEventListener("click",function(){openWord(item.index);});
-        results.appendChild(button);
+      results.forEach(function (item) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "quick-result";
+        button.textContent = item.label;
+        button.addEventListener("click", function () { selectWord(item.index, "learn"); });
+        $("study-results").appendChild(button);
       });
     }
-    results.hidden=false;
-    input.setAttribute("aria-expanded","true");
+    $("study-results").hidden = false;
   }
-  input.addEventListener("input",search);
-  input.addEventListener("keydown",function(event){
-    if (event.key==="Escape") { hideResults(); input.blur(); }
-    if (event.key==="Enter") {
-      var first=results.querySelector(".quick-result");
-      if (first && !results.hidden) {event.preventDefault();first.click();}
+  function wordTokens(text) {
+    var stop = ["the","and","with","where","from","that","which","this","their","into","under","legal","person","court","means","being","right","relating","other"];
+    return String(text || "").toLowerCase().split(/[^a-z]+/).filter(function (t) { return t.length >= 4 && !stop.includes(t); });
+  }
+  function similarWords() {
+    var focus = word();
+    var category = focus.category || "Foundation";
+    var tokens = new Set(wordTokens(focus.definition));
+    return WORDS.map(function (item, index) {
+      var similarity = wordTokens(item.definition).filter(function (token) { return tokens.has(token); }).length;
+      return { index: index, w: item, weight: similarity };
+    }).filter(function (item) { return item.index !== selected && item.w.definition && item.w.definition !== focus.definition && (item.w.category || "Foundation") === category; })
+      .sort(function (a, b) { return b.weight - a.weight; });
+  }
+  function renderMeaning() {
+    $("game-prompt").textContent = "Choose the correct meaning";
+    $("game-term").hidden = false;
+    $("game-term").textContent = word().term;
+    $("game-clue").hidden = true;
+    $("game-feedback").hidden = true;
+    var options = $("game-options");
+    options.replaceChildren();
+    var all = similarWords();
+    if (all.length < 3) {
+      all = WORDS.map(function (w, index) { return { w: w, index: index }; })
+        .filter(function (entry) { return entry.index !== selected && entry.w.definition && entry.w.definition !== word().definition; });
     }
+    var chosen = all.slice(0, Math.min(all.length, 8));
+    var distractors = arrayShuffle(chosen).slice(0, 3).map(function (item) { return item.w; });
+    var candidates = arrayShuffle([word()].concat(distractors));
+    var token = ++optionToken;
+    candidates.forEach(function (candidate) {
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "game-choice";
+      button.textContent = candidate.definition;
+      if (answered.meaning) button.disabled = true;
+      button.addEventListener("click", function () {
+        if (answered.meaning || token !== optionToken) return;
+        answered.meaning = true;
+        var correct = candidate === word();
+        document.querySelectorAll("#game-options .game-choice").forEach(function (b) {
+          b.disabled = true;
+          if (b.textContent === word().definition) b.classList.add("correct");
+        });
+        if (!correct) button.classList.add("wrong");
+        showFeedback(correct ? "Correct. You can also practise its spelling." : "Not quite. The correct meaning is highlighted.");
+        if (correct) award();
+      });
+      options.appendChild(button);
+    });
+    if (answered.meaning) showFeedback("Meaning question completed. Switch to Spelling or choose another word.");
+  }
+  function maskWord(term) {
+    var chars = Array.from(term);
+    var available = chars.map(function (c, i) { return /[A-Za-z]/.test(c) ? i : -1; }).filter(function (i) { return i >= 0; });
+    var missing = available.filter(function (_, i) { return i % 3 === 1 || (available.length <= 5 && i === 0); });
+    if (!missing.length && available.length) missing = [available[0]];
+    return { display: chars.map(function (c, i) { return missing.includes(i) ? "＿" : c; }).join(""), expected: missing.map(function (i) { return chars[i]; }).join("") };
+  }
+  function renderSpelling() {
+    $("game-prompt").textContent = "Fill in the missing letters";
+    $("game-term").hidden = false;
+    var mask = maskWord(word().term);
+    $("game-term").textContent = mask.display;
+    $("game-term").classList.add("spell-mask");
+    $("game-clue").hidden = false;
+    $("game-clue").textContent = word().definition;
+    $("game-feedback").hidden = true;
+    $("game-options").replaceChildren();
+    var form = document.createElement("form");
+    form.className = "spell-form";
+    var input = document.createElement("input");
+    input.type = "text"; input.autocomplete = "off"; input.spellcheck = false;
+    input.setAttribute("aria-label", "Missing letters, in order");
+    input.placeholder = "Missing letters, in order";
+    input.maxLength = Math.max(mask.expected.length * 2, 1);
+    var submit = document.createElement("button");
+    submit.type = "submit"; submit.textContent = "Check";
+    form.append(input, submit);
+    if (answered.spelling) { input.disabled = true; submit.disabled = true; }
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (answered.spelling) return;
+      answered.spelling = true;
+      var correct = simplify(input.value).replace(/\s/g, "") === simplify(mask.expected);
+      input.disabled = true; submit.disabled = true;
+      $("game-term").textContent = word().term;
+      showFeedback(correct ? "Correct spelling." : "Missing letters: " + mask.expected + " · " + word().term);
+      if (correct) award();
+    });
+    $("game-options").appendChild(form);
+    if (answered.spelling) showFeedback("Spelling completed. Choose another word to play again.");
+  }
+  function award() {
+    correctCount++;
+    try { localStorage.setItem("law-word-game-score", String(correctCount)); } catch (e) {}
+    var p = progress();
+    if (p) { p.score += 5; p.streak++; updateProgress(); }
+  }
+  function showFeedback(message) { $("game-feedback").hidden = false; $("game-feedback").textContent = message; }
+  function renderGame() {
+    document.querySelectorAll("#words-view [data-game]").forEach(function (button) {
+      button.classList.toggle("active", button.dataset.game === gameType);
+    });
+    $("game-term").classList.remove("spell-mask");
+    if (gameType === "meaning") renderMeaning(); else renderSpelling();
+  }
+  var newsByWord = {
+    "Appeal": { title: "US Supreme Court to hear an appeal over immigration detention", url: "https://www.reuters.com/world/supreme-court-hear-trump-appeal-involving-lengthy-detention-certain-immigrants-2026-06-15/" },
+    "Petitioner": { title: "India's Supreme Court rejects Vodafone Idea petition", url: "https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/" },
+    "Petition": { title: "India's Supreme Court rejects Vodafone Idea petition", url: "https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/" }
+  };
+  function renderNews() {
+    var section = $("learn-news");
+    section.replaceChildren();
+    var p = document.createElement("p");
+    p.className = "study-meta";
+    p.textContent = "In the news";
+    var a = document.createElement("a");
+    a.target = "_blank"; a.rel = "noopener noreferrer";
+    var data = newsByWord[word().term];
+    a.href = data ? data.url : "https://news.google.com/search?q=" + encodeURIComponent('"' + word().term + '" court law');
+    a.textContent = data ? data.title + " ↗" : "Find reporting related to " + word().term + " ↗";
+    section.append(p, a);
+    section.hidden = false;
+  }
+  function renderLearn() {
+    $("learn-category").textContent = word().category || "Legal term";
+    $("learn-term").textContent = word().term;
+    $("learn-definition").textContent = word().definition || "";
+    $("learn-memory").textContent = word().memory || "";
+    $("learn-example").textContent = word().examples && word().examples.length ? word().examples[0] : "Use this term precisely in your answer.";
+    renderNews();
+  }
+  function renderCompare() {
+    var w = word();
+    $("compare-left-term").textContent = w.term;
+    $("compare-left-meaning").textContent = w.compareSelf || w.definition;
+    var genuine = w.compareTerm && !["Answer use", "Examiner expects"].includes(w.compareTerm);
+    if (genuine) {
+      $("compare-right-term").textContent = w.compareTerm;
+      $("compare-right-meaning").textContent = w.compareOther || "";
+      $("compare-rule").textContent = w.compareRule || "Compare the two legal concepts.";
+    } else {
+      var related = similarWords()[0];
+      $("compare-right-term").textContent = related ? related.w.term : "Related concept";
+      $("compare-right-meaning").textContent = related ? related.w.definition : "Additional comparisons will be added.";
+      $("compare-rule").textContent = "Related vocabulary in the same subject area. Compare their meanings; they are not necessarily opposites.";
+    }
+  }
+  function renderMode() {
+    if (mode === "game") renderGame();
+    if (mode === "learn") renderLearn();
+    if (mode === "compare") renderCompare();
+  }
+  function reviewQueue() {
+    var p = progress();
+    var area = $("study-review-terms");
+    area.replaceChildren();
+    if (!p || !p.difficult.size) {
+      var blank = document.createElement("p");
+      blank.textContent = "No words marked for revision yet.";
+      area.appendChild(blank);
+    } else {
+      Array.from(p.difficult).filter(function (idx) { return idx >= 0 && idx < WORDS.length; }).forEach(function (idx) {
+        var button = document.createElement("button");
+        button.type = "button"; button.textContent = WORDS[idx].term;
+        button.addEventListener("click", function () { $("study-review-list").hidden = true; $("review-toggle").setAttribute("aria-expanded", "false"); selectWord(idx, "learn"); });
+        area.appendChild(button);
+      });
+    }
+  }
+  function mark(forRevision) {
+    var p = progress();
+    if (p) {
+      if (forRevision) {
+        p.difficult.add(selected); p.learned.delete(selected); p.streak = 0;
+      } else {
+        var first = !p.learned.has(selected);
+        p.learned.add(selected); p.difficult.delete(selected);
+        if (first) p.score += 10;
+        p.streak++;
+      }
+      updateProgress();
+    }
+    nextWord();
+  }
+  document.querySelectorAll("#words-view [data-mode]").forEach(function (button) {
+    button.addEventListener("click", function () { setMode(button.dataset.mode); });
   });
-  clear.addEventListener("click",function(){input.value="";card.hidden=true;search();input.focus();});
-
-  document.getElementById("quick-word-detail").addEventListener("click",function(){
-    more.hidden=!more.hidden;
-    this.textContent=more.hidden?"More details":"Less details";
-    this.setAttribute("aria-expanded",String(!more.hidden));
+  document.querySelectorAll("#words-view [data-game]").forEach(function (button) {
+    button.addEventListener("click", function () { gameType = button.dataset.game; if (mode !== "game") setMode("game"); else { renderGame(); animate(); } });
   });
-  document.getElementById("quick-word-speak").addEventListener("click",function(){
-    if (!active || !("speechSynthesis" in window)) return;
+  $("study-search").addEventListener("input", runSearch);
+  $("study-search").addEventListener("keydown", function (event) {
+    if (event.key === "Escape") { hideSearch(); this.blur(); }
+    if (event.key === "Enter") { var first = $("study-results").querySelector("button"); if (first) { event.preventDefault(); first.click(); } }
+  });
+  $("study-clear").addEventListener("click", function () { $("study-search").value = ""; hideSearch(); this.hidden = true; $("study-search").focus(); });
+  $("study-next").addEventListener("click", nextWord);
+  $("word-got").addEventListener("click", function () { mark(false); });
+  $("word-revise").addEventListener("click", function () { mark(true); });
+  $("review-toggle").addEventListener("click", function () {
+    var list = $("study-review-list"); list.hidden = !list.hidden;
+    this.setAttribute("aria-expanded", String(!list.hidden));
+    if (!list.hidden) { reviewQueue(); list.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
+  });
+  $("learn-listen").addEventListener("click", function () {
+    if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
-    var speech=new SpeechSynthesisUtterance(active.term);
-    speech.lang="en-IN";speech.rate=.85;window.speechSynthesis.speak(speech);
+    var speech = new SpeechSynthesisUtterance(word().term);
+    speech.lang = "en-IN"; speech.rate = 0.85;
+    window.speechSynthesis.speak(speech);
   });
+  selectWord(selected, "game");
 })();
