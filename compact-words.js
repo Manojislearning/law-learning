@@ -172,7 +172,7 @@
       wrapper.append(hint,entry,check);options.appendChild(wrapper);
       wrapper.addEventListener("submit",function(e){
         e.preventDefault();if(!round)return;
-        var match=entry.value.trim().replace(/\\s+/g," ").toLocaleLowerCase()===picked.term.toLocaleLowerCase();
+        var match=entry.value.trim().replace(/\s+/g," ").toLocaleLowerCase()===picked.term.toLocaleLowerCase();
         if(match){correctCount++;try{localStorage.setItem("law-word-game-score",String(correctCount));}catch(e){}}
         document.getElementById("game-feedback").textContent=match?"Correct spelling! +1":"Correct spelling: "+picked.term;
         document.getElementById("game-term").textContent=picked.term;
