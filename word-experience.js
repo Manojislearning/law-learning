@@ -44,7 +44,10 @@ var article={
 "Petitioner":["Supreme Court rejects Vodafone Idea's petition (2025)","The petitioner approached the court seeking relief.","https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/"],
 "Review petition":["Supreme Court pauses liquidation while review is sought (2025)","A review petition was planned against an earlier ruling.","https://www.reuters.com/world/india/indias-top-court-orders-status-quo-liquidation-proceedings-bhushan-power-2025-05-26/"],
 "Review":["Supreme Court pauses liquidation while review is sought (2025)","Review asks the court to revisit an earlier decision.","https://www.reuters.com/world/india/indias-top-court-orders-status-quo-liquidation-proceedings-bhushan-power-2025-05-26/"],
-"Injunction":["US bill raised questions about enforcing injunctions (2025)","The reporting explains judicial injunctions and enforcement.","https://www.reuters.com/world/us/trumps-sweeping-tax-cut-bill-includes-provision-weaken-court-powers-2025-05-30/"]
+"Injunction":["US bill raised questions about enforcing injunctions (2025)","The reporting explains judicial injunctions and enforcement.","https://www.reuters.com/world/us/trumps-sweeping-tax-cut-bill-includes-provision-weaken-court-powers-2025-05-30/"],
+"Reservation":["Supreme Court permits SC/ST reservation sub-classification (2024)","A landmark ruling on reservations and equality.","https://indianexpress.com/article/explained/explained-law/explained-sub-classification-of-sc-st-9489996/lite/"],
+"Benefit of doubt":["Court acquits accused after prosecution failed to prove charges (2026)","A reported case illustrating how the benefit of reasonable doubt affects acquittal.","https://indianexpress.com/article/legal-news/allahabad-high-court-84-year-old-pocso-case-benefit-of-doubt-10798601/"],
+"Acquittal":["Court acquits accused after prosecution failed to prove charges (2026)","An acquittal after examining whether the criminal charge was proven.","https://indianexpress.com/article/legal-news/allahabad-high-court-84-year-old-pocso-case-benefit-of-doubt-10798601/"]
 };
 var lookup=new Map(WORDS.map(function(w,i){return[w.term.toLowerCase(),i]}));
 function w(){return WORDS[index];}
@@ -147,7 +150,8 @@ function renderDeck(){
  if(cardIndex===7){
  title(box,"Use it in a sentence");
  var example=(word.examples||[]).find(function(x){return lower(x).includes(lower(word.term));});
- var context=example?example.replace(word.term,"_____"):"A legal issue involves: "+word.definition;
+ var pos=example?lower(example).indexOf(lower(word.term)):-1;
+ var context=pos>=0?example.slice(0,pos)+"_____"+example.slice(pos+word.term.length):"Choose the legal term for this situation: "+word.definition;
  p(box,context);small(box,"Select the missing legal term.");options(box,word.term,wrongWords().map(function(x){return x.term;}));
  }
  if(cardIndex===8){
