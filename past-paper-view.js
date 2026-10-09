@@ -37,9 +37,10 @@ function marked(parent,text){
   });
   if(!found){parent.appendChild(document.createTextNode(text.slice(start)));break;}
   if(found.at>start)parent.appendChild(document.createTextNode(text.slice(start,found.at)));
-  var button=B(parent,text.slice(found.at,found.at+found.term.length),function(){
-   if(window.openLawWord)window.openLawWord(found.term,"game");else location.hash="words";
-  },"exam-term");button.title="Practise "+found.term+" in the word game";
+  var selectedTerm=found.term;
+  var button=B(parent,text.slice(found.at,found.at+selectedTerm.length),function(){
+   if(window.openLawWord)window.openLawWord(selectedTerm,"game");else location.hash="words";
+  },"exam-term");button.title="Practise "+selectedTerm+" in the word game";
   start=found.at+found.term.length;n++;
  }
 }
