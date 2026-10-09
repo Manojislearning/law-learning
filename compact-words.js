@@ -46,7 +46,7 @@
     @media(max-width:480px){.quick-search{width:100%;min-width:0}.quick-search-wrap{width:100%}#quick-word-input{min-width:0;font-size:16px}.quick-search-trigger{flex:none}}
 
 
-    .quick-words { max-width: 640px; margin: 22px auto; }
+    .quick-words { max-width: 640px; margin: 12px auto; }
     .quick-words h2 { margin: 0 0 5px; font-size: clamp(1.6rem,6vw,2.3rem); }
     .quick-words .quick-caption { color: var(--muted); font-size: .86rem; margin-bottom: 24px; }
     .quick-search { display:flex; align-items:center; gap:10px; padding: 5px 14px; border: 1px solid var(--line); border-radius:17px; background:#fff; box-shadow:0 8px 30px rgba(13,19,33,.05); }
@@ -79,8 +79,6 @@
   var shell = document.createElement("div");
   shell.className = "quick-words";
   shell.innerHTML =
-    '<h2>Words</h2>' +
-    '<p class="quick-caption">Learn one word at a time.</p>' +
     '<div class="quick-search-wrap"><div class="quick-search" role="search">' +
       '<span class="quick-search-trigger" aria-hidden="true">⌕</span>' +
       '<input id="quick-word-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search legal words…" aria-label="Search legal vocabulary" aria-controls="quick-word-results" aria-expanded="false">' +
@@ -89,7 +87,7 @@
     '<div id="quick-word-results" role="listbox" aria-label="Matching words" hidden></div>' +
     '<div class="quick-mode"><button type="button" id="quick-mode-game" class="active">Word game</button><button type="button" id="quick-mode-study">Learn words</button></div>' +
     '<section id="quick-game"><div id="game-question" class="game-question"><div class="game-meta"><span>Choose the correct meaning</span><span id="game-score">0 correct</span></div><h3 class="game-term" id="game-term"></h3><div class="game-options" id="game-options"></div><p class="game-feedback" id="game-feedback" aria-live="polite"></p><button class="game-next" id="game-next" type="button" hidden>Next word →</button></div></section>' +
-    '<section id="quick-study" hidden><button class="game-next" id="quick-random" type="button">Show a word →</button></section>' +
+    '<section id="quick-study" hidden><button class="game-next" id="quick-random" type="button">Next word →</button></section>' +
     '<article id="quick-word-card" aria-live="polite" hidden>' +
       '<span class="quick-tag" id="quick-word-category">Legal term</span>' +
       '<h3 id="quick-word-title"></h3>' +
@@ -121,7 +119,7 @@
     card.hidden=true;
   }
   gameMode.addEventListener("click",function(){mode("game");});
-  studyMode.addEventListener("click",function(){mode("study");});
+  studyMode.addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
   document.getElementById("quick-random").addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
   var correctCount = 0, round = null, roundNumber = 0;
   try { correctCount = Number(localStorage.getItem("law-word-game-score")) || 0; } catch(e){}
