@@ -37,7 +37,7 @@ function marked(parent,text){
   });
   if(!found){parent.appendChild(document.createTextNode(text.slice(start)));break;}
   if(found.at>start)parent.appendChild(document.createTextNode(text.slice(start,found.at)));
-  var selectedTerm=found.term;
+  let selectedTerm=found.term;
   var button=B(parent,text.slice(found.at,found.at+selectedTerm.length),function(){
    if(window.openLawWord)window.openLawWord(selectedTerm,"game");else location.hash="words";
   },"exam-term");button.title="Practise "+selectedTerm+" in the word game";
