@@ -1,15 +1,17 @@
-const CACHE = "law-learning-v24";
+/* Network-first application worker: keep user data in localStorage, never cache stale navigations. */
+const CACHE = "law-learning-v25";
 const ASSETS = [
   "./",
   "./index.html",
+  "./refresh.html",
   "./styles.css?v=14",
-  "./app.js?v=24",
-  "./word-experience.js?v=24",
-  "./syllabus-flow.js?v=24",
-  "./subjects-library.js?v=24",
-  "./comparison-guide.js?v=24",
-  "./past-paper-data.js?v=24",
-  "./past-paper-view.js?v=24",
+  "./app.js?v=25",
+  "./word-experience.js?v=25",
+  "./syllabus-flow.js?v=25",
+  "./subjects-library.js?v=25",
+  "./comparison-guide.js?v=25",
+  "./past-paper-data.js?v=25",
+  "./past-paper-view.js?v=25",
   "./exam-words-1.js",
   "./exam-words-2.js",
   "./exam-words-3.js",
@@ -19,41 +21,46 @@ const ASSETS = [
 ];
 
 self.addEventListener("install", function(event) {
-  event.waitUntil(caches.open(CACHE).then(function(cache) { return cache.addAll(ASSETS); }));
-  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE).then(function(cache) {
+      return cache.addAll(ASSETS);
+    }).then(function() { return self.skipWaiting(); })
+  );
 });
 
 self.addEventListener("activate", function(event) {
   event.waitUntil(
-    caches.keys()
-      .then(function(keys) {
-        return Promise.all(keys.filter(function(key) { return key !== CACHE; }).map(function(key) { return caches.delete(key); }));
-      })
-      .then(function() {
-        return self.clients.claim();
-      })
-      .then(function() {
-        return self.clients.matchAll({ type: "window" });
-      })
-      .then(function(clients) {
-        clients.forEach(function(client) {
-          if (client.url) client.navigate(client.url);
-        });
-      })
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.filter(function(key) {
+        return key.startsWith("law-learning-") && key !== CACHE;
+      }).map(function(key) { return caches.delete(key); }));
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
 });
 
 self.addEventListener("fetch", function(event) {
   if (event.request.method !== "GET") return;
+  var url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
+
   event.respondWith(
-    fetch(event.request).then(function(response) {
-      var copy = response.clone();
-      caches.open(CACHE).then(function(cache) { cache.put(event.request, copy); });
-      return response;
-    }).catch(function() {
-      return caches.match(event.request).then(function(cached) {
-        return cached || caches.match("./index.html");
-      });
-    })
+    fetch(event.request, { cache: "no-store" })
+      .then(function(response) {
+        if (response.ok) {
+          var copy = response.clone();
+          event.waitUntil(caches.open(CACHE).then(function(cache) {
+            return cache.put(event.request, copy);
+          }));
+        }
+        return response;
+      }).catch(function() {
+        return caches.match(event.request).then(function(cached) {
+          if (cached) return cached;
+          if (event.request.mode === "navigate") return caches.match("./index.html");
+          return Response.error();
+        });
+      })
   );
 });
