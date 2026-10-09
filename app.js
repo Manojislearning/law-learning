@@ -905,6 +905,7 @@ function setupNavigation() {
   var sectionNames = {
     words: ["Legal vocabulary", "Words"],
     syllabus: ["KSLU · 3-Year LL.B", "Syllabus"],
+    subjects: ["KSLU · Legal concepts", "Subjects"],
     exam: ["Exam preparation", "Exam Pattern"],
     papers: ["Previous year questions", "Old Papers"],
     notes: ["Personal study space", "Notes"],
