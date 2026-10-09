@@ -15,11 +15,11 @@
     #quick-word-card:not([hidden]), .game-question.animated {animation:wordEnter .42s cubic-bezier(.18,.7,.2,1) both;}
     .quick-result {animation:resultEnter .22s ease both;}
     @media (prefers-reduced-motion:reduce) { #quick-word-card:not([hidden]),.game-question.animated,.quick-result {animation:none !important} }
-    .quick-search-wrap {display:flex;align-items:center;gap:10px;margin-bottom:18px;justify-content:flex-end;}
-    .quick-search {width:44px;min-height:38px;padding:0 11px;border-radius:14px;transition:width .3s ease;overflow:hidden;}
-    .quick-search.expanded {width:100%;}
+    .quick-search-wrap {display:block;width:100%;margin-bottom:18px;}
+    .quick-search {width:100%;min-height:40px;padding:0 12px;border-radius:13px;transition:box-shadow .2s ease;overflow:hidden;}
+    .quick-search.expanded {width:100%;box-shadow:0 0 0 2px rgba(13,19,33,.06);}
     .quick-search-trigger {border:0;background:none;color:var(--text);font-size:1.2rem;padding:0;cursor:pointer;min-width:20px;}
-    #quick-word-input {min-height:38px;font-size:.88rem;min-width:0;width:0;opacity:0;pointer-events:none;transition:opacity .2s ease;}
+    #quick-word-input {min-height:38px;font-size:.88rem;min-width:0;width:auto;opacity:1;pointer-events:auto;transition:opacity .2s ease;}
     .quick-search.expanded #quick-word-input {opacity:1;pointer-events:auto;width:auto;}
     .quick-mode {display:flex;gap:8px;margin:0 0 18px;}
     .quick-mode button {border:1px solid var(--line);border-radius:12px;background:white;padding:10px 16px;font:inherit;font-weight:750;cursor:pointer;}
@@ -37,6 +37,14 @@
     .game-next {margin-top:9px;padding:12px 20px;background:var(--text);color:white;border:0;border-radius:12px;font:inherit;font-weight:750;}
     .game-next[hidden] {display:none!important;}
     .quick-search-wrap + #quick-word-results {margin-bottom:15px;}
+    .game-spelling {display:grid;gap:10px;}
+    .game-spelling input {height:46px;min-width:0;width:100%;border:1px solid var(--line);border-radius:12px;padding:0 13px;font:inherit;font-size:1.12rem;letter-spacing:.05em;}
+    .game-spelling button {border:0;background:var(--text);color:#fff;border-radius:12px;padding:12px;font:inherit;font-weight:700;}
+    .word-news {margin-top:17px;border-top:1px solid var(--line);padding-top:14px;font-size:.84rem;line-height:1.45;}
+    .word-news p {margin:7px 0;}
+    .word-news a {color:#1a4f9c;text-decoration:underline;}
+    @media(max-width:480px){.quick-search{width:100%;min-width:0}.quick-search-wrap{width:100%}#quick-word-input{min-width:0;font-size:16px}.quick-search-trigger{flex:none}}
+
 
     .quick-words { max-width: 640px; margin: 22px auto; }
     .quick-words h2 { margin: 0 0 5px; font-size: clamp(1.6rem,6vw,2.3rem); }
@@ -74,7 +82,7 @@
     '<h2>Words</h2>' +
     '<p class="quick-caption">Learn one word at a time.</p>' +
     '<div class="quick-search-wrap"><div class="quick-search" role="search">' +
-      '<button type="button" id="quick-search-toggle" class="quick-search-trigger" aria-label="Open search" aria-expanded="false">⌕</button>' +
+      '<span class="quick-search-trigger" aria-hidden="true">⌕</span>' +
       '<input id="quick-word-input" type="search" autocomplete="off" spellcheck="false" placeholder="Search legal words…" aria-label="Search legal vocabulary" aria-controls="quick-word-results" aria-expanded="false">' +
       '<button id="quick-search-clear" type="button" aria-label="Clear search" hidden>×</button>' +
     '</div></div>' +
@@ -86,7 +94,7 @@
       '<span class="quick-tag" id="quick-word-category">Legal term</span>' +
       '<h3 id="quick-word-title"></h3>' +
       '<p id="quick-word-definition"></p>' +
-      '<div class="quick-actions"><button type="button" id="quick-word-speak">Listen</button><button type="button" id="quick-word-detail" aria-expanded="false">More details</button><button type="button" id="quick-word-close">Close card</button></div>' +
+      '<div class="quick-actions"><button type="button" id="quick-word-speak">Listen</button><button type="button" id="quick-word-detail" aria-expanded="false">More details</button></div><div id="quick-word-news" class="word-news"></div>' +
       '<div id="quick-word-more" hidden>' +
         '<span class="quick-label">Remember</span><p id="quick-word-memory"></p>' +
         '<span class="quick-label">Example</span><p id="quick-word-example"></p>' +
@@ -101,15 +109,6 @@
   var clear = document.getElementById("quick-search-clear");
   var active = null;
   var searchBox = shell.querySelector(".quick-search");
-  var searchToggle = document.getElementById("quick-search-toggle");
-  function setSearchExpanded(open) {
-    searchBox.classList.toggle("expanded", open);
-    searchToggle.setAttribute("aria-expanded", String(open));
-    searchToggle.setAttribute("aria-label", open ? "Close search" : "Open search");
-    if (open) input.focus();
-    else {input.value="";hideResults();clear.hidden=true;}
-  }
-  searchToggle.addEventListener("click",function(){setSearchExpanded(!searchBox.classList.contains("expanded"));});
   var game = document.getElementById("quick-game");
   var study = document.getElementById("quick-study");
   var gameMode = document.getElementById("quick-mode-game");
@@ -124,21 +123,64 @@
   gameMode.addEventListener("click",function(){mode("game");});
   studyMode.addEventListener("click",function(){mode("study");});
   document.getElementById("quick-random").addEventListener("click",function(){openWord(Math.floor(Math.random()*WORDS.length));});
-  var correctCount = 0, round = null;
+  var correctCount = 0, round = null, roundNumber = 0;
   try { correctCount = Number(localStorage.getItem("law-word-game-score")) || 0; } catch(e){}
   function shuffle(a) { for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
+  function hideLetters(term){
+    var letters=0;
+    return Array.from(term).map(function(c,i){
+      if(!/[a-z]/i.test(c))return c;
+      letters++;
+      return i%3===1 || i%4===0 ? "＿":c;
+    }).join("");
+  }
+  var verifiedNews={
+    "Appeal":{title:"US Supreme Court to hear appeal over prolonged immigration detention",date:"15 June 2026",url:"https://www.reuters.com/world/supreme-court-hear-trump-appeal-involving-lengthy-detention-certain-immigrants-2026-06-15/",note:"A real example of an appeal challenging a lower-court decision."},
+    "Bail":{title:"US Supreme Court to review detention without bond hearings",date:"15 June 2026",url:"https://www.reuters.com/world/supreme-court-hear-trump-appeal-involving-lengthy-detention-certain-immigrants-2026-06-15/",note:"The case concerns access to release hearings, an issue closely related to bail."},
+    "Petitioner":{title:"India's Supreme Court rejects Vodafone Idea's petition",date:"19 May 2025",url:"https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/",note:"Vodafone Idea sought relief by petitioning the Supreme Court."},
+    "Petition":{title:"India's Supreme Court rejects Vodafone Idea's petition",date:"19 May 2025",url:"https://www.reuters.com/world/india/india-top-court-rejects-vodafone-ideas-petition-india-waive-telecom-dues-2025-05-19/",note:"A real-life example of a legal petition."}
+  };
+  function renderNews(word){
+    var target=document.getElementById("quick-word-news");target.replaceChildren();
+    var heading=document.createElement("strong");heading.textContent="In real news";target.appendChild(heading);
+    var data=verifiedNews[word.term];
+    var p=document.createElement("p"),link=document.createElement("a");
+    link.target="_blank";link.rel="noopener noreferrer";
+    if(data){p.textContent=data.note+" ("+data.date+")";link.href=data.url;link.textContent=data.title;}
+    else {p.textContent="Explore current reporting using this legal term.";link.href="https://news.google.com/search?q="+encodeURIComponent('"'+word.term+'" law court');link.textContent="Find news featuring "+word.term+" ↗";}
+    target.append(p,link);
+  }
   function nextRound() {
     var choices = WORDS.filter(function(w){return w.term && w.definition;});
     if(choices.length<4) return;
     var picked = choices[Math.floor(Math.random()*choices.length)];
     var distractors = shuffle(choices.filter(function(w){return w.term!==picked.term && w.definition!==picked.definition;})).slice(0,3);
     round=picked;
-    document.getElementById("game-term").textContent=picked.term;
+    roundNumber++;
+    var spelling=roundNumber%2===0;
+    document.getElementById("game-term").textContent=spelling ? hideLetters(picked.term) : picked.term;
+    document.querySelector(".game-meta span").textContent=spelling?"Fill in the missing letters":"Choose the correct meaning";
     document.getElementById("game-score").textContent=correctCount+" correct";
     document.getElementById("game-feedback").textContent="";
     document.getElementById("game-next").hidden=true;
     var options=document.getElementById("game-options");options.replaceChildren();
-    shuffle([picked].concat(distractors)).forEach(function(w){
+    if(spelling){
+      var wrapper=document.createElement("form");wrapper.className="game-spelling";
+      var hint=document.createElement("p");hint.textContent=picked.definition;hint.style.margin="0 0 4px";
+      var entry=document.createElement("input");entry.type="text";entry.autocomplete="off";entry.spellcheck=false;entry.setAttribute("aria-label","Type the complete legal word");entry.placeholder="Type the complete word";
+      var check=document.createElement("button");check.type="submit";check.textContent="Check spelling";
+      wrapper.append(hint,entry,check);options.appendChild(wrapper);
+      wrapper.addEventListener("submit",function(e){
+        e.preventDefault();if(!round)return;
+        var match=entry.value.trim().replace(/\\s+/g," ").toLocaleLowerCase()===picked.term.toLocaleLowerCase();
+        if(match){correctCount++;try{localStorage.setItem("law-word-game-score",String(correctCount));}catch(e){}}
+        document.getElementById("game-feedback").textContent=match?"Correct spelling! +1":"Correct spelling: "+picked.term;
+        document.getElementById("game-term").textContent=picked.term;
+        document.getElementById("game-score").textContent=correctCount+" correct";
+        entry.disabled=true;check.disabled=true;
+        document.getElementById("game-next").hidden=false;round=null;
+      });
+    }else shuffle([picked].concat(distractors)).forEach(function(w){
       var b=document.createElement("button");b.className="game-choice";b.type="button";b.textContent=w.definition;
       b.addEventListener("click",function(){
         if(!round) return;
@@ -172,6 +214,7 @@
     document.getElementById("quick-word-example").textContent = (active.examples && active.examples[0]) || "";
     input.value = active.term;
     clear.hidden = false;
+    renderNews(active);
     hideResults();
     more.hidden = true;
     document.getElementById("quick-word-detail").textContent = "More details";
@@ -222,7 +265,7 @@
     }
   });
   clear.addEventListener("click",function(){input.value="";card.hidden=true;search();input.focus();});
-  document.getElementById("quick-word-close").addEventListener("click",function(){card.hidden=true;input.value="";search();input.focus();});
+
   document.getElementById("quick-word-detail").addEventListener("click",function(){
     more.hidden=!more.hidden;
     this.textContent=more.hidden?"More details":"Less details";
