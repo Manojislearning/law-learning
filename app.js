@@ -910,6 +910,7 @@ function setupNavigation() {
     exam: ["Exam preparation", "Exam Pattern"],
     papers: ["Previous year questions", "Old Papers"],
     notes: ["Personal study space", "Notes"],
+    profile: ["Local learning profile", "Profile"],
     links: ["Karnataka · Official resources", "Important Links"]
   };
 
