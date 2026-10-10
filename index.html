@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="26" />
+  <meta name="app-version" content="27" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -55,12 +55,12 @@
             <p>Explore Torts, Hindu Law, Contract Law and every LL.B subject by its core concepts.</p>
             <span class="home-arrow">→</span>
           </button>
-          <button class="home-card" data-open="brainmap" type="button">
+          <a class="home-card" href="./brain-map.html" style="text-decoration:none;color:inherit;">
             <span class="home-index">04</span>
             <strong>Brain Map</strong>
             <p>Explore Negligence through connected, expandable legal concepts and cases.</p>
             <span class="home-arrow">→</span>
-          </button>
+          </a>
           <button class="home-card" data-open="exam" type="button">
             <span class="home-index">05</span>
             <strong>Exam Pattern</strong>
@@ -86,7 +86,7 @@
             <span class="home-arrow">→</span>
           </button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 26 · <a href="./refresh.html?build=26" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 27 · <a href="./refresh.html?build=27" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="words-view" class="main-view">
         <div class="section-head compact">
@@ -310,7 +310,7 @@
 
       <section id="subjects-view" class="main-view"><div id="subject-library"></div></section>
 
-      <section id="brainmap-view" class="main-view"><div id="brain-map-panel"></div></section>
+      <section id="brainmap-view" class="main-view"><div class="content-card" style="padding:20px"><h2>Brain Map</h2><p>Open the complete Negligence concept map with expandable branches.</p><a href="./brain-map.html" class="btn primary" style="display:inline-block;text-decoration:none">Open Brain Map →</a></div></section>
 
       <section id="papers-view" class="main-view">
         <div class="section-head">
@@ -402,7 +402,7 @@
   <script src="./word-experience.js?v=25"></script>
   <script src="./syllabus-flow.js?v=25"></script>
   <script src="./subjects-library.js?v=26"></script>
-  <script src="./brain-map.js?v=1"></script>
+  <!-- The standalone Brain Map is opened from its own page. -->
   <script src="./comparison-guide.js?v=25"></script>
   <script src="./past-paper-data.js?v=25"></script>
   <script src="./past-paper-view.js?v=25"></script>
