@@ -36,6 +36,11 @@ Mobile-first, installable Progressive Web App (PWA) for studying law, KSLU LL.B.
 6. **Important Links**
    - KSLU, courts, India Code, Bar Council and other official student/legal resources
 
+7. **Brain Map — Negligence (Law of Torts)**
+   - Expandable connected branches for legal meaning, elements, proof, possible defences, cases, examples and exam-answer structure
+   - Mobile-friendly right-angle connectors, without an inner branch scrollbar
+   - Official Supreme Court judgment links and a shortcut from Subjects → Law of Torts
+
 ## Run locally
 
 Open `index.html` with a local web server. Service workers require HTTP/HTTPS, so for full PWA behavior use GitHub Pages or another local server.
