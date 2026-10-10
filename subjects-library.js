@@ -43,7 +43,7 @@ function subjectRows(){
 function subjectPage(){
  var bar=E(pane,"div",undefined,"sb-top");B(bar,"←",navBack,"sb-back");var head=E(bar,"div");E(head,"p","Semester "+current.sem,"sb-kicker");E(head,"h2",selected(),"sb-title");
  E(pane,"p",current.sem===1?"Select a verified syllabus unit to explore its fundamental concepts.":"These are foundation concepts for study. Official detailed unit headings are not yet imported.","sb-intro");
- if(/Law of Torts/i.test(selected()))B(pane,"Open Negligence Brain Map →",function(){location.hash="brainmap";},"sb-back");
+ if(/Law of Torts/i.test(selected()))B(pane,"Open Negligence Brain Map →",function(){location.assign("./brain-map.html");},"sb-back");
  if(current.sem===1){
   KSLU_FIRST_SEMESTER.courses[current.i].units.forEach(function(unit,i){
    var card=E(pane,"div",undefined,"sb-concept");E(card,"h3",unit.unit+" — "+unit.title);
