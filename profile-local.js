@@ -76,5 +76,7 @@ $("profile-import-file").addEventListener("change",async function(){
   window.location.reload();
  }catch(e){status("Import failed: "+e.message);}
 });
+var open=document.getElementById("profile-open");
+if(open)open.addEventListener("click",function(){location.hash="profile";});
 loadFields();
 })();
