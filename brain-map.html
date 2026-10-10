@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+  <meta name="theme-color" content="#0d1321" />
+  <meta name="description" content="Interactive Law of Torts concept branches in Learning Law"/>
+  <title>Brain Map · Learning Law</title>
+  <link rel="stylesheet" href="./styles.css?v=14" />
+  <link rel="stylesheet" href="./brain-map.css?v=1" />
+  <style>
+    body { min-height: 100vh; }
+    .bm-page-head { display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 25px;padding:4px 0 16px;border-bottom:1px solid var(--line); }
+    .bm-page-head a { text-decoration:none;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 13px;font-size:.86rem;font-weight:750; }
+    .bm-page-head strong { margin-left:auto;font-size:.94rem; }
+    .bm-page-foot { padding:28px 0;color:var(--muted);font-size:.78rem; }
+    .bm-page-foot a { color:#225b91; }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <nav class="bm-page-head" aria-label="Brain Map navigation">
+      <a href="./index.html?build=27#home">← Learning Law</a>
+      <strong>Brain Map</strong>
+    </nav>
+    <main id="brain-map-panel">
+      <h1>Brain Map · Negligence</h1>
+      <p>Loading your law concept branches…</p>
+    </main>
+    <footer class="bm-page-foot">
+      <a href="./refresh.html?build=27">Refresh Learning Law app</a> · Build 27
+    </footer>
+  </div>
+  <script>
+    document.getElementById("brain-map-panel").replaceChildren();
+  </script>
+  <script src="./brain-map.js?v=1"></script>
+</body>
+</html>
