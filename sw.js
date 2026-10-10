@@ -1,14 +1,15 @@
 /* Network-first application worker: keep user data in localStorage, never cache stale navigations. */
-const CACHE = "law-learning-v27";
+const CACHE = "law-learning-v28";
 const ASSETS = [
   "./",
   "./index.html",
+  "./profile-local.js?v=28",
   "./refresh.html",
   "./styles.css?v=14",
   "./brain-map.css?v=1",
   "./brain-map.js?v=1",
   "./brain-map.html",
-  "./app.js?v=26",
+  "./app.js?v=28",
   "./word-experience.js?v=25",
   "./syllabus-flow.js?v=25",
   "./subjects-library.js?v=26",
