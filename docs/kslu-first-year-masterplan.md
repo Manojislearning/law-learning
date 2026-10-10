@@ -76,8 +76,8 @@ Status legend: PLANNED means not implemented. Checkpoint requires a tested accep
 
 ### Wave A — trust and architecture (must ship first)
 
-1. **A1 Repository quality gate (IN PROGRESS).** Node syntax checks, referenced-file checks, service-worker assets, data-schema checks. Build fails on missing script or duplicate routes.
-2. **A2 Backups and migration (PLANNED).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
+1. **A1 Repository quality gate (INITIAL CHECKS PASSING).** Node syntax checks, referenced-file checks, service-worker assets, data-schema checks. Build fails on missing script or duplicate routes.
+2. **A2 Backups and migration (PARTLY SHIPPED: local export/import; data migrations pending).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
 3. **A3 Decompose app safely (PLANNED).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
 4. **A4 Content source ledger (PLANNED).** Stable content ID, syllabus year, unit, Act/section, case citation, source link, verified date, reviewer, correction record.
 
@@ -118,7 +118,7 @@ Status legend: PLANNED means not implemented. Checkpoint requires a tested accep
 
 ### Wave G — identity, privacy and personalisation
 
-25. **G1 Local-first profile (PLANNED).** Optional nickname, study language, semester, daily goal, fonts, reduced-motion and reminders; no login required.
+25. **G1 Local-first profile (PARTLY SHIPPED: nickname, goal, language preference, text size and reduced motion).** Optional nickname, study language, semester, daily goal, fonts, reduced-motion and reminders; no login required.
 26. **G2 Strong optional accounts (PLANNED; REQUIRES BACKEND).** Managed identity with verified email/passkeys or safely implemented password flow, account recovery, session limits and MFA where supported.
 27. **G3 Sync and security (PLANNED; REQUIRES BACKEND).** Least-privilege server access, row-level per-user rules, TLS, secure cookies/tokens, rate limiting, backups, auditing and erasure/export controls. Never publish backend secrets in GitHub.
 28. **G4 Fair motivation and preferences (PLANNED).** Achievements tied to comprehension, streak-free mode, quiet reminders and private progress by default.
@@ -209,5 +209,5 @@ When a real backend exists:
 
 ## Immediate implementation order
 
-**First commit**: this auditable master plan plus automated source, asset and data checks.
-Then **A2 → A3 → A4**, with data export and source validation, before designing the unified Today screen and spaced-review engine.
+**Initial foundation shipped:** master plan; passing GitHub Actions syntax, asset, navigation, word, syllabus and answer checks; and local-only profile with progress/notes export and confirmed import.
+**Next:** A2 versioned migrations → A3 modular architecture → A4 reviewed content ledger. Then deliver the unified Today screen and spaced-review engine. GitHub Pages publication and automated source checks do not replace real-device functional testing.
