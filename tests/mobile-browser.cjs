@@ -346,30 +346,42 @@ async function run(){
     assert.equal(errors.length,0,"News browser errors: "+errors.join("; "));
     await context.close();
    }
-   // Readability and two word levels: actual Chromium on narrow viewports.
+   // v62: chooser, definition first, static progress and inline spelling on narrow screens.
    for(const width of [320,390,768]){
     const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
-    const page=await context.newPage(),errors=[];page.on("pageerror",err=>errors.push(err.message));
-    await page.goto(address.replace("v=43#practice","v=58#words"),{waitUntil:"load"});
-    const levels=page.locator(".w-level");
-    assert.equal(await levels.count(),2,"Legal and Difficult Words choices should be visible");
-    assert.ok((await page.locator("#w-level-position").innerText()).includes("415"));
-    const advanced=levels.filter({hasText:"Difficult Words"});
+    const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+    await page.goto(address.replace("v=43#practice","v=62#words"),{waitUntil:"load"});
+    assert.equal(await page.locator("#w-chooser .w-level").count(),2);
+    assert.equal(await page.locator("#w-practice").isHidden(),true);
+    const advanced=page.locator('#w-chooser [data-wlevel="advanced"]');
     const bounds=await advanced.boundingBox();
-    assert.ok(bounds&&bounds.width>100&&bounds.height>=44&&bounds.x>=0&&bounds.x+bounds.width<=width+1,"Advanced level button is not accessible at "+width+"px");
+    assert.ok(bounds&&bounds.width>100&&bounds.height>=44&&bounds.x>=-1&&bounds.x+bounds.width<=width+1);
     await advanced.tap();
+    assert.equal(await page.locator("#w-practice").isVisible(),true);
     assert.ok((await page.locator("#w-level-position").innerText()).includes("115"));
     assert.ok((await page.locator("#w-deck").innerText()).includes("Cogent"));
+    assert.ok((await page.locator("#w-deck").innerText()).includes("Convincing because"));
+    assert.equal(await page.locator("#w-game input[type=range]").count(),0);
+    assert.equal(await page.locator("#w-progress").count(),1);
     await page.locator("#w-forward").tap();
-    assert.ok((await page.locator("#w-deck").innerText()).includes("law answer"),"Writing example should be visible");
-    const sizes=await page.evaluate(()=>{
-      const selectors=["#w-level-position",".w-level.active strong","#w-deck .w-p"];
-      return selectors.map(s=>{const n=document.querySelector(s);return {selector:s,size:parseFloat(getComputedStyle(n).fontSize),right:n.getBoundingClientRect().right};});
-    });
-    assert.ok(sizes.every(x=>x.size>=16&&x.right<=width+1),width+"px font too small or text overflowing "+JSON.stringify(sizes));
-    await page.locator(".w-level").filter({hasText:"Legal Words"}).tap();
-    assert.ok((await page.locator("#w-level-position").innerText()).includes("415"),"Level switch must retain original legal words");
-    assert.equal(errors.length,0,"Word game v58 browser errors at "+width+"px: "+errors.join("; "));
+    assert.ok((await page.locator("#w-deck").innerText()).includes("law answer"));
+    await page.locator("#w-forward").tap();
+    assert.equal(await page.locator("#w-progress").getAttribute("aria-valuenow"),"3");
+    assert.equal(await page.locator("#w-deck .w-spell-blank").count(),2);
+    assert.ok(!(await page.locator("#w-deck").innerText()).includes("Convincing because"));
+    await page.locator("#w-deck .w-spell-blank").nth(0).fill("o");
+    await page.locator("#w-deck .w-spell-blank").nth(1).fill("n");
+    await page.locator("#w-deck .w-spell-form button[type=submit]").tap();
+    assert.ok((await page.locator("#w-deck").innerText()).includes("Correct spelling."));
+    const rect=await page.locator("#w-deck .w-inline-spelling").boundingBox();
+    assert.ok(rect&&rect.x>=-1&&rect.x+rect.width<=width+1,width+"px inline spelling overflows");
+    await page.locator("#w-change-level").tap();
+    assert.equal(await page.locator("#w-chooser").isVisible(),true);
+    await page.locator('#w-chooser [data-wlevel="legal"]').tap();
+    assert.ok((await page.locator("#w-level-position").innerText()).includes("415"));
+    await page.locator("#back-home").tap();
+    assert.equal(await page.locator("#w-chooser").isVisible(),true);
+    assert.equal(errors.length,0,"Words browser errors "+width+": "+errors.join("; "));
     await context.close();
    }
    // KSLU exam v59: 16 question navigation, readable answer copy and touch controls.
@@ -399,7 +411,7 @@ async function run(){
     assert.equal(errors.length,0,"Exam reader browser errors "+width+"px: "+errors.join("; "));
     await context.close();
    }
-   // Student hub v60: a single Home tile with four comfortably tappable study destinations.
+   // Student hub v62: seven title-only study entries and contextual Back navigation.
    for(const width of [320,390,768]){
     const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
     const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
@@ -410,13 +422,13 @@ async function run(){
     await page.waitForURL(/#student$/);
     const student=page.locator("#student-view");
     await student.waitFor({state:"visible"});
-    assert.equal(await student.locator(".student-hub-card").count(),4);
+    assert.equal(await student.locator(".student-hub-card").count(),7);
     assert.equal(await student.locator('a[href="./reader/?map=1"]').count(),1);
     const rectangles=await student.locator(".student-hub-card").evaluateAll(nodes=>nodes.map(node=>{
       const r=node.getBoundingClientRect();return {left:r.left,right:r.right,height:r.height};
     }));
     assert.ok(rectangles.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px Student hub item overflow or touch target too small: "+JSON.stringify(rectangles));
-    for(const route of ["syllabus","subjects","papers"]){
+    for(const route of ["syllabus","subjects","papers","exam","links"]){
       await student.locator('[data-open="'+route+'"]').tap();
       await page.waitForURL(new RegExp("#"+route+"$"));
       await page.waitForFunction(() => document.querySelector("#back-home")?.textContent === "← Student");
