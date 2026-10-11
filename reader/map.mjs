@@ -75,15 +75,23 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
   const edges=tag('g'),cards=tag('g');scene.replaceChildren(edges,cards);
   for(const n of nodes){
    if(n.parent){
-    const p=n.parent,turn=(p.x+p.width+n.x)/2;
-    edges.append(attrs(tag('path'),{class:'map-link',d:'M'+(p.x+p.width)+' '+p.y+' H'+turn+' V'+n.y+' H'+n.x}));
+    const p=n.parent,turn=(p.x+p.width+n.x)/2,sign=Math.sign(n.y-p.y),r=Math.min(14,Math.abs(n.y-p.y)/3);
+    // Orthogonal branches with softened right-angle bends.
+    const d=sign===0
+      ?'M'+(p.x+p.width)+' '+p.y+' H'+n.x
+      :'M'+(p.x+p.width)+' '+p.y+' H'+(turn-r)
+       +' Q'+turn+' '+p.y+' '+turn+' '+(p.y+sign*r)
+       +' V'+(n.y-sign*r)
+       +' Q'+turn+' '+n.y+' '+(turn+r)
+       +' H'+n.x;
+    edges.append(attrs(tag('path'),{class:'map-link',d}));
    }
    const g=attrs(tag('g'),{'data-id':n.id,role:'button',tabindex:0,'aria-label':n.label,class:'map-node '+(n.kind==='root'?'root-node':n.kind==='heading'?'heading-node':'point-node')+(n===active?' selected':'')});
-   g.append(attrs(tag('rect'),{x:n.x,y:n.y-n.height/2,width:n.width,height:n.height,rx:12}));
+   g.append(attrs(tag('rect'),{x:n.x,y:n.y-n.height/2,width:n.width,height:n.height,rx:30}));
    n.lines.forEach((line,i)=>g.append(text(line,n.x+17,n.y+5+(i-(n.lines.length-1)/2)*18,'map-text')));
    if(n!==root){
     const link=attrs(tag('g'),{'data-open-note':n.id,role:'button',tabindex:0,'aria-label':'Open source note for '+n.label});
-    link.append(attrs(tag('rect'),{x:n.x+n.width-43,y:n.y-22,width:40,height:44,rx:8,class:'map-node-action'}));
+    link.append(attrs(tag('rect'),{x:n.x+n.width-43,y:n.y-22,width:40,height:44,rx:17,class:'map-node-action'}));
     link.append(text('↗',n.x+n.width-31,n.y+7,'map-node-icon'));g.append(link);
    }
    cards.append(g);
