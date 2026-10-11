@@ -237,8 +237,8 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
  function back(){
   if(!parents.length){close();return;}
-  focusRoot=parents.pop();
-  focusRoot.collapsed=false;
+  const previous=parents.pop();
+  focusRoot=focusBranch(root,previous.id)||previous;
   active=null;showDetails(false);paint();fit();updateNavigation();
  }
  function read(n){
