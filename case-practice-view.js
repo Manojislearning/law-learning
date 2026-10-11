@@ -27,8 +27,8 @@ function refreshHomeCaseCount(){
  var el=document.getElementById("home-case-count");if(!el)return;
  if(!caseReview){el.textContent="75 IRAC cases · review history unavailable";return;}
  try{
-  var n=caseReview.total(root.localStorage);
-  el.textContent=n?(n+" saved case"+(n===1?"":"s")+" to revisit · 75 IRAC cases"):"75 IRAC cases · 5 subjects · changed-facts";
+  var plan=caseReview.dailyPlan(root.localStorage,banks);
+  el.textContent=plan.total?(plan.due+" due today · "+plan.total+" saved for review · 75 IRAC cases"):"75 IRAC cases · 5 subjects · changed-facts";
  }catch(err){el.textContent="75 IRAC cases · saved review needs attention";}
 }
 function hydrateWeakCases(){
@@ -81,6 +81,18 @@ function dashboard(){
  var panel=E(wrap,"section",undefined,"cp-panel");
  E(panel,"h3","Mixed five-case practice");
  E(panel,"p","Each set mixes five units. Completed cases count toward rotation; skipped cases remain eligible next time. Three completed sets cover all fifteen cases in this subject.");
+ var daily=null;
+ try{daily=caseReview&&caseReview.dailyPlan(root.localStorage,banks);}catch(err){saveWarning="Daily review history could not be read. It has not been reset. "+err.message;}
+ if(daily&&daily.due>0){
+  var today=E(wrap,"section",undefined,"cp-panel cp-daily-panel");
+  E(today,"p","DUE CASES · ALL FIVE SUBJECTS","cp-eyebrow");
+  E(today,"h3","Daily Case Review");
+  E(today,"p",daily.due+" due case"+(daily.due===1?"":"s")+" across "+Object.keys(daily.bySubject).filter(function(k){return daily.bySubject[k]>0;}).length+" subject"+(Object.keys(daily.bySubject).filter(function(k){return daily.bySubject[k]>0;}).length===1?"":"s")+". The next "+daily.queue.length+" mix subjects, with the oldest due items first within each subject.");
+  B(today,"Review "+daily.queue.length+" due case"+(daily.queue.length===1?"":"s")+" →",startDaily);
+  E(today,"p","Scheduled for revisiting, not proof of poor legal ability. Reference answers remain hidden until you write.","cp-topic");
+ }else if(daily&&daily.upcoming){
+  E(wrap,"p","No saved case is due yet. Your next revisit is "+new Date(daily.nextAt).toLocaleDateString()+". You can practise early by selecting a subject below.","cp-topic");
+ }
  B(panel,"Start 5 cases →",start);
  B(panel,"Changed-facts challenge · 5 scenarios →",function(){startTransfer();},true);
  if(weak.size){
@@ -101,6 +113,24 @@ function start(){
  pos=0;analysed=0;skipped=0;
  draw();
 }
+function startDaily(){
+ var daily;
+ try{daily=caseReview.dailyPlan(root.localStorage,banks);}catch(err){saveWarning="Daily case review is unavailable: "+err.message;dashboard();return;}
+ if(!daily.queue.length){dashboard();return;}
+ session=daily.queue.map(function(r){
+  var match=banks[r.subject].cases.find(function(c){return c.id===r.id;});
+  return {subject:r.subject,case:match};
+ });
+ mode="daily";pos=0;analysed=0;skipped=0;draw();
+}
+function currentCase(){
+ var slot=session[pos];
+ if(mode==="daily"){
+  bankKey=slot.subject;bank=banks[bankKey];history=histories[bankKey];weak=weakBySubject[bankKey];
+  return slot.case;
+ }
+ return slot;
+}
 function startWeakReview(){
  var pending=bank.cases.filter(function(c){return weak.has(c.id);});
  if(!pending.length){dashboard();return;}
@@ -108,7 +138,7 @@ function startWeakReview(){
  session=pending.slice(0,5);mode="retry";pos=0;analysed=0;skipped=0;draw();
 }
 function advance(completed,checks,assessed){
- var c=session[pos];
+ var c=currentCase();
  if(completed){
   analysed++;
   core.recordUsage(history,[c]);
@@ -123,16 +153,16 @@ function advance(completed,checks,assessed){
  pos++;if(pos>=session.length)finish();else draw();
 }
 function draw(){
- var c=session[pos];
+ var c=currentCase();
  var wrap=shell();
- E(wrap,"p",mode==="retry"?"SECOND ATTEMPT · NO ANSWER HINTS":"EXAM PRACTICE · NO TOPIC HINTS","cp-eyebrow");
+ E(wrap,"p",mode==="retry"||mode==="daily"?"DELAYED RETRIEVAL · NO ANSWER HINTS":"EXAM PRACTICE · NO TOPIC HINTS","cp-eyebrow");
  var box=E(wrap,"article",undefined,"cp-panel");
  var meta=E(box,"div",undefined,"cp-meta");
  E(meta,"span","Case "+(pos+1)+" / "+session.length);E(meta,"span",courseName());
  var heading=E(box,"h2","Read the facts");heading.tabIndex=-1;
  E(box,"p",c.facts,"cp-facts");
  E(box,"p",c.task,"cp-question");
- if(mode==="retry"){
+ if(mode==="retry"||mode==="daily"){
   E(box,"p","Try again from memory before opening the reference. Your earlier answer is not shown or saved.","cp-topic");
   var earlier=weak.get(c.id);
   var reminder=earlier?core.revisitReminder(earlier):[];
@@ -228,6 +258,7 @@ function finish(){
  var finishedTitle=E(box,"h2","You finished the set");finishedTitle.tabIndex=-1;
  E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning. No essay grade was assigned.");
  E(box,"p","Your weak-case list carries over to future visits and Profile backups. Retry starts with the earliest scheduled cases, and the answer remains hidden until you attempt it again.","cp-topic");
+ if(mode==="daily")E(box,"p","Daily review mixed due cases across your subjects. Only your self-identified missing IRAC elements and revisit dates are saved; this is not an automatic evaluation.","cp-topic");
  if(saveWarning){var warning=E(box,"p",saveWarning,"cp-error");warning.setAttribute("role","status");}
  if(mode==="retry"&&session&&session.length){
   B(box,"Try changed facts from these units →",function(){startTransfer(session.map(function(c){return c.id;}));});
@@ -236,6 +267,7 @@ function finish(){
   E(box,"p",weak.size+" case"+(weak.size===1?" needs":"s need")+" another attempt: skipped, not self-checked, or marked incomplete in your own IRAC checklist.","cp-topic");
   B(box,"Retry "+weak.size+" weak or skipped case"+(weak.size===1?"":"s")+" →",startWeakReview);
  }else E(box,"p","No cases currently flagged for a retry. This does not certify exam mastery.","cp-topic");
+ if(mode==="daily")B(box,"See remaining daily reviews →",dashboard,true);
  B(box,"Try a different set →",start);
  B(box,"Return to practice overview",dashboard,true);
  B(wrap,"Home",goHome,true);
