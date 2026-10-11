@@ -76,6 +76,11 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.equal(options.length,3,"Every concept check must have three options");
  options[0].click();
  assert.equal(gd.querySelector(".c1-feedback").hidden,false,"Quiz must show explanatory feedback");
+ const recognition=gw.LawReviewCore.read(gw.localStorage).cards["contract1-unit1:proposal"];
+ assert.ok(recognition,"Guided quiz attempt must schedule a review");
+ assert.equal(recognition.stage,0,"Recognition must not count as successful recall");
+ assert.equal(recognition.recognitions,1);
+ assert.ok(recognition.due>Date.now(),"Guided quiz should schedule retrieval into the future");
  gd.querySelector(".c1-next").click();
  assert.ok(gd.querySelector(".c1-card h2").textContent.includes("acceptance"),"Next button must change lesson");
  assert.deepEqual(guided.errors,[],"Guided lesson cannot throw during startup");
