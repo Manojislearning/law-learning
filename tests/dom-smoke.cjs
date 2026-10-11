@@ -379,15 +379,14 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.ok(host.textContent.includes("₹5 lakh"));
   const controls=[...host.querySelectorAll(".law-tab")];
   assert.equal(controls.length,3,"Existing law check must show all three subjects");
-  const next=host.querySelector(".law-forward");
   const expected=["Hit-and-run","Cashless","third-party","Insurer","Motor Accidents","Filing time","ex-gratia","Insurance transfer"];
-  for(const name of expected){next.click();assert.ok(host.querySelector(".law-panel h3").textContent.includes(name),"Missing motor law card "+name);}
+  for(const name of expected){host.querySelector(".law-forward").click();assert.ok(host.querySelector(".law-panel h3").textContent.includes(name),"Missing motor law card "+name);}
   assert.ok(host.textContent.includes("thirty days"));
   const details=host.querySelector(".law-references");assert.ok(details);
   assert.ok([...details.querySelectorAll("a")].some(x=>x.href.includes("egazette.gov.in")),"2026 motor notes need official Gazette sources");
-  controls[0].click();
+  host.querySelectorAll(".law-tab")[0].click();
   assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("BNS"));
-  controls[1].click();
+  host.querySelectorAll(".law-tab")[1].click();
   assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"));
   assert.deepEqual(mv.errors,[]);
   mv.dom.window.close();
