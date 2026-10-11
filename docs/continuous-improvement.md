@@ -1,11 +1,29 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **49** — reliable case completion tracking and session-only weak-case retries across all three IRAC subjects; prior release histories follow.
+Latest user-visible release: **50** — 15 contrastive changed-fact questions across Contract, Torts and BNS, with weak-unit transfer follow-up; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 50 — Changed-facts transfer after IRAC practice (11 October 2026)
+
+**Audit:** The existing 45-case system supported written IRAC and weak-case retry, but immediate repetition of the **same facts** can reward memorising the published explanation. A second, materially altered fact pattern is needed to practise **transfer**, not just recall.
+
+**What changed:** Fifteen original source-linked fact variations were added, one per unit for Contract–I, Torts and BNS. The existing Case Practice overview now offers a **Changed-facts challenge**. After a weak-case retry, learners may also open a subject- and unit-relevant transfer set. Each scenario asks what legally matters about the change; typed reasoning is required before revealing the rule, factual application and misconception. No system pretends to mark free-form legal answers automatically.
+
+**Meaningful contrasts:** Conditional versus unconditional acceptance; contractual hardship versus later illegality; undisclosed versus disclosed special losses; fleeing driver versus truly unidentifiable vehicle; res ipsa and rebuttal evidence; hurt versus grievous hurt; cruel treatment versus alleged dowry death. Each uses the primary source links of its corresponding original case.
+
+**Design constraints:** One existing Case Practice destination, not an additional navigation maze. No XP, streak pressure, personal essay uploads, localStorage changes or backup migrations. The transfer module's validation rejects duplicates, missing parent cases and incomplete source-linked legal reasoning.
+
+**Verification:** Fifteen challenge flows tested under simulated browser interaction, including answer-hiding, reveal, sources and cleanup on exit, plus weak-retry follow-up. Chromium emulation verifies 320/390/768px touch controls, focus and explanation gating. Actual Android/TalkBack testing, admission-cohort verification and proof of longer-term transfer remain outstanding.
+
+**Full design and limits:** `docs/changed-facts-transfer-v50.md`.
+
+**Next priority:** Delayed changed-fact exercises and source-audited case-law/application feedback, then actual-device accessibility validation. Do not inflate correct immediate self-check into a mastery claim.
+
+---
 
 ## Version 49 — Retrievable weak-case practice and truthful completion tracking (11 October 2026)
 
