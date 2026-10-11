@@ -4,7 +4,7 @@
 var data={
   "schema": 1,
   "scope": "KSLU 3-year LL.B. — imported Semester I draft",
-  "reviewPolicy": "Links are authentic sources; this does not certify the imported 30 unit descriptions. Verify with the applicable KSLU syllabus PDF and current statutory text before publishing as reviewed.",
+  "reviewPolicy": "Contract–I Unit I has been compared with KSLU's 2018–19 PDF. All units remain needs-review until the enrolled cohort's applicable syllabus is identified and checked.",
   "publishedForCohort": "unconfirmed",
   "sources": {
     "kslu-index": {
@@ -55,6 +55,13 @@ var data={
       "publisher": "Legislative Department, Government of India",
       "kind": "primary-text-index",
       "verifiedScope": "Reference link supplied; up-to-date text, amendments and curriculum content still require review."
+    },
+    "kslu-2018-p6": {
+      "title": "KSLU official three-year LL.B. syllabus — Contract–I page 6 (2018–19)",
+      "url": "https://kslu.karnataka.gov.in/storage/pdf-files/%E0%B3%A9%E0%B2%B5%E0%B2%B0%E0%B3%8D%E0%B2%B7%E0%B2%A6%20%E0%B2%8E%E0%B2%B2%E0%B3%8D%E0%B2%8E%E0%B2%B2%E0%B3%8D%20%E0%B2%AC%E0%B2%BF%20%E0%B2%AF%20%E0%B2%AA%E0%B2%B0%E0%B2%BF%E0%B2%B7%E0%B3%8D%E0%B2%95%E0%B3%83%E0%B2%A4%20%E0%B2%AA%E0%B2%A0%E0%B3%8D%E0%B2%AF%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B2%AE.pdf",
+      "publisher": "Karnataka State Law University",
+      "kind": "official-syllabus-pdf",
+      "verifiedScope": "Contract–I Unit I headings/topics match the 2018–19 KSLU PDF (printed page 6). This does not certify applicability to each later admission cohort."
     }
   },
   "units": [
@@ -149,10 +156,14 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "contract-act"
+        "contract-act",
+        "kslu-2018-p6"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [
+        "The Unit I topic outline matches KSLU's official 2018–19 PDF; applicability to later admission cohorts still needs confirmation."
+      ],
+      "syllabusEditionEvidence": "Official 2018–19 KSLU syllabus, printed page 6 (Contract–I Unit I); current admission-cohort match not confirmed"
     },
     {
       "id": "sem1-c2-u2",
