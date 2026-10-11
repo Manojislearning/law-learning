@@ -5,7 +5,7 @@ import {resolve} from 'node:path';
 import vm from 'node:vm';
 const root=resolve(import.meta.dirname,'..');
 const read=file=>readFileSync(resolve(root,file),'utf8');
-function load(file,key){const ctx={globalThis:{}};vm.runInNewContext(read(file),ctx,{timeout:1800});return ctx.globalThis[key];}
+function load(file,key){const ctx={globalThis:{},URL};vm.runInNewContext(read(file),ctx,{timeout:1800});return ctx.globalThis[key];}
 const bank=load('legal-accuracy-data.js','LawAccuracyData');
 const core=load('legal-accuracy-core.js','LawAccuracyCore');
 const ledger=load('content-ledger.js','LawContentLedger');
