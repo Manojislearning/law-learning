@@ -1,125 +1,152 @@
+
 import {frontmatter,renderMarkdown,resolveLink} from './markdown.mjs';
 const NS='http://www.w3.org/2000/svg';
-const names={'01-Semester-1':'Semester I','02-Semester-2':'Semester II','Constitutional-Law-I':'Constitutional Law I','Contract-I':'Contract I','Law-of-Torts':'Law of Torts','Family-Law-I---Hindu-Law':'Family Law I · Hindu Law','Criminal-Law-I---BNS-2023':'Criminal Law I · BNS','English-For-Kannada-Medium':'English'};
-const clean=s=>names[s]||s.replace(/\.(md|canvas)$/i,'').replace(/^\d\d\s*-\s*/,'').replace(/-/g,' ').replace(/\s+/g,' ').trim();
-const svg=type=>document.createElementNS(NS,type);
-const set=(el,props)=>{for(const [key,val] of Object.entries(props))el.setAttribute(key,String(val));return el};
-const txt=(value,x,y,klass)=>{const el=set(svg('text'),{x,y,class:klass});el.textContent=value;return el};
-const splitTitle=(value,max=36)=>{const lines=[''];for(const word of String(value).split(/\s+/)){let i=lines.length-1;if((lines[i]+' '+word).trim().length>max&&lines[i])lines.push(word);else lines[i]=(lines[i]+' '+word).trim()}return lines.slice(0,3)};
-export function makeVaultTree(files){
- const root={id:'root',label:'LAW NOTES',children:[],parent:null,path:null},nodes=new Map([['root',root]]);
- function add(parent,key,label,file=null){
-  const id=parent.id+'/'+key;if(nodes.has(id))return nodes.get(id);
-  const item={id,label,path:file,parent,children:[]};nodes.set(id,item);parent.children.push(item);return item;
- }
- for(const file of files.filter(f=>f.toLowerCase().endsWith('.md')).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}))){
-  const parts=file.split('/'),name=parts.pop();let parent=root;
-  for(const p of parts.filter(x=>x!=='Units'))parent=add(parent,p,clean(p));
-  add(parent,name,clean(name),file);
+const tag=t=>document.createElementNS(NS,t);
+const attrs=(e,o)=>{Object.entries(o).forEach(([k,v])=>e.setAttribute(k,String(v)));return e};
+const text=(s,x,y,c)=>{const e=attrs(tag('text'),{x,y,class:c});e.textContent=s;return e};
+const clean=s=>String(s).replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'$2').replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/!?\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[*_~]/g,'').trim();
+export const isTopic=p=>/\/Units\/Unit-\d\d\/(?:0[1-9]|[1-9]\d) - .+\.md$/i.test(p)||/\/Topics\/[^/]+\.md$/i.test(p);
+function node(s,kind,parent,section='',source=''){
+ const n={id:(parent?.id||'')+'-'+(parent?.children.length||0),label:clean(s).slice(0,260),kind,parent,children:[],section,source,link:null,x:0,y:0,width:354,height:76};
+ if(parent)parent.children.push(n);return n;
+}
+export function noteBranches(content,path,paths){
+ const parsed=frontmatter(content),lines=parsed.body.split(/\r?\n/);
+ const title=parsed.meta.title||clean((lines.find(s=>/^#\s+/.test(s))||'').replace(/^#\s+/,''))||path.split('/').pop().replace(/\.md$/,'');
+ const root=node(title,'root',null);root.id='root';
+ let sections=[root],section='',list=null,indent=0;
+ for(const source of lines){
+  const l=source.trim();if(!l||/^---+$/.test(l))continue;
+  const h=/^(#{1,6})\s+(.+)/.exec(l);
+  if(h){
+   const depth=h[1].length;if(depth===1)continue;
+   const parent=sections[Math.min(depth-2,sections.length-1)]||root;
+   const n=node(h[2],'heading',parent,h[2],source);
+   sections=sections.slice(0,depth-1);sections[depth-1]=n;section=h[2];list=null;continue;
+  }
+  const bullet=/^(\s*)(?:[-*+]|\d+[.)])\s+(.+)$/.exec(source);
+  let value=bullet?bullet[2].replace(/^\[[ xX]\]\s+/,''):l;
+  if(/^>\s*\[!/.test(value)||/^>{0,1}\s*$/.test(value)||/^~~~/.test(value)||/^\|[-|:\s]+\|?$/.test(value))continue;
+  value=value.replace(/^>\s*/, '');
+  const base=bullet&&list&&bullet[1].length>indent?list:sections[sections.length-1]||root;
+  const n=node(value,bullet?'point':'text',base,section,value);
+  if(!n.label){base.children.pop();continue}
+  if(bullet){list=n;indent=bullet[1].length}else list=null;
+  const w=/!?\[\[([^\]]+)\]\]/.exec(value),m=/\[[^\]]+\]\(([^)]+)\)/.exec(value);
+  const target=w?w[1].split('|')[0]:m?m[1]:null;
+  if(target)n.link=resolveLink(target,path,paths);
  }
  return root;
 }
-export function noteBranches(content){
- const lines=frontmatter(content).body.split(/\r?\n/),out=[];
- for(const line of lines){
-  const raw=line.trim();if(!raw||/^[-|:\s]{3,}$/.test(raw))continue;
-  const heading=/^#{1,6}\s+(.+)/.exec(raw),bullet=/^(?:[-*+]|\d+[.)])\s+(.+)/.exec(raw),quote=/^>\s*(.+)/.exec(raw);
-  let title=(heading?heading[1]:bullet?bullet[1]:quote?quote[1]:raw)
-   .replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'$2')
-   .replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/[*_~]/g,'').trim();
-  if(!title||/^\[!/.test(title))continue;
-  if(title.length>250)title=title.slice(0,247)+'…';
-  out.push({title,kind:heading?'heading':bullet?'point':'text'});
-  if(out.length===130)break;
- }
- return out;
+function lines(s){
+ const out=[''];for(const word of String(s).split(/\s+/)){const i=out.length-1;if((out[i]+' '+word).trim().length>38&&out[i])out.push(word);else out[i]=(out[i]+' '+word).trim()}
+ return out.slice(0,4);
+}
+export function measureTree(root){
+ let cy=44,deep=0;
+ const visit=(n,d)=>{
+  n.x=32+460*d;n.width=350;n.lines=lines(n.label);n.height=Math.max(68,24+18*n.lines.length);deep=Math.max(deep,d);
+  n.children.forEach(ch=>visit(ch,d+1));
+  if(n.children.length)n.y=(n.children[0].y+n.children[n.children.length-1].y)/2;
+  else{n.y=cy+n.height/2;cy+=n.height+25}
+ };
+ visit(root,0);return {width:(deep+1)*460+80,height:Math.max(350,cy+80)};
 }
 export function mountVaultMap({files,getNote,readNote}){
- const panel=document.querySelector('#map-overlay'),canvas=document.querySelector('#map-svg'),scene=document.querySelector('#map-scene');
- const filter=document.querySelector('#map-subject'),details=document.querySelector('#map-details'),body=document.querySelector('#map-note-body');
- const title=document.querySelector('#map-note-title'),status=document.querySelector('#map-status'),selectedLabel=document.querySelector('#map-current');
- const root=makeVaultTree(files),all=new Map(),byPath=new Map();let visible=[],scope=root,chosen=null,extra=[],bounds={w:800,h:500};
- let view={x:0,y:0,w:1200,h:800},drag=null,dragged=false;
- const addNode=n=>{all.set(n.id,n);if(n.path)byPath.set(n.path,n);n.children.forEach(addNode)};addNode(root);
- function option(node,label){const el=document.createElement('option');el.value=node.id;el.textContent=label;filter.append(el)}
- option(root,'Entire vault');
- for(const node of root.children){option(node,node.label);if(/^0[12]-Semester/.test(node.id.split('/').pop()))for(const child of node.children.filter(x=>x.children.length))option(child,node.label+' · '+child.label)}
- function layout(){
-  visible=[];let leaf=0,max=0;
-  function visit(n,depth){
-   n.x=35+depth*420;max=Math.max(max,depth);
-   const kids=n===chosen?n.children.concat(extra):n.children;
-   for(const child of kids)visit(child,depth+1);
-   n.y=kids.length?(kids[0].y+kids[kids.length-1].y)/2:45+leaf++*88;
-   visible.push(n);
-  }
-  visit(scope,0);bounds={w:(max+1)*420+90,h:Math.max(180,leaf*88+85)};
-  document.querySelector('#map-count').textContent=visible.length+' nodes';
- }
- function applyView(){canvas.setAttribute('viewBox',[view.x,view.y,view.w,view.h].join(' '))}
+ const panel=document.querySelector('#map-overlay'),svg=document.querySelector('#map-svg'),scene=document.querySelector('#map-scene');
+ const drawer=document.querySelector('#map-details'),body=document.querySelector('#map-note-body'),title=document.querySelector('#map-note-title'),status=document.querySelector('#map-status');
+ let root=null,nodes=[],topic='',active=null,bounds={width:1000,height:700},v={x:0,y:0,w:1200,h:800};
+ const pointers=new Map();let pinch=null,moved=false;
+ const rect=()=>svg.getBoundingClientRect();
+ const size=()=>({w:Math.max(1,rect().width),h:Math.max(1,rect().height)});
+ const apply=()=>svg.setAttribute('viewBox',[v.x,v.y,v.w,v.h].join(' '));
  function fit(){
-  const aspect=Math.max(1,canvas.clientWidth)/Math.max(1,canvas.clientHeight);
-  const w=bounds.w+120,h=bounds.h+100;
-  view={x:-60,y:-50,w:Math.max(w,h*aspect),h:Math.max(h,w/aspect)};applyView();
+  const {w,h}=size(),ratio=w/h,W=bounds.width+110,H=bounds.height+100;
+  v={x:-55,y:-50,w:Math.max(W,H*ratio),h:Math.max(H,W/ratio)};apply();
  }
- function zoom(factor){
-  const cx=view.x+view.w/2,cy=view.y+view.h/2;
-  const w=Math.max(280,Math.min(200000,view.w*factor)),h=w*Math.max(1,canvas.clientHeight)/Math.max(1,canvas.clientWidth);
-  view={x:cx-w/2,y:cy-h/2,w,h};applyView();
+ function zoom(f,x,y){
+  const r=rect(),u=Math.max(0,Math.min(1,(x-r.left)/Math.max(1,r.width))),t=Math.max(0,Math.min(1,(y-r.top)/Math.max(1,r.height)));
+  const w=Math.max(240,Math.min(90000,v.w*f)),h=w*size().h/size().w;
+  v={x:v.x+v.w*u-w*u,y:v.y+v.h*t-h*t,w,h};apply();
  }
- function paint(reset=false){
-  layout();scene.replaceChildren();
-  const lines=svg('g'),cards=svg('g');scene.append(lines,cards);
-  const setVisible=new Set(visible);
-  for(const n of visible){
-   if(n.parent&&setVisible.has(n.parent)){
-    const p=n.parent;lines.append(set(svg('path'),{d:'M'+(p.x+330)+' '+p.y+' H'+(p.x+360)+' V'+n.y+' H'+n.x,class:'map-link'}));
+ function zoomMiddle(f){const r=rect();zoom(f,r.left+r.width/2,r.top+r.height/2)}
+ function showDetails(show){drawer.hidden=!show;panel.classList.toggle('has-details',show)}
+ function paint(){
+  const edges=tag('g'),cards=tag('g');scene.replaceChildren(edges,cards);
+  for(const n of nodes){
+   if(n.parent){
+    const p=n.parent,turn=(p.x+p.width+n.x)/2;
+    edges.append(attrs(tag('path'),{class:'map-link',d:'M'+(p.x+p.width)+' '+p.y+' H'+turn+' V'+n.y+' H'+n.x}));
    }
-  }
-  for(const n of visible){
-   const g=set(svg('g'),{'data-id':n.id,class:'map-node '+(n.path?'file':n.children.length?'folder':'detail')+(chosen===n?' selected':''),role:'button',tabindex:0,'aria-label':n.label});
-   g.append(set(svg('rect'),{x:n.x,y:n.y-32,width:330,height:64,rx:14}));
-   const lines=splitTitle(n.label);
-   lines.forEach((part,i)=>g.append(txt(part,n.x+17,n.y+5+(i-(lines.length-1)/2)*17,'map-text')));
+   const g=attrs(tag('g'),{'data-id':n.id,role:'button',tabindex:0,'aria-label':n.label,class:'map-node '+(n.kind==='root'?'root-node':n.kind==='heading'?'heading-node':'point-node')+(n===active?' selected':'')});
+   g.append(attrs(tag('rect'),{x:n.x,y:n.y-n.height/2,width:n.width,height:n.height,rx:12}));
+   n.lines.forEach((line,i)=>g.append(text(line,n.x+17,n.y+5+(i-(n.lines.length-1)/2)*18,'map-text')));
+   if(n!==root){
+    const link=attrs(tag('g'),{'data-open-note':n.id,role:'button',tabindex:0,'aria-label':'Open source note for '+n.label});
+    link.append(attrs(tag('rect'),{x:n.x+n.width-43,y:n.y-22,width:40,height:44,rx:8,class:'map-node-action'}));
+    link.append(text('↗',n.x+n.width-31,n.y+7,'map-node-icon'));g.append(link);
+   }
    cards.append(g);
   }
-  if(reset)fit();else applyView();
-  status.textContent=scope.label;
+  document.querySelector('#map-count').textContent=nodes.length+' branches';
  }
- function showDetails(yes){details.hidden=!yes;panel.classList.toggle('has-details',yes)}
- async function selectNode(node){
-  if(!node)return;
-  if(!node.path){
-   if(node.id.includes('/text-'))return;
-   scope=node;chosen=null;extra=[];showDetails(false);filter.value=all.has(scope.id)&&[...filter.options].some(o=>o.value===scope.id)?scope.id:'root';paint(true);
-   return;
+ const find=id=>nodes.find(n=>n.id===id);
+ function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false}
+ function read(n){
+  if(!n)return;const dest=n.link||{path:topic,heading:n.section||''};
+  close();void readNote(dest.path,dest.heading||'');
+ }
+ function select(n){
+  if(!n)return;active=n;title.textContent=n.label;body.innerHTML=renderMarkdown(n.kind==='heading'?'## '+n.label:n.source||n.label).html;showDetails(true);paint();
+ }
+ scene.addEventListener('click',e=>{
+  if(moved)return;
+  const link=e.target.closest('[data-open-note]'),card=e.target.closest('[data-id]');
+  if(link)read(find(link.dataset.openNote));else if(card)select(find(card.dataset.id));
+ });
+ scene.addEventListener('keydown',e=>{
+  if(!['Enter',' '].includes(e.key))return;
+  const link=e.target.closest('[data-open-note]'),card=e.target.closest('[data-id]');
+  if(!link&&!card)return;e.preventDefault();if(link)read(find(link.dataset.openNote));else select(find(card.dataset.id));
+ });
+ svg.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.12:.89,e.clientX,e.clientY)},{passive:false});
+ const gesture=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2,d:Math.hypot(a.x-b.x,a.y-b.y)});
+ svg.addEventListener('pointerdown',e=>{
+  if(e.pointerType==='mouse'&&e.button!==0)return;
+  pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size===2){const [a,b]=[...pointers.values()];pinch=gesture(a,b);moved=true}
+ });
+ svg.addEventListener('pointermove',e=>{
+  if(!pointers.has(e.pointerId))return;
+  const prev=pointers.get(e.pointerId);pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pointers.size>=2){
+   const [a,b]=[...pointers.values()],now=gesture(a,b);
+   if(pinch){
+    zoom(pinch.d/Math.max(1,now.d),now.x,now.y);
+    v.x-=(now.x-pinch.x)*v.w/size().w;v.y-=(now.y-pinch.y)*v.h/size().h;apply();
+   }pinch=now;moved=true;return;
   }
-  status.textContent='Opening note…';
-  try{
-   const content=await getNote(node.path);
-   chosen=node;selectedLabel.textContent=node.label;title.textContent=node.label;
-   body.innerHTML=renderMarkdown(content).html;
-   extra=noteBranches(content).map((x,i)=>({id:node.id+'/text-'+i,label:x.title,path:null,parent:node,children:[]}));
-   showDetails(true);paint(false);status.textContent='Complete note loaded';
-  }catch(error){status.textContent='Could not open note: '+String(error.message||error)}
- }
- scene.addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(!dragged&&card)void selectNode(visible.find(x=>x.id===card.dataset.id))});
- scene.addEventListener('keydown',e=>{const card=e.target.closest('[data-id]');if(card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();void selectNode(visible.find(x=>x.id===card.dataset.id))}});
- canvas.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.2:.83)},{passive:false});
- canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={px:e.clientX,py:e.clientY,x:view.x,y:view.y};dragged=false});
- canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.px,dy=e.clientY-drag.py;if(Math.abs(dx)+Math.abs(dy)>7)dragged=true;if(!dragged)return;view.x=drag.x-dx*view.w/Math.max(1,canvas.clientWidth);view.y=drag.y-dy*view.h/Math.max(1,canvas.clientHeight);applyView()});
- const end=()=>{drag=null;setTimeout(()=>{dragged=false},0)};
- canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);
- document.querySelector('#map-close').addEventListener('click',close);
- document.querySelector('#map-detail-close').addEventListener('click',()=>showDetails(false));
+  const dx=e.clientX-prev.x,dy=e.clientY-prev.y;
+  if(Math.abs(dx)+Math.abs(dy)>2){v.x-=dx*v.w/size().w;v.y-=dy*v.h/size().h;apply();moved=true}
+ });
+ function finish(e){pointers.delete(e.pointerId);pinch=null;if(!pointers.size)setTimeout(()=>{moved=false},80)}
+ svg.addEventListener('pointerup',finish);svg.addEventListener('pointercancel',finish);
  document.querySelector('#map-fit').addEventListener('click',fit);
- document.querySelector('#map-zoom-in').addEventListener('click',()=>zoom(.72));
- document.querySelector('#map-zoom-out').addEventListener('click',()=>zoom(1.35));
- document.querySelector('#map-back').addEventListener('click',()=>{scope=scope.parent||root;chosen=null;extra=[];showDetails(false);paint(true)});
- document.querySelector('#map-read-note').addEventListener('click',()=>{if(chosen?.path){const p=chosen.path;close();void readNote(p)}});
- filter.addEventListener('change',()=>{scope=all.get(filter.value)||root;chosen=null;extra=[];showDetails(false);paint(true)});
- body.addEventListener('click',e=>{const a=e.target.closest('a[data-target]');if(!a||!chosen?.path)return;e.preventDefault();const target=resolveLink(a.dataset.target,chosen.path,files);if(!target)return;const n=byPath.get(target.path);if(!n)return;if(!visible.includes(n)){scope=n.parent||root;paint(true)}void selectNode(n)});
- function open(){panel.hidden=false;scope=root;chosen=null;extra=[];filter.value='root';showDetails(false);paint(true);document.querySelector('#map-close').focus()}
- function close(){panel.hidden=true;showDetails(false)}
- return {open,close};
+ document.querySelector('#map-zoom-in').addEventListener('click',()=>zoomMiddle(.75));
+ document.querySelector('#map-zoom-out').addEventListener('click',()=>zoomMiddle(1.3));
+ document.querySelector('#map-close').addEventListener('click',close);
+ document.querySelector('#map-back').addEventListener('click',close);
+ document.querySelector('#map-detail-close').addEventListener('click',()=>showDetails(false));
+ document.querySelector('#map-read-note').addEventListener('click',()=>read(active||root));
+ async function open(path){
+  if(!isTopic(path))return false;
+  topic=path;panel.hidden=false;showDetails(false);status.textContent='Loading topic…';
+  try{
+   root=noteBranches(await getNote(path),path,files);nodes=[];const walk=n=>{nodes.push(n);n.children.forEach(walk)};walk(root);
+   bounds=measureTree(root);paint();fit();status.textContent=root.label;
+   document.querySelector('#map-current').textContent='Tap a branch · ↗ opens its Markdown topic';
+   document.querySelector('#map-close').focus();return true;
+  }catch(e){status.textContent=String(e.message||e);return false}
+ }
+ return {open,close,isTopic};
 }
