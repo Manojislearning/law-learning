@@ -142,6 +142,12 @@ async function main(){
    }
    const layout=await page.evaluate(()=>({
     page:document.documentElement.scrollWidth,
+    viewport:window.innerWidth,
+    scrollX:window.scrollX,
+    visualOffset:window.visualViewport?.offsetLeft,
+    htmlRect:document.documentElement.getBoundingClientRect().toJSON(),
+    bodyRect:document.body.getBoundingClientRect().toJSON(),
+    appRect:document.querySelector('.app').getBoundingClientRect().toJSON(),
     elements:[...document.querySelectorAll(".masthead,.reader-toolbar,#article,.bottom-nav")].filter(e=>e.offsetWidth>0).map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))
    }));
    assert.ok(layout.page<=width+2,width+"px horizontal overflow: "+JSON.stringify(layout));
