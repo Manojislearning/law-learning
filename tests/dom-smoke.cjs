@@ -45,8 +45,12 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  const {dom,doc,errors}=build("https://example.test/law-learning/index.html?v=34#home");
  assert.equal(dom.window.LawAppCore.router.current(),"home");
  assert.ok(doc.getElementById("syllabus-detail"));
- const syll=doc.querySelector('button.home-card[data-open="syllabus"]');
- assert.ok(syll,"Syllabus main menu must exist");
+ const student=doc.querySelector('#home-view button.home-card[data-open="student"]');
+ assert.ok(student,"Student must be the visible study hub entry on Home");
+ student.click();await settle();
+ assert.equal(dom.window.LawAppCore.router.current(),"student");
+ const syll=doc.querySelector('#student-view button.home-card[data-open="syllabus"]');
+ assert.ok(syll,"Syllabus must be accessible inside Student");
  syll.click();await settle();
  assert.equal(dom.window.LawAppCore.router.current(),"syllabus");
  assert.ok(doc.querySelector(".sf-source-entry"),"Syllabus landing page must contain visible source entry");
