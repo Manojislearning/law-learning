@@ -1,11 +1,31 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **50** — 15 contrastive changed-fact questions across Contract, Torts and BNS, with weak-unit transfer follow-up; prior release histories follow.
+Latest user-visible release: **51** — 15 Constitutional Law–I IRAC cases and 5 changed-facts exercises, bringing practice to four first-semester subjects; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 51 — Independent Constitutional Law I reasoning (11 October 2026)
+
+**Prioritisation:** The repository was already at v50 with 15 Torts cases and changed-facts practice. Repeating that content would not improve the learner's outcomes. The larger first-year gap was **Constitutional Law–I**, which had a verified historical topic outline but no matching source-linked, independently written case-analysis pathway.
+
+**What changed:** Fifteen original Constitutional Law–I issue-spotting questions (three per KSLU unit), and five changed-fact variations about birth citizenship, Article 14 classifications, Article 19 speech restrictions, Article 22 preventive detention and the distinct writ jurisdictions of Articles 32 and 226. This expands the existing practice to **60 original IRAC cases and 20 transfer questions across Contract, Torts, BNS and Constitutional Law**.
+
+**Method:** Each five-case session samples one scenario from each unit, avoids repeating cases before coverage, conceals the label and model answer until the student writes, and includes original rule/application/common-error feedback. The existing weak-case retry remains session-only; missing self-assessment is not called failure, and a short answer is not given an invented legal score.
+
+**Source transparency:** Legislative Department's government Constitution of India 2024 text and India Code's Citizenship Act, 1955 text updated as of 15 April 2026. Preamble interpretation, date-sensitive citizenship, Art. 12 State action, Article 13 legislative review, Articles 14–19 equality and freedoms, Articles 20–25 procedural/religion protections, minority rights and writs are differentiated. For judicial interpretations and current date-specific qualifications, consult later authoritative judgments; source-text linkage does **not** certify any court ratio or current cohort.
+
+**App implementation:** Existing unified Case Practice now offers four subject choices in a two-column mobile layout; Constitutional Law–I syllabus and unit pages link to it. All original Contract/Torts/BNS cases, stored spaced-revision dates, profile backups and session privacy are retained. No new localStorage keys or assessment scores.
+
+**Regression:** Pure test guards for 15 constitution cases and 5 per-unit changed facts; 5-unit rotation across all four subjects; official-source whitelist; deep links, answers hidden until writing, native links, and session cleanup; Chromium 320/390/768-pixel touch and keyboard checks. Finished releases require full CI and final GitHub Pages verification.
+
+**Evidence and limitations:** `docs/constitutional-practice-v51.md`; 2018–19 KSLU outline with admission-cohort confirmation still pending. The new cases are not actual KSLU past papers or examiner-approved marks.
+
+**Next highest-value gap:** Family Law–I: Hindu Law cases, with careful current-statute source review (marriage, guardianship, adoption, maintenance, coparcenary succession), or real Android/TalkBack accessibility tests. Avoid overclaiming mastery from immediate self-checks.
+
+---
 
 ## Version 50 — Changed-facts transfer after IRAC practice (11 October 2026)
 
