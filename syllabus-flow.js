@@ -129,6 +129,11 @@ function sourceUnitPage(subject,unitIndex){
   E(list,"h3","Official references");
   ledger.getSources(record).forEach(function(item){sourceLink(list,item);});
   E(list,"p","A source-page match does not verify case law, updated sections, current cohort rules or every teaching note.","sf-source-small");
+  if(record&&(subject===4||(subject===2&&unitIndex===4))){
+   var check=subject===4?"bns":"consumer";
+   var cta=E(f,"div",undefined,"sf-footer");
+   B(cta,"Current Law Check","Updated statute notes and common legal mistakes →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open(check);});
+  }
  }
  var foot=E(f,"div",undefined,"sf-footer");
  B(foot,"Study this unit","Continue to topics →",function(){
@@ -210,6 +215,13 @@ function render(){
     if(courseUI)B(e,"Start guided lessons",courseUI.lessons.length+" short lessons · examples · practice",function(){push("guided",0);});
   }
 
+  /* Modern statutory corrections are separate from the original university outline. */
+  if(sem===1&&((subject===4)||(subject===2&&unit===4))){
+   var legalTopic=subject===4?"bns":"consumer";
+   B(e,"Current Law Check","Selected section mappings, modern provisions and common exam traps →",function(){
+    if(window.LawAccuracyUI)window.LawAccuracyUI.open(legalTopic);
+   });
+  }
   topicsCache.forEach(function(t,i){B(e,t,"Study this topic →",function(){push("topic",i);});});
   E(e,"p","The topic divisions are study aids based on the imported course outline.","sf-note");
  }else{
