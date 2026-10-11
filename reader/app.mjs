@@ -6,7 +6,7 @@ const API=`https://api.github.com/repos/${REPO}`;
 const KEY='kslu-vault-reader-v1';
 const DEFAULT_PATH='00 - Notes.md';
 const $=s=>document.querySelector(s);
-const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,sourceMode:false,rawMarkdown:''};
+const state={files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,sourceMode:false,rawMarkdown:''};
 let scrollSaveAt=0,toastTimer=null,requestedPath='',mapController=null;
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
@@ -20,17 +20,16 @@ function toast(message){const el=$('#toast');el.textContent=message;el.hidden=fa
 function applyPrefs(){document.documentElement.style.setProperty('--reader-size',state.font+'px');document.body.classList.toggle('cool',!state.warm);$('#font-size').value=state.font;$('#font-size-label').textContent=state.font+'px';$('#warm-toggle').checked=state.warm;$('#saved-number').textContent=state.saved.size;}
 applyPrefs();
 function setStatus(text,connected=false){const el=$('#status-badge');el.innerHTML='<span></span> '+esc(text);el.classList.toggle('connected',connected)}
-async function github(path,token=state.token){
+async function github(path){
  const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
- if(token)headers.Authorization='Bearer '+token;
  const res=await fetch(API+path,{
    method:'GET',headers,
    cache:'no-store',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer'
  });
  if(!res.ok){
-   if(res.status===401)throw new Error('GitHub rejected the token. Create a new fine-grained token.');
-   if(res.status===403)throw new Error('Access denied or API limit reached. Check repository permissions.');
-   if(res.status===404)throw new Error(token?'LAW-NOTES is not accessible with this token.':'LAW-NOTES is still private. Use a read-only token or change GitHub repository visibility to Public.');
+   if(res.status===401)throw new Error('The notes service denied the request.');
+   if(res.status===403)throw new Error('Reading limit reached. Try again later.');
+   if(res.status===404)throw new Error('These notes could not be found.');
    throw new Error('GitHub could not load the vault (HTTP '+res.status+').');
  }
  return res.json();
@@ -47,16 +46,16 @@ function treeFromPaths(paths){
  return root;
 }
 function hideFile(path){return !/\.(md|canvas)$/i.test(path)||path.startsWith('.')||path.split('/').some(p=>p.startsWith('.'))||/^(?:untitled|welcome)(?:\s|\.|\/)/i.test(path);}
-async function loadTree(token=state.token){
- const response=await github('/git/trees/main?recursive=1',token);
+async function loadTree(){
+ const response=await github('/git/trees/main?recursive=1');
  if(response.truncated)throw new Error('GitHub file listing is truncated. A smaller vault is needed.');
  const paths=response.tree.filter(f=>f.type==='blob'&&!hideFile(f.path)).map(f=>f.path).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
  if(!paths.length)throw new Error('GitHub connected, but no Markdown notes were found.');
  state.files=paths;state.tree=treeFromPaths(paths);
- $('#repo-meta').textContent=paths.length+' Markdown & Canvas files · main branch';
+ $('#repo-meta').textContent=paths.length+' notes';
  $('#refresh-btn').disabled=false;
  $('#connect-view').hidden=true;$('#reader-view').hidden=false;
- setStatus(token?'Connected':'Public notes',true);
+ setStatus('Notes ready',true);
  renderSidebar();
 }
 function loading(message,show=true){
@@ -69,8 +68,7 @@ async function connect(){
  $('#connect-view').hidden=true;
  loading('Loading library');
  try{
-  await loadTree('');
-  state.token='';
+  await loadTree();
   if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote,onClose:()=>selectMobileNav('bottom-home')});
   const firstTopic=state.files.find(f=>/\/Constitutional-Law-I\/Units\/Unit-01\/01 - /.test(f))||state.files.find(isTopic);
   const path=openRequestedMap&&!isTopic(requestedPath)?(firstTopic||DEFAULT_PATH):state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
