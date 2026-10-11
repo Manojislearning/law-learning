@@ -407,8 +407,9 @@ async function run(){
     assert.equal(await page.locator('#home-view [data-open="student"]').count(),1);
     assert.equal(await page.locator('#home-view [data-open="syllabus"],#home-view [data-open="subjects"],#home-view [data-open="papers"],#home-view a[href="./reader/?map=1"]').count(),0);
     await page.locator('#home-view [data-open="student"]').tap();
+    await page.waitForURL(/#student$/);
     const student=page.locator("#student-view");
-    assert.equal(await student.isVisible(),true);
+    await student.waitFor({state:"visible"});
     assert.equal(await student.locator(".student-hub-card").count(),4);
     assert.equal(await student.locator('a[href="./reader/?map=1"]').count(),1);
     const rectangles=await student.locator(".student-hub-card").evaluateAll(nodes=>nodes.map(node=>{
