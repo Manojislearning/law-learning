@@ -135,7 +135,7 @@ async function run(){
    await root.locator("textarea").fill("I identify the tort issue and a relevant judicial or statutory rule, analyse the facts and possible defences, and reach a balanced conclusion.");
    await root.getByRole("button",{name:/Reveal reference reasoning/}).tap();
    assert.equal(await model.isVisible(),true);
-   assert.ok((await model.innerText()).includes("Law of Torts · Unit"));
+   assert.ok((await model.locator(".cp-eyebrow").textContent()).includes("Law of Torts · Unit"),"Reference should reveal Torts subject and unit after the attempt");
    assert.ok((await model.locator("a.cp-case-source").count())>0);
    assert.equal(await root.locator(".cp-rubric input").count(),4);
    assert.equal(errors.length,0,width+"px Torts Chromium errors: "+errors.join("; "));
