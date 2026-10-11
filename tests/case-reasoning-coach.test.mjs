@@ -48,7 +48,7 @@ test('Related law opens via supported existing syllabus route only after referen
 });
 test('Only already existing offline modules are updated, not stored state or backup schema',()=>{
  const html=read('index.html'),sw=read('sw.js'),backup=read('backup-core.js');
- for(const file of ['case-practice-core.js?v=54','case-practice-view.js?v=54']){
+ for(const file of ['case-practice-core.js?v=54','case-practice-view.js?v=55']){
   assert.ok(html.includes(file),'HTML missing '+file);
   assert.ok(sw.includes(file),'Offline cache missing '+file);
  }
