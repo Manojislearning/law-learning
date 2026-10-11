@@ -169,7 +169,27 @@ async function run(){
    assert.equal(errors.length,0,width+"px BNS practice errors: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts and BNS practice and keyboard focus.");
+
+  {
+   const context=await browser.newContext({viewport:{width:390,height:780},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=49&course=torts#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   await area.getByRole("button",{name:/Start 5 cases/}).tap();
+   for(let i=0;i<5;i++)await area.getByRole("button",{name:"Skip case"}).tap();
+   assert.ok((await area.innerText()).includes("0 cases compared with reference reasoning; 5 skipped."));
+   const retry=area.getByRole("button",{name:/Retry 5 weak or skipped cases/});
+   assert.equal(await retry.isVisible(),true);
+   const box=await retry.boundingBox();assert.ok(box&&box.height>=44,"Retry button must remain touch accessible");
+   await retry.tap();
+   assert.equal(await area.locator(".cp-model").isHidden(),true,"Weak-case retry must never reveal the previous model answer");
+   assert.equal(await area.locator("textarea").inputValue(),"","Student essay must not be prefilled or persisted");
+   assert.ok((await area.innerText()).includes("SECOND ATTEMPT"));
+   assert.equal(errors.length,0,"Torts retry mobile runtime errors: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts/BNS practice, retry workflow and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
