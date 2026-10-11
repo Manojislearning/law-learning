@@ -10,8 +10,9 @@ const htmlFiles={
  "00 - Notes.md":"# Law Notes Home\n\nOpen [[01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I|Constitutional Law I]].\n\n## Start here\n\nYour studies organised.",
  "01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I.md":
  "# Constitutional Law I\n\n## Unit 1\n\nThe [[Preamble]] sets out the Constitution's aims.",
- "01-Semester-1/Constitutional-Law-I/Preamble.md":
- "# Preamble\n\n## Meaning\n\nJustice, liberty, equality and fraternity.\n\n## Main Values\n\nEquality and fraternity.\n\n## Exam Points\n\nExplain constitutional ideals."
+ "01-Semester-1/Constitutional-Law-I/Topics/Preamble.md":
+ "# Preamble\n\n## Meaning\n\nJustice, liberty, equality and fraternity.\n\n- [[Constitutionalism|Constitutionalism]]\n\n## Main Values\n\nEquality and fraternity.\n\n## Exam Points\n\nExplain constitutional ideals.",
+ "01-Semester-1/Constitutional-Law-I/Topics/Constitutionalism.md":"# Constitutionalism\n\n## Rule of Law\n\nPower is restrained by constitutional limits."
 };
 const paths=Object.keys(htmlFiles);
 function serve(req,res){
@@ -66,16 +67,39 @@ async function main(){
    await home.first().click();
    await page.locator("#article h1").filter({hasText:"Constitutional Law I"}).waitFor();
    assert.match(await page.locator("#article").innerText(),/Constitutional Law I/);
+   assert.equal(await page.locator("#map-btn").isHidden(),true,"Subject index should not offer a map");
+   await page.locator("#article a.wiki").first().click();
+   await page.locator("#article h1").filter({hasText:"Preamble"}).waitFor();
+   assert.equal(await page.locator("#map-btn").isVisible(),true,"Topic note must offer the map");
    await page.locator("#map-btn").click();
    assert.equal(await page.locator("#map-overlay").isVisible(),true);
-   assert.ok(await page.locator("#map-scene [data-id]").count()>=5,"Map must contain actual note branches");
-   await page.locator("#map-scene [aria-label=\"Preamble\"]").click();
-   await page.locator("#map-details:not([hidden]) #map-note-body h1").first().waitFor();
-   assert.match(await page.locator("#map-note-body").innerText(),/Justice, liberty, equality/);
-   await page.locator("#map-fit").click();
+   assert.ok(await page.locator("#map-scene [data-id]").count()>=6,"Map must contain topic headings and points");
+   assert.equal(await page.locator("#map-scene [aria-label='Semester I']").count(),0,"No vault-wide tree");
+   await page.locator("#map-scene [aria-label='Meaning']").click();
+   await page.locator("#map-details:not([hidden]) #map-note-body h2").first().waitFor();
+   assert.match(await page.locator("#map-note-title").innerText(),/Meaning/);
+   const before=await page.locator("#map-svg").getAttribute("viewBox");
    await page.locator("#map-zoom-in").click();
-   await page.locator("#map-close").click();
-   assert.equal(await page.locator("#map-overlay").isVisible(),false);
+   const after=await page.locator("#map-svg").getAttribute("viewBox");
+   assert.ok(Number(after.split(" ")[2])<Number(before.split(" ")[2]),"Zoom-in should enlarge branches");
+   await page.locator("#map-fit").click();
+   const pinch=await page.locator("#map-svg").evaluate(svg=>{
+     const box=svg.getBoundingClientRect(),x=box.left+90,y=box.top+100;
+     const send=(type,id,px)=>svg.dispatchEvent(new PointerEvent(type,{bubbles:true,pointerId:id,pointerType:"touch",isPrimary:id===1,clientX:px,clientY:y}));
+     const initial=Number(svg.getAttribute("viewBox").split(" ")[2]);
+     send("pointerdown",1,x);send("pointerdown",2,x+90);send("pointermove",2,x+170);
+     const result=Number(svg.getAttribute("viewBox").split(" ")[2]);
+     send("pointerup",2,x+170);send("pointerup",1,x);
+     return {initial,result};
+   });
+   assert.ok(pinch.result<pinch.initial,"Two-finger pinch out must zoom in");
+   await page.locator("#map-scene [aria-label='Constitutionalism'] [data-open-note]").click();
+   await page.locator("#article h1").filter({hasText:"Constitutionalism"}).waitFor();
+   assert.equal(await page.locator("#map-overlay").isVisible(),false,"Backlink opens the Markdown note");
+   if(mobile)await page.locator("#bottom-next").click();
+   else await page.locator("#next-note").click();
+   await page.locator("#article h1").filter({hasText:"Preamble"}).waitFor();
+   assert.equal(await page.locator("#up-note").isVisible(),true,"Topic has Up navigation");
    await page.locator("#save-btn").click();
    assert.equal(await page.locator("#save-btn").evaluate(el=>el.classList.contains("saved")),true);
    await page.locator("#font-btn").click();
@@ -84,8 +108,6 @@ async function main(){
    assert.equal(await page.locator("#font-size-label").textContent(),"22px");
    await page.locator("#close-prefs").click();
    assert.equal(await page.locator("#prefs").isVisible(),false);
-   await page.locator("#article a.wiki").first().click();
-   await page.locator("#article h1").filter({hasText:"Preamble"}).waitFor();
    assert.equal(await page.locator("#study-pager").isVisible(),true,"Multi-heading Markdown should start as short pages.");
    assert.equal(await page.locator("#article .study-page:visible").count(),1);
    await page.locator("#page-next").click();
