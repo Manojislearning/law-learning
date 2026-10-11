@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-11T10:17:07Z",
+  "generatedAt": "2026-10-11T10:18:42Z",
   "items": [
     {
       "id": "d1f05771fe26332c",
@@ -8,8 +8,8 @@
       "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-to-hold-two-day-national-consultation-on-10-years-of-juvenile-justice-act/134838500",
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T16:26:48Z",
-      "category": "Latest",
-      "priority": 0
+      "category": "Supreme Court",
+      "priority": 1
     },
     {
       "id": "f0fffcc48bfab58d",
@@ -17,6 +17,24 @@
       "url": "https://legal.economictimes.indiatimes.com/news/litigation/no-question-of-restrictive-live-streaming-of-court-proceedings-says-sc/134838433",
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T16:20:05Z",
+      "category": "Supreme Court",
+      "priority": 1
+    },
+    {
+      "id": "2da64b70ebada4d1",
+      "title": "Siemens Energy India says Russian court rejects appeal; ₹44.38 crore order stands",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/siemens-energy-india-says-russian-court-rejects-appeal-44-38-crore-order-stands/134830266",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-09T10:14:55Z",
+      "category": "Latest",
+      "priority": 0
+    },
+    {
+      "id": "65c6a2d6aa7b008f",
+      "title": "Blue Dart appoints Rabindra Purohit as VP-Legal, Compliance and Company Secretary",
+      "url": "https://legal.economictimes.indiatimes.com/news/industry/blue-dart-appoints-rabindra-purohit-as-vp-legal-compliance-and-company-secretary/134829307",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-09T09:35:56Z",
       "category": "Latest",
       "priority": 0
     },
@@ -27,7 +45,7 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-07T11:04:38Z",
       "category": "Latest",
-      "priority": 0
+      "priority": 1
     },
     {
       "id": "0789a78a79aef6ca",
@@ -35,8 +53,8 @@
       "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-reserves-verdict-on-pleas-challenging-hc-order-striking-down-attendance-mandate-for-law-students/134757902",
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-07T06:12:56Z",
-      "category": "Latest",
-      "priority": 0
+      "category": "Supreme Court",
+      "priority": 1
     },
     {
       "id": "41cd237789c1c5b8",
@@ -45,6 +63,15 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-05T17:04:58Z",
       "category": "Legislation",
+      "priority": 0
+    },
+    {
+      "id": "31c87150a1996724",
+      "title": "AI has become a necessity for legal teams, says LexisNexis India and Southeast Asia MD Gaythri Raman",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/ai-has-become-a-necessity-for-legal-teams-says-lexisnexis-southeast-asia-md-gaythri-raman/134538292",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-09-28T10:48:34Z",
+      "category": "Latest",
       "priority": 0
     }
   ]
