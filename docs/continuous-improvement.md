@@ -1,11 +1,29 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **54** — optional evidence/counterargument practice, targeted weak-case reminders and syllabus jump after answer review; prior releases follow.
+Latest user-visible release: **55** — balanced daily cross-subject case revisit, due-only priority and honest backed-up learner history; prior releases follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 55 — Daily Case Review across all five subjects (11 October 2026)
+
+**Problem found in the audit:** The five subject case banks already provided 75 original IRAC problems, 25 changed-facts challenges, and backed-up weak-case metadata. But a student had to switch subjects and retry each subject's entire weak-case queue, even when some items were not yet due. This made regular revision unnecessarily laborious and obscured the useful follow-up dates.
+
+**Improvement shipped:**
+1. **Daily Case Review** appears at the top of Case Practice when saved cases are due. It selects up to five due cases **across Contract–I, Torts, BNS, Constitution and Hindu Law**, taking at most one case per subject per pass to avoid having one subject dominate a short study session. The oldest due items are prioritised within a subject.
+2. The home Case Practice card reports **how many weak cases are due today** and how many remain saved. The dashboard gives an immediate start action for an achievable batch.
+3. **Not-yet-due cases are excluded** from the daily batch; students can still use the older manual subject-specific retry button to practise early. Skipping a due case keeps it on the revisit list.
+4. Each question reuses the original **retrieval-first IRAC flow**: answer first; only then see source-linked reasoning; voluntarily self-check the four elements. Fully selected elements clear the student's revisit flag **only as a self-report**, not an automated essay grade. Essays are not stored.
+5. **Privacy and compatibility:** All five original bank case IDs and the existing `law-learning-case-review-v1` key are preserved. No new persistent data, no backup-schema migration, no historical scores altered. Corrupt saved metadata is reported without silent reset.
+6. **Regression tests:** deterministic due-date/cross-course fairness/corrupt-history tests; JSDOM all-five-subject replay and local-backup verification; Chromium touch checks at 320/390 pixels; full original law-content, case and backup test suite.
+
+**Learning rationale:** Spacing and interleaving are more effective when retrieval requires students to distinguish which rule applies to an unfamiliar issue; a concise daily set lowers friction. These are design principles, not a claim of measured KSLU examination improvement. Students still need to verify university scheme and legal propositions against official authorities.
+
+**Next higher-value step:** audit whether self-reported all-four IRAC checkboxes prematurely remove genuinely weak concepts. Consider a voluntary *confidence + counterexample* self-check without calculating deceptive accuracy scores, then test actual student performance on delayed unseen cases. Make the daily queue more directly discoverable in home navigation without additional clutter; continue current KSLU cohort and primary case-law verification.
+
+---
 
 ## Version 54 — Explain factual reasoning and connect weak cases to the syllabus (11 October 2026)
 
