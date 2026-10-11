@@ -83,7 +83,7 @@ test('Legacy Contract I and Torts banks and separate study histories remain vali
 });
 test('New BNS learning route loads cached files and never stores free-form drafts',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('case-practice-view.js'),flow=read('syllabus-flow.js');
- for(const item of ['bns-case-practice-data.js?v=48','case-practice-core.js?v=52','case-practice-view.js?v=52','syllabus-flow.js?v=52']){
+ for(const item of ['bns-case-practice-data.js?v=48','case-practice-core.js?v=52','case-practice-view.js?v=53','syllabus-flow.js?v=52']){
   assert.ok(html.includes(item),'index lacks '+item);
   assert.ok(sw.includes(item),'offline cache lacks '+item);
  }
