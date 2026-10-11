@@ -45,7 +45,7 @@ test('Broken case links or unsupported sources are rejected rather than displaye
  const dup=JSON.parse(JSON.stringify(data));
  dup.items[1].id=dup.items[0].id;
  assert.throws(()=>core.verify(dup,banks),/Duplicate/);
- assert.throws(()=>core.select(data,banks,'hindu',[],()=>.3),/Unknown subject/);
+ assert.throws(()=>core.select(data,banks,'english',[],()=>.3),/Unknown subject/);
  assert.throws(()=>core.select(data,banks,'contract',[],()=>1),/Invalid shuffle/);
 });
 test('Changed facts explicitly contrast high-risk legal mistakes without claims of assured outcomes',()=>{
