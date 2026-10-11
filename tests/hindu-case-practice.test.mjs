@@ -65,7 +65,7 @@ test('Five Hindu fact changes inherit real parent cases and valid sources',()=>{
 });
 test('New Hindu reading remains in shared router, offline cache and in-memory self-assessment',()=>{
  const html=read('index.html'),worker=read('sw.js'),view=read('case-practice-view.js'),syllabus=read('syllabus-flow.js');
- for(const asset of ['hindu-case-practice-data.js?v=52','case-practice-core.js?v=54','case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=54','syllabus-flow.js?v=52']){
+ for(const asset of ['hindu-case-practice-data.js?v=52','case-practice-core.js?v=54','case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=55','syllabus-flow.js?v=52']){
   assert.ok(html.includes(asset),'HTML missing '+asset);assert.ok(worker.includes(asset),'Worker missing '+asset);
  }
  assert.ok(html.includes('75 IRAC cases'));
@@ -73,5 +73,5 @@ test('New Hindu reading remains in shared router, offline cache and in-memory se
  assert.ok(view.includes('bankKey==="hindu"'));
  assert.ok(syllabus.includes('open("hindu")'));
  assert.ok(!view.includes('localStorage.setItem'));
- assert.ok(html.indexOf('hindu-case-practice-data.js?v=52')<html.indexOf('case-practice-view.js?v=54'));
+ assert.ok(html.indexOf('hindu-case-practice-data.js?v=52')<html.indexOf('case-practice-view.js?v=55'));
 });
