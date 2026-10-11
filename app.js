@@ -352,7 +352,34 @@ function buildExamWords(rows) {
 CORE_WORDS.forEach(function(word) {
   word.category = word.category || "Foundation";
 });
-const WORDS = CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || []));
+function buildAdvancedEnglishWords(rows) {
+  // Each row: word, meaning, example from legal writing, simpler explanation.
+  // Append after existing legal words so all saved numeric word IDs remain stable.
+  var seen = new Set(CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || [])).map(function(w){return w.term.toLowerCase();}));
+  return (Array.isArray(rows) ? rows : []).filter(function(row){
+    if(!Array.isArray(row)||row.length!==4||row.some(function(s){return typeof s!=="string"||!s.trim();}))return false;
+    var key=row[0].toLowerCase();
+    if(seen.has(key))return false;
+    seen.add(key);return true;
+  }).map(function(row){
+    var term=row[0],definition=row[1],example=row[2],plain=row[3];
+    return {
+      term:term, pronunciation:term, definition:definition,
+      memory:term+" — "+plain,
+      deep:definition+" In a legal note or exam answer: "+example,
+      daily:plain,
+      kannada:"English writing vocabulary",
+      kannadaExplain:"This entry focuses on precise English in your law notes and written answers.",
+      kannadaSentence:example,
+      compareTerm:"Answer use",
+      compareSelf:definition,
+      compareOther:example,
+      compareRule:"Use this word only when its precise meaning fits the sentence. Do not substitute formal English for accurate legal reasoning.",
+      examples:[example], category:"Advanced English"
+    };
+  });
+}
+const WORDS = CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || []),buildAdvancedEnglishWords(window.LAW_ADVANCED_ENGLISH_ROWS || []));
 
 const KSLU_FIRST_SEMESTER = {
   "title": "KSLU 3-Year LL.B · Semester I",
