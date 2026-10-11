@@ -1,4 +1,4 @@
-/* v56 Law News: a continuous vertical page, without nested scroll panels. */
+/* v57 Law News: a continuous vertical page, without nested scroll panels. */
 .news-heading{margin:8px 0 14px}.news-heading h2{font-size:clamp(1.8rem,5vw,2.35rem);letter-spacing:-.04em;margin:3px 0 8px}.news-heading .muted{max-width:680px;line-height:1.55}
 .news-status{font-size:.77rem;color:var(--muted);line-height:1.45;margin:0 0 15px}
 .news-filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.news-filter{background:var(--surface);border:1px solid var(--line);border-radius:999px;color:var(--text);font:inherit;font-size:.79rem;font-weight:750;min-height:44px;padding:8px 13px;cursor:pointer}.news-filter.is-active{background:var(--text);color:white;border-color:var(--text)}
@@ -13,3 +13,16 @@
 .news-note,.news-footnote{font-size:.78rem;line-height:1.5;color:var(--muted)}.news-note{border-left:3px solid #a47130;padding-left:12px}.news-footnote{margin:22px 0 30px}.news-empty{background:var(--surface);border:1px dashed var(--line);border-radius:16px;padding:24px;margin-bottom:14px}.news-empty h3{margin:0 0 8px}.news-empty .muted{line-height:1.6}.news-filter:focus-visible,.news-action:focus-visible,.news-more:focus-visible,.news-quiz-toggle:focus-visible{outline:3px solid #6281aa;outline-offset:3px}
 @media(max-width:375px){.news-story{padding:15px}.news-story-meta{align-items:flex-start;flex-direction:column}.news-actions>*{flex:1}}
 @media(prefers-reduced-motion:reduce){.news-story,.news-filter{transition:none}}
+
+/* Lightweight visual previews: actual publisher images, truthful neutral fallbacks. */
+.news-media{width:100%;margin-top:13px;aspect-ratio:16/8.5;background:#e8edf3;border-radius:13px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.news-image{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#e8edf3}
+.news-media-fallback{display:flex;align-items:center;justify-content:center;flex-direction:column;width:100%;height:100%;color:#384e69;background:linear-gradient(135deg,#e8edf3,#dce5ee);gap:3px}
+.news-media-symbol{font-family:Georgia,serif;font-weight:700;line-height:1;font-size:clamp(3.5rem,10vw,5.5rem);opacity:.72}
+.news-media-label{font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;font-weight:850}
+.news-brief{padding:0 0 6px}
+.news-brief-label{font-size:.68rem;letter-spacing:.07em;font-weight:850;color:#5e6e83}
+.news-brief .news-excerpt{font-size:.88rem;color:#36475b;line-height:1.55;margin:5px 0 13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.news-brief .news-brief-unavailable{color:var(--muted);font-style:italic}
+@media(min-width:780px){.news-media{aspect-ratio:16/7.2}.news-image{max-height:none}}
+@media(max-width:390px){.news-media{aspect-ratio:16/9}.news-story .news-title{margin-top:12px}}
