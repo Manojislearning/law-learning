@@ -253,5 +253,62 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(due.errors,[]);
   due.dom.window.close();
  }
- console.log("DOM integration passed: Contract I lessons, spaced retrieval due dates, reveal gates, export and home navigation.");
+
+ {
+  const cp=build("https://example.test/law-learning/index.html?v=42#practice");
+  const w=cp.dom.window,d=cp.doc,root=d.getElementById("practice-root");
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.ok(root.textContent.includes("Practise legal reasoning"),"Direct practice link should open exam set overview");
+  assert.ok(root.textContent.includes("not official KSLU"),"Students must see provenance caveat");
+  let start=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases"));
+  assert.ok(start,"Need visible start button");
+  start.click();
+  const observedUnits=new Set(),factsSeen=new Set(),dataBefore=w.localStorage.length;
+  for(let i=0;i<5;i++){
+   assert.ok(root.textContent.includes("Case "+(i+1)+" / 5"));
+   assert.ok(!root.textContent.includes("Contract–I · Unit I ·"),"Study unit must not be given away before reveal");
+   const facts=root.querySelector(".cp-facts").textContent;
+   assert.ok(facts.length>60);
+   factsSeen.add(facts);
+   const response=root.querySelector(".cp-writing textarea");
+   const reveal=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning"));
+   const model=root.querySelector(".cp-model"),rubric=root.querySelector(".cp-rubric");
+   assert.equal(model.hidden,true);assert.equal(rubric.hidden,true);
+   reveal.click();
+   assert.equal(model.hidden,true,"Empty response must not reveal model");
+   assert.ok(root.querySelector(".cp-error").textContent.includes("40 characters"));
+   response.value="The parties' rights depend on the relevant legal rule and how it applies to these specific facts.";
+   response.dispatchEvent(new w.Event("input",{bubbles:true}));
+   reveal.click();
+   assert.equal(model.hidden,false);
+   assert.equal(rubric.hidden,false);
+   assert.ok(model.textContent.includes("Rule"));
+   assert.ok(model.textContent.includes("Application"));
+   const m=model.textContent.match(/Contract–I · Unit (I|II|III|IV|V) ·/);
+   assert.ok(m,"Case explanation should disclose actual unit only after attempt");
+   observedUnits.add(m[1]);
+   assert.equal(model.querySelectorAll("a[href*='indiacode.nic.in']").length>=0,true);
+   const ticks=[...rubric.querySelectorAll('input[type="checkbox"]')];
+   assert.equal(ticks.length,4);
+   ticks[0].checked=true;ticks[0].dispatchEvent(new w.Event("change",{bubbles:true}));
+   assert.ok(rubric.textContent.includes("1 of 4"),"The self-check should update without assigning an exam score");
+   const next=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Next case"));
+   next.click();
+  }
+  assert.equal(observedUnits.size,5,"One issue-spotting case is needed from each unit");
+  assert.equal(factsSeen.size,5);
+  assert.ok(root.textContent.includes("You finished the set"));
+  assert.ok(root.textContent.includes("No essay grade"));
+  assert.equal(w.localStorage.length,dataBefore,"Written practice must not create persistent data");
+  const again=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set"));
+  again.click();
+  const fresh=root.querySelector(".cp-facts").textContent;
+  assert.ok(!factsSeen.has(fresh),"Second session should initially present a not-yet-used scenario");
+  w.LawAppCore.router.navigate("home");
+  assert.equal(root.textContent,"","Leaving practice must discard the in-memory essay draft");
+  assert.ok(d.getElementById("review-dashboard-count"),"Review Due must remain available");
+  assert.deepEqual(cp.errors,[]);
+  cp.dom.window.close();
+ }
+ console.log("DOM integration passed: Contract I lessons, spaced recall, balanced IRAC case practice and offline-safe navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
