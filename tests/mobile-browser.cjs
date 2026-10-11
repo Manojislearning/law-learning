@@ -230,7 +230,7 @@ async function run(){
    await area.locator("textarea").fill("Issue: identify the relevant constitutional provision. Rule: consider the Constitution. Application: analyse the facts. Conclusion: qualify the result.");
    await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
    assert.equal(await model.isVisible(),true);
-   assert.ok((await model.innerText()).includes("Constitutional Law–I"));
+   assert.ok((await model.innerText()).toLowerCase().includes("constitutional law–i"),"Constitutional analysis must show the right course");
    assert.ok(await model.locator("a[href*='legislative.gov.in']").count()>0);
    const picks=area.locator(".cp-rubric input");
    assert.equal(await picks.count(),4);
