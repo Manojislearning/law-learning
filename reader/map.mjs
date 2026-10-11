@@ -39,7 +39,7 @@ export function noteBranches(content,path,paths){
  return root;
 }
 function lines(s){
- const out=[''];for(const word of String(s).split(/\s+/)){const i=out.length-1;if((out[i]+' '+word).trim().length>38&&out[i])out.push(word);else out[i]=(out[i]+' '+word).trim()}
+ const out=[''];for(const word of String(s).split(/\s+/)){const i=out.length-1;if((out[i]+' '+word).trim().length>31&&out[i])out.push(word);else out[i]=(out[i]+' '+word).trim()}
  return out.slice(0,4);
 }
 export function measureTree(root){
@@ -52,7 +52,7 @@ export function measureTree(root){
  };
  visit(root,0);return {width:(deep+1)*460+80,height:Math.max(350,cy+80)};
 }
-export function mountVaultMap({files,getNote,readNote}){
+export function mountVaultMap({files,getNote,readNote,onClose}){
  const panel=document.querySelector('#map-overlay'),svg=document.querySelector('#map-svg'),scene=document.querySelector('#map-scene');
  const drawer=document.querySelector('#map-details'),body=document.querySelector('#map-note-body'),title=document.querySelector('#map-note-title'),status=document.querySelector('#map-status');
  let root=null,nodes=[],topic='',active=null,bounds={width:1000,height:700},v={x:0,y:0,w:1200,h:800};
@@ -91,7 +91,7 @@ export function mountVaultMap({files,getNote,readNote}){
   document.querySelector('#map-count').textContent=nodes.length+' branches';
  }
  const find=id=>nodes.find(n=>n.id===id);
- function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false}
+ function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
  function read(n){
   if(!n)return;const dest=n.link||{path:topic,heading:n.section||''};
   close();void readNote(dest.path,dest.heading||'');
