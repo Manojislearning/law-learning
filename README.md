@@ -1,3 +1,13 @@
+## Version 58 — Readable text and two vocabulary levels
+
+**Reading comfort:** The News feed, article excerpts, study pages and interactive word game use larger mobile-friendly typography and minimum-size touch controls. Dedicated `readability.css` rules respect narrow screens. The older word game's CSS no longer hides the Home entries for News, Case Practice, Review and other features.
+
+**Word game:** There are now two independently navigable practice levels:
+- **Level 1 — Legal Words**: the existing 415 law concepts, legal terms and exam command words, with their original indices unchanged.
+- **Level 2 — Advanced English**: 115 new precise English words frequently useful in reading legal material, composing notes, structuring arguments, and writing exam answers. Every entry has a meaning, plain-English aid and legal-writing usage sentence; the game gives examples instead of pretending these words have independently verified news reports.
+
+The level choice and recent item in each level are saved locally under `law-learning-word-level-v1`. The older `law-learning-progress-v2` IDs, score, learned/revise flags and backup format remain unchanged. Existing level-one learners retain their records without migration. Both levels are unlocked, accessible through buttons and keyboard navigation, and use the same 10-card recall, comparison and explanation sequence. The optional level preference is device-local.
+
 ## Version 57 — Illustrated, readable legal news cards
 
 The Law News screen (`#news`) now displays each publisher's linked preview photograph when available and a **brief, attributed publisher excerpt capped at about 24 words**. Images are linked directly from the publisher's HTTPS image URL; they are not copied into this repository or replaced with unrelated stock photography. Failed or missing images show a clearly neutral illustration. Missing publisher descriptions are identified rather than fabricated. Headlines, publication times, source links, local bookmarks, filters and the student reasoning prompt remain intact.
