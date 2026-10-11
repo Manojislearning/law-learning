@@ -11,6 +11,7 @@
   var ROUTES={
     home:["3-Year LL.B · Study App","Law Learning"],
     words:["Legal vocabulary","Words"],
+    review:["Contract–I · Revision","Review"],
     syllabus:["KSLU · 3-Year LL.B","Syllabus"],
     subjects:["KSLU · Legal concepts","Subjects"],
     exam:["Exam preparation","Exam Pattern"],
