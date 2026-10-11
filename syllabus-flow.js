@@ -205,6 +205,11 @@ function render(){
     var meta=window.LawContentLedger&&window.LawContentLedger.getUnit(subject,i);
     B(d,u.unit+" — "+u.title,meta&&meta.outlineAudit?"Published outline compared · scheme pending":"Learn topics →",function(){push("unit",i);});
    });
+   if(subject===2){
+    B(d,"Torts Case Practice","15 original problems · five mixed units · written IRAC feedback →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("torts");
+    });
+   }
   }else{
    var msg=E(d,"div",undefined,"sf-info");E(msg,"h3","Detailed unit outline not imported");
    E(msg,"p","The subject title is shown from the 2024–25 KSLU programme listing. The detailed units for this semester have not been added or verified.");
@@ -219,6 +224,11 @@ function render(){
     if(courseUI)B(e,"Start guided lessons",courseUI.lessons.length+" short lessons · examples · practice",function(){push("guided",0);});
   }
 
+  if(sem===1&&subject===2){
+   B(e,"Practice Law of Torts","Five unseen questions per set · analysis first · sourced model answers →",function(){
+    if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("torts");
+   });
+  }
   /* Modern statutory corrections are separate from the original university outline. */
   if(sem===1&&subject===4){
    B(e,"Current Law Check · BNS","Selected section mappings, commencement and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
