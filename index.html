@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="59" />
+  <meta name="app-version" content="60" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="./news.css?v=57" />
   <link rel="stylesheet" href="./readability.css?v=58" />
   <link rel="stylesheet" href="./exam-papers.css?v=59" />
+  <link rel="stylesheet" href="./student-menu.css?v=60" />
 </head>
 <body>
   <div class="app-shell">
@@ -81,24 +82,12 @@
             <p>Two levels: Legal Words and Advanced English for strong exam answers.</p>
             <span class="home-arrow">→</span>
           </button>
-          <button class="home-card" data-open="syllabus" type="button">
+          <button class="home-card student-home-card" data-open="student" type="button">
             <span class="home-index">02</span>
-            <strong>Syllabus</strong>
-            <p>30 Semester I outlines compared with KSLU PDFs · admission-year confirmation pending.</p>
+            <strong>Student</strong>
+            <p>Syllabus, Topic Brain Branches, Subjects and Exam Papers &amp; Answers — all in one place.</p>
             <span class="home-arrow">→</span>
           </button>
-          <button class="home-card" data-open="subjects" type="button">
-            <span class="home-index">03</span>
-            <strong>Subjects</strong>
-            <p>Explore Torts, Hindu Law, Contract Law and every LL.B subject by its core concepts.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <a class="home-card" href="./reader/?map=1" style="text-decoration:none;color:inherit;">
-            <span class="home-index">04</span>
-            <strong>Topic Brain Branches</strong>
-            <p>Explore one topic · pinch to zoom · jump to Markdown notes from branches.</p>
-            <span class="home-arrow">→</span>
-          </a>
           <a class="home-card" href="./reader/" style="text-decoration:none;color:inherit;">
             <span class="home-index">09</span>
             <strong>Law Notes</strong>
@@ -110,12 +99,6 @@
             <span class="home-index">05</span>
             <strong>Exam Pattern</strong>
             <p>Understand how your Semester I papers are structured.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <button class="home-card" data-open="papers" type="button">
-            <span class="home-index">06</span>
-            <strong>Exam Papers & Answers</strong>
-            <p>Five subjects · 16 detailed answers · original KSLU paper scans.</p>
             <span class="home-arrow">→</span>
           </button>
           <button class="home-card" data-open="notes" type="button">
@@ -131,8 +114,45 @@
             <span class="home-arrow">→</span>
           </button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 59 · <a href="./refresh.html?build=59" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 60 · <a href="./refresh.html?build=60" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
+      <section id="student-view" class="main-view" aria-label="Student study resources">
+        <div class="student-hub">
+          <header class="student-hub-heading">
+            <p class="eyebrow">KSLU · 3-Year LL.B</p>
+            <h2>Student</h2>
+            <p class="muted">Your study essentials in one place. Open the syllabus, explore connected topics, browse subjects or practise examination answers.</p>
+          </header>
+          <nav class="student-hub-grid" aria-label="Student resources">
+            <button class="home-card student-hub-card" type="button" data-open="syllabus">
+              <span class="student-hub-number">01 · COURSE OUTLINE</span>
+              <strong>Syllabus</strong>
+              <p>Explore the KSLU Semester I subjects and their five units, with links to the published outline.</p>
+              <span class="student-hub-arrow" aria-hidden="true">→</span>
+            </button>
+            <a class="home-card student-hub-card" href="./reader/?map=1">
+              <span class="student-hub-number">02 · VISUAL LEARNING</span>
+              <strong>Topic Brain Branches</strong>
+              <p>Explore visual topic branches and open the connected Markdown study notes.</p>
+              <span class="student-hub-arrow" aria-hidden="true">→</span>
+            </a>
+            <button class="home-card student-hub-card" type="button" data-open="subjects">
+              <span class="student-hub-number">03 · STUDY LIBRARY</span>
+              <strong>Subjects</strong>
+              <p>Review legal concepts across Contract, Constitutional Law, Torts, Hindu Law and more.</p>
+              <span class="student-hub-arrow" aria-hidden="true">→</span>
+            </button>
+            <button class="home-card student-hub-card" type="button" data-open="papers">
+              <span class="student-hub-number">04 · EXAM PREPARATION</span>
+              <strong>Exam Papers &amp; Answers</strong>
+              <p>Find past-paper scan links and practise 16 detailed model answers across five subjects.</p>
+              <span class="student-hub-arrow" aria-hidden="true">→</span>
+            </button>
+          </nav>
+          <p class="student-hub-footnote">Your saved notes, word progress and examination practice stay unchanged.</p>
+        </div>
+      </section>
+
       <section id="words-view" class="main-view">
         <div class="section-head compact">
           <div>
