@@ -219,10 +219,11 @@ function search(){
 }
 function mark(review){
  if(typeof state!=="undefined"){
- if(review){state.difficult.add(index);state.learned.delete(index);state.streak=0;}
- else {if(!state.learned.has(index))state.score+=10;state.learned.add(index);state.difficult.delete(index);state.streak++;}
- if(typeof saveProgress==="function")saveProgress();if(typeof renderStats==="function")renderStats();
- }nextWord();
+  window.LawAppCore.progress.mark(state,index,review,{firstPoints:10,repeatPoints:0,removeLearned:true});
+  if(typeof saveProgress==="function")saveProgress();
+  if(typeof renderStats==="function")renderStats();
+ }
+ nextWord();
 }
 document.querySelectorAll("#words-view [data-wtab]").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.wtab);});});
 $("w-back").addEventListener("click",function(){if(cardIndex>0){cardIndex--;renderDeck();}});
