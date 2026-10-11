@@ -293,9 +293,33 @@ function mark(review){
  }
  nextWord();
 }
+function showChooser(){
+ $("w-chooser").hidden=false;
+ $("w-practice").hidden=true;
+ hideSearch();
+}
+function showPractice(){
+ $("w-chooser").hidden=true;
+ $("w-practice").hidden=false;
+}
 document.querySelectorAll("#words-view [data-wlevel]").forEach(function(b){
- b.addEventListener("click",function(){var level=b.dataset.wlevel;if(!pools[level]||!pools[level].length)return;choose(lastByLevel[level],"game");});
+ b.addEventListener("click",function(){
+  var level=b.dataset.wlevel;
+  if(!pools[level]||!pools[level].length)return;
+  showPractice();
+  choose(lastByLevel[level],"game");
+ });
 });
+$("w-change-level").addEventListener("click",showChooser);
+document.addEventListener("click",function(event){
+ if(!event.target.closest("#back-home")||location.hash!=="#words"||$("w-practice").hidden)return;
+ event.preventDefault();event.stopImmediatePropagation();showChooser();
+},true);
+if(window.LawAppCore&&window.LawAppCore.router){
+ window.LawAppCore.router.subscribe(function(route){
+  if(route!=="words")showChooser();
+ });
+}
 document.querySelectorAll("#words-view [data-wtab]").forEach(function(b){b.addEventListener("click",function(){switchTab(b.dataset.wtab);});});
 $("w-back").addEventListener("click",function(){if(cardIndex>0){cardIndex--;renderDeck();}});
 $("w-forward").addEventListener("click",function(){if(cardIndex<9){cardIndex++;renderDeck();}else nextWord();});
@@ -372,10 +396,10 @@ document.addEventListener("keydown",function(e){
  if(e.key==="ArrowLeft")moveBySwipe(1);
 });
 /* Wide swipe zone: covers card body, answer options, and whitespace; excludes
-   the search field, slider, bottom revision controls and tappable links. */
+   the search field, progress bar, bottom revision controls and tappable links. */
 var swipeSurface=document.querySelector("#words-view .word-v19"),wideStart=null;
 function blockedGestureTarget(target){
- return !!target.closest(".w-search,.w-tabs,.w-bottom,.w-scrubber,.cmp-page,input,textarea,select,a,[contenteditable='true']");
+ return !!target.closest(".w-search,.w-tabs,.w-bottom,.w-progress,.cmp-page,input,textarea,select,a,[contenteditable='true']");
 }
 swipeSurface.addEventListener("touchstart",function(event){
  if(event.touches.length!==1||blockedGestureTarget(event.target)){wideStart=null;return;}
@@ -403,7 +427,7 @@ swipeSurface.addEventListener("touchcancel",function(){wideStart=null;},{capture
 window.openLawWord=function(term,requestedTab){
  var i=WORDS.findIndex(function(x){return x.term.toLowerCase()===String(term).trim().toLowerCase();});
  if(i<0)return false;
- location.hash="words";choose(i,requestedTab||"game");window.scrollTo({top:0,behavior:"smooth"});return true;
+ location.hash="words";showPractice();choose(i,requestedTab||"game");window.scrollTo({top:0,behavior:"smooth"});return true;
 };
-choose(index,"game");
+choose(index,"game");showChooser();
 })();
