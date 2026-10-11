@@ -84,7 +84,7 @@ test('App deep link and on-demand subject selection preserve private essays and 
  }
  assert.ok(view.includes('get("course")'));
  assert.ok(view.includes('open:openCourse'));
- assert.ok(view.includes('histories={contract:new Map(),torts:new Map(),bns:new Map()}'));
+ assert.ok(view.includes('histories={contract:new Map(),torts:new Map(),bns:new Map(),constitution:new Map()}'),'Each subject keeps independent session history');
  assert.ok(view.includes('draft.value.trim().length<40'));
  assert.ok(view.includes('model.hidden=false'));
  assert.ok(syllabus.includes('LawCasePracticeUI.open("torts")'));
