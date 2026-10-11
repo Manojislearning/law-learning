@@ -210,6 +210,11 @@ function render(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("constitution");
     });
    }
+   if(subject===3){
+    B(d,"Hindu Law Case Practice","15 original problems · marriage, succession, adoption and remedies →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("hindu");
+    });
+   }
    if(subject===2){
     B(d,"Torts Case Practice","15 original problems · five mixed units · written IRAC feedback →",function(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("torts");
@@ -229,6 +234,11 @@ function render(){
   var course=KSLU_FIRST_SEMESTER.courses[subject],u=course.units[unit];
   topicsCache=splitTopics(u);
   var e=screen(u.title,course.name+" · "+u.unit,"Choose one core topic.");
+  if(sem===1&&subject===3){
+    B(e,"Hindu Law Case Practice","15 problems · independent legal reasoning and self-check →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("hindu");
+    });
+  }
   if(sem===1&&subject===0){
     B(e,"Constitutional Law Case Practice","15 problems · independent issue spotting · self-check →",function(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("constitution");
