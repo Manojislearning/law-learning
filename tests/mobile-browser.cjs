@@ -31,7 +31,7 @@ async function run(){
   for(const width of [320,390,768]){
    const context=await browser.newContext({viewport:{width,height:740},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
    const page=await context.newPage(),errors=[];
-   page.on("pageerror",e=>errors.push(e.message));
+   page.on("pageerror",e=>errors.push(e.stack||e.message));
    await page.goto(address,{waitUntil:"load"});
    await page.locator("#practice-root").getByRole("button",{name:/Start 5 cases/}).tap();
    const heading=page.locator("#practice-root h2").first();
