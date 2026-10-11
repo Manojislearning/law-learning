@@ -18,7 +18,7 @@ function serve(req,res){
  let pathname;
  try{pathname=decodeURIComponent(new URL(req.url,"http://localhost").pathname);}
  catch{res.writeHead(400);res.end();return;}
- const target=path.resolve(root,"."+pathname);
+ const target=path.resolve(root,"."+(pathname.endsWith("/")?pathname+"index.html":pathname));
  if(!target.startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
  fs.readFile(target,(err,data)=>{
   if(err){res.writeHead(404);res.end("missing");return;}
