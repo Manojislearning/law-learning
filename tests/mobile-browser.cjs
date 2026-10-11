@@ -189,7 +189,32 @@ async function run(){
    assert.equal(errors.length,0,"Torts retry mobile runtime errors: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts/BNS practice, retry workflow and keyboard focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=50&course=torts#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   await area.getByRole("button",{name:/Changed-facts challenge/}).tap();
+   assert.ok((await area.innerText()).includes("CHANGED FACTS"));
+   const boxes=await page.evaluate(()=>{
+    const nodes=[...document.querySelectorAll("#practice-root button,#practice-root textarea")].filter(el=>el.getClientRects().length);
+    return nodes.map(el=>({name:el.tagName,left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height}));
+   });
+   assert.ok(boxes.every(b=>b.left>=-1&&b.right<=width+1&&b.height>=44),width+"px transfer controls should fit and be touch-accessible "+JSON.stringify(boxes));
+   const model=area.locator(".cp-transfer-model");
+   assert.equal(await model.isHidden(),true);
+   await area.getByRole("button",{name:/Compare with transfer reasoning/}).tap();
+   assert.equal(await model.isHidden(),true,"The model must stay hidden before an answer");
+   await area.locator("textarea").fill("This revised fact changes the applicable rule and the likely conclusion; relevant evidence must still be checked before deciding.");
+   await area.getByRole("button",{name:/Compare with transfer reasoning/}).tap();
+   assert.equal(await model.isVisible(),true);
+   assert.equal(await page.evaluate(()=>document.activeElement?.classList.contains("cp-transfer-model")),true,"Focus must move to the changed-facts reference");
+   assert.ok(await model.locator("a[href^='https://']").count()>0);
+   assert.equal(errors.length,0,"Transfer mobile browser runtime errors at "+width+"px: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
