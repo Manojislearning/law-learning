@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {isTopic,noteBranches,measureTree,visibleBranches,toggleBranch} from '../reader/map.mjs';
+import {isTopic,noteBranches,measureTree,visibleBranches,toggleBranch,focusBranch} from '../reader/map.mjs';
 
 const topic='01-Semester-1/Constitutional-Law-I/Units/Unit-01/01 - Meaning and definition of Constitution.md';
 const related='01-Semester-1/Constitutional-Law-I/Units/Unit-01/03 - Constitutionalism.md';
@@ -36,6 +36,28 @@ for(const a of list)for(const other of list){
  if(a===other||a.x!==other.x)continue;
  assert.ok(Math.abs(a.y-other.y)>=(a.height+other.height)/2,'Visible same-column branches do not overlap');
 }
+const focus=focusBranch(root,root.children[0].id);
+assert.equal(focus.label,'Meaning');
+assert.deepEqual(visibleBranches(focus).map(n=>n.label),
+ ['Meaning','A constitution is the supreme legal framework.','Institutions','Constitutionalism']);
+assert.equal(focus.depth,1,'An originally nested branch retains source relationship prior to relayout');
+const focusedSize=measureTree(focus);
+assert.ok(focusedSize.width>100&&focusedSize.height>100);
+assert.equal(focus.x,40,'Focused branch starts at the root coordinate');
+assert.equal(focus.depth,0,'Focused branch becomes the visual root');
+assert.ok(focus.lines.every(line=>line.length>0));
+const longBranch=noteBranches('# Issue\\n## Introduction\\n'+
+ 'Article 14 of the Constitution of India prohibits the State from denying to any person equality before the law and the equal protection of the laws within India. '+
+ 'This has broad implications for public authorities and administrative decisions.',topic,[]);
+const longPoint=longBranch.children[0].children[0];
+const longFocus=focusBranch(longBranch,longBranch.children[0].id);
+measureTree(longFocus);
+assert.ok(longPoint.lines.length>=3,'Long legal text wraps into multiple readable lines');
+assert.ok(longPoint.width<=450,'Long legal text must not extend as an unbounded line');
+const reset=focusBranch(root,root.id);
+assert.equal(reset,root);
+assert.deepEqual(visibleBranches(root).map(n=>n.label),['A Constitution','Meaning','Rights','Write in the exam'],
+ 'Returning to main topic restores immediate branches');
 assert.equal(toggleBranch(root,root.children[0].id),false);
 list=visibleBranches(root);
 assert.equal(list.some(n=>n.label==='Institutions'),true,'Clicking Meaning reveals its immediate subbranches');
