@@ -121,6 +121,8 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  const gesture=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2,d:Math.hypot(a.x-b.x,a.y-b.y)});
  svg.addEventListener('pointerdown',e=>{
   if(e.pointerType==='mouse'&&e.button!==0)return;
+  // A fresh tap after a pinch must not inherit the previous gesture's click guard.
+  if(pointers.size===0)moved=false;
   pointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(pointers.size===2){const [a,b]=[...pointers.values()];pinch=gesture(a,b);moved=true}
  });
