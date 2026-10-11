@@ -8,8 +8,8 @@ const root=path.resolve(__dirname,"..");
 const read=p=>fs.readFileSync(path.join(root,p),"utf8");
 const html=read("index.html");
 const items=[
-  {id:"a123456789abcdef",title:"<img src=x onerror=alert(1)> Supreme Court pronounces a legal order",url:"https://example.org/case-a",source:"Example News",publishedAt:"2026-10-10T08:00:00Z",category:"Supreme Court",priority:2},
-  {id:"b123456789abcdef",title:"Karnataka High Court considers an appeal",url:"https://example.org/case-b",source:"Example Publisher",publishedAt:"2026-10-10T07:00:00Z",category:"Karnataka",priority:1},
+  {id:"a123456789abcdef",title:"<img src=x onerror=alert(1)> Supreme Court pronounces a legal order",url:"https://example.org/case-a",source:"Example News",publishedAt:"2026-10-10T08:00:00Z",category:"Supreme Court",priority:2,image:"https://cdn.example.org/court.jpg",brief:"The court considered the operation of an important legal issue, according to the publisher description."},
+  {id:"b123456789abcdef",title:"Karnataka High Court considers an appeal",url:"https://example.org/case-b",source:"Example Publisher",publishedAt:"2026-10-10T07:00:00Z",category:"Karnataka",priority:1,image:"javascript:alert(1)"},
   {id:"c123456789abcdef",title:"Important statutory update",url:"javascript:alert('x')",source:"Spoofed",publishedAt:"2026-10-10T05:00:00Z",category:"Legislation",priority:1}
 ];
 async function main(){
@@ -28,7 +28,12 @@ async function main(){
   assert.equal(w.LawAppCore.router.current(),"news");
   assert.ok(sourceCalls[0].startsWith("https://raw.githubusercontent.com/"),"Live data must be fetched from the bot-updated snapshot");
   assert.equal(d.querySelectorAll(".news-story").length,2,"Unsafe links should not render");
-  assert.equal(d.querySelectorAll("#news-root img").length,0,"Untrusted story titles must never render as HTML");
+  assert.equal(d.querySelectorAll("#news-root img").length,1,"Only the authenticated HTTPS publisher preview should render as an image");
+  assert.equal(d.querySelector(".news-image").getAttribute("src"),"https://cdn.example.org/court.jpg");
+  assert.equal(d.querySelector(".news-image").loading,"lazy");
+  assert.equal(d.querySelectorAll(".news-media-fallback").length,1,"Unsafe image URLs must receive a neutral fallback");
+  assert.ok(d.querySelector(".news-brief").textContent.includes("The court considered"),"Short attributed brief must be shown");
+  assert.ok(d.querySelectorAll("#news-root img[onerror]").length===0,"Untrusted markup cannot inject image events");
   assert.ok(d.querySelector(".news-title").textContent.includes("<img"),"Untrusted title must remain literal text");
   const first=d.querySelector(".news-read");
   assert.equal(first.getAttribute("target"),"_blank");
