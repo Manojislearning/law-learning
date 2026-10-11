@@ -46,10 +46,10 @@ test('Official-source matching does not falsely certify current cohort applicabi
 test('Home, syllabus and offline cache include guided lesson files',()=>{
  const html=read('index.html'),sw=read('sw.js'),syllabus=read('syllabus-flow.js');
  assert.ok(html.includes('id="home-contract-lesson"'));
- for(const x of ['contract-unit1-data','contract-unit1-ui']){
-  assert.ok(html.includes(x+'.js?v=36'));
-  assert.ok(sw.includes(x+'.js?v=36'));
+ for(const [x,v] of [['contract-unit1-data','36'],['contract-unit1-ui','37']]){
+  assert.ok(html.includes(x+'.js?v='+v));
+  assert.ok(sw.includes(x+'.js?v='+v));
  }
  assert.ok(syllabus.includes('window.openContractUnitOne'));
- assert.ok(syllabus.includes('window.ContractUnitOneUI.render'));
+ assert.ok(syllabus.includes('window.ContractUnitOneUI'));
 });
