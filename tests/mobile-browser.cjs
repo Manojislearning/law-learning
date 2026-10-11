@@ -314,7 +314,39 @@ async function run(){
    assert.equal(errors.length,0,"Daily phone browser runtime errors: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
+  // News v57: thumbnail, concise source brief and no horizontal overflow on phones.
+   for(const width of [320,390,768]){
+    const context=await browser.newContext({viewport:{width,height:740},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+    const page=await context.newPage(),errors=[];page.on("pageerror",err=>errors.push(err.message));
+    await page.route("https://raw.githubusercontent.com/Manojislearning/law-learning/main/data/news.json**", async route=>{
+      await route.fulfill({status:200,contentType:"application/json",body:JSON.stringify({
+        schema:1,generatedAt:"2026-10-11T10:00:00Z",items:[{
+          id:"a123456789abcdef",title:"Supreme Court considers a question of public law",
+          url:"https://example.org/verified-story",source:"Example News",publishedAt:"2026-10-11T09:00:00Z",
+          category:"Supreme Court",priority:1,image:"https://images.example.org/legal-preview.jpg",
+          brief:"The publisher describes the current proceedings and notes that the legal position requires confirmation from the official court order."
+        }]
+      })});
+    });
+    await page.route("https://images.example.org/legal-preview.jpg",async route=>{
+      await route.fulfill({status:200,contentType:"image/png",body:Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9WlP+lEAAAAASUVORK5CYII=","base64")});
+    });
+    await page.goto(address.replace("v=43#practice","v=57#news"),{waitUntil:"load"});
+    await page.locator("#news-root .news-story").first().waitFor();
+    const image=page.locator("#news-root .news-image");
+    assert.equal(await image.count(),1,"News image must appear at "+width+"px");
+    assert.ok((await page.locator("#news-root .news-brief").innerText()).includes("The publisher describes"),"Publisher brief must render");
+    const bounds=await page.evaluate(()=>{
+      return [...document.querySelectorAll("#news-root .news-story,#news-root .news-image,#news-root .news-filters button,#news-root .news-actions a,#news-root .news-actions button")].filter(el=>el.getClientRects().length).map(el=>{
+        const r=el.getBoundingClientRect();return {left:r.left,right:r.right,height:r.height,tag:el.tagName};
+      });
+    });
+    assert.ok(bounds.every(b=>b.left>=-1&&b.right<=width+1),width+"px news image/card overflow: "+JSON.stringify(bounds));
+    assert.ok(bounds.filter(x=>["BUTTON","A"].includes(x.tag)).every(x=>x.height>=44),"News touch target too short");
+    assert.equal(errors.length,0,"News browser errors: "+errors.join("; "));
+    await context.close();
+   }
+   console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
