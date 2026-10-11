@@ -1,11 +1,32 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **45** — selected primary-source-checked BNS and Consumer 2019 corrections, with explicit modern-rule caveats; prior release histories follow.
+Latest user-visible release: **46** — nine Motor Vehicles statutory updates, including 2026 Jan Vishwas changes, and tested accessible three-subject law checks; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 46 — Motor Vehicles Act 2019–2026 accuracy expansion (11 October 2026)
+
+**Audit result:** The imported Law of Torts Unit V outline included Motor Vehicles Act, 1988 but did not explain three important current-law layers: (1) amended no-fault compensation and the 2022 hit-and-run scheme, (2) the separate 2025 cashless treatment scheme, (3) the **Jan Vishwas (Amendment of Provisions) Act, 2026** changes notified with effect from 15 August 2026.
+
+**What was delivered:**
+1. Nine Motor Vehicles study notes (24 total Current Law Check cards) covering Sections 146–147, 149–150, 157, 161–164, 165–166 and dated compensation/medical treatment schemes. Clear ₹5 lakh/₹2.5 lakh no-fault sums versus ₹2 lakh/₹50,000 hit-and-run amounts. Section 162 cashless treatment up to ₹1.5 lakh and seven days.
+2. A **2026 Section 166(3) proviso** note about sufficient-cause late filing within the additional statutory period, Section 164(4) ex-gratia treatment and updated Section 157(2) thirty-day insurance transfer change. These matters are particularly easy to misstate when using older 2018 syllabus notes or pre-2026 consolidated legislation.
+3. A **Motor Vehicles** tab inside the existing Current Law Check alongside BNS and Consumer Protection, plus an additional direct link from Torts Unit V and its Sources & review view. No separate oversized home panel or new user-state storage.
+4. Unit V source ledger updated with official India Code, MoRTH / PIB reports and Gazette amendment/commencement records. Old syllabus review status remains `needs-review`; the partial `lawAudit` is not whole-unit legal certification.
+5. Verified browser and mobile interactions, including correct tab selection, all nine card transitions, and computed touch target heights at 320, 390 and 768 CSS pixels.
+
+**Audit-driven fix:** A malformed CSS grid declaration initially caused the new law-check controls to render below intended mobile touch size. The real Chromium test caught it; the grid syntax was corrected and the full suite passed. Additional selector checks now distinguish the three study tabs from the separate Back to Syllabus action.
+
+**Privacy:** The new content doesn't alter local vocabulary scores, profile data, reviewed-card schedules, typed essays or backup formats.
+
+**Source notes:** `docs/motor-vehicles-accuracy-v46.md` records the official India Code, 2022/2025 ministry announcements and 2026 Act and commencement Gazette references.
+
+**Next priorities:** (1) Extend into **unseen Torts problem questions** covering negligence, motor compensation, hit-and-run identification and consumer remedies; (2) build section-by-section BNS evidence audits, correcting any old IPC mappings; (3) authenticate the exact admission-cohort KSLU syllabus; (4) complete real Android/TalkBack testing and validate learning retention with consented learners.
+
+---
 
 ## Version 45 — Focused BNS and Consumer current-law correction (11 October 2026)
 
