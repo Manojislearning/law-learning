@@ -46,7 +46,7 @@ assert.ok(focusedSize.width>100&&focusedSize.height>100);
 assert.equal(focus.x,40,'Focused branch starts at the root coordinate');
 assert.equal(focus.depth,0,'Focused branch becomes the visual root');
 assert.ok(focus.lines.every(line=>line.length>0));
-const longBranch=noteBranches('# Issue\\n## Introduction\\n'+
+const longBranch=noteBranches('# Issue\n## Introduction\n'+
  'Article 14 of the Constitution of India prohibits the State from denying to any person equality before the law and the equal protection of the laws within India. '+
  'This has broad implications for public authorities and administrative decisions.',topic,[]);
 const longPoint=longBranch.children[0].children[0];
