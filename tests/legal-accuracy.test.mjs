@@ -11,11 +11,13 @@ const core=load('legal-accuracy-core.js','LawAccuracyCore');
 const ledger=load('content-ledger.js','LawContentLedger');
 test('All law-check lessons have 3 different choices, a legal explanation, and primary-source links',()=>{
  const result=core.verify(bank);
- assert.equal(result.total,15);
+ assert.equal(result.total,24);
  assert.equal(result.counts.bns,8);
  assert.equal(result.counts.consumer,7);
+ assert.equal(result.counts.motor,9);
  assert.equal(core.cardsFor(bank,'bns').length,8);
  assert.equal(core.cardsFor(bank,'consumer').length,7);
+ assert.equal(core.cardsFor(bank,'motor').length,9);
  assert.throws(()=>core.cardsFor(bank,'ipc'),/Invalid/);
  for(const item of bank.cards){
   assert.ok(item.rule.length>35);
@@ -75,7 +77,7 @@ test('All 5 BNS and Torts Consumer units flag partial law checks without falsely
 test('New primary-source experience is one route and precached, without new local storage keys',()=>{
  const html=read('index.html'),sw=read('sw.js'),app=read('app-core.js'),syllabus=read('syllabus-flow.js'),view=read('legal-accuracy-view.js');
  for(const name of ['legal-accuracy-data.js','legal-accuracy-core.js','legal-accuracy-view.js']){
-  assert.ok(html.includes(name+'?v=45'));assert.ok(sw.includes(name+'?v=45'));
+  assert.ok(html.includes(name+'?v=46'));assert.ok(sw.includes(name+'?v=46'));
  }
  assert.ok(app.includes('"law-updates":'));
  assert.ok(html.includes('data-open="law-updates"'));
