@@ -1,11 +1,32 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **42** — interleaved independent IRAC exam practice with self-check; prior release histories follow.
+Latest user-visible release: **43** — case-specific reasoning feedback and Chromium mobile accessibility regression checks; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 43 — Accessibility and specific reasoning feedback (11 October 2026)
+
+**Audit finding:** Version 42 showed only a self-reported `n / 4` IRAC checklist count. That number did not explain *how to improve* a weak legal argument, and small interactive targets or unclear focus could interrupt students using small screens or keyboards.
+
+**Delivered:**
+1. **Targeted remediation:** Unchecked Issue, Rule, Application and Conclusion criteria each produce a specific improvement prompt grounded in the *current case's* source-linked reference outline. This is coaching for an element the student has self-identified as missing — **not** an AI diagnosis of an essay's correctness.
+2. **Avoid information overload:** The improvement guidance is in a collapsed, optional panel. Four long reference paragraphs are not forced onto the mobile screen.
+3. **Accessible interaction:** Practice buttons have at least 44 CSS pixels height, checkbox targets at least 24 pixels, details summaries have larger hit areas, visible keyboard focus remains supported, and the rubric progress text uses a polite status announcement. The existing reveal transition moves keyboard focus to the newly available reference outline.
+4. **Real browser CI:** A separate GitHub Actions job runs Playwright with Chromium mobile viewport emulation at **320, 390 and 768 CSS pixels** and a keyboard-only case exercise. It checks initial answer hiding, typed-attempt gate, element-specific guidance updates, touch-target dimensions, focus progression and browser runtime errors.
+5. **Regression safety:** Pure helper tests cover all four self-assessment states; the original JSDOM suite still tests the five-unit interleaved case flow, Review Due, backup portability and preservation of unsent answers.
+
+**Important verification limits:** Browser viewport emulation does not equal testing Android Chrome, TalkBack, iOS VoiceOver, real hardware keyboards or low-bandwidth phones. Nor does automated DOM focus testing certify WCAG conformance or the accuracy of the KSLU content.
+
+**Design references:**
+- W3C WCAG 2.2 target size minimum and focus visible: https://www.w3.org/WAI/standards-guidelines/wcag/new-in-22/
+- WAI-ARIA polite status messages (avoid disruptive announcements): https://www.w3.org/TR/wai-aria/
+
+**Next high-value work:** (1) Authenticate the KSLU syllabus for the student's exact admission scheme and audit each law/case claim, particularly Unit V amendment issues; (2) gather consented real-learner feedback about confusion and written-answer effort; (3) add real-device TalkBack and Chrome accessibility checks; (4) make legal misconceptions diagnosable with alternative fact patterns, without claiming AI scoring.
+
+---
 
 ## Version 42 — Independent legal issue spotting (11 October 2026)
 
