@@ -750,5 +750,45 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(first.errors,[]);assert.deepEqual(restored.errors,[]);assert.deepEqual(corrupt.errors,[]);
   first.dom.window.close();restored.dom.window.close();corrupt.dom.window.close();
  }
+
+ {
+  const url="https://example.test/law-learning/index.html?v=54&course=torts#practice";
+  const first=build(url),w=first.dom.window,d=first.doc,host=d.getElementById("practice-root");
+  [...host.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases")).click();
+  const caseItem=w.LawTortsCaseData.cases.find(c=>c.facts===host.querySelector(".cp-facts").textContent);
+  assert.ok(caseItem,"Current Torts scenario must come from a validated bank");
+  const prompts=host.querySelector(".cp-reasoning");
+  assert.ok(prompts&&prompts.textContent.includes("Which specific fact"),"Optional evidence/counterargument prompts must be available before reveal");
+  assert.equal(host.querySelector(".cp-model").hidden,true,"The correct legal rule remains hidden");
+  assert.ok(!host.querySelector(".cp-unit-link"),"Study link should not exist outside the concealed answer");
+  const attempt="Issue: who is legally responsible? Rule: identify the current statute. Application: contrast the evidence and defence. Conclusion: reasoned outcome.";
+  host.querySelector("textarea").value=attempt;
+  [...host.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning")).click();
+  assert.equal(host.querySelector(".cp-model").hidden,false);
+  assert.ok(host.querySelector(".cp-model .cp-unit-link"),"Study exact syllabus unit becomes available only with reference answer");
+  const checks=host.querySelectorAll(".cp-rubric input");checks[0].checked=true;
+  checks[0].dispatchEvent(new w.Event("change",{bubbles:true}));
+  [...host.querySelectorAll("button")].find(x=>x.textContent.includes("Next case")).click();
+  const key=w.LawCaseReviewCore.KEY,raw=w.localStorage.getItem(key);
+  assert.ok(raw&&raw.includes('"application"')&&raw.includes('"rule"'));
+  assert.ok(!raw.includes(attempt),"Private essay must never enter saved history");
+  const next=build(url,{[key]:raw}),nw=next.dom.window,nd=next.doc,screen=nd.getElementById("practice-root");
+  [...screen.querySelectorAll("button")].find(x=>x.textContent.includes("Retry 1 weak")).click();
+  assert.ok(screen.textContent.includes("SECOND ATTEMPT"));
+  const reminder=screen.querySelector(".cp-retry-reminder");
+  assert.ok(reminder&&reminder.textContent.includes("applying the facts"),"Previously missed IRAC structure should be recalled");
+  assert.equal(screen.querySelector(".cp-model").hidden,true,"Previous legal solution must not leak on retry");
+  screen.querySelector("textarea").value=attempt;
+  [...screen.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning")).click();
+  const study=screen.querySelector(".cp-unit-link");
+  assert.ok(study);
+  study.click();await settle();
+  assert.equal(nw.LawAppCore.router.current(),"syllabus","Study link must use existing syllabus router");
+  assert.equal(screen.textContent,"","Leaving practice clears typed essay");
+  assert.ok(nd.querySelector("#syllabus-detail").textContent.includes("Unit "+["","I","II","III","IV","V"][caseItem.unit]),"Syllabus should open the case's exact unit");
+  assert.ok(nw.localStorage.getItem(key).includes('"application"'),"Opening syllabus must not erase the student's weak-case target");
+  assert.deepEqual(first.errors,[]);assert.deepEqual(next.errors,[]);
+  first.dom.window.close();next.dom.window.close();
+ }
  console.log("DOM integration passed: Hindu, Constitution, Contract, Torts and BNS IRAC, changed-facts transfer and statutory checks.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
