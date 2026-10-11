@@ -790,5 +790,55 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(first.errors,[]);assert.deepEqual(next.errors,[]);
   first.dom.window.close();next.dom.window.close();
  }
- console.log("DOM integration passed: Hindu, Constitution, Contract, Torts and BNS IRAC, changed-facts transfer and statutory checks.");
+
+ {
+  const url="https://example.test/law-learning/index.html?v=55&course=torts#practice";
+  const seed=build(url),K=seed.dom.window.LawCaseReviewCore.KEY;
+  const w0=seed.dom.window,subjects=[
+   ["contract",w0.LawCaseData],["torts",w0.LawTortsCaseData],
+   ["bns",w0.LawBnsCaseData],["constitution",w0.LawConstitutionCaseData],
+   ["hindu",w0.LawHinduCaseData]
+  ];
+  subjects.forEach(([key,bank],index)=>{
+   w0.LawCaseReviewCore.note(w0.localStorage,key,bank.cases[0].id,"skipped",[],Date.now()-600000-index*60000);
+  });
+  const raw=w0.localStorage.getItem(K);seed.dom.window.close();
+  const app=build(url,{[K]:raw}),w=app.dom.window,d=app.doc,screen=d.getElementById("practice-root");
+  assert.ok(d.getElementById("home-case-count").textContent.includes("5 due today"),"Home must surface cross-subject due count");
+  assert.ok(screen.textContent.includes("Daily Case Review"),"Daily case review must be visible on practice overview");
+  const start=[...screen.querySelectorAll("button")].find(x=>x.textContent.includes("Review 5 due cases"));
+  assert.ok(start);start.click();
+  const seen=new Set();
+  for(let n=0;n<5;n++){
+   const subtitle=screen.querySelector(".cp-meta").textContent;seen.add(subtitle.replace(/Case \d+ \/ \d+/,"").trim());
+   assert.ok(screen.textContent.includes("DELAYED RETRIEVAL"));
+   assert.equal(screen.querySelector(".cp-model").hidden,true,"Daily review cannot pre-reveal previous answer");
+   if(n===1){
+     [...screen.querySelectorAll("button")].find(x=>x.textContent==="Skip case").click();
+     continue;
+   }
+   const draft=screen.querySelector(".cp-writing textarea");
+   draft.value="PRIVATE_DAILY_REVIEW_ESSAY This fresh legal analysis states the rule and applies relevant facts while considering a possible counterargument.";
+   [...screen.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning")).click();
+   assert.equal(screen.querySelector(".cp-model").hidden,false);
+   const checks=[...screen.querySelectorAll(".cp-rubric input")];
+   checks.forEach(input=>{input.checked=true;input.dispatchEvent(new w.Event("change",{bubbles:true}));});
+   [...screen.querySelectorAll("button")].find(x=>x.textContent.includes("Next case")).click();
+  }
+  assert.equal(seen.size,5,"Daily case queue must mix all five subjects fairly");
+  assert.ok(screen.textContent.includes("You finished the set"));
+  const state=w.LawCaseReviewCore.read(w.localStorage);
+  assert.equal(Object.keys(state.cases).length,1,"Only skipped cases should remain due after four self-cleared cases");
+  assert.ok(!w.localStorage.getItem(K).includes("PRIVATE_DAILY_REVIEW_ESSAY"));
+  assert.ok(screen.textContent.includes("Daily review mixed due cases"));
+  [...screen.querySelectorAll("button")].find(x=>x.textContent.includes("See remaining daily reviews")).click();
+  assert.ok(screen.textContent.includes("Daily Case Review"),"The remaining due case must be accessible immediately");
+  assert.ok(screen.textContent.includes("Review 1 due case"));
+  assert.ok(d.getElementById("home-case-count").textContent.includes("1 due today"));
+  const backup=w.LawBackupCore.exportBackup(w.localStorage);
+  assert.equal(w.LawBackupCore.describe(backup).caseReviewCount,1);
+  assert.deepEqual(app.errors,[]);
+  app.dom.window.close();
+ }
+ console.log("DOM integration passed: five-subject IRAC, private daily due review, changed-facts transfer and statutory checks.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
