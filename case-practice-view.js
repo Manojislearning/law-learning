@@ -35,6 +35,7 @@ function dashboard(){
  E(notes,"p","Issue: what legal question arises? Rule: which statute or principle applies? Application: connect the rule to facts for and against each side. Conclusion: give a qualified outcome.");
  B(wrap,"Back to home",goHome,true);
  E(wrap,"p","Your written answers and rubric choices stay on this page only, and are discarded when you leave the practice session. No account, upload, score or automatic legal grading.","cp-topic");
+ if(typeof dashboardTitle.focus==="function")dashboardTitle.focus();
 }
 function start(){
  session=core.select(bank,history);
@@ -122,12 +123,13 @@ function draw(){
 function finish(){
  var wrap=shell(),box=E(wrap,"section",undefined,"cp-panel");
  E(box,"p","PRACTICE SESSION COMPLETE","cp-eyebrow");
- E(box,"h2","You finished the set");
+ var finishedTitle=E(box,"h2","You finished the set");finishedTitle.tabIndex=-1;
  E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. No essay grade was assigned.");
  E(box,"p","The next set prioritises cases you have not yet seen in this open visit. To improve, focus on missing statutory rules and applications rather than memorising an answer.","cp-topic");
  B(box,"Try a different set →",start);
  B(box,"Return to practice overview",dashboard,true);
  B(wrap,"Home",goHome,true);
+ if(typeof finishedTitle.focus==="function")finishedTitle.focus();
 }
 root.LawCasePracticeUI={show:dashboard,reset:reset};
 root.LawAppCore.router.subscribe(function(route){
