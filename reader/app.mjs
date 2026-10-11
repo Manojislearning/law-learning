@@ -209,9 +209,9 @@ function saveReadingPosition(){if(!state.current)return;const area=$('#reading-s
  if(Date.now()-scrollSaveAt>750){scrollSaveAt=Date.now();try{localStorage.setItem(KEY+':progress:'+state.current,Math.round(fraction*100))}catch{}}
 }
 function revealHeading(id){
+ if(state.sourceMode)showMarkdown(false);
  const target=document.getElementById(id);
  if(!target)return false;
- if(state.sourceMode)showMarkdown(false);
  target.scrollIntoView({behavior:'smooth',block:'start'});
  return true;
 }
@@ -247,7 +247,7 @@ async function openNote(path,heading=''){
   $('#breadcrumb').innerHTML='<strong>'+esc(sourceParts.slice(0,-1).join(' / ')||'Vault')+'</strong> &nbsp;/&nbsp; '+esc(title);
 
   const progress=localStorage.getItem(KEY+':progress:'+path)||'';
-  const course=path.endsWith('.canvas')?'OBSIDIAN CANVAS':path.includes('01-Semester-1')?'SEMESTER I':path.includes('02-Semester-2')?'SEMESTER II':path.includes('10-Books')?'READING LIBRARY':'LAW NOTES';
+  const course=path.endsWith('.canvas')?'CANVAS':path.includes('01-Semester-1')?'SEMESTER I':path.includes('02-Semester-2')?'SEMESTER II':path.includes('10-Books')?'BOOKS':'NOTES';
   const toc=note.toc.filter(h=>h.level<=3);
   const intro=`<div class="note-eyebrow">${course}${progress?' · '+esc(progress)+'% READ':''}</div>`;
   const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
