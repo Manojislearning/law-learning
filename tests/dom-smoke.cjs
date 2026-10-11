@@ -266,7 +266,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const observedUnits=new Set(),factsSeen=new Set(),dataBefore=w.localStorage.length;
   for(let i=0;i<5;i++){
    assert.ok(root.textContent.includes("Case "+(i+1)+" / 5"));
-   assert.ok(!root.textContent.includes("Contract–I · Unit I ·"),"Study unit must not be given away before reveal");
+   assert.equal(root.querySelector(".cp-model").hidden,true,"Reference reasoning must stay hidden until the student attempts the case");
    const facts=root.querySelector(".cp-facts").textContent;
    assert.ok(facts.length>60);
    factsSeen.add(facts);
