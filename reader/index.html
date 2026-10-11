@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#111e30">
+  <meta name="theme-color" content="#f4f5f7">
   <meta name="description" content="A calm, private, Obsidian-style mobile reader for your GitHub LAW-NOTES vault.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css">
-  <title>Vault Reader · KSLU</title>
+  <link rel="stylesheet" href="./minimal.css?v=2">
+  <title>Law Notes · Vault Reader</title>
 </head>
 <body>
   <div class="app" id="app">
     <header class="masthead">
       <div class="masthead-left">
         <button id="menu-btn" class="icon-btn mobile-only" type="button" aria-label="Open library" title="Open library"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
-        <a class="brand" href="./" aria-label="Vault Reader home"><span class="brand-mark">V<span>·</span></span><span class="brand-text"><strong>VAULT <em>READER</em></strong><small>KSLU LAW LIBRARY</small></span></a>
+        <a class="brand" href="./" aria-label="Vault Reader home"><span class="brand-mark">V<span>·</span></span><span class="brand-text"><strong>LAW <em>NOTES</em></strong><small>YOUR READING LIBRARY</small></span></a>
       </div>
       <div class="top-actions">
         <span id="status-badge" class="status-badge"><span></span> Not connected</span>
@@ -28,7 +29,7 @@
     <main class="layout" id="layout">
       <aside id="sidebar" class="sidebar" aria-label="Notes library">
         <div class="sidebar-inner">
-          <div class="sidebar-header"><div><span class="section-kicker">YOUR WORKSPACE</span><h2>My Library</h2></div><button type="button" class="icon-btn mobile-only" id="close-sidebar" aria-label="Close library">×</button></div>
+          <div class="sidebar-header"><div><span class="section-kicker">KSLU · LAW NOTES</span><h2>My Library</h2></div><button type="button" class="icon-btn mobile-only" id="close-sidebar" aria-label="Close library">×</button></div>
           <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg><input id="search" type="search" placeholder="Find a note or unit…" autocomplete="off"><kbd>/</kbd></label>
           <div class="filter-tabs" role="group" aria-label="Library filter"><button class="filter active" type="button" data-filter="all">All notes</button><button class="filter" type="button" data-filter="saved">Saved <span id="saved-number">0</span></button></div>
           <div id="sidebar-content" class="sidebar-scroll"><div class="sidebar-placeholder"><span class="placeholder-icon">⌑</span><strong>Your notes will appear here.</strong><p>Connect your private LAW-NOTES repository to browse the folders.</p></div></div>
@@ -39,22 +40,22 @@
       <section class="reader-pane" aria-live="polite">
         <div id="connect-view" class="connect-wrap">
           <div class="connect-card">
-            <div class="connect-eyebrow"><span class="pill-star">✦</span> YOUR PERSONAL STUDY SPACE</div>
-            <div class="connect-icon">◫</div>
-            <h1>Your entire law library.<br><em>Beautifully readable.</em></h1>
-            <p class="connect-lead">Open your Obsidian notes straight from your private GitHub vault on your phone. No file downloads, no copying notes, no clutter.</p>
+            <div class="connect-eyebrow"><span class="pill-star">✦</span> PRIVATE GITHUB LIBRARY</div>
+            <div class="connect-icon" aria-hidden="true">▤</div>
+            <h1>Your law notes.<br><em>One quiet place.</em></h1>
+            <p class="connect-lead">Read your Obsidian notes directly from your private GitHub vault. Clear text, simple folders, and no distractions.</p>
             <div class="vault-summary"><span class="vault-avatar">LN</span><span><strong>LAW-NOTES</strong><small>Manojislearning / LAW-NOTES</small></span><span class="private-chip">◉ Private</span></div>
             <form id="connect-form" autocomplete="off">
               <label class="field-label" for="token">GitHub read-only access token</label>
               <div class="token-row"><input id="token" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false" required><button id="show-token" type="button" aria-label="Show or hide token" title="Show or hide token">Show</button></div>
-              <button id="connect-btn" class="primary-btn" type="submit">Open my reading library <span>→</span></button>
+              <button id="connect-btn" class="primary-btn" type="submit">Open my library <span aria-hidden="true">→</span></button>
             </form>
             <p class="connect-error" id="connect-error" role="alert" hidden></p>
             <details class="setup-help"><summary>How do I get a read-only GitHub token?</summary><div>
               <ol><li>Open <a href="https://github.com/settings/personal-access-tokens/new?name=KSLU-Vault-Reader&target_name=Manojislearning&expires_in=30&contents=read" target="_blank" rel="noopener noreferrer">GitHub's fine-grained token page</a>.</li><li>Choose the <strong>Manojislearning</strong> owner and select <strong>Only select repositories → LAW-NOTES</strong>.</li><li>Set <strong>Contents: Read-only</strong>. Do not grant write permissions.</li><li>Generate the token and paste it above. Keep it secret.</li></ol>
               <p>The token stays only in memory while this page is open, is sent only to GitHub’s API, and is never saved to this phone or committed to the website. Reopening the app requires reconnecting.</p>
             </div></details>
-            <div class="trust-line">♧ Read-only connection <span>·</span> Notes stay private <span>·</span> No account required</div>
+            <div class="trust-line">Read-only GitHub access <span>·</span> Private notes <span>·</span> No extra account</div>
           </div>
         </div>
 
