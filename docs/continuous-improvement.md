@@ -1,11 +1,33 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **44** — page-linked KSLU edition audit for all 30 Semester I outlines, with current-cohort caveat; prior release histories follow.
+Latest user-visible release: **45** — selected primary-source-checked BNS and Consumer 2019 corrections, with explicit modern-rule caveats; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 45 — Focused BNS and Consumer current-law correction (11 October 2026)
+
+**Highest-value audit finding:** The app's historical syllabus text was source-linked, but users could still memorise wrong or stale offence numbers or consumer commission thresholds. The most consequential examples are (a) the commencement distinction for BNS Section 106(2) and (b) the 2021 revised consumer commission jurisdiction rules, which supersede original thresholds printed under the 2019 Act.
+
+**Changes shipped:**
+1. A visible, minimal **Current Law Check** home entry, with contextual open buttons from BNS Units I–V and Torts Unit V. Fifteen self-contained source-linked correction cards: eight BNS, seven Consumer.
+2. Each card contains exact statutory section focus, an original plain-language rule summary, one fact example, a 'common mistake' and a three-choice check with explanatory feedback and clear correct response. Answers are shuffled; no false mastery or XP awarded.
+3. Primary India Code Acts, MHA commencement Gazette notification and official Consumer Affairs 2021 jurisdiction Rules are linked from the specific cards. A short status note clearly separates selected provision checks from the whole Act, subsequent amendments, case law and applicable KSLU cohort.
+4. Six unit ledger records have a separate `lawAudit: selected-provisions-checked` scope; all existing `syllabusStatus` values remain `needs-review`. Consumer jurisdiction and BNS commencement caution text is displayed on the appropriate syllabus source page.
+5. Offline service-worker cache updated; prior word, quiz, writing, review and profile backup keys are unchanged.
+6. Added statutory correctness regression checks plus browser navigation for Consumer and BNS, and mobile Chromium touch/overflow checks at 320, 390, 768 CSS pixels.
+
+**Verified boundaries:** Section 106(2) was excluded from the MHA **1 July 2024** commencement notification. The card explicitly instructs students to check later Gazette notifications rather than treating that historical notice as an eternal statement of non-commencement. Consumer bands from the **2021 Rules** are based on consideration paid: District up to ₹50 lakh, State over ₹50 lakh to ₹2 crore, National over ₹2 crore, subject to other limits and possible later amendments.
+
+**Comparison against learning-app pitfalls:** Users need error-focused retrieval and the reason a tempting answer is wrong, not a static section table or repetitive same-position quizzes. This module uses a fact example and common-misconception prompt per rule without introducing reward popups or a meaningless legal proficiency score.
+
+**Source/audit record:** `docs/statutory-accuracy-v45.md`.
+
+**Next work:** More detailed BNS subsection auditing, including interpretation and gender-related offences; Motor Vehicles Act update for Torts Unit V; establish the student's exact KSLU admission-year scheme from the institution's official notice; and test real Android TalkBack/keyboard behaviour rather than assuming Chromium mobile emulation suffices.
+
+---
 
 ## Version 44 — Official KSLU first-year outline audit (11 October 2026)
 
