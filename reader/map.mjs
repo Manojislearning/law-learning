@@ -106,7 +106,7 @@ export function mountVaultMap({files,getNote,readNote}){
  scene.addEventListener('click',e=>{const card=e.target.closest('[data-id]');if(!dragged&&card)void selectNode(visible.find(x=>x.id===card.dataset.id))});
  scene.addEventListener('keydown',e=>{const card=e.target.closest('[data-id]');if(card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();void selectNode(visible.find(x=>x.id===card.dataset.id))}});
  canvas.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.2:.83)},{passive:false});
- canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={px:e.clientX,py:e.clientY,x:view.x,y:view.y};dragged=false;canvas.setPointerCapture(e.pointerId)});
+ canvas.addEventListener('pointerdown',e=>{if(e.button!==0)return;drag={px:e.clientX,py:e.clientY,x:view.x,y:view.y};dragged=false});
  canvas.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.px,dy=e.clientY-drag.py;if(Math.abs(dx)+Math.abs(dy)>7)dragged=true;if(!dragged)return;view.x=drag.x-dx*view.w/Math.max(1,canvas.clientWidth);view.y=drag.y-dy*view.h/Math.max(1,canvas.clientHeight);applyView()});
  const end=()=>{drag=null;setTimeout(()=>{dragged=false},0)};
  canvas.addEventListener('pointerup',end);canvas.addEventListener('pointercancel',end);
