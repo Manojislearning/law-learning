@@ -38,7 +38,7 @@ test('A historical outline match never becomes current-cohort or statutory-conte
  assert.equal(data.publishedForCohort,'unconfirmed');
  assert.equal(data.units.filter(x=>x.syllabusStatus==='verified').length,0);
  for(const u of data.units)assert.equal(u.syllabusStatus,'needs-review');
- assert.ok(data.reviewPolicy.includes('NOT'));
+ assert.ok(data.reviewPolicy.toLowerCase().includes('outline matching only'), 'Source matches cannot certify full legal accuracy');
  assert.ok(getUnit(1,4).outlineAudit.caution.includes('2018'));
  assert.ok(getUnit(2,4).outlineAudit.caution.includes('1986'));
 });
