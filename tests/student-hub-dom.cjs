@@ -35,7 +35,8 @@ function setup(hash){
  const student=d.querySelector("#student-view");
  assert.equal(home.querySelectorAll('[data-open="student"]').length,1);
  assert.equal(home.querySelectorAll('[data-open="syllabus"],[data-open="subjects"],[data-open="papers"],a[href="./reader/?map=1"]').length,0);
- assert.equal(student.querySelectorAll('.student-hub-card').length,7);
+ assert.equal(student.querySelectorAll('.student-hub-card').length,10);
+ assert.equal(home.querySelectorAll('[data-open="notes"],#profile-open,#home-contract-lesson').length,0);
  assert.ok(student.querySelector('a[href="./reader/"]'));
  assert.ok(!home.querySelector('[data-open="exam"],[data-open="links"],a[href="./reader/"]'));
  assert.ok(student.querySelector('a[href="./reader/?map=1"]'));
@@ -44,7 +45,7 @@ function setup(hash){
  assert.equal(w.LawAppCore.router.current(),"student");
  assert.equal(student.classList.contains("active"),true);
  assert.equal(d.getElementById("section-title").textContent,"Student");
- const links=["syllabus","subjects","papers","exam","links"];
+ const links=["syllabus","subjects","papers","exam","links","profile","settings"];
  for(const route of links){
    const button=student.querySelector('[data-open="'+route+'"]');
    assert.ok(button,"Student missing "+route);
@@ -57,6 +58,25 @@ function setup(hash){
    assert.equal(w.LawAppCore.router.current(),"student");
    assert.equal(student.classList.contains("active"),true);
  }
+ const settingsButton=student.querySelector('[data-open="settings"]');
+ settingsButton.click();await settle();
+ const goal=d.getElementById("settings63-goal"),large=d.getElementById("settings63-large");
+ assert.ok(goal&&large,"Settings page must contain functional controls");
+ goal.value="20";large.checked=true;
+ d.querySelector("#settings-root form").dispatchEvent(new w.Event("submit",{bubbles:true,cancelable:true}));
+ const saved=JSON.parse(w.localStorage.getItem("law-learning-profile-v1"));
+ assert.equal(saved.goal,"20");assert.equal(saved.largeText,true);
+ assert.equal(d.body.classList.contains("profile-large-text"),true);
+ d.getElementById("back-home").click();await settle();
+ assert.equal(w.LawAppCore.router.current(),"student");
+
+ const contract=student.querySelector("#home-contract-lesson");
+ assert.ok(contract,"Existing Contract-I shortcut must be available inside Student");
+ contract.click();await settle();
+ assert.equal(w.LawAppCore.router.current(),"syllabus");
+ d.getElementById("back-home").click();await settle();
+ assert.equal(w.LawAppCore.router.current(),"student");
+
  d.getElementById("back-home").click();
  await settle();
  assert.equal(w.LawAppCore.router.current(),"home");
@@ -68,5 +88,5 @@ function setup(hash){
  assert.equal(direct.w.LawAppCore.router.current(),"student");
  assert.equal(direct.d.getElementById("student-view").classList.contains("active"),true);
  direct.dom.window.close();
- console.log("Student hub DOM: seven relocated links, direct entry and contextual Back navigation passed.");
+ console.log("Student hub DOM: ten resource links, direct entry and contextual Back navigation passed.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
