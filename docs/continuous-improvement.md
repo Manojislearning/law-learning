@@ -1,11 +1,29 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **48** — 15 original BNS IRAC cases, three legal subjects and 45 original first-year legal problems; prior release histories follow.
+Latest user-visible release: **49** — reliable case completion tracking and session-only weak-case retries across all three IRAC subjects; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 49 — Retrievable weak-case practice and truthful completion tracking (11 October 2026)
+
+**Learning audit:** The existing 45-case, three-subject IRAC experience counted a problem as “used” immediately when displayed. Skipping a case could thus push it out of future mixed sets, falsely implying study exposure. The four-part self-check gave suggestions but did not let students systematically retry identified weaknesses.
+
+**Delivered:**
+1. **Skipped does not mean studied.** Only a written answer that was revealed and advanced with **Next case** updates the existing in-memory rotation count. Skipping keeps a case eligible for a later mixed set.
+2. **Retry weak or skipped cases** on completion of a five-case session, also accessible from the same subject's practice overview. A session-local queue records skipped cases and the IRAC elements the student *self-identified* as omitted.
+3. **Retry from scratch.** The repeated scenario starts with a blank answer field and hidden reference/model reasoning. Neither original essays nor reference answers are prefilled. It remains user-controlled self-assessment, **not** automated marking or evidence of professional competence.
+4. **Unknown differs from wrong.** If no checkboxes were touched, the status is **not self-assessed**, rather than claiming all four legal elements were demonstrably wrong. All four self-checked items clear the retry flag; partial self-checks retain the gap(s).
+5. **No new storage keys or schema migration.** Answers, session-only weakness flags and checklist interaction are not saved to localStorage or uploaded. Progress, spaced review history and older backups are unchanged.
+6. **Regression coverage:** End-to-end simulated-browser Torts test covers skip → four written comparisons → self-identified Rule gap → two fresh retries → cleared queue. A separate deterministic BNS test verifies that all-skipped cases remain eligible and session flags disappear on departure. Chromium phone-width smoke test checks the retry button and initial concealed answer state.
+
+**Remaining limitations:** A self-check is a prompt for reflection, not a verified estimate of whether a legal answer is correct. Repeating the same case after one reading may improve fluency but does not establish delayed memory or transfer to a genuinely unseen fact pattern. Cohort-specific KSLU curriculum matching remains pending.
+
+**Next research and product priority:** Introduce a varied *counterexample* after weak-case retries so students must transfer the rule to changed facts; link it to authoritative statute/case principles. Evaluate whether recognition of legal section numbers translates into reasoning in fresh cases. Add structured accessibility tests for TalkBack and real Android browsers when available.
+
+---
 
 ## Version 48 — Independent BNS issue-spotting (11 October 2026)
 
