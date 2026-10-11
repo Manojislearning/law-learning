@@ -6,6 +6,10 @@
 
 Mobile-first, installable Progressive Web App (PWA) for studying law, KSLU LL.B. syllabus content and exam-oriented legal vocabulary.
 
+## Version 53 — Persistent weak-case review
+
+Case Practice now remembers only **which case** you skipped or self-identified as incomplete, **which IRAC elements** you missed, and **when to revisit it**. Weak cases can be resumed tomorrow or sooner in all five law subjects. Private essays are **not stored**; the self-check is **not an automated grade**. The home screen shows the number waiting for review. Backup schema **4** includes this data and can still import v1–v3 backups.
+
 ## Version 42 — Independent exam practice
 
 **Case Practice** (`#practice`) contains 15 original Contract–I hypotheticals across Units I–V. A session serves five mixed cases with no advance unit label. Learners write an original IRAC answer, reveal an educator-authored reference outline and check four specific reasoning elements. The module avoids fake AI grading or exam scores and does not store written drafts. Links open primary legislation; the problems are **not official KSLU question papers**.
