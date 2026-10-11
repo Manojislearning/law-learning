@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="61" />
+  <meta name="app-version" content="62" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="./exam-papers.css?v=59" />
   <link rel="stylesheet" href="./student-menu.css?v=60" />
   <link rel="stylesheet" href="./menu-simple.css?v=61" />
+  <link rel="stylesheet" href="./word-game-v62.css?v=62" />
 </head>
 <body>
   <div class="app-shell">
@@ -73,12 +74,9 @@
         <div class="home-grid">
           <button class="home-card primary-card" data-open="words" type="button"><strong>Learn Words</strong><span class="home-arrow" aria-hidden="true">→</span></button>
           <button class="home-card student-home-card" data-open="student" type="button"><strong>Student</strong><span class="home-arrow" aria-hidden="true">→</span></button>
-          <a class="home-card" href="./reader/"><strong>Law Notes</strong><span class="home-arrow" aria-hidden="true">→</span></a>
-          <button class="home-card" data-open="exam" type="button"><strong>Exam Pattern</strong><span class="home-arrow" aria-hidden="true">→</span></button>
           <button class="home-card" data-open="notes" type="button"><strong>Notes</strong><span class="home-arrow" aria-hidden="true">→</span></button>
-          <button class="home-card links-home-card" data-open="links" type="button"><strong>Important Links</strong><span class="home-arrow" aria-hidden="true">→</span></button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 61 · <a href="./refresh.html?build=61" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 62 · <a href="./refresh.html?build=62" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="student-view" class="main-view" aria-label="Student study resources">
         <div class="student-hub">
@@ -88,6 +86,9 @@
             <a class="home-card student-hub-card" href="./reader/?map=1"><strong>Topic Brain Branches</strong><span class="student-hub-arrow" aria-hidden="true">→</span></a>
             <button class="home-card student-hub-card" type="button" data-open="subjects"><strong>Subjects</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
             <button class="home-card student-hub-card" type="button" data-open="papers"><strong>Exam Papers &amp; Answers</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <a class="home-card student-hub-card" href="./reader/"><strong>Law Notes</strong><span class="student-hub-arrow" aria-hidden="true">→</span></a>
+            <button class="home-card student-hub-card" type="button" data-open="exam"><strong>Exam Pattern</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <button class="home-card student-hub-card" type="button" data-open="links"><strong>Important Links</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
           </nav>
         </div>
       </section>
@@ -420,11 +421,11 @@
   <script src="./exam-words-2.js"></script>
   <script src="./exam-words-3.js"></script>
   <script src="./exam-words-4.js"></script>
-  <script src="./app-core.js?v=61"></script>
+  <script src="./app-core.js?v=62"></script>
   <script src="./advanced-english-words.js?v=58"></script>
   <script src="./app.js?v=58"></script>
   <script src="./legacy-study-ui.js?v=35"></script>
-  <script src="./word-experience.js?v=61"></script>
+  <script src="./word-experience.js?v=62"></script>
   <script src="./content-ledger.js?v=46"></script>
   <script src="./contract-unit1-data.js?v=36"></script>
   <script src="./contract-unit2-data.js?v=37"></script>
