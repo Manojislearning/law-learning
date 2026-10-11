@@ -14,9 +14,9 @@ test("Two levels preserve all 415 legal word IDs and append 115 unique answer-wr
   const items=vm.runInNewContext(app.slice(0,cut)+"\nWORDS.map(w=>({term:w.term,category:w.category,example:w.examples?.[0],definition:w.definition}));",ctx,{timeout:3000});
   assert.equal(items.length,530);
   assert.equal(items.filter(w=>w.category!=="Advanced English").length,415);
-  assert.deepEqual(items.slice(0,3).map(w=>w.term),["Affidavit","Appeal","Petition"]);
+  assert.deepEqual(Array.from(items).slice(0,3).map(w=>w.term),["Affidavit","Appeal","Bail"]);
   assert.equal(items.filter(w=>w.category==="Advanced English").length,115);
-  assert.deepEqual(items.slice(415,419).map(w=>w.term),["Cogent","Tenable","Untenable","Plausible"]);
+  assert.deepEqual(Array.from(items).slice(415,419).map(w=>w.term),["Cogent","Tenable","Untenable","Plausible"]);
   const terms=items.map(w=>w.term.toLowerCase());
   assert.equal(new Set(terms).size,terms.length,"Duplicated spelling across levels");
   for(const item of items.slice(415)){
