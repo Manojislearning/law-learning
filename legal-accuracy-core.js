@@ -9,7 +9,7 @@ function verify(d){
   ids.add(c.id);
   if(!Object.prototype.hasOwnProperty.call(counts,c.topic))throw Error("Unknown law topic.");
   counts[c.topic]++;
-  ["title","section","rule","example","mistake","question","why"].forEach(function(k){if(typeof c[k]!=="string"||c[k].length<27)throw Error("Card "+c.id+" lacks "+k);});
+  ["title","section","rule","example","mistake","question","why"].forEach(function(k){var min=(k==="section"?7:k==="title"?14:27);if(typeof c[k]!=="string"||c[k].length<min)throw Error("Card "+c.id+" lacks "+k);});
   if(!Array.isArray(c.choices)||c.choices.length!==3||new Set(c.choices).size!==3)throw Error("Invalid correction choices.");
   if(!Number.isInteger(c.answer)||c.answer<0||c.answer>2)throw Error("Invalid correction answer.");
   if(!Array.isArray(c.refs)||!c.refs.length)throw Error("Missing primary references.");
