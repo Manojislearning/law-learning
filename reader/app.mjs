@@ -1,12 +1,13 @@
 import {esc, slug, renderMarkdown, resolveLink} from './markdown.mjs';
+import {mountVaultMap} from './map.mjs';
 
 const REPO='Manojislearning/LAW-NOTES';
 const API=`https://api.github.com/repos/${REPO}`;
 const KEY='kslu-vault-reader-v1';
-const DEFAULT_PATH='HOME - Start Here.md';
+const DEFAULT_PATH='00 - Notes.md';
 const $=s=>document.querySelector(s);
 const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,paged:true,pageIndex:0,pages:[]};
-let scrollSaveAt=0,toastTimer=null,requestedPath='';
+let scrollSaveAt=0,toastTimer=null,requestedPath='',mapController=null;
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
  state.saved=new Set(Array.isArray(saved.saved)?saved.saved:[]);
@@ -21,14 +22,16 @@ function applyPrefs(){document.documentElement.style.setProperty('--reader-size'
 applyPrefs();
 function setStatus(text,connected=false){const el=$('#status-badge');el.innerHTML='<span></span> '+esc(text);el.classList.toggle('connected',connected)}
 async function github(path,token=state.token){
+ const headers={'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'};
+ if(token)headers.Authorization='Bearer '+token;
  const res=await fetch(API+path,{
-   method:'GET',headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'},
+   method:'GET',headers,
    cache:'no-store',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer'
  });
  if(!res.ok){
    if(res.status===401)throw new Error('GitHub rejected the token. Create a new fine-grained token.');
    if(res.status===403)throw new Error('Access denied or API limit reached. Check repository permissions.');
-   if(res.status===404)throw new Error('Private repository not accessible. Select LAW-NOTES and grant Contents: Read-only.');
+   if(res.status===404)throw new Error(token?'LAW-NOTES is not accessible with this token.':'LAW-NOTES is still private. Use a read-only token or change GitHub repository visibility to Public.');
    throw new Error('GitHub could not load the vault (HTTP '+res.status+').');
  }
  return res.json();
@@ -54,7 +57,7 @@ async function loadTree(token=state.token){
  $('#repo-meta').textContent=paths.length+' Markdown & Canvas files · main branch';
  $('#refresh-btn').disabled=false;
  $('#connect-view').hidden=true;$('#reader-view').hidden=false;
- setStatus('Connected',true);
+ setStatus(token?'Connected':'Public notes',true);
  renderSidebar();
 }
 async function connect(token){
@@ -63,6 +66,7 @@ async function connect(token){
   await loadTree(token);
   state.token=token;
   $('#token').value='';
+  if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote});
   const path=state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
   await openNote(path);
   toast('Private LAW-NOTES library connected.');
@@ -70,8 +74,9 @@ async function connect(token){
  finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my library ';}
 }
 $('#connect-form').addEventListener('submit',event=>{event.preventDefault();const token=$('#token').value.trim();if(token)void connect(token)});
+$('#public-connect-btn').addEventListener('click',()=>void connect(''));
 $('#show-token').addEventListener('click',()=>{const input=$('#token');input.type=input.type==='password'?'text':'password';$('#show-token').textContent=input.type==='password'?'Show':'Hide'});
-$('#refresh-btn').addEventListener('click',async()=>{if(!state.token)return;try{state.notes.clear();await loadTree();if(state.current)await openNote(state.current);toast('Latest notes loaded from GitHub.')}catch(e){toast(e.message)}});
+$('#refresh-btn').addEventListener('click',async()=>{if(!state.files.length)return;try{state.notes.clear();await loadTree();if(state.current)await openNote(state.current);toast('Latest notes loaded from GitHub.')}catch(e){toast(e.message)}});
 
 function iconFolder(name){return name.startsWith('01-')||name.startsWith('02-')?'▱':'▦'}
 const unitOneShortTitles={
@@ -88,6 +93,8 @@ const unitOneShortTitles={
 };
 function niceName(path){
  const name=path.split('/').pop();
+ if(path==='00 - Notes.md')return 'Notes';
+ if(path==='01-Semester-1/00 - Semester I Notes.md')return 'Semester I';
  if(path.includes('/Constitutional-Law-I/Units/Unit-01/')){
   if(unitOneShortTitles[name])return unitOneShortTitles[name];
  }
@@ -318,7 +325,7 @@ $('#scrim').addEventListener('click',()=>{closeSidebar();closePrefs()});
 $('#font-size').addEventListener('input',event=>{state.font=Number(event.target.value);applyPrefs();settingsSave()});
 $('#warm-toggle').addEventListener('change',event=>{state.warm=event.target.checked;applyPrefs();settingsSave()});
 $('#disconnect-btn').addEventListener('click',()=>{
- state.token='';state.notes.clear();state.files=[];state.tree=null;state.current='';
+ state.token='';state.notes.clear();state.files=[];state.tree=null;state.current='';mapController?.close();
  if('speechSynthesis' in window)window.speechSynthesis.cancel();
  $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;state.pages=[];setPageView();
  $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
@@ -327,7 +334,9 @@ selectMobileNav('bottom-home');
 $('#bottom-library').addEventListener('click',()=>{state.filter='all';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));renderSidebar();openSidebar()});
 $('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
 $('#bottom-saved').addEventListener('click',()=>{state.filter='saved';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='saved'));renderSidebar();openSidebar()});
-$('#bottom-text').addEventListener('click',openPrefs);
+const showMap=()=>{if(!state.files.length){toast('Open notes first.');return;}mapController?.open();selectMobileNav('bottom-map');};
+$('#map-btn').addEventListener('click',showMap);
+$('#bottom-map').addEventListener('click',showMap);
 window.addEventListener('popstate',()=>{const path=new URLSearchParams(location.search).get('file');if(path&&state.files.includes(path))void openNote(path)});
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{});
 // Authentication lives only in memory; a reload requires a new read-only token.
