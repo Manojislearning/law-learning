@@ -61,7 +61,7 @@ function recognize(storage,id,correct,when){
  row.lastAt=now;row.lastKind="recognition";
  // Once a recall stage is earned, a recognition-only success cannot advance it.
  // Recognition failures flag a short retry without silently erasing the recall record.
- if(!correct){row.due=Math.min(row.due,now+10*MINUTE);}
+ if(!correct){row.due=now+10*MINUTE;}
  else if(!before)row.due=now+DAY;
  state.cards[id]=row;save(storage,state);return row;
 }
