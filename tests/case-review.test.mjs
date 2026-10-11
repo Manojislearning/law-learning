@@ -51,7 +51,7 @@ test('Corrupted or future-version data is rejected and never silently replaced',
  assert.throws(()=>C.note(db,'contract',Contract.cases[0].id,'skipped',[],T),/Unsupported/);
  assert.equal(db.getItem(C.KEY),original);
  assert.throws(()=>C.parse('invalid'),/not valid JSON/);
- assert.throws(()=>C.parse(JSON.stringify({version:1,cases:{'__proto__':{}}})),/Unsupported|Invalid/);
+ assert.throws(()=>C.parse('{"version":1,"cases":{"__proto__":{"status":"skipped"}}}'),/Invalid saved case ID/);
 });
 test('Identity validation rejects invented courses, unsafe IDs and malformed flags',()=>{
  const db=store(),id=Contract.cases[0].id;
