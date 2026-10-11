@@ -130,5 +130,5 @@ function renderHome(){
  });
 }
 renderHome();
-window.addEventListener("hashchange",function(){if(location.hash==="#papers")goHome();});
+window.LawAppCore.router.subscribe(function(route){if(route==="papers")goHome();});
 })();
