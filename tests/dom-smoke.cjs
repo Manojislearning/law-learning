@@ -97,14 +97,27 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.deepEqual(u2.errors,[],"Unit II navigation must not throw");
  u2.dom.window.close();
 
- const homepage=build("https://example.test/law-learning/index.html?v=37#home");
+ const u3=build("https://example.test/law-learning/index.html?learn=contract1-unit3&v=38#syllabus");
+ const u3d=u3.doc,u3w=u3.dom.window;
+ assert.equal(u3w.ContractUnitThreeUI.lessons.length,10,"Unit III must provide ten lessons");
+ assert.ok(u3d.querySelector(".c1-card h2").textContent.includes("performance"),"Unit III deep link must open performance lesson");
+ assert.ok(u3d.querySelector(".c1-lesson-number").textContent.includes("Unit III"),"Unit label must be Unit III");
+ assert.equal(u3d.querySelectorAll(".c1-option").length,3,"Unit III questions must give three options");
+ u3d.querySelector(".c1-option").click();
+ assert.equal(u3d.querySelector(".c1-feedback").hidden,false,"A response must reveal explanatory feedback");
+ u3d.querySelector(".c1-next").click();
+ assert.ok(u3d.querySelector(".c1-card h2").textContent.includes("Who must perform"),"Unit III next navigation must advance");
+ assert.deepEqual(u3.errors,[],"Unit III must not trigger browser runtime errors");
+ u3.dom.window.close();
+
+ const homepage=build("https://example.test/law-learning/index.html?v=38#home");
  const btn=homepage.doc.getElementById("home-contract-lesson");
  assert.ok(btn,"Homepage needs a single visible guided-lesson entry");
  btn.click();await settle();
  assert.equal(homepage.dom.window.LawAppCore.router.current(),"syllabus");
  assert.ok(homepage.doc.querySelector(".c1-card"),"Home lesson entry should open a guided concept");
- assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("Who can make a contract?"),"Homepage should launch the new Unit II course");
+ assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("performance"),"Homepage should launch Unit III");
  assert.deepEqual(homepage.errors,[]);
  homepage.dom.window.close();
- console.log("DOM integration passed: KSLU sources, Unit I and Unit II lessons, quizzes, deep links and home course.");
+ console.log("DOM integration passed: KSLU sources, Contract Units I–III, questions, deep links and home course.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
