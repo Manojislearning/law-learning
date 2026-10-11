@@ -66,13 +66,14 @@ function startWeakReview(){
  if(!pending.length){dashboard();return;}
  session=pending.slice(0,5);mode="retry";pos=0;analysed=0;skipped=0;draw();
 }
-function advance(completed,checks){
+function advance(completed,checks,assessed){
  var c=session[pos];
  if(completed){
   analysed++;
   core.recordUsage(history,[c]);
   var missed=core.criteria.filter(function(key,i){return !checks[i];});
-  if(missed.length)weak.set(c.id,{status:"self-identified gaps",missing:missed});
+  if(!assessed)weak.set(c.id,{status:"not self-assessed",missing:[]});
+  else if(missed.length)weak.set(c.id,{status:"self-identified gaps",missing:missed});
   else weak.delete(c.id);
  }else{
   skipped++;
@@ -125,12 +126,12 @@ function draw(){
    ["application","I applied specific facts and addressed a possible limitation."],
    ["conclusion","I reached a qualified conclusion supported by my reasoning."]
  ];
- var picks=[];
+ var picks=[],assessed=false;
  markers.forEach(function(item){
   var label=E(rubric,"label"),input=E(label,"input");input.type="checkbox";
   picks.push(input);E(label,"span",item[1]);
  });
- var status=E(rubric,"p","Tick only what your written answer actually included.","cp-result");
+ var status=E(rubric,"p","Tick only the elements you included. Leave the checklist untouched if you prefer not to assess; the case will be flagged for review.","cp-result");
  status.setAttribute("role","status");status.setAttribute("aria-live","polite");
  var guidance=E(rubric,"details",undefined,"cp-coaching");
  var guidanceTitle=E(guidance,"summary","Review suggestions for missed elements");
@@ -148,9 +149,9 @@ function draw(){
    missing.forEach(function(tip){E(tips,"li",tip.message);});
   }
  }
- picks.forEach(function(p){p.addEventListener("change",update);});
+ picks.forEach(function(p){p.addEventListener("change",function(){assessed=true;update();});});
  update();
- var finishBtn=B(box,"Next case →",function(){advance(true,picks.map(function(x){return x.checked;}));});finishBtn.hidden=true;
+ var finishBtn=B(box,"Next case →",function(){advance(true,picks.map(function(x){return x.checked;}),assessed);});finishBtn.hidden=true;
  var skip=B(wrap,"Skip case",function(){advance(false);},true);
  B(wrap,"End practice",dashboard,true);
  if(typeof heading.focus==="function")heading.focus();
@@ -162,7 +163,7 @@ function finish(){
  E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning. No essay grade was assigned.");
  E(box,"p","The next set prioritises cases you have not completed in this open visit. Your self-checked missing IRAC steps can be retried with the reference answer hidden again.","cp-topic");
  if(weak.size){
-  E(box,"p",weak.size+" case"+(weak.size===1?" needs":"s need")+" another attempt: skipped or marked incomplete in your own IRAC checklist.","cp-topic");
+  E(box,"p",weak.size+" case"+(weak.size===1?" needs":"s need")+" another attempt: skipped, not self-checked, or marked incomplete in your own IRAC checklist.","cp-topic");
   B(box,"Retry "+weak.size+" weak or skipped case"+(weak.size===1?"":"s")+" →",startWeakReview);
  }else E(box,"p","No cases currently flagged for a retry. This does not certify exam mastery.","cp-topic");
  B(box,"Try a different set →",start);
