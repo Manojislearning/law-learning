@@ -1,56 +1,128 @@
-
 import {frontmatter,renderMarkdown,resolveLink} from './markdown.mjs';
 const NS='http://www.w3.org/2000/svg';
 const tag=t=>document.createElementNS(NS,t);
 const attrs=(e,o)=>{Object.entries(o).forEach(([k,v])=>e.setAttribute(k,String(v)));return e};
 const text=(s,x,y,c)=>{const e=attrs(tag('text'),{x,y,class:c});e.textContent=s;return e};
-const clean=s=>String(s).replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'$2').replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/!?\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[*_~]/g,'').trim();
+const COLORS=['#3289cb','#eb8b30','#2ea66c','#d75954','#9369ca','#17a8ad','#bd982f','#d16b9a'];
+const clean=s=>String(s||'').replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g,'$2').replace(/\[\[([^\]]+)\]\]/g,'$1').replace(/!?\[([^\]]+)\]\([^)]+\)/g,'$1').replace(/[*_~]/g,'').replace(/\s+/g,' ').trim();
 export const isTopic=p=>/\/Units\/Unit-\d\d\/(?:0[1-9]|[1-9]\d) - .+\.md$/i.test(p)||/\/Topics\/[^/]+\.md$/i.test(p);
-function node(s,kind,parent,section='',source=''){
- const n={id:(parent?.id||'')+'-'+(parent?.children.length||0),label:clean(s).slice(0,260),kind,parent,children:[],section,source,link:null,x:0,y:0,width:354,height:76};
- if(parent)parent.children.push(n);return n;
+
+function node(label,kind,parent,section='',source=''){
+ const n={id:(parent?.id||'')+'-'+(parent?.children.length||0),label:clean(label).slice(0,750),kind,parent,children:[],section,source,link:null,collapsed:false,x:0,y:0,width:0,height:0,color:COLORS[0]};
+ if(parent)parent.children.push(n);
+ return n;
+}
+function destination(raw,path,paths){
+ const wiki=/!?\[\[([^\]]+)\]\]/.exec(raw);
+ const md=/\[[^\]]+\]\(([^)]+)\)/.exec(raw);
+ const target=wiki?wiki[1].split('|')[0]:md?md[1]:null;
+ return target?resolveLink(target,path,paths):null;
 }
 export function noteBranches(content,path,paths){
  const parsed=frontmatter(content),lines=parsed.body.split(/\r?\n/);
  const title=parsed.meta.title||clean((lines.find(s=>/^#\s+/.test(s))||'').replace(/^#\s+/,''))||path.split('/').pop().replace(/\.md$/,'');
  const root=node(title,'root',null);root.id='root';
- let sections=[root],section='',list=null,indent=0;
- for(const source of lines){
-  const l=source.trim();if(!l||/^---+$/.test(l))continue;
-  const h=/^(#{1,6})\s+(.+)/.exec(l);
-  if(h){
-   const depth=h[1].length;if(depth===1)continue;
-   const parent=sections[Math.min(depth-2,sections.length-1)]||root;
-   const n=node(h[2],'heading',parent,h[2],source);
-   sections=sections.slice(0,depth-1);sections[depth-1]=n;section=h[2];list=null;continue;
+ const hasSections=lines.some(l=>/^##\s+/.test(l));
+ const stack=[{level:1,n:root}];
+ let fenced=false,currentHeading=root,previousList=null,previousIndent=-1,overview=null;
+ const addLine=(raw,parent,section)=>{
+  const colon=/^\s*\*\*([^*]{1,65}):\*\*\s*(.+)$/.exec(raw)||/^\s*\*\*([^*]{1,65})\*\*:\s*(.+)$/.exec(raw);
+  if(colon){
+   const name=node(colon[1].trim(),'key',parent,section,raw);
+   const detail=node(colon[2].trim(),'point',name,section,colon[2].trim());
+   detail.link=destination(colon[2],path,paths);return name;
   }
-  const bullet=/^(\s*)(?:[-*+]|\d+[.)])\s+(.+)$/.exec(source);
-  let value=bullet?bullet[2].replace(/^\[[ xX]\]\s+/,''):l;
-  if(/^>\s*\[!/.test(value)||/^>{0,1}\s*$/.test(value)||/^~~~/.test(value)||/^\|[-|:\s]+\|?$/.test(value))continue;
-  value=value.replace(/^>\s*/, '');
-  const base=bullet&&list&&bullet[1].length>indent?list:sections[sections.length-1]||root;
-  const n=node(value,bullet?'point':'text',base,section,value);
-  if(!n.label){base.children.pop();continue}
-  if(bullet){list=n;indent=bullet[1].length}else list=null;
-  const w=/!?\[\[([^\]]+)\]\]/.exec(value),m=/\[[^\]]+\]\(([^)]+)\)/.exec(value);
-  const target=w?w[1].split('|')[0]:m?m[1]:null;
-  if(target)n.link=resolveLink(target,path,paths);
+  const n=node(raw,'point',parent,section,raw);
+  n.link=destination(raw,path,paths);
+  return n;
+ };
+ for(const raw of lines){
+  const line=raw.trim();
+  if(/^(?:`{3,}|~{3,})/.test(line)){fenced=!fenced;continue;}
+  if(fenced||!line||/^---+$/.test(line)||/^\|/.test(line)||/^<\w/.test(line))continue;
+  if(/^>\s*\[!/.test(line))continue;
+  const heading=/^(#{1,6})\s+(.+)/.exec(line);
+  if(heading){
+   const depth=heading[1].length;
+   if(depth===1)continue;
+   while(stack.length>1&&stack[stack.length-1].level>=depth)stack.pop();
+   const parent=stack[stack.length-1].n;
+   const n=node(heading[2],'heading',parent,heading[2],raw);
+   stack.push({level:depth,n});
+   currentHeading=n;previousList=null;previousIndent=-1;
+   continue;
+  }
+  if(hasSections&&currentHeading===root)continue;
+  const bullet=/^(\s*)(?:[-*+]|\d+[.)])\s+(.+)$/.exec(raw);
+  const value=bullet?bullet[2].replace(/^\[[ xX]\]\s+/,''):line.replace(/^>\s*/,'');
+  if(!value||/^!\[/.test(value))continue;
+  let base=currentHeading;
+  if(currentHeading===root){
+   if(!overview)overview=node('Overview','heading',root,'Overview');
+   base=overview;
+  }
+  if(bullet){
+   const ind=bullet[1].replace(/\t/g,'  ').length;
+   if(previousList&&ind>previousIndent)base=previousList;
+   const n=addLine(value,base,currentHeading===root?'Overview':currentHeading.label);
+   previousList=n;previousIndent=ind;
+  }else{
+   previousList=null;previousIndent=-1;
+   addLine(value,base,currentHeading===root?'Overview':currentHeading.label);
+  }
  }
+ const fold=n=>{n.collapsed=n!==root&&n.children.length>0;n.children.forEach(fold);};
+ fold(root);
  return root;
 }
-function lines(s){
- const out=[''];for(const word of String(s).split(/\s+/)){const i=out.length-1;if((out[i]+' '+word).trim().length>31&&out[i])out.push(word);else out[i]=(out[i]+' '+word).trim()}
- return out.slice(0,4);
+export function visibleBranches(root){
+ if(!root)return [];
+ const result=[];
+ const visit=n=>{result.push(n);if(!n.collapsed)n.children.forEach(visit);};
+ visit(root);
+ return result;
+}
+export function toggleBranch(root,id){
+ const stack=[root];
+ while(stack.length){
+  const n=stack.pop();
+  if(n?.id===id&&n.children.length){n.collapsed=!n.collapsed;return n.collapsed;}
+  if(n)stack.push(...n.children);
+ }
+ return null;
 }
 export function measureTree(root){
- let cy=44,deep=0;
- const visit=(n,d)=>{
-  n.x=32+460*d;n.width=350;n.lines=lines(n.label);n.height=Math.max(68,24+18*n.lines.length);deep=Math.max(deep,d);
-  n.children.forEach(ch=>visit(ch,d+1));
-  if(n.children.length)n.y=(n.children[0].y+n.children[n.children.length-1].y)/2;
-  else{n.y=cy+n.height/2;cy+=n.height+25}
+ const visible=visibleBranches(root);
+ const widths=[],ctx=typeof document!=='undefined'&&document.createElement?document.createElement('canvas').getContext('2d'):null;
+ for(const n of visible){
+  const depth=n===root?0:(n.parent?.depth??0)+1;
+  n.depth=depth;
+  n.color=depth===0?COLORS[0]:depth===1?COLORS[root.children.indexOf(n)%COLORS.length]:(n.parent?.color||COLORS[0]);
+  const px=depth===0?25:depth===1?22:19;
+  n.fontSize=px;
+  if(ctx)ctx.font=(depth<=1?'700 ':'500 ')+px+'px system-ui';
+  const measured=ctx?ctx.measureText(n.label).width:n.label.length*px*.52;
+  n.width=Math.max(110,Math.ceil(measured)+34);
+  n.height=px+28;
+  widths[depth]=Math.max(widths[depth]||0,n.width);
+ }
+ const x=[40];
+ for(let i=1;i<widths.length;i++)x[i]=x[i-1]+widths[i-1]+125;
+ const subtree=n=>{
+  const children=n.collapsed?[]:n.children;
+  n.span=Math.max(n.height+18,children.reduce((sum,c)=>sum+subtree(c),0)+Math.max(0,children.length-1)*14);
+  return n.span;
  };
- visit(root,0);return {width:(deep+1)*460+80,height:Math.max(350,cy+80)};
+ subtree(root);
+ const position=(n,top)=>{
+  n.x=x[n.depth];n.y=top+n.span/2;
+  if(n.collapsed)return;
+  const total=n.children.reduce((sum,c)=>sum+c.span,0)+Math.max(0,n.children.length-1)*14;
+  let cursor=top+(n.span-total)/2;
+  for(const child of n.children){position(child,cursor);cursor+=child.span+14;}
+ };
+ position(root,20);
+ return {width:Math.max(...visible.map(n=>n.x+n.width))+55,height:root.span+60};
 }
 export function mountVaultMap({files,getNote,readNote,onClose}){
  const panel=document.querySelector('#map-overlay'),svg=document.querySelector('#map-svg'),scene=document.querySelector('#map-scene');
@@ -72,31 +144,40 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  function zoomMiddle(f){const r=rect();zoom(f,r.left+r.width/2,r.top+r.height/2)}
  function showDetails(show){drawer.hidden=!show;panel.classList.toggle('has-details',show)}
  function paint(){
-  const edges=tag('g'),cards=tag('g');scene.replaceChildren(edges,cards);
+  if(!root)return;
+  nodes=visibleBranches(root);
+  bounds=measureTree(root);
+  const edges=tag('g'),labels=tag('g');
+  scene.replaceChildren(edges,labels);
   for(const n of nodes){
    if(n.parent){
-    const p=n.parent,turn=(p.x+p.width+n.x)/2,sign=Math.sign(n.y-p.y),r=Math.min(14,Math.abs(n.y-p.y)/3);
-    // Orthogonal branches with softened right-angle bends.
-    const d=sign===0
-      ?'M'+(p.x+p.width)+' '+p.y+' H'+n.x
-      :'M'+(p.x+p.width)+' '+p.y+' H'+(turn-r)
-       +' Q'+turn+' '+p.y+' '+turn+' '+(p.y+sign*r)
-       +' V'+(n.y-sign*r)
-       +' Q'+turn+' '+n.y+' '+(turn+r)
-       +' H'+n.x;
-    edges.append(attrs(tag('path'),{class:'map-link',d}));
+    const p=n.parent,x1=p.x+p.width-12,x2=n.x-16,mid=(x1+x2)/2;
+    const d='M'+x1+' '+p.y+' C'+mid+' '+p.y+' '+mid+' '+n.y+' '+x2+' '+n.y;
+    edges.append(attrs(tag('path'),{class:'map-link',d,stroke:n.color}));
    }
-   const g=attrs(tag('g'),{'data-id':n.id,role:'button',tabindex:0,'aria-label':n.label,class:'map-node '+(n.kind==='root'?'root-node':n.kind==='heading'?'heading-node':'point-node')+(n===active?' selected':'')});
-   g.append(attrs(tag('rect'),{x:n.x,y:n.y-n.height/2,width:n.width,height:n.height,rx:30}));
-   n.lines.forEach((line,i)=>g.append(text(line,n.x+17,n.y+5+(i-(n.lines.length-1)/2)*18,'map-text')));
-   if(n!==root){
-    const link=attrs(tag('g'),{'data-open-note':n.id,role:'button',tabindex:0,'aria-label':'Open source note for '+n.label});
-    link.append(attrs(tag('rect'),{x:n.x+n.width-43,y:n.y-22,width:40,height:44,rx:17,class:'map-node-action'}));
-    link.append(text('↗',n.x+n.width-31,n.y+7,'map-node-icon'));g.append(link);
+   const expanded=n.children.length>0&&!n.collapsed;
+   const g=attrs(tag('g'),{'data-id':n.id,role:'button',tabindex:0,'aria-label':n.label,
+    'aria-expanded':n.children.length?String(expanded):'',
+    class:'map-branch '+(n.kind==='root'?'root-node':n.depth===1?'heading-node':'point-node')+(n===active?' selected':'')});
+   // Transparent tap target: SVG has no visual cards.
+   g.append(attrs(tag('rect'),{x:n.x-16,y:n.y-n.height/2-7,width:n.width+42,height:n.height+18,rx:4,class:'map-branch-hit'}));
+   const name=text(n.label,n.x,n.y+5,'map-branch-text');
+   attrs(name,{'font-size':n.fontSize,'font-weight':n.depth===0?800:n.depth===1?700:520});
+   g.append(name);
+   const underY=n.y+Math.max(12,n.fontSize*.65);
+   g.append(attrs(tag('line'),{x1:n.x,y1:underY,x2:n.x+n.width-18,y2:underY,stroke:n.color,'stroke-width':n.depth===0?4:2.2,class:'map-branch-underline'}));
+   if(n.children.length){
+    const cx=n.x+n.width+5,cy=n.y;
+    g.append(attrs(tag('circle'),{cx,cy,r:10,fill:n.collapsed?'#fff':n.color,stroke:n.color,'stroke-width':2.2,class:'map-fold-circle'}));
+    if(n.collapsed){
+     g.append(attrs(tag('path'),{d:'M'+(cx-4)+' '+cy+' h8 M'+cx+' '+(cy-4)+' v8',stroke:n.color,'stroke-width':1.8,class:'map-fold-mark'}));
+    }else{
+     g.append(attrs(tag('path'),{d:'M'+(cx-4)+' '+cy+' h8',stroke:'#fff','stroke-width':1.8,class:'map-fold-mark'}));
+    }
    }
-   cards.append(g);
+   labels.append(g);
   }
-  document.querySelector('#map-count').textContent=nodes.length+' branches';
+  document.querySelector('#map-count').textContent=nodes.length+' visible branches';
  }
  const find=id=>nodes.find(n=>n.id===id);
  function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
@@ -105,17 +186,40 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
   close();void readNote(dest.path,dest.heading||'');
  }
  function select(n){
-  if(!n)return;active=n;title.textContent=n.label;body.innerHTML=renderMarkdown(n.kind==='heading'?'## '+n.label:n.source||n.label).html;showDetails(true);paint();
+  if(!n)return;
+  active=n;
+  title.textContent=n.label;
+  body.innerHTML=renderMarkdown(n.source||n.label).html;
+  document.querySelector('#map-read-note').textContent=n.link?'Open linked note ↗':'Read this in notes ↗';
+  showDetails(true);
+  paint();
+ }
+ async function activate(n){
+  if(!n)return;
+  if(n.children.length){
+   toggleBranch(root,n.id);active=null;showDetails(false);paint();fit();return;
+  }
+  if(n.link?.path&&n.link.path!==topic&&n.depth<7&&!n.loaded){
+   n.loaded=true;
+   try{
+    const linked=noteBranches(await getNote(n.link.path),n.link.path,files);
+    n.children=linked.children.slice(0,55);
+    n.children.forEach(child=>{child.parent=n;});
+    if(n.children.length){n.collapsed=false;active=null;showDetails(false);paint();fit();return;}
+   }catch(e){n.loaded=false;console.warn('Could not expand linked note',e);}
+  }
+  select(n);
  }
  scene.addEventListener('click',e=>{
   if(moved)return;
-  const link=e.target.closest('[data-open-note]'),card=e.target.closest('[data-id]');
-  if(link)read(find(link.dataset.openNote));else if(card)select(find(card.dataset.id));
+  const branch=e.target.closest('[data-id]');
+  if(branch)void activate(find(branch.dataset.id));
  });
  scene.addEventListener('keydown',e=>{
   if(!['Enter',' '].includes(e.key))return;
-  const link=e.target.closest('[data-open-note]'),card=e.target.closest('[data-id]');
-  if(!link&&!card)return;e.preventDefault();if(link)read(find(link.dataset.openNote));else select(find(card.dataset.id));
+  const branch=e.target.closest('[data-id]');
+  if(!branch)return;
+  e.preventDefault();void activate(find(branch.dataset.id));
  });
  svg.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.12:.89,e.clientX,e.clientY)},{passive:false});
  const gesture=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2,d:Math.hypot(a.x-b.x,a.y-b.y)});
@@ -152,9 +256,9 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
   if(!isTopic(path))return false;
   topic=path;panel.hidden=false;showDetails(false);status.textContent='Loading topic…';
   try{
-   root=noteBranches(await getNote(path),path,files);nodes=[];const walk=n=>{nodes.push(n);n.children.forEach(walk)};walk(root);
-   bounds=measureTree(root);paint();fit();status.textContent=root.label;
-   document.querySelector('#map-current').textContent='Tap a branch · ↗ opens its Markdown topic';
+   root=noteBranches(await getNote(path),path,files);
+   active=null;paint();fit();status.textContent=root.label;
+   document.querySelector('#map-current').textContent='Click a branch to reveal the next level · click again to fold';
    document.querySelector('#map-close').focus();return true;
   }catch(e){status.textContent=String(e.message||e);return false}
  }
