@@ -89,7 +89,7 @@ async function run(){
    const context=await browser.newContext({viewport:{width,height:750},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
    const page=await context.newPage(),errors=[];
    page.on("pageerror",e=>errors.push(e.message));
-   await page.goto(address.replace("v=43#practice","v=45&law=bns#law-updates"),{waitUntil:"load"});
+   await page.goto(address.replace("v=43#practice","v=46&law=bns#law-updates"),{waitUntil:"load"});
    const root=page.locator("#law-updates-root");
    assert.ok((await root.innerText()).includes("Section 106(2)"));
    const visible=await page.evaluate(()=>{
@@ -104,10 +104,14 @@ async function run(){
    await page.locator("#law-updates-root .law-tab").filter({hasText:"Consumer"}).tap();
    assert.ok((await root.innerText()).includes("Syllabus history"),"Consumer tab should show historical statute caveat");
    assert.ok((await root.innerText()).includes("Consumer Protection Act, 2019"));
+   await page.locator("#law-updates-root .law-tab").filter({hasText:"Motor Vehicles"}).tap();
+   assert.ok((await root.innerText()).includes("No-fault compensation"));
+   assert.ok((await root.innerText()).includes("₹5 lakh"));
+   assert.equal(await page.locator("#law-updates-root .law-tab").count(),3);
    assert.equal(errors.length,0,"Law check errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer statutory check and focus.");
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor statutory check and focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
