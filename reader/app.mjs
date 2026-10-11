@@ -6,7 +6,7 @@ const API=`https://api.github.com/repos/${REPO}`;
 const KEY='kslu-vault-reader-v1';
 const DEFAULT_PATH='00 - Notes.md';
 const $=s=>document.querySelector(s);
-const state={files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,sourceMode:false,rawMarkdown:''};
+const state={files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false};
 let scrollSaveAt=0,toastTimer=null,requestedPath='',mapController=null;
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
@@ -207,29 +207,11 @@ function saveReadingPosition(){if(!state.current)return;const area=$('#reading-s
  if(Date.now()-scrollSaveAt>750){scrollSaveAt=Date.now();try{localStorage.setItem(KEY+':progress:'+state.current,Math.round(fraction*100))}catch{}}
 }
 function revealHeading(id){
- if(state.sourceMode)showMarkdown(false);
  const target=document.getElementById(id);
  if(!target)return false;
  target.scrollIntoView({behavior:'smooth',block:'start'});
  return true;
 }
-function showMarkdown(show){
- if(!state.current||!state.rawMarkdown)return;
- state.sourceMode=!!show;
- const button=$('#markdown-btn');
- button.setAttribute('aria-pressed',String(state.sourceMode));
- button.title=state.sourceMode?'Return to rendered notes':'Show original Markdown source';
- button.innerHTML=state.sourceMode?'<span class="markdown-mini">Aa</span><span class="tool-word">Preview</span>':'<span class="markdown-mini">MD</span><span class="tool-word">Markdown</span>';
- const article=$('#article');
- if(state.sourceMode){
-  article.innerHTML='<div class="markdown-file-chip">Markdown · Read only</div><pre class="markdown-source"><code>'+esc(state.rawMarkdown)+'</code></pre>';
- }else{
-  article.innerHTML=state.renderedHtml;
- }
- $('#reading-scroll').scrollTop=0;
-}
-$('#markdown-btn').addEventListener('click',()=>showMarkdown(!state.sourceMode));
-
 async function openNote(path,heading=''){
  if(!state.files.includes(path)){toast('That note is not available in this vault.');return;}
  if(state.loading)return;
@@ -238,7 +220,6 @@ async function openNote(path,heading=''){
  try{
   if('speechSynthesis' in window)window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';
   const markdown=await loadNote(path),note=/\.canvas$/i.test(path)?renderCanvas(markdown,path):renderMarkdown(markdown),meta=note.meta;
-  state.rawMarkdown=markdown;state.sourceMode=false;
   state.current=path;requestedPath=path;
   const title=meta.title || niceName(path);
   const sourceParts=path.split('/');
@@ -252,9 +233,6 @@ async function openNote(path,heading=''){
   const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
   state.renderedHtml=intro+headingHtml+tocHtml+note.html;
   article.innerHTML=state.renderedHtml;
-  $('#markdown-btn').setAttribute('aria-pressed','false');
-  $('#markdown-btn').innerHTML='<span class="markdown-mini">MD</span><span class="tool-word">Markdown</span>';
-  $('#markdown-btn').title='Show original Markdown source';
   article.classList.remove('note-enter');
   // Retrigger a short, low-motion page entrance after a successful note change.
   void article.offsetWidth;
@@ -312,7 +290,6 @@ $('#menu-btn').addEventListener('click',openSidebar);
 $('#close-sidebar').addEventListener('click',closeSidebar);
 $('#settings-btn').addEventListener('click',()=>$('#prefs').hidden?openPrefs():closePrefs());
 $('#close-prefs').addEventListener('click',closePrefs);
-$('#font-btn').addEventListener('click',openPrefs);
 $('#scrim').addEventListener('click',()=>{closeSidebar();closePrefs()});
 $('#font-size').addEventListener('input',event=>{state.font=Number(event.target.value);applyPrefs();settingsSave()});
 $('#warm-toggle').addEventListener('change',event=>{state.warm=event.target.checked;applyPrefs();settingsSave()});
