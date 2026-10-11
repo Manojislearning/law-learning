@@ -24,6 +24,8 @@ jobs:
           node-version: '22'
       - name: Verify app and content
         run: node --test tests/*.test.mjs
+      - name: Check browser integration test syntax
+        run: node --check tests/dom-smoke.cjs
       - name: Install DOM integration checker
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Verify browser script startup and syllabus navigation
