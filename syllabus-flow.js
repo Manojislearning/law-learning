@@ -130,9 +130,13 @@ function sourceUnitPage(subject,unitIndex){
   ledger.getSources(record).forEach(function(item){sourceLink(list,item);});
   E(list,"p","A source-page match does not verify case law, updated sections, current cohort rules or every teaching note.","sf-source-small");
   if(record&&(subject===4||(subject===2&&unitIndex===4))){
-   var check=subject===4?"bns":"consumer";
    var cta=E(f,"div",undefined,"sf-footer");
-   B(cta,"Current Law Check","Updated statute notes and common legal mistakes →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open(check);});
+   if(subject===4){
+    B(cta,"Current Law Check · BNS","Offence sections and commencement →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
+   }else{
+    B(cta,"Current Law Check · Consumer","2019 Act and 2021 rules →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
+    B(cta,"Current Law Check · Motor Vehicles","Compensation, insurance and amended timelines →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
+   }
   }
  }
  var foot=E(f,"div",undefined,"sf-footer");
@@ -216,11 +220,12 @@ function render(){
   }
 
   /* Modern statutory corrections are separate from the original university outline. */
-  if(sem===1&&((subject===4)||(subject===2&&unit===4))){
-   var legalTopic=subject===4?"bns":"consumer";
-   B(e,"Current Law Check","Selected section mappings, modern provisions and common exam traps →",function(){
-    if(window.LawAccuracyUI)window.LawAccuracyUI.open(legalTopic);
-   });
+  if(sem===1&&subject===4){
+   B(e,"Current Law Check · BNS","Selected section mappings, commencement and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
+  }
+  if(sem===1&&subject===2&&unit===4){
+   B(e,"Current Law Check · Consumer","2019 Act, 2021 rules and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
+   B(e,"Current Law Check · Motor Vehicles","No-fault claims, insurance, 2022–26 reforms →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
   }
   topicsCache.forEach(function(t,i){B(e,t,"Study this topic →",function(){push("topic",i);});});
   E(e,"p","The topic divisions are study aids based on the imported course outline.","sf-note");
