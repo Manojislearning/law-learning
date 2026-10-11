@@ -38,6 +38,7 @@ function nameIncludes(scope,selector,part){return [...scope.querySelectorAll(sel
  let b=nameIncludes(d,".exam59-chip","Criminal Law–I (BNS)");
  assert.ok(b);
  b.click();
+ b=nameIncludes(d,".exam59-chip","Criminal Law–I (BNS)");
  assert.equal(b.getAttribute("aria-pressed"),"true");
  assert.equal(d.querySelectorAll(".exam59-question").length,3);
  const q=nameIncludes(d,".exam59-question","culpable homicide");
