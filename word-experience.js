@@ -121,9 +121,44 @@ function wrongWords(){
  return items.concat(other).slice(0,3);
 }
 function spelling(word){
- var characters=Array.from(word),positions=[];characters.forEach(function(c,i){if(/[A-Za-z]/.test(c))positions.push(i);});
- var missing=positions.filter(function(_,j){return j%3===1});if(!missing.length&&positions.length)missing=[positions[0]];
- return {masked:characters.map(function(c,i){return missing.includes(i)?"＿":c;}).join(""),answer:missing.map(function(i){return characters[i];}).join("")};
+ var letters=Array.from(word),positions=[];
+ letters.forEach(function(c,i){if(/[A-Za-z]/.test(c))positions.push(i);});
+ var missing=positions.filter(function(_,j){return j%3===1});
+ if(!missing.length&&positions.length)missing=[positions[0]];
+ return {letters:letters,missing:missing,answer:missing.map(function(i){return letters[i];}).join("")};
+}
+function spellingFields(form,spell){
+ var line=put(form,"div","w-inline-spelling"),fields=[];
+ line.setAttribute("role","group");line.setAttribute("aria-label","Missing letters");
+ spell.letters.forEach(function(letter,i){
+   if(!spell.missing.includes(i)){put(line,"span","w-spell-letter",letter);return;}
+   var field=put(line,"input","w-spell-blank");
+   field.type="text";field.maxLength=1;field.inputMode="text";
+   field.spellcheck=false;field.autocomplete="off";field.autocapitalize="off";
+   field.setAttribute("aria-label","Missing letter "+(fields.length+1)+" of "+spell.missing.length);
+   fields.push(field);
+ });
+ fields.forEach(function(field,i){
+   field.addEventListener("input",function(){
+     var letters=Array.from(field.value).filter(function(ch){return /[A-Za-z]/.test(ch);});
+     field.value=letters.slice(-1).join("");
+     if(field.value&&fields[i+1])fields[i+1].focus();
+   });
+   field.addEventListener("keydown",function(event){
+     if(event.key==="Backspace"&&!field.value&&fields[i-1]){event.preventDefault();fields[i-1].focus();}
+     if(event.key==="ArrowLeft"&&fields[i-1]){event.preventDefault();fields[i-1].focus();}
+     if(event.key==="ArrowRight"&&fields[i+1]){event.preventDefault();fields[i+1].focus();}
+   });
+   field.addEventListener("paste",function(event){
+     var pasted=event.clipboardData&&event.clipboardData.getData("text");
+     if(!pasted)return;
+     event.preventDefault();
+     var letters=Array.from(pasted).filter(function(ch){return /[A-Za-z]/.test(ch);});
+     letters.forEach(function(ch,j){if(fields[i+j])fields[i+j].value=ch;});
+     if(letters.length)fields[Math.min(i+letters.length,fields.length-1)].focus();
+   });
+ });
+ return fields;
 }
 function yesno(box,statement,truth,explain){
  title(box,statement);var out=put(box,"div","w-options");
@@ -141,13 +176,20 @@ function renderDeck(){
  if(cardIndex===0){title(box,word.term);p(box,word.definition);}
  if(cardIndex===1){if(currentLevel===ADVANCED_LEVEL){title(box,"In a law answer");p(box,(word.examples&&word.examples[0])||word.definition);small(box,"See how the word fits a legal note or examination answer.");}else{title(box,"A real-world example");newsView(box);}}
  if(cardIndex===2){
- var spell=spelling(word.term);title(box,spell.masked);small(box,"Fill the missing letters in order.");p(box,word.definition);
- var form=put(box,"form"),input=put(form,"input","w-input");input.placeholder="Missing letters";input.autocomplete="off";input.spellcheck=false;
- var b=btn(form,"Check spelling",function(){});b.type="submit";
- form.addEventListener("submit",function(e){e.preventDefault();var key=index+"-"+cardIndex;if(answers[key])return;answers[key]=true;
- var good=lower(input.value).replace(/\s/g,"")===lower(spell.answer);
- noteFeedback(box,good,good?"Correct spelling.":"Missing letters: "+spell.answer+". Full term: "+word.term+".");
- input.disabled=true;b.disabled=true;if(good)award();});
+ var spell=spelling(word.term),form=put(box,"form","w-spell-form");
+ var fields=spellingFields(form,spell);
+ var check=btn(form,"Check spelling",function(){});check.type="submit";
+ form.addEventListener("submit",function(event){
+  event.preventDefault();
+  var key=index+"-"+cardIndex;if(answers[key])return;
+  if(fields.some(function(field){return !field.value.trim();})){noteFeedback(box,false,"Fill every blank.");return;}
+  answers[key]=true;
+  var value=fields.map(function(field){return field.value;}).join("");
+  var correct=lower(value)===lower(spell.answer);
+  noteFeedback(box,correct,correct?"Correct spelling.":"Correct word: "+word.term+".");
+  fields.forEach(function(field){field.disabled=true;});check.disabled=true;
+  if(correct)award();
+ });
  }
  if(cardIndex===3){title(box,word.term);small(box,currentLevel===ADVANCED_LEVEL?"Choose the precise English meaning.":"Select the correct legal meaning.");options(box,word.definition,wrongWords().map(function(x){return x.definition;}));}
  if(cardIndex===4){
