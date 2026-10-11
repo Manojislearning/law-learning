@@ -30,6 +30,8 @@ jobs:
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Verify browser script startup and syllabus navigation
         run: node tests/dom-smoke.cjs
+      - name: Verify News navigation, attribution, safe links and bookmarks
+        run: node tests/news-dom.cjs
 
   mobile_browser:
     name: Chromium mobile viewport and keyboard checks
