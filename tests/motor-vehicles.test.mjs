@@ -79,7 +79,7 @@ test('Torts Unit V provenance retains cohort ambiguity and both study routes',()
 });
 test('Motor Vehicles subject is available from the same offline app, no user storage changed',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('legal-accuracy-view.js'),sy=read('syllabus-flow.js');
- for(const file of ['legal-accuracy-data.js?v=46','legal-accuracy-core.js?v=46','legal-accuracy-view.js?v=63','content-ledger.js?v=46','syllabus-flow.js?v=52']){
+ for(const file of ['legal-accuracy-data.js?v=46','legal-accuracy-core.js?v=46','legal-accuracy-view.js?v=63','content-ledger.js?v=46','syllabus-flow.js?v=63']){
   assert.ok(html.includes(file),'HTML lacks '+file);
   assert.ok(sw.includes(file),'SW lacks '+file);
  }
