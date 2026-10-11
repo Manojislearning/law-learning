@@ -84,7 +84,30 @@ async function run(){
   assert.equal(await page.evaluate(()=>document.activeElement?.textContent),"Read the facts","Focus should follow the next case");
   assert.equal(errors.length,0);
   await context.close();
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation and focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:750},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=45&law=bns#law-updates"),{waitUntil:"load"});
+   const root=page.locator("#law-updates-root");
+   assert.ok((await root.innerText()).includes("Section 106(2)"));
+   const visible=await page.evaluate(()=>{
+    const els=[...document.querySelectorAll("#law-updates-root button")].filter(el=>el.getClientRects().length);
+    return els.map(el=>({name:el.innerText.slice(0,50),x:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height}));
+   });
+   assert.ok(visible.every(x=>x.x>=-1&&x.right<=width+1&&x.height>=44),width+"px law check overflow or small target "+JSON.stringify(visible));
+   const answer=page.locator("#law-updates-root .law-feedback");
+   assert.equal(await answer.isVisible(),false,"Answer feedback must begin hidden");
+   await page.locator("#law-updates-root .law-answer").first().tap();
+   assert.equal(await answer.isVisible(),true,"Practice answer must reveal explanation");
+   await page.locator("#law-updates-root .law-tab").filter({hasText:"Consumer"}).tap();
+   assert.ok((await root.innerText()).includes("Syllabus history"),"Consumer tab should show historical statute caveat");
+   assert.ok((await root.innerText()).includes("Consumer Protection Act, 2019"));
+   assert.equal(errors.length,0,"Law check errors at "+width+"px: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer statutory check and focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
