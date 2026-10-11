@@ -2,10 +2,10 @@
  * Backups are local files, not encrypted cloud accounts.
  */
 (function(root, factory) {
-  var api = factory();
+  var api = factory(root);
   if (typeof module === "object" && module.exports) module.exports = api;
   if (root) root.LawBackupCore = api;
-})(typeof globalThis === "object" ? globalThis : this, function() {
+})(typeof globalThis === "object" ? globalThis : this, function(root) {
   "use strict";
   var APP = "law-learning", VERSION = 3, MAX_BYTES = 1024 * 1024;
   var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1"];
