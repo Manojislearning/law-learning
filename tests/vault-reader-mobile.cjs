@@ -148,7 +148,7 @@ async function main(){
     htmlRect:document.documentElement.getBoundingClientRect().toJSON(),
     bodyRect:document.body.getBoundingClientRect().toJSON(),
     appRect:document.querySelector('.app').getBoundingClientRect().toJSON(),
-    elements:[...document.querySelectorAll(".masthead,.reader-toolbar,#article,.bottom-nav")].filter(e=>e.offsetWidth>0).map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))
+    elements:[...document.querySelectorAll(".masthead,.reader-toolbar,#article,.bottom-nav")].filter(e=>e.offsetWidth>0).map(e=>({tag:e.tagName,class:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,offsetLeft:e.offsetLeft,parentLeft:e.parentElement?.getBoundingClientRect().left,width:e.offsetWidth,marginLeft:getComputedStyle(e).marginLeft,marginRight:getComputedStyle(e).marginRight,transform:getComputedStyle(e).transform}))
    }));
    assert.ok(layout.page<=width+2,width+"px horizontal overflow: "+JSON.stringify(layout));
    assert.ok(layout.elements.every(x=>x.left>=-2&&x.right<=width+2),width+"px controls overflow: "+JSON.stringify(layout));
