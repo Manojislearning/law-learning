@@ -5,13 +5,15 @@
 "use strict";
 var host=document.getElementById("practice-root"),core=root.LawCaseCore;
 var banks={contract:root.LawCaseData,torts:root.LawTortsCaseData,bns:root.LawBnsCaseData};
+var transferCore=root.LawTransferCore,transferData=root.LawTransferData;
 var requested=new URLSearchParams(root.location.search).get("course");
 var bankKey=Object.prototype.hasOwnProperty.call(banks,requested)?requested:"contract";
 var bank=banks[bankKey];
 if(!host||!core||!bank)return;
 var histories={contract:new Map(),torts:new Map(),bns:new Map()},weakBySubject={contract:new Map(),torts:new Map(),bns:new Map()};
 var history=histories[bankKey],weak=weakBySubject[bankKey],session=null,pos=0,analysed=0,skipped=0,mode="mixed";
-try{core.verify(banks.contract);core.verify(banks.torts);core.verify(banks.bns);}catch(err){host.textContent="Case practice is unavailable: "+err.message;return;}
+var transfers=[],transferIndex=0,transferDone=0,transferSkipped=0;
+try{core.verify(banks.contract);core.verify(banks.torts);core.verify(banks.bns);if(!transferCore)throw Error("Changed-facts engine unavailable.");transferCore.verify(transferData,banks);}catch(err){host.textContent="Case practice is unavailable: "+err.message;return;}
 var css=document.createElement("style");css.textContent=".cp-wrap{max-width:710px;margin:0 auto;padding:9px 0 58px}.cp-wrap p{line-height:1.65;font-size:.91rem}.cp-eyebrow{font-size:.72rem;font-weight:850;letter-spacing:.055em;color:var(--muted);text-transform:uppercase}.cp-wrap h2{font-size:clamp(1.6rem,4.8vw,2rem);line-height:1.2;margin:8px 0 14px}.cp-panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:clamp(16px,4vw,24px);margin:13px 0}.cp-banner{background:#f4f6f8;border-radius:12px;padding:12px 15px;color:#243044;font-size:.84rem;line-height:1.5;margin:14px 0}.cp-button{display:block;width:100%;margin-top:12px;background:#101c2d;color:#fff;border:1px solid #101c2d;border-radius:12px;padding:12px 15px;font:inherit;font-weight:780;cursor:pointer}.cp-button.alt{background:white;color:#101c2d;border-color:var(--line)}.cp-button:focus-visible,.cp-wrap textarea:focus-visible,.cp-rubric input:focus-visible,.cp-wrap a:focus-visible{outline:3px solid #7691b3;outline-offset:3px}.cp-meta{display:flex;gap:10px;align-items:center;justify-content:space-between;color:var(--muted);font-size:.78rem;font-weight:800;margin-bottom:16px}.cp-facts{font-size:1rem!important;line-height:1.8!important;color:var(--text)}.cp-question{border-left:3px solid #1c304f;padding:8px 13px;margin:14px 0;font-weight:700}.cp-writing{display:block;font-size:.84rem;font-weight:750;margin-top:16px}.cp-writing textarea{width:100%;display:block;margin-top:9px;padding:12px;border:1px solid #b5c0ce;border-radius:12px;box-sizing:border-box;font:inherit;font-size:16px;line-height:1.6;resize:vertical;min-height:160px;background:#fff;color:var(--text)}.cp-help{font-size:.82rem;color:var(--muted);margin:16px 0}.cp-help summary{cursor:pointer;font-weight:750}.cp-error{color:#864324;font-size:.85rem;min-height:22px;margin-top:9px}.cp-model{background:#f2f5f8;border-radius:12px;padding:15px;margin:16px 0}.cp-model h3{font-size:.89rem;margin:17px 0 4px}.cp-model h3:first-child{margin-top:0}.cp-model p{margin:3px 0 12px}.cp-rubric{border:1px solid var(--line);border-radius:13px;padding:13px;margin-top:16px}.cp-rubric legend{font-size:.87rem;font-weight:800;padding:0 5px}.cp-rubric label{display:flex;gap:12px;align-items:flex-start;font-size:.85rem;line-height:1.5;margin:11px 0}.cp-rubric input{width:20px;height:20px;flex:none;accent-color:#1e4c71}.cp-result{font-size:.83rem;background:#f5f7f8;border-radius:10px;padding:12px;margin-top:10px}.cp-case-source{display:block;font-size:.82rem;color:#285988;margin:9px 0;line-height:1.5}.cp-topic{font-size:.85rem;color:var(--muted)}.cp-wrap [hidden]{display:none!important}.cp-coaching{margin:14px 0 0;background:#f1f5f8;border-radius:12px;padding:12px}.cp-coaching summary{min-height:44px;padding:9px 2px;cursor:pointer;font-size:.86rem;font-weight:760}.cp-coaching-list{padding-left:20px;margin:0}.cp-coaching-list li{line-height:1.6;font-size:.85rem;margin:8px 0;overflow-wrap:anywhere}.cp-coaching-list li:first-child{margin-top:0}.cp-coaching-list li:last-child{margin-bottom:0}.cp-rubric label{min-height:44px;padding:7px 0;cursor:pointer}.cp-rubric input{width:24px;height:24px}.cp-help summary{min-height:44px;padding:10px 2px;display:list-item}.cp-case-source{min-height:40px;padding:9px 0;overflow-wrap:anywhere}.cp-wrap button{min-height:44px}.cp-wrap h2:focus,.cp-model:focus{outline:none}.cp-wrap h2:focus-visible,.cp-model:focus-visible{outline:3px solid #7691b3;outline-offset:4px}.cp-subjects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:15px 0}.cp-subjects .cp-button{margin:0;min-height:48px;min-width:0}.cp-subjects .cp-button[aria-pressed=true]{background:#101c2d;color:white;border-color:#101c2d}@media(max-width:350px){.cp-panel{padding:14px}.cp-meta{flex-wrap:wrap}.cp-coaching{padding:10px}.cp-subjects{grid-template-columns:repeat(2,minmax(0,1fr))}.cp-subjects .cp-button:last-child{grid-column:1/-1}}";document.head.appendChild(css);
 function E(parent,tag,text,cl){
  var n=document.createElement(tag);if(cl)n.className=cl;if(text!==undefined)n.textContent=String(text);
@@ -20,7 +22,7 @@ function E(parent,tag,text,cl){
 function B(parent,text,click,alt){
  var el=E(parent,"button",text,"cp-button"+(alt?" alt":""));el.type="button";el.addEventListener("click",click);return el;
 }
-function reset(){session=null;pos=0;analysed=0;skipped=0;mode="mixed";host.replaceChildren();}
+function reset(){session=null;pos=0;analysed=0;skipped=0;mode="mixed";transfers=[];transferIndex=0;transferDone=0;transferSkipped=0;host.replaceChildren();}
 function forgetSelfChecks(){Object.keys(weakBySubject).forEach(function(k){weakBySubject[k].clear();});}
 function shell(){host.replaceChildren();return E(host,"div",undefined,"cp-wrap");}
 function goHome(){root.LawAppCore.router.navigate("home");}
@@ -48,6 +50,7 @@ function dashboard(){
  E(panel,"h3","Mixed five-case practice");
  E(panel,"p","Each set mixes five units. Completed cases count toward rotation; skipped cases remain eligible next time. Three completed sets cover all fifteen cases in this subject.");
  B(panel,"Start 5 cases →",start);
+ B(panel,"Changed-facts challenge · 5 scenarios →",function(){startTransfer();},true);
  if(weak.size)B(panel,"Retry "+weak.size+" weak or skipped case"+(weak.size===1?"":"s")+" →",startWeakReview,true);
  var notes=E(wrap,"details",undefined,"cp-help");
  E(notes,"summary","What is IRAC?");
@@ -162,6 +165,9 @@ function finish(){
  var finishedTitle=E(box,"h2","You finished the set");finishedTitle.tabIndex=-1;
  E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning. No essay grade was assigned.");
  E(box,"p","The next set prioritises cases you have not completed in this open visit. Your self-checked missing IRAC steps can be retried with the reference answer hidden again.","cp-topic");
+ if(mode==="retry"&&session&&session.length){
+  B(box,"Try changed facts from these units →",function(){startTransfer(session.map(function(c){return c.id;}));});
+ }
  if(weak.size){
   E(box,"p",weak.size+" case"+(weak.size===1?" needs":"s need")+" another attempt: skipped, not self-checked, or marked incomplete in your own IRAC checklist.","cp-topic");
   B(box,"Retry "+weak.size+" weak or skipped case"+(weak.size===1?"":"s")+" →",startWeakReview);
@@ -171,6 +177,61 @@ function finish(){
  B(wrap,"Home",goHome,true);
  if(typeof finishedTitle.focus==="function")finishedTitle.focus();
 }
+
+function startTransfer(parentIds){
+ try{transfers=transferCore.select(transferData,banks,bankKey,parentIds);}
+ catch(err){host.textContent="Changed-facts practice is unavailable: "+err.message;return;}
+ transferIndex=0;transferDone=0;transferSkipped=0;mode="transfer";showTransfer();
+}
+function showTransfer(){
+ var prompt=transfers[transferIndex];
+ if(!prompt){finishTransfer();return;}
+ var original=bank.cases.find(function(x){return x.id===prompt.parentId;});
+ var wrap=shell();
+ E(wrap,"p","CHANGED FACTS · TRANSFER THE RULE","cp-eyebrow");
+ var box=E(wrap,"article",undefined,"cp-panel");
+ E(box,"p","Scenario "+(transferIndex+1)+" of "+transfers.length+" · "+courseName(),"cp-topic");
+ var heading=E(box,"h2","What changes this time?");heading.tabIndex=-1;
+ E(box,"p",prompt.changedFacts,"cp-facts");
+ E(box,"p",prompt.question,"cp-question");
+ E(box,"p","Explain the factual difference, the legal rule and how the outcome may change. The comparison remains hidden until you attempt it.","cp-topic");
+ var label=E(box,"label","Your changed-facts analysis","cp-writing");
+ var essay=E(label,"textarea");essay.rows=5;essay.maxLength=2400;essay.placeholder="Changed fact:\nApplicable rule:\nWhy the outcome may change:";
+ var notice=E(box,"p","","cp-error");notice.setAttribute("role","status");notice.setAttribute("aria-live","polite");
+ var reveal=B(box,"Compare with transfer reasoning →",function(){
+  if(essay.value.trim().length<40){notice.textContent="Explain the changed fact and legal rule in at least 40 characters before comparing.";return;}
+  essay.readOnly=true;reveal.hidden=true;notice.textContent="";
+  model.hidden=false;next.hidden=false;skip.hidden=true;
+  if(typeof model.focus==="function")model.focus();
+ });
+ var model=E(box,"section",undefined,"cp-model cp-transfer-model");model.hidden=true;model.tabIndex=-1;
+ E(model,"p","Compared with "+original.title+" · Unit "+["","I","II","III","IV","V"][original.unit],"cp-eyebrow");
+ E(model,"h3","Rule");E(model,"p",prompt.rule);
+ E(model,"h3","Why the changed fact matters");E(model,"p",prompt.application);
+ E(model,"h3","Mistake to avoid");E(model,"p",prompt.trap);
+ E(model,"p","Reference reasoning only, not an examination grade or guaranteed court outcome. Other facts may matter.","cp-topic");
+ var refs=E(model,"details",undefined,"cp-help");E(refs,"summary","Primary judgments and legislation");
+ original.sourceIds.forEach(function(id){
+  var src=bank.sources[id];if(!src)return;
+  var link=E(refs,"a",src.title+" ↗","cp-case-source");
+  link.href=src.url;link.target="_blank";link.rel="noopener noreferrer";
+ });
+ var next=B(box,transferIndex===transfers.length-1?"Finish transfer practice →":"Next changed fact →",function(){transferDone++;transferIndex++;showTransfer();});next.hidden=true;
+ var skip=B(wrap,"Skip changed fact",function(){transferSkipped++;transferIndex++;showTransfer();},true);
+ B(wrap,"End changed-facts practice",dashboard,true);
+ if(typeof heading.focus==="function")heading.focus();
+}
+function finishTransfer(){
+ var wrap=shell(),box=E(wrap,"section",undefined,"cp-panel");
+ E(box,"p","TRANSFER PRACTICE COMPLETE","cp-eyebrow");
+ var title=E(box,"h2","You tested changed facts");title.tabIndex=-1;
+ E(box,"p",transferDone+" scenario"+(transferDone===1?"":"s")+" compared with reference reasoning; "+transferSkipped+" skipped.","cp-topic");
+ E(box,"p","This immediate self-check does not certify mastery or delayed retention. No written answer was saved.","cp-topic");
+ B(box,"Return to Case Practice",dashboard);
+ B(box,"Another changed-facts set",function(){startTransfer();},true);
+ if(typeof title.focus==="function")title.focus();
+}
+
 root.LawCasePracticeUI={show:dashboard,reset:reset,open:openCourse};
 root.LawAppCore.router.subscribe(function(route){
  if(route==="practice")dashboard();
