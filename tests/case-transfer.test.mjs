@@ -9,13 +9,14 @@ const banks={
  contract:require('../case-practice-data.js'),
  torts:require('../torts-case-practice-data.js'),
  bns:require('../bns-case-practice-data.js'),
- constitution:require('../constitution-case-practice-data.js')
+ constitution:require('../constitution-case-practice-data.js'),
+ hindu:require('../hindu-case-practice-data.js')
 };
 const read=p=>readFileSync(resolve(root,p),'utf8');
 test('Exactly 20 original changed-fact prompts map to real original cases, one per unit and course',()=>{
  assert.equal(core.verify(data,banks),true);
- assert.equal(data.items.length,20);
- for(const course of ['contract','torts','bns','constitution']){
+ assert.equal(data.items.length,25);
+ for(const course of ['contract','torts','bns','constitution','hindu']){
   const rows=data.items.filter(t=>t.subject===course);
   assert.equal(rows.length,5);
   assert.deepEqual(rows.map(t=>banks[course].cases.find(c=>c.id===t.parentId).unit).sort(),[1,2,3,4,5]);
@@ -60,11 +61,11 @@ test('Changed facts explicitly contrast high-risk legal mistakes without claims 
 });
 test('Version 51 loads changed-facts assets before practice reader and precaches both',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('case-practice-view.js');
- for(const asset of ['case-transfer-data.js?v=51','case-transfer-core.js?v=51','case-practice-view.js?v=51']){
+ for(const asset of ['case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=52']){
   assert.ok(html.includes(asset),'Missing browser asset '+asset);
   assert.ok(sw.includes(asset),'Missing offline asset '+asset);
  }
- assert.ok(html.indexOf('case-transfer-core.js?v=51')<html.indexOf('case-practice-view.js?v=51'));
+ assert.ok(html.indexOf('case-transfer-core.js?v=52')<html.indexOf('case-practice-view.js?v=52'));
  assert.ok(view.includes('startTransfer'));
  assert.ok(view.includes('finishTransfer'));
  assert.ok(view.includes('essay.value.trim().length<40'),'Reference answer must remain gated');
