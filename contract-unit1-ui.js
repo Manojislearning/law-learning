@@ -1,10 +1,14 @@
-/* Shared Contract I lesson renderer for Units I–IV. No artificial mastery/score changes. */
+/* Shared Contract I lesson renderer for Units I–V. No artificial mastery/score changes. */
 (function(root){
 "use strict";
 var sheet=document.createElement("style");sheet.textContent=".c1-guide{max-width:680px;margin:auto;padding:4px 0 45px}.c1-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px}.c1-back{background:#fff;border:1px solid var(--line);border-radius:11px;padding:11px;font:inherit;color:var(--text);font-weight:750}.c1-count{font-size:.79rem;color:var(--muted);font-weight:800}.c1-card{background:#fff;border:1px solid var(--line);border-radius:17px;padding:clamp(17px,4vw,24px)}.c1-card h2{font-size:clamp(1.6rem,6vw,2.1rem);margin:6px 0 13px;line-height:1.2}.c1-card h3{font-size:.97rem;margin:20px 0 6px}.c1-card p{font-size:.94rem;line-height:1.65;margin:8px 0}.c1-muted{font-size:.82rem!important;color:var(--muted);line-height:1.5}.c1-simple{border-radius:12px;background:#f3f5f7;padding:14px;margin:14px 0}.c1-simple strong{font-size:.85rem}.c1-simple p{margin:5px 0!important}.c1-rule{border-left:3px solid #32445d;padding-left:12px}.c1-option{display:block;width:100%;border:1px solid var(--line);border-radius:12px;background:#f8f9fb;text-align:left;font:inherit;font-size:.9rem;color:var(--text);line-height:1.5;padding:13px;margin:8px 0}.c1-option.correct{background:#e8f6ec;border-color:#288455}.c1-option.wrong{background:#fff0ee;border-color:#b35b59}.c1-feedback{margin-top:14px;background:#f2f4f6;border-radius:12px;padding:13px;font-size:.88rem;line-height:1.6}.c1-feedback.correct{background:#e8f6ec}.c1-next{display:block;width:100%;background:#0d1321;color:#fff;border:0;border-radius:12px;padding:13px;font:inherit;font-weight:750;margin-top:15px}.c1-terms{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0}.c1-terms button{border:1px solid var(--line);border-radius:10px;background:#f5f7f8;color:var(--text);padding:9px;font:inherit;font-size:.8rem;font-weight:700}.c1-sources{border:1px solid var(--line);background:#fff;border-radius:13px;padding:0;margin:12px 0}.c1-sources summary{cursor:pointer;padding:14px;font-weight:700;font-size:.86rem}.c1-sources-body{padding:0 14px 12px}.c1-sources-body a{display:block;margin:10px 0;font-size:.84rem;color:#275c93}.c1-swipe{text-align:center;color:var(--muted);font-size:.74rem;padding:5px}.c1-lesson-number{font-size:.75rem;font-weight:750;color:var(--muted)}@media(prefers-reduced-motion:no-preference){@keyframes c1go{from{opacity:.35;transform:translateX(14px)}to{opacity:1;transform:translateX(0)}}@keyframes c1back{from{opacity:.35;transform:translateX(-14px)}to{opacity:1;transform:translateX(0)}}.c1-guide.forward .c1-card{animation:c1go .24s ease-out}.c1-guide.backward .c1-card{animation:c1back .24s ease-out}}";document.head.appendChild(sheet);
 var extraStyle=document.createElement("style");
 extraStyle.textContent=".c1-retry{display:block;width:100%;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px 13px;font:inherit;font-weight:700;font-size:.85rem;margin-top:11px}.c1-retry:focus-visible,.c1-option:focus-visible{outline:3px solid #708bb0;outline-offset:2px}.c1-feedback[hidden],.c1-retry[hidden],.c1-next[hidden]{display:none!important}";
 document.head.appendChild(extraStyle);
+
+var writingStyle=document.createElement("style");
+writingStyle.textContent=".c1-write{border:1px solid var(--line);border-radius:13px;background:#fff;margin:14px 0}.c1-write summary{cursor:pointer;padding:13px;font-size:.87rem;font-weight:750}.c1-write-body{padding:0 14px 14px}.c1-write-facts{font-size:.92rem;line-height:1.6}.c1-write-label{font-size:.81rem;font-weight:750;display:block;margin:12px 0 0}.c1-write-input{box-sizing:border-box;display:block;width:100%;font:inherit;font-size:16px;line-height:1.5;border:1px solid #c7cdd7;border-radius:10px;min-height:78px;padding:11px;margin-top:6px;resize:vertical;background:#fff;color:var(--text)}.c1-compare{border:1px solid #27364e;border-radius:11px;background:#27364e;color:#fff;padding:11px 14px;margin-top:15px;font:inherit;font-size:.86rem;font-weight:750}.c1-model{background:#f3f5f8;border-radius:12px;padding:14px;margin-top:14px}.c1-model strong{font-size:.85rem}.c1-model h4{font-size:.81rem;margin:12px 0 2px}.c1-model p{font-size:.87rem;line-height:1.55;margin:3px 0}.c1-model[hidden]{display:none!important}";
+document.head.appendChild(writingStyle);
 function E(parent,tag,text,cls){
  var n=document.createElement(tag);if(cls)n.className=cls;
  if(text!==undefined)n.textContent=text;
@@ -15,7 +19,7 @@ function B(parent,text,callback,cls){
 }
 function createGuide(data){
 if(!data||!Array.isArray(data.lessons))return null;
-var missed=new Set(),retryMode=false;
+var missed=new Set(),retryMode=false,drafts=new Map();
 function shuffleChoices(info){
  var indices=info.choices.map(function(_,i){return i;});
  for(var i=indices.length-1;i>0;i--){
@@ -93,6 +97,43 @@ function render(container,opts){
   if(originalIndex===info.answer)correctButton=btn;
  });
  var correctButton; /* assigned during option creation; read only when user answers */
+ /* Optional effortful recall: no automated marking of free-form legal answers. */
+ var writing=E(outer,"details",undefined,"c1-write");
+ E(writing,"summary",info.writing?"Apply the law · Write an IRAC answer (optional)":"Recall the rule in your own words (optional)");
+ var inside=E(writing,"div",undefined,"c1-write-body");
+ E(inside,"p",info.writing?info.writing.facts:"Without copying the notes above, explain "+info.title.toLowerCase()+" in your own words.","c1-write-facts");
+ if(info.writing)E(inside,"p",info.writing.prompt,"c1-muted");
+ var labels=info.writing?["Issue","Rule","Application","Conclusion"]:["Your answer"];
+ var key=data.id+":"+info.id,old=drafts.get(key)||{},fields={};
+ labels.forEach(function(label,n){
+  var field=E(inside,"label",label,"c1-write-label");
+  var area=E(field,"textarea",undefined,"c1-write-input");
+  area.rows=label==="Application"?3:2;
+  area.placeholder=label==="Issue"?"What legal question arises?":label==="Rule"?"State the relevant statutory section.":label==="Application"?"Apply each important fact to the law.":label==="Conclusion"?"Give a qualified outcome.":"Write two or three sentences without looking at the rule.";
+  area.value=old[label]||"";
+  area.addEventListener("input",function(){
+   var saved=drafts.get(key)||{};saved[label]=area.value;drafts.set(key,saved);
+  });
+  fields[label]=area;
+ });
+ var model=E(inside,"div",undefined,"c1-model");model.hidden=true;
+ function showModel(){
+  model.replaceChildren();
+  E(model,"strong","Compare with a reference outline — not an automated grade.");
+  if(info.writing){
+   ["Issue","Rule","Application","Conclusion"].forEach(function(label){
+    E(model,"h4",label);
+    E(model,"p",info.writing.outline[label.toLowerCase()]);
+   });
+  }else{
+   E(model,"h4","Rule");E(model,"p",info.focus);
+   E(model,"h4","Exam focus");E(model,"p",info.exam);
+  }
+  E(model,"p","Check which legal elements you recalled, and improve any missing reasoning. Your answer is not automatically assessed.","c1-muted");
+  model.hidden=false;
+ }
+ B(inside,"Compare with reference answer",showModel,"c1-compare");
+ E(inside,"p","Draft stays only in this open study session. It is not uploaded or added to mastery scores.","c1-muted");
  var terms=E(outer,"div",undefined,"c1-terms");
  info.terms.forEach(function(term){
   B(terms,"Learn "+term+" ↗",function(){
@@ -131,4 +172,5 @@ root.ContractUnitOneUI=createGuide(root.ContractUnitOneData);
 root.ContractUnitTwoUI=createGuide(root.ContractUnitTwoData);
 root.ContractUnitThreeUI=createGuide(root.ContractUnitThreeData);
 root.ContractUnitFourUI=createGuide(root.ContractUnitFourData);
+root.ContractUnitFiveUI=createGuide(root.ContractUnitFiveData);
 })(typeof window!=="undefined"?window:globalThis);
