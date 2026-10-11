@@ -6,17 +6,16 @@ const API=`https://api.github.com/repos/${REPO}`;
 const KEY='kslu-vault-reader-v1';
 const DEFAULT_PATH='00 - Notes.md';
 const $=s=>document.querySelector(s);
-const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,paged:true,pageIndex:0,pages:[]};
+const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,sourceMode:false,rawMarkdown:''};
 let scrollSaveAt=0,toastTimer=null,requestedPath='',mapController=null;
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
  state.saved=new Set(Array.isArray(saved.saved)?saved.saved:[]);
  state.font=Number.isFinite(saved.font)?Math.max(16,Math.min(26,saved.font)):19;
  state.warm=saved.warm!==false;
- state.paged=saved.paged!==false;
  requestedPath=new URLSearchParams(location.search).get('file')||saved.last||DEFAULT_PATH;
 }catch{requestedPath=DEFAULT_PATH;}
-function settingsSave(){try{localStorage.setItem(KEY,JSON.stringify({saved:[...state.saved],font:state.font,warm:state.warm,paged:state.paged,last:state.current}))}catch{}}
+function settingsSave(){try{localStorage.setItem(KEY,JSON.stringify({saved:[...state.saved],font:state.font,warm:state.warm,last:state.current}))}catch{}}
 function toast(message){const el=$('#toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3800)}
 function applyPrefs(){document.documentElement.style.setProperty('--reader-size',state.font+'px');document.body.classList.toggle('cool',!state.warm);$('#font-size').value=state.font;$('#font-size-label').textContent=state.font+'px';$('#warm-toggle').checked=state.warm;$('#saved-number').textContent=state.saved.size;}
 applyPrefs();
@@ -60,25 +59,33 @@ async function loadTree(token=state.token){
  setStatus(token?'Connected':'Public notes',true);
  renderSidebar();
 }
-async function connect(token){
+function loading(message,show=true){
+ const el=$('#loading-screen');
+ $('#loading-message').textContent=message||'Opening your notes';
+ el.hidden=!show;
+}
+async function connect(){
  const openRequestedMap=new URLSearchParams(location.search).get('map')==='1';
- $('#connect-error').hidden=true;$('#connect-btn').disabled=true;$('#connect-btn').firstChild.textContent='Connecting to GitHub… ';
+ $('#connect-view').hidden=true;
+ loading('Loading library');
  try{
-  await loadTree(token);
-  state.token=token;
-  $('#token').value='';
+  await loadTree('');
+  state.token='';
   if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote,onClose:()=>selectMobileNav('bottom-home')});
   const firstTopic=state.files.find(f=>/\/Constitutional-Law-I\/Units\/Unit-01\/01 - /.test(f))||state.files.find(isTopic);
   const path=openRequestedMap&&!isTopic(requestedPath)?(firstTopic||DEFAULT_PATH):state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
+  loading('Opening notes');
   await openNote(path);
-  toast(token?'Notes connected.':'Public notes opened.');
-  if(openRequestedMap&&isTopic(path))void mapController?.open(path);
- }catch(e){$('#connect-view').hidden=false;$('#reader-view').hidden=true;setStatus('Not connected');const err=$('#connect-error');err.textContent=e instanceof Error?e.message:'Could not connect.';err.hidden=false;}
- finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my library ';}
+  if(openRequestedMap&&isTopic(path))void mapController.open(path);
+ }catch(e){
+  $('#reader-view').hidden=true;$('#connect-view').hidden=false;
+  setStatus('Unavailable');
+  $('#connect-error').textContent=e instanceof Error?e.message:'Could not open notes.';
+ }finally{
+  loading('',false);
+ }
 }
-$('#connect-form').addEventListener('submit',event=>{event.preventDefault();const token=$('#token').value.trim();if(token)void connect(token)});
-$('#public-connect-btn').addEventListener('click',()=>void connect(''));
-$('#show-token').addEventListener('click',()=>{const input=$('#token');input.type=input.type==='password'?'text':'password';$('#show-token').textContent=input.type==='password'?'Show':'Hide'});
+$('#public-connect-btn').addEventListener('click',()=>void connect());
 $('#refresh-btn').addEventListener('click',async()=>{if(!state.files.length)return;try{state.notes.clear();await loadTree();if(state.current)await openNote(state.current);toast('Latest notes loaded from GitHub.')}catch(e){toast(e.message)}});
 
 function iconFolder(name){return name.startsWith('01-')||name.startsWith('02-')?'▱':'▦'}
@@ -197,90 +204,43 @@ function navigation(path){const peers=siblingNotes(path),idx=peers.indexOf(path)
  $('#prev-note').dataset.note=prev||'';$('#next-note').dataset.note=next||'';
 }
 function saveReadingPosition(){if(!state.current)return;const area=$('#reading-scroll'),length=area.scrollHeight-area.clientHeight;
- const fraction=state.paged&&state.pages.length>=2?(state.pageIndex+1)/state.pages.length:(length>0?Math.max(0,Math.min(1,area.scrollTop/length)):1);
+ const fraction=length>0?Math.max(0,Math.min(1,area.scrollTop/length)):1;
  $('#progress-line').style.width=Math.round(fraction*100)+'%';
  if(Date.now()-scrollSaveAt>750){scrollSaveAt=Date.now();try{localStorage.setItem(KEY+':progress:'+state.current,Math.round(fraction*100))}catch{}}
-}
-// Divide long Markdown into compact H2 sections, without losing or editing content.
-// The original document is still available through the Scroll toggle.
-function splitIntoReadingPages(){
- const article=$('#article');
- state.pages=[];
- const headings=[...article.children].filter(element=>element.tagName==='H2' && !/^(?:sources|continue|next note|keep studying)$/i.test(element.textContent.trim()));
- if(headings.length<2){setPageView();return;}
- for(const heading of headings){
-  const section=document.createElement('section');
-  section.className='study-page';
-  article.insertBefore(section,heading);
-  let cursor=heading;
-  while(cursor && (cursor===heading || !headings.includes(cursor))){
-   const next=cursor.nextSibling;
-   section.appendChild(cursor);
-   cursor=next;
-  }
-  state.pages.push(section);
- }
- state.pageIndex=0;
- setPageView();
-}
-function setPageView(){
- const usePages=state.paged && state.pages.length>=2;
- state.pageIndex=Math.min(Math.max(state.pageIndex,0),Math.max(state.pages.length-1,0));
- for(const [index,page] of state.pages.entries()){
-  page.hidden=usePages && index!==state.pageIndex;
- }
- $('#article').classList.toggle('paged-study',usePages);
- $('#study-pager').hidden=!usePages;
- $('#pages-btn').disabled=state.pages.length<2;
- $('#pages-btn').setAttribute('aria-pressed',String(usePages));
- $('#pages-btn').innerHTML=usePages?'▤ <span class="tool-word">Pages</span>':'▥ <span class="tool-word">Scroll</span>';
- $('#pages-btn').title=usePages?'Show all sections as one long note':'Read in short pages';
- if(usePages){
-  const label=state.pages[state.pageIndex]?.querySelector('h2')?.textContent?.trim()||'Section';
-  $('#page-count').textContent=(state.pageIndex+1)+' / '+state.pages.length+' · '+label;
-  $('#page-prev').disabled=state.pageIndex===0;
-  $('#page-next').disabled=state.pageIndex===state.pages.length-1;
-  $('#progress-line').style.width=Math.round(100*(state.pageIndex+1)/state.pages.length)+'%';
- }
-}
-function nextReadingPage(delta){
- const target=state.pageIndex+delta;
- if(target<0||target>=state.pages.length)return;
- state.pageIndex=target;
- setPageView();
- $('#reading-scroll').scrollTo({top:0,behavior:'instant'});
- const heading=state.pages[target].querySelector('h2');
- heading?.focus?.({preventScroll:true});
 }
 function revealHeading(id){
  const target=document.getElementById(id);
  if(!target)return false;
- const parent=target.closest('.study-page');
- if(parent && state.paged){
-  state.pageIndex=state.pages.indexOf(parent);
-  setPageView();
- }
+ if(state.sourceMode)showMarkdown(false);
  target.scrollIntoView({behavior:'smooth',block:'start'});
  return true;
 }
-$('#pages-btn').addEventListener('click',()=>{
- if(state.pages.length<2)return;
- state.paged=!state.paged;
- setPageView();
- settingsSave();
- $('#reading-scroll').scrollTo({top:0,behavior:'smooth'});
-});
-$('#page-prev').addEventListener('click',()=>nextReadingPage(-1));
-$('#page-next').addEventListener('click',()=>nextReadingPage(1));
+function showMarkdown(show){
+ if(!state.current||!state.rawMarkdown)return;
+ state.sourceMode=!!show;
+ const button=$('#markdown-btn');
+ button.setAttribute('aria-pressed',String(state.sourceMode));
+ button.title=state.sourceMode?'Return to rendered notes':'Show original Markdown source';
+ button.innerHTML=state.sourceMode?'◉ <span class="tool-word">Preview</span>':'&lt;/&gt; <span class="tool-word">Markdown</span>';
+ const article=$('#article');
+ if(state.sourceMode){
+  article.innerHTML='<div class="markdown-file-chip">Markdown · Read only</div><pre class="markdown-source"><code>'+esc(state.rawMarkdown)+'</code></pre>';
+ }else{
+  article.innerHTML=state.renderedHtml;
+ }
+ $('#reading-scroll').scrollTop=0;
+}
+$('#markdown-btn').addEventListener('click',()=>showMarkdown(!state.sourceMode));
 
 async function openNote(path,heading=''){
  if(!state.files.includes(path)){toast('That note is not available in this vault.');return;}
  if(state.loading)return;
  state.loading=true;
- const article=$('#article');state.pages=[];article.innerHTML='<div class="empty">Opening note from GitHub…</div>';setPageView();
+ const article=$('#article');article.innerHTML='<div class="note-skeleton"><i></i><i></i><i></i><i></i></div>';
  try{
   if('speechSynthesis' in window)window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';
   const markdown=await loadNote(path),note=/\.canvas$/i.test(path)?renderCanvas(markdown,path):renderMarkdown(markdown),meta=note.meta;
+  state.rawMarkdown=markdown;state.sourceMode=false;
   state.current=path;requestedPath=path;
   const title=meta.title || niceName(path);
   const sourceParts=path.split('/');
@@ -292,8 +252,11 @@ async function openNote(path,heading=''){
   const intro=`<div class="note-eyebrow">${course}${progress?' · '+esc(progress)+'% READ':''}</div>`;
   const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
   const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
-  article.innerHTML=intro+headingHtml+tocHtml+note.html;
-  splitIntoReadingPages();
+  state.renderedHtml=intro+headingHtml+tocHtml+note.html;
+  article.innerHTML=state.renderedHtml;
+  $('#markdown-btn').setAttribute('aria-pressed','false');
+  $('#markdown-btn').innerHTML='&lt;/&gt; <span class="tool-word">Markdown</span>';
+  $('#markdown-btn').title='Show original Markdown source';
   article.classList.remove('note-enter');
   // Retrigger a short, low-motion page entrance after a successful note change.
   void article.offsetWidth;
@@ -303,7 +266,7 @@ async function openNote(path,heading=''){
   $('#save-btn').innerHTML=state.saved.has(path)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
   navigation(path);renderSidebar();settingsSave();
   history.replaceState(null,'',location.pathname+'?file='+encodeURIComponent(path));
-  if(heading){requestAnimationFrame(()=>{const el=document.getElementById(slug(heading));if(!revealHeading(slug(heading)))toast('Opened note; heading not found.')})}
+  if(heading)requestAnimationFrame(()=>{if(!revealHeading(slug(heading)))toast('Heading not found.')});
  }catch(error){article.innerHTML=`<div class="empty"><h2>Could not open this note</h2><p>${esc(error.message)}</p><button type="button" class="primary-btn" id="retry-note">Retry</button></div>`;$('#retry-note').addEventListener('click',()=>void openNote(path));}
  finally{state.loading=false;}
 }
@@ -355,12 +318,6 @@ $('#font-btn').addEventListener('click',openPrefs);
 $('#scrim').addEventListener('click',()=>{closeSidebar();closePrefs()});
 $('#font-size').addEventListener('input',event=>{state.font=Number(event.target.value);applyPrefs();settingsSave()});
 $('#warm-toggle').addEventListener('change',event=>{state.warm=event.target.checked;applyPrefs();settingsSave()});
-$('#disconnect-btn').addEventListener('click',()=>{
- state.token='';state.notes.clear();state.files=[];state.tree=null;state.current='';mapController?.close();
- if('speechSynthesis' in window)window.speechSynthesis.cancel();
- $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;state.pages=[];setPageView();
- $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
-});
 selectMobileNav('bottom-home');
 $('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
 const showMap=()=>{if(!isTopic(state.current)){toast('Choose a topic note first.');return;}void mapController?.open(state.current).then(success=>{if(success)selectMobileNav('bottom-map')});};
@@ -368,4 +325,5 @@ $('#map-btn').addEventListener('click',showMap);
 $('#bottom-map').addEventListener('click',showMap);
 window.addEventListener('popstate',()=>{const path=new URLSearchParams(location.search).get('file');if(path&&state.files.includes(path))void openNote(path)});
 if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{});
-// Authentication lives only in memory; a reload requires a new read-only token.
+// Public read-only notes load automatically. No GitHub credentials are requested or stored.
+void connect();
