@@ -288,6 +288,32 @@ async function run(){
    assert.equal(errors.length,0,"No case-to-unit browser errors: "+errors.join("; "));
    await context.close();
   }
+
+  for(const width of [320,390]){
+   const context=await browser.newContext({viewport:{width,height:740},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",err=>errors.push(err.message));
+   await page.goto(address.replace("v=43#practice","v=55&course=contract#practice"),{waitUntil:"load"});
+   await page.evaluate(()=>{
+    const w=window,rows=[["contract",w.LawCaseData],["torts",w.LawTortsCaseData],["bns",w.LawBnsCaseData],["constitution",w.LawConstitutionCaseData],["hindu",w.LawHinduCaseData]];
+    rows.forEach(([subject,bank],i)=>w.LawCaseReviewCore.note(w.localStorage,subject,bank.cases[0].id,"skipped",[],Date.now()-100000-i*10000));
+    w.LawCasePracticeUI.show();
+   });
+   const practice=page.locator("#practice-root");
+   assert.ok((await practice.innerText()).includes("Daily Case Review"),"Due dashboard must be visible on phone");
+   const daily=practice.getByRole("button",{name:/Review 5 due cases/});
+   const rect=await daily.boundingBox();
+   assert.ok(rect&&rect.height>=44&&rect.x>=-1&&rect.x+rect.width<=width+1,"Daily review CTA too small/overflow at "+width+"px");
+   await daily.tap();
+   assert.ok((await practice.innerText()).includes("DAILY REVIEW · DELAYED RETRIEVAL"));
+   assert.equal(await practice.locator(".cp-model").isHidden(),true,"Daily review must not reveal old answer");
+   assert.equal(await practice.locator(".cp-writing textarea").inputValue(),"");
+   const skip=practice.getByRole("button",{name:"Skip case"});
+   await skip.tap();
+   assert.equal(await practice.locator(".cp-model").isHidden(),true);
+   assert.equal(errors.length,0,"Daily phone browser runtime errors: "+errors.join("; "));
+   await context.close();
+  }
   console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
