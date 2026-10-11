@@ -1,11 +1,32 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **46** — nine Motor Vehicles statutory updates, including 2026 Jan Vishwas changes, and tested accessible three-subject law checks; prior release histories follow.
+Latest user-visible release: **47** — 15 source-linked unseen Torts problems within shared Contract/Torts IRAC practice, preserving offline learning progress; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 47 — Independent Law of Torts exam practice (11 October 2026)
+
+**Prioritisation:** Rather than build yet another isolated quiz, reused the same exam-style **written IRAC**, official-source feedback and lesson-free mixed-unit practice established for Contract–I. The next meaningful learning outcome is applying tort doctrine and motor/consumer statutory distinctions to **new facts**.
+
+**Delivered:**
+1. **15 original Torts problems**, three in each of KSLU's five Semester I Torts unit groupings: nature and foundational wrongs; defences/vicarious liability; negligence, strict and absolute liability; wrongs against person and property; and Consumer/Motor Vehicles liability.
+2. The existing Case Practice entry now allows **Contract–I or Law of Torts** selection (30 total original case problems). A five-case session draws one from each unit, shuffles the order and favours unseen problems before repeating alternatives.
+3. Model reasoning remains hidden until a short written attempt. Then the user may compare four structured IRAC paragraphs, read a common legal misconception and open primary judicial/statutory documents. Students mark missed elements themselves; **not an AI grade or exam score**.
+4. The Torts syllabus subject and each unit provide a direct open action. Torts also supports `?course=torts#practice` while previous `#practice` links continue to open Contract–I by default.
+5. New Torts answers and self-check rubrics are kept only in the current page; saved vocabulary, spaced revisions, backup format and original Contract cases remain intact.
+6. Validation extends to official **Supreme Court judgments** (`api.sci.gov.in`) as primary case-law sources as well as India Code, Gazette and ministry reports. The source checker still rejects arbitrary external hostnames.
+7. Automated checks include factual-case bank structure, source hosts, mix-without-immediate-repeat, cross-subject switching, legal-answer reveal gates, rubric integrity, old Contract test paths and real Chromium mobile-width tests.
+
+**Academic accuracy:** The case bank is original educational material. It references *Subhagwanti* negligence, *M.C. Mehta* hazardous-enterprise liability, discussions of *Vidyawati* vicarious liability, constitutional detention compensation and dated Motor/Consumer statutory provisions. This is **not** an audit of all Torts doctrine or current KSLU admission scheme. Read `docs/torts-case-practice-v47.md` for the exact source URLs and case scope.
+
+**UX findings:** (a) keep a single home Case Practice entry and switch subject inside it; (b) don't label the case by unit until after an attempt; (c) avoid overwhelming users with model answers before recall; (d) mix cases across units; (e) record no unverifiable mastery. Chromium surfaced a harmless test assertion discrepancy between uppercase-rendered labels and underlying text content; test the accessible text directly.
+
+**Next:** Prefer diagnosing *which arguments learners miss*, improving distinct model counterarguments, auditing BNS Unit III subsection accuracy against live legislation and identifying the student's admission-year scheme. Actual Android/TalkBack and consented learner observation remain necessary to validate usability and learning outcome assumptions.
+
+---
 
 ## Version 46 — Motor Vehicles Act 2019–2026 accuracy expansion (11 October 2026)
 
