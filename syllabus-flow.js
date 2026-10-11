@@ -210,6 +210,11 @@ function render(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("torts");
     });
    }
+   if(subject===4){
+    B(d,"BNS Case Practice","15 original criminal-law problems · offences, defences and IRAC reasoning →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("bns");
+    });
+   }
   }else{
    var msg=E(d,"div",undefined,"sf-info");E(msg,"h3","Detailed unit outline not imported");
    E(msg,"p","The subject title is shown from the 2024–25 KSLU programme listing. The detailed units for this semester have not been added or verified.");
