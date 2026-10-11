@@ -54,7 +54,7 @@ test('Version 44 uses a single source dashboard with PDF-page links and offline 
   assert.ok(html.includes(p),'Index must load '+p);
   assert.ok(sw.includes(p),'Worker must cache '+p);
  }
- assert.ok(html.includes('30 Semester I outlines compared'));
+ assert.ok(html.includes('data-open="syllabus"'));
  assert.ok(nav.includes('Syllabus source audit'));
  assert.ok(nav.includes('View corresponding KSLU PDF page'));
  assert.ok(nav.includes('get("sources")')||nav.includes('get("sources")==="1"'));
