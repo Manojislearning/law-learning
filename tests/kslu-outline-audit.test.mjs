@@ -50,7 +50,7 @@ test('English conditional paper and modern BNS scheme cannot be misrepresented',
 });
 test('Version 44 uses a single source dashboard with PDF-page links and offline cache',()=>{
  const html=read('index.html'),sw=read('sw.js'),nav=read('syllabus-flow.js');
- for(const p of ['app.js?v=44','content-ledger.js?v=45','syllabus-flow.js?v=45']){
+ for(const p of ['app.js?v=44','content-ledger.js?v=46','syllabus-flow.js?v=46']){
   assert.ok(html.includes(p),'Index must load '+p);
   assert.ok(sw.includes(p),'Worker must cache '+p);
  }
