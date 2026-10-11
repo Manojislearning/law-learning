@@ -2,6 +2,12 @@
 
 Mobile-first, installable Progressive Web App (PWA) for studying law, KSLU LL.B. syllabus content and exam-oriented legal vocabulary.
 
+## Version 42 — Independent exam practice
+
+**Case Practice** (`#practice`) contains 15 original Contract–I hypotheticals across Units I–V. A session serves five mixed cases with no advance unit label. Learners write an original IRAC answer, reveal an educator-authored reference outline and check four specific reasoning elements. The module avoids fake AI grading or exam scores and does not store written drafts. Links open primary legislation; the problems are **not official KSLU question papers**.
+
+Automated tests check mixed-unit selection, coverage without repeated cases across three sets, reference-answer gates, statute links and preservation of prior revision/backups. Android-device testing remains to be completed.
+
 ## Version 41 — What works now
 
 - **Contract–I guided course:** all five imported first-semester units, **50 lessons** in total. Each has plain-language statutory explanations, practical examples, common errors, exam notes and explanatory quizzes.
