@@ -570,29 +570,15 @@ const PRACTICE_QUESTIONS = [
 
 const STORAGE_KEY = "law-learning-progress-v2";
 const NOTES_KEY = "law-learning-notes-v1";
-let saved = {};
-try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch (e) { saved = {}; }
-
-let state = {
-  currentWord: Number.isInteger(saved.currentWord) ? saved.currentWord : 0,
-  score: saved.score || 0,
-  learned: new Set(saved.learned || []),
-  difficult: new Set(saved.difficult || []),
-  streak: saved.streak || 0,
-  quizTarget: 0
-};
+/* Shared state loaded through app-core; storage keys and existing progress remain unchanged. */
+let state = window.LawAppCore.createProgress(localStorage).load();
+window.LawAppCore.progress = window.LawAppCore.createProgress(localStorage);
 
 const $ = function(selector) { return document.querySelector(selector); };
 const $$ = function(selector) { return Array.from(document.querySelectorAll(selector)); };
 
 function saveProgress() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    currentWord: state.currentWord,
-    score: state.score,
-    learned: Array.from(state.learned),
-    difficult: Array.from(state.difficult),
-    streak: state.streak
-  }));
+  return window.LawAppCore.progress.save(state);
 }
 
 function currentWord() {
@@ -757,21 +743,14 @@ function speakCurrent(rate) {
 }
 
 function markKnown() {
-  var index = state.currentWord;
-  var firstTime = !state.learned.has(index);
-  state.learned.add(index);
-  state.difficult.delete(index);
-  state.score += firstTime ? 10 : 3;
-  state.streak += 1;
+  window.LawAppCore.progress.mark(state,state.currentWord,false,{firstPoints:10,repeatPoints:3});
   saveProgress();
   renderStats();
   changeWord(1);
 }
 
 function markHard() {
-  state.difficult.add(state.currentWord);
-  state.streak = 0;
-  state.score += 1;
+  window.LawAppCore.progress.mark(state,state.currentWord,true,{removeLearned:false,reviewPoints:1});
   saveProgress();
   renderStats();
   changeWord(1);
@@ -902,50 +881,9 @@ function renderQuestions() {
 }
 
 function setupNavigation() {
-  var sectionNames = {
-    words: ["Legal vocabulary", "Words"],
-    syllabus: ["KSLU · 3-Year LL.B", "Syllabus"],
-    subjects: ["KSLU · Legal concepts", "Subjects"],
-    brainmap: ["Law of Torts · Concept map", "Brain Map"],
-    exam: ["Exam preparation", "Exam Pattern"],
-    papers: ["Previous year questions", "Old Papers"],
-    notes: ["Personal study space", "Notes"],
-    profile: ["Local learning profile", "Profile"],
-    links: ["Karnataka · Official resources", "Important Links"]
-  };
-
-  function showRoute(route) {
-    var home = route === "home";
-    $("#home-view").classList.toggle("active", home);
-    $$(".main-view").forEach(function(panel) {
-      panel.classList.toggle("active", !home && panel.id === route + "-view");
-    });
-
-    $("#back-home").hidden = home;
-    $("#section-kicker").textContent = home ? "3-Year LL.B · Study App" : sectionNames[route][0];
-    $("#section-title").textContent = home ? "Law Learning" : sectionNames[route][1];
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  function routeFromHash() {
-    var route = window.location.hash.replace("#", "");
-    if (!sectionNames[route]) route = "home";
-    showRoute(route);
-  }
-
-  $$(".home-card[data-open]").forEach(function(button) {
-    button.addEventListener("click", function() {
-      window.location.hash = button.dataset.open;
-    });
-  });
-
-  $("#back-home").addEventListener("click", function() {
-    window.location.hash = "home";
-  });
-
-  window.addEventListener("hashchange", routeFromHash);
-  routeFromHash();
+  /* One shared hash router handles menu clicks, back and view activation. */
+  window.LawAppCore.router = window.LawAppCore.createRouter(window,document);
+  window.LawAppCore.router.start();
 
   $$(".word-tab").forEach(function(button) {
     button.addEventListener("click", function() {
