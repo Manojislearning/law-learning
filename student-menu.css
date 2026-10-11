@@ -1,0 +1,18 @@
+/* v60 Student hub: study navigation moves off Home without altering study content. */
+.student-hub{max-width:870px;margin:8px auto 48px}
+.student-hub-heading{margin:8px 0 21px}
+.student-hub-heading h2{font-size:clamp(1.95rem,5.7vw,2.6rem);letter-spacing:-.04em;line-height:1.2;margin:4px 0 10px}
+.student-hub-heading .muted{max-width:660px;line-height:1.7;font-size:1.05rem}
+.student-hub-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.student-hub-grid .student-hub-card{box-sizing:border-box;width:100%;min-width:0;min-height:193px;display:flex;flex-direction:column;align-items:flex-start;gap:9px;text-align:left;padding:clamp(17px,3.5vw,24px);position:relative;color:var(--text);text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:19px;cursor:pointer}
+.student-hub-card strong{font-size:clamp(1.18rem,3.1vw,1.5rem);line-height:1.3;letter-spacing:-.015em}
+.student-hub-card p{font-size:1rem;line-height:1.6;margin:0 0 16px;color:var(--muted);max-width:34ch}
+.student-hub-number{font-size:.79rem;font-weight:850;color:#60718a;letter-spacing:.045em}
+.student-hub-arrow{position:absolute;right:19px;bottom:14px;font-size:1.55rem;line-height:1;color:#3f5d88}
+.student-hub-card:hover{border-color:#9eadc3;box-shadow:0 7px 22px rgba(13,19,33,.055)}
+.student-hub-card:focus-visible,.student-home-card:focus-visible{outline:3px solid #557cae;outline-offset:3px}
+.student-home-card{border-color:#b5c5da!important;background:#f2f6fb!important}
+.student-home-card strong{color:#1c3557}
+.student-hub-footnote{color:var(--muted);font-size:.88rem;line-height:1.6;margin:20px 2px}
+@media(max-width:600px){.student-hub-grid{grid-template-columns:1fr;gap:10px}.student-hub-grid .student-hub-card{min-height:149px;padding:18px}.student-hub-card p{max-width:unset;padding-right:17px}.student-hub-heading{margin-bottom:15px}}
+@media(prefers-reduced-motion:reduce){.student-hub-card{transition:none}}
