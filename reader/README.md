@@ -11,6 +11,15 @@ Hosted as a standalone Progressive Web App at the public Law Learning site's `/r
 - Fetches one private note at a time and never publishes, mirrors, exports, or permanently caches private note bodies.
 - Only the app shell is cached by the service worker; private GitHub API responses are never cached.
 
+## Short study pages (October 2026)
+
+The reader opens Markdown notes with at least two substantive level-two sections in **Pages** mode by default: one section at a time with **Back**, **Next**, and a page counter. The **Pages / Scroll** toggle returns to continuous reading. This only changes the display: underlying Markdown content remains untouched.
+
+- The source footers and Continue links stay grouped with the final section, so reading does not require extra page taps.
+- Constitutional Law I, Unit 1 in the private LAW-NOTES vault now contains seven concise lessons, a revision sheet, and exam practice.
+- Bookmarks, text-to-speech, references, GitHub refresh, reduced-motion support and device-local display preferences still work.
+- Security: The read-only GitHub token is held only in memory; it is not saved into the public website or local preferences.
+
 ## Connect to the private LAW-NOTES vault
 
 1. Open the reader's URL in Android Chrome.
