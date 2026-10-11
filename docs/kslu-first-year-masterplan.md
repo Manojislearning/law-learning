@@ -78,8 +78,8 @@ Status legend: PLANNED means not implemented. Checkpoint requires a tested accep
 
 1. **A1 Repository quality gate (INITIAL CHECKS PASSING).** Node syntax checks, referenced-file checks, service-worker assets, data-schema checks. Build fails on missing script or duplicate routes.
 2. **A2 Backups and migration (IMPLEMENTED AND AUTOMATED TESTED; mobile import/export still needs hands-on validation).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
-3. **A3 Decompose app safely (SHARED CORE SHIPPED; legacy renderer extraction pending).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
-4. **A4 Content source ledger (PLANNED).** Stable content ID, syllabus year, unit, Act/section, case citation, source link, verified date, reviewer, correction record.
+3. **A3 Decompose app safely (IMPLEMENTED: router, progress, UI helpers and extracted legacy renderer; Android functional smoke test still pending).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
+4. **A4 Content source ledger (FOUNDATION IMPLEMENTED: 30 unit IDs, primary-source links and review flags; source-by-source legal verification still pending).** Stable content ID, syllabus year, unit, Act/section, case citation, source link, verified date, reviewer, correction record.
 
 ### Wave B — intuitive mobile UX
 
@@ -210,4 +210,4 @@ When a real backend exists:
 ## Immediate implementation order
 
 **Initial foundation shipped:** master plan; passing GitHub Actions syntax, asset, navigation, word, syllabus and answer checks; and local-only profile with progress/notes export and confirmed import.
-**Next:** A3 modular architecture → A4 reviewed content ledger. Backup schema 1 is now migrated to schema 2 during imports, with validation, preview and rollback tests. Then deliver the unified Today screen and spaced-review engine. GitHub Pages publication and automated source checks do not replace real-device functional testing.
+**Next:** A4 substantive legal review and accurate syllabus-to-statute crosswalk. A3 shared architecture and renderer extraction are implemented, but Android interaction checks are still required. Backup schema 1 is now migrated to schema 2 during imports, with validation, preview and rollback tests. Then deliver the unified Today screen and spaced-review engine. GitHub Pages publication and automated source checks do not replace real-device functional testing.
