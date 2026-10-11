@@ -181,7 +181,8 @@ function draw(){
    saveWeakCase(c,"not self-assessed",[]);
   }
   if(typeof root.openSyllabusUnit==="function")root.openSyllabusUnit(target.semester,target.subject,target.unit);
- },"cp-unit-link");
+ },true);
+ study.classList.add("cp-unit-link");
  E(model,"p","Opening the syllabus closes this unsaved essay. The case remains in your saved revisit list unless you already marked it complete.","cp-topic");
  var rubric=E(box,"fieldset",undefined,"cp-rubric");rubric.hidden=true;
  E(rubric,"legend","Self-check your answer (not a grade)");
