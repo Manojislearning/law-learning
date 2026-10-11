@@ -459,7 +459,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.equal(w.LawTortsCaseData.cases.length,15);
   assert.equal(w.LawCaseData.cases.length,15);
   assert.ok(root.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("BNS"));
-  assert.equal(root.querySelectorAll(".cp-subjects button").length,4,"All four legal practice subjects must be available");
+  assert.equal(root.querySelectorAll(".cp-subjects button").length,5,"All five law subjects must be available");
   const launch=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases"));
   assert.ok(launch);launch.click();
   const seen=new Set(),units=new Set(),startStorage=w.localStorage.length;
@@ -572,7 +572,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   skipped.dom.window.close();
  }
 
- for(const subject of ["contract","torts","bns","constitution"]){
+ for(const subject of ["contract","torts","bns","constitution","hindu"]){
   const transfer=build("https://example.test/law-learning/index.html?v=50&course="+subject+"#practice");
   const w=transfer.dom.window,area=transfer.doc.getElementById("practice-root"),initial=w.localStorage.length;
   const launcher=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Changed-facts challenge"));
@@ -631,7 +631,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const w=constitutional.dom.window,doc=constitutional.doc,area=doc.getElementById("practice-root"),count=w.localStorage.length;
   assert.equal(w.LawConstitutionCaseData.cases.length,15);
   assert.ok(area.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Constitution"));
-  assert.equal(area.querySelectorAll('.cp-subjects button').length,4);
+  assert.equal(area.querySelectorAll('.cp-subjects button').length,5);
   const launch=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases"));
   assert.ok(launch);launch.click();
   let units=new Set();
@@ -670,5 +670,48 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(via.errors,[]);
   via.dom.window.close();
  }
- console.log("DOM integration passed: Constitution, Contract, Torts, BNS IRAC, transfer, recall and statutory checks.");
+
+ {
+  const hinduTest=build("https://example.test/law-learning/index.html?v=52&course=hindu#practice");
+  const w=hinduTest.dom.window,d=hinduTest.doc,area=d.getElementById("practice-root"),count=w.localStorage.length;
+  assert.equal(w.LawHinduCaseData.cases.length,15);
+  assert.equal(area.querySelectorAll(".cp-subjects button").length,5);
+  assert.ok(area.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Hindu Law"));
+  [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases")).click();
+  const units=new Set();
+  for(let i=0;i<5;i++){
+   const model=area.querySelector(".cp-model");
+   assert.equal(model.hidden,true,"Hindu reference reasoning must be concealed");
+   const reveal=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning"));
+   reveal.click();assert.equal(model.hidden,true,"No solution without original written attempt");
+   const draft=area.querySelector("textarea");draft.value="Issue: test which Hindu statute applies. Rule: identify section and exception. Application: consider evidence and dates. Conclusion: a qualified finding.";
+   reveal.click();assert.equal(model.hidden,false);
+   assert.ok([...model.querySelectorAll('a[href*="indiacode.nic.in"]')].length>0,"Hindu model must link primary statute");
+   const match=model.textContent.match(/Unit (IV|III|II|I|V) ·/);
+   assert.ok(match);units.add(match[1]);
+   [...area.querySelectorAll(".cp-rubric input")].forEach(x=>{x.checked=true;x.dispatchEvent(new w.Event("change",{bubbles:true}));});
+   [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Next case")).click();
+  }
+  assert.equal(units.size,5);
+  assert.ok(area.textContent.includes("You finished the set"));
+  assert.equal(w.localStorage.length,count,"Family-law essays should never be stored");
+  [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Return to practice overview")).click();
+  [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Changed-facts challenge")).click();
+  assert.equal(area.querySelector(".cp-transfer-model").hidden,true);
+  assert.ok(area.textContent.includes("Family Law"));
+  w.LawAppCore.router.navigate("home");await settle();
+  assert.equal(area.textContent,"");
+  assert.deepEqual(hinduTest.errors,[]);
+  hinduTest.dom.window.close();
+ }
+ {
+  const via=build("https://example.test/law-learning/index.html?v=52#syllabus");
+  const w=via.dom.window,d=via.doc;
+  findButton(d,"First Year").click();findButton(d,"Semester 1").click();
+  findButton(d,"Family Law").click();findButton(d,"Hindu Law Case Practice").click();await settle();
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.ok(d.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Hindu Law"));
+  assert.deepEqual(via.errors,[]);via.dom.window.close();
+ }
+ console.log("DOM integration passed: Hindu, Constitution, Contract, Torts and BNS IRAC, changed-facts transfer and statutory checks.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
