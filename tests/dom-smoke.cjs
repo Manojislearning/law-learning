@@ -334,7 +334,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const law=build("https://example.test/law-learning/index.html?law=consumer&v=46#law-updates");
   const w=law.dom.window,d=law.doc,host=d.getElementById("law-updates-root");
   assert.equal(w.LawAppCore.router.current(),"law-updates","Deep link must open current-law screen");
-  assert.ok(host.querySelector("h2").textContent.includes("Current Law Check"));
+  assert.ok(host.querySelector("h2").textContent.includes("Law Updates"));
   assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"),"Consumer deep link must select consumer data");
   assert.ok(host.querySelector(".law-panel h3").textContent.includes("Syllabus history"));
   assert.equal(host.querySelectorAll(".law-answer").length,3);
@@ -364,9 +364,9 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   findButton(d,"Semester 1").click();
   findButton(d,"Law of Torts").click();
   findButton(d,"Unit V").click();
-  const current=findButton(d,"Current Law Check · Consumer");
+  const current=findButton(d,"Law Updates · Consumer");
   assert.ok(current,"Torts Unit V must link to modern 2019 consumer legal checks");
-  assert.ok(findButton(d,"Current Law Check · Motor Vehicles"),"Torts Unit V must also offer current motor-accident law");
+  assert.ok(findButton(d,"Law Updates · Motor Vehicles"),"Torts Unit V must also offer current motor-accident law");
   current.click();await settle();
   assert.equal(w.LawAppCore.router.current(),"law-updates");
   assert.ok(d.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"));
