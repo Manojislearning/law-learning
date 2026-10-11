@@ -1,3 +1,11 @@
+## Version 63 — Clean Home and expanded Student menu
+
+The Home menu now presents **Law Updates** (renamed from Current Law Check), Law News, Case Practice, Review, **Learn Words** (light card, not black) and Student. The redundant Home **Notes** shortcut and **Profile & backups** shortcut are removed, while study notes and backups remain available without deleting any stored work. **Continue Contract–I** now appears inside Student and still launches the existing Unit V lessons.
+
+Student has ten direct resources: Syllabus, Topic Brain Branches, Subjects, Exam Papers & Answers, Law Notes, Exam Pattern, Important Links, Continue Contract–I, Profile and Settings. **Settings** is a distinct screen with daily study goal, explanation language, larger text and reduced animations; it uses the original device-local `law-learning-profile-v1` key and synchronises with the existing Profile form. Profile remains the place for local account information and export/import backups. No user study records are migrated or deleted.
+
+The previous v62 changes remain: Learn Words opens a category chooser, the first game card shows the definition, the spelling card has direct letter blanks and no repeated explanation, and a static progress line replaces the draggable card slider. Automated tests check mobile reading and navigation, preserved word IDs, backups and Settings persistence.
+
 ## Version 61 — Simple titles, no menu subtitles
 
 The Home and Student menus now show compact **title-only buttons**, with no descriptive subheadlines, numbering or category labels. Home **Words** is renamed **Learn Words**. Within Learn Words the two choices are **Legal Words** and **Difficult Words**. The second choice retains the same 115 advanced-English entries and the same storage IDs; only the user-facing title has changed. Each menu remains accessible by keyboard or touch with at least 44px targets.
