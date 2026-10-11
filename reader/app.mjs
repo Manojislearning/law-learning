@@ -69,7 +69,8 @@ async function connect(token){
   if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote});
   const path=state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
   await openNote(path);
-  toast('Private LAW-NOTES library connected.');
+  toast(token?'Notes connected.':'Public notes opened.');
+  if(new URLSearchParams(location.search).get('map')==='1')mapController?.open();
  }catch(e){$('#connect-view').hidden=false;$('#reader-view').hidden=true;setStatus('Not connected');const err=$('#connect-error');err.textContent=e instanceof Error?e.message:'Could not connect.';err.hidden=false;}
  finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my library ';}
 }
