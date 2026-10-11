@@ -159,7 +159,7 @@ function finish(){
  var wrap=shell(),box=E(wrap,"section",undefined,"cp-panel");
  E(box,"p","PRACTICE SESSION COMPLETE","cp-eyebrow");
  var finishedTitle=E(box,"h2","You finished the set");finishedTitle.tabIndex=-1;
- E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning and no essay grade is assigned.");
+ E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning. No essay grade was assigned.");
  E(box,"p","The next set prioritises cases you have not completed in this open visit. Your self-checked missing IRAC steps can be retried with the reference answer hidden again.","cp-topic");
  if(weak.size){
   E(box,"p",weak.size+" case"+(weak.size===1?" needs":"s need")+" another attempt: skipped or marked incomplete in your own IRAC checklist.","cp-topic");
