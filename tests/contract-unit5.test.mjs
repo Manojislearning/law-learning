@@ -49,7 +49,7 @@ test('Unit V official statutory authority is HTTPS and imported syllabus remains
 });
 test('Version 40 loads guided Unit V and keeps old unit support and offline integrity',()=>{
  const html=read('index.html'),sw=read('sw.js'),nav=read('syllabus-flow.js'),ui=read('contract-unit1-ui.js');
- for(const file of ['contract-unit5-data.js?v=40','contract-unit1-ui.js?v=41','syllabus-flow.js?v=45']){
+ for(const file of ['contract-unit5-data.js?v=40','contract-unit1-ui.js?v=41','syllabus-flow.js?v=46']){
   assert.ok(html.includes(file),'Missing HTML script '+file);
   assert.ok(sw.includes(file),'Missing offline file '+file);
  }
