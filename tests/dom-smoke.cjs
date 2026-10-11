@@ -305,6 +305,8 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const fresh=root.querySelector(".cp-facts").textContent;
   assert.ok(!factsSeen.has(fresh),"Second session should initially present a not-yet-used scenario");
   w.LawAppCore.router.navigate("home");
+  await settle();
+  assert.equal(w.LawAppCore.router.current(),"home");
   assert.equal(root.textContent,"","Leaving practice must discard the in-memory essay draft");
   assert.ok(d.getElementById("review-dashboard-count"),"Review Due must remain available");
   assert.deepEqual(cp.errors,[]);
