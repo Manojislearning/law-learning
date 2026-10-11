@@ -77,7 +77,7 @@ Status legend: PLANNED means not implemented. Checkpoint requires a tested accep
 ### Wave A — trust and architecture (must ship first)
 
 1. **A1 Repository quality gate (INITIAL CHECKS PASSING).** Node syntax checks, referenced-file checks, service-worker assets, data-schema checks. Build fails on missing script or duplicate routes.
-2. **A2 Backups and migration (PARTLY SHIPPED: local export/import; data migrations pending).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
+2. **A2 Backups and migration (IMPLEMENTED AND AUTOMATED TESTED; mobile import/export still needs hands-on validation).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
 3. **A3 Decompose app safely (PLANNED).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
 4. **A4 Content source ledger (PLANNED).** Stable content ID, syllabus year, unit, Act/section, case citation, source link, verified date, reviewer, correction record.
 
@@ -210,4 +210,4 @@ When a real backend exists:
 ## Immediate implementation order
 
 **Initial foundation shipped:** master plan; passing GitHub Actions syntax, asset, navigation, word, syllabus and answer checks; and local-only profile with progress/notes export and confirmed import.
-**Next:** A2 versioned migrations → A3 modular architecture → A4 reviewed content ledger. Then deliver the unified Today screen and spaced-review engine. GitHub Pages publication and automated source checks do not replace real-device functional testing.
+**Next:** A3 modular architecture → A4 reviewed content ledger. Backup schema 1 is now migrated to schema 2 during imports, with validation, preview and rollback tests. Then deliver the unified Today screen and spaced-review engine. GitHub Pages publication and automated source checks do not replace real-device functional testing.
