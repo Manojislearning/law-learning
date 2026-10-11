@@ -235,7 +235,7 @@ function finishTransfer(){
 root.LawCasePracticeUI={show:dashboard,reset:reset,open:openCourse};
 root.LawAppCore.router.subscribe(function(route){
  if(route==="practice")dashboard();
- else {if(session)reset();forgetSelfChecks();} /* Discard drafts and self-check flags on departure. */
+ else {if(session||transfers.length)reset();forgetSelfChecks();} /* Discard all written answers, counterexamples and self-checks on departure. */
 });
 if(root.LawAppCore.router.current()==="practice")dashboard();
 })(typeof window!=="undefined"?window:globalThis);
