@@ -24,7 +24,7 @@ function verify(bank){
    var src=bank.sources[id];
    if(!src||!validText(src.title,8)||typeof src.url!=="string")throw Error("Missing primary law source.");
    var url;try{url=new URL(src.url);}catch(e){throw Error("Missing primary law source.");}
-   if(url.protocol!=="https:"||!["www.indiacode.nic.in","api.sci.gov.in","www.pib.gov.in","egazette.gov.in","consumeraffairs.gov.in","kslu.karnataka.gov.in","www.mha.gov.in"].includes(url.hostname))throw Error("Missing primary law source.");
+   if(url.protocol!=="https:"||!["www.indiacode.nic.in","api.sci.gov.in","www.pib.gov.in","egazette.gov.in","consumeraffairs.gov.in","kslu.karnataka.gov.in","www.mha.gov.in","lddashboard.legislative.gov.in"].includes(url.hostname))throw Error("Missing primary law source.");
   });
  }
  if(units.some(function(n){return n!==3;}))throw Error("Every course unit must have three cases.");
