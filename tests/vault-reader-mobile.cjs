@@ -7,7 +7,7 @@ const path=require("node:path");
 const {chromium}=require("playwright");
 const root=path.resolve(__dirname,"..");
 const htmlFiles={
- "HOME - Start Here.md":"# Law Notes Home\n\nOpen [[01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I|Constitutional Law I]].\n\n## Start here\n\nYour studies organised.",
+ "00 - Notes.md":"# Law Notes Home\n\nOpen [[01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I|Constitutional Law I]].\n\n## Start here\n\nYour studies organised.",
  "01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I.md":
  "# Constitutional Law I\n\n## Unit 1\n\nThe [[Preamble]] sets out the Constitution's aims.",
  "01-Semester-1/Constitutional-Law-I/Preamble.md":
