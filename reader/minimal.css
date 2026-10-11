@@ -407,3 +407,28 @@ button,a,input{touch-action:manipulation}
 .article.paged-study .study-page>p,
 .article.paged-study .study-page>ul,
 .article.paged-study .study-page>ol{max-width:680px}
+
+
+/* Mobile note navigation — no credential-losing page reloads. */
+.brand{border:0;background:transparent;padding:0;font:inherit;cursor:pointer;text-align:left}
+.up-note{flex:none;display:flex;align-items:center;justify-content:center;border:1px solid #dfe6ee;background:#f4f6f9;
+ color:#2a4669;border-radius:11px;font:800 13px/1 ui-sans-serif,system-ui;padding:0 13px;min-height:41px;
+ transition:background .16s ease,transform .16s ease}
+.up-note:hover{background:#e6edf6}
+.up-note:active{transform:scale(.96)}
+.bottom-nav button:disabled{opacity:.35;cursor:default}
+.bottom-nav button:not(:disabled):active{transform:scale(.95)}
+#bottom-prev span,#bottom-next span{font-family:ui-sans-serif,system-ui;font-size:25px;font-weight:550}
+@media(max-width:850px){
+ .reader-toolbar{padding:0 9px;gap:6px}
+ .reader-toolbar .breadcrumb{display:none}
+ .reader-toolbar .reader-tools{margin-left:auto}
+ .reader-toolbar .up-note{min-height:41px;font-size:13px;padding:0 11px}
+ .reader-tools .map-open-btn{min-width:43px}
+ .bottom-nav{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+ .bottom-nav button{font-size:11px;line-height:1.2}
+}
+@media(max-width:345px){
+ .reader-toolbar .tool-btn{min-width:35px!important;padding:8px 5px!important}
+ .reader-toolbar .up-note{padding:0 7px;font-size:12px}
+}
