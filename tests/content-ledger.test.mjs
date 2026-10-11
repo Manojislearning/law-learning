@@ -42,7 +42,7 @@ test('Unreviewed syllabus wording is never marked verified',()=>{
 });
 test('Every source is an official government or university HTTPS resource',()=>{
   const ledger=loadLedger().data;
-  const allowed=['kslu.karnataka.gov.in','www.indiacode.nic.in','legislative.gov.in'];
+  const allowed=['kslu.karnataka.gov.in','www.indiacode.nic.in','legislative.gov.in','www.mha.gov.in','consumeraffairs.gov.in'];
   Object.entries(ledger.sources).forEach(([id,s])=>{
     const u=new URL(s.url);
     assert.equal(u.protocol,'https:');
