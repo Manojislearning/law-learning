@@ -19,7 +19,7 @@ a{color:#22568b}#progress{word-break:break-word}
 <h1>Updating Law Learning</h1>
 <p id="progress" role="status" aria-live="polite">Clearing outdated app files while preserving your scores, notes and revision list…</p>
 <button id="retry" type="button" hidden>Try again</button>
-<small>Build 37 · Only cached files are cleared. Your saved learning progress is not erased.</small>
+<small>Build 38 · Only cached files are cleared. Your saved learning progress is not erased.</small>
 </main>
 <script>
 (function(){
@@ -38,7 +38,7 @@ try{
    await Promise.all(all.filter(function(key){return key.indexOf("law-learning-")===0;}).map(function(k){return caches.delete(k);}));
  }
  status.textContent="Loading the updated website…";
- location.replace("./index.html?build=37&refresh="+Date.now()+"#home");
+ location.replace("./index.html?build=38&refresh="+Date.now()+"#home");
 }catch(error){
  status.textContent="Automatic refresh did not finish. You can try again or open the website in a private tab. "+String(error&&error.message||"");
  retry.hidden=false;running=false;
