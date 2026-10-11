@@ -25,7 +25,7 @@ function render(){
  mount.replaceChildren();
  var rootBox=E(mount,"div",undefined,"law-check");
  E(rootBox,"div","KSLU · SELECTED CURRENT-LAW CORRECTIONS","law-pill");
- var title=E(rootBox,"h2","Current Law Check","law-guide-heading");
+ var title=E(rootBox,"h2","Law Updates","law-guide-heading");
  title.tabIndex=-1;
  E(rootBox,"p","Check high-risk statute changes and section numbers before relying on an older syllabus summary. These are selected source-checked notes, not a complete legal commentary.");
  var nav=E(rootBox,"div",undefined,"law-controls");
