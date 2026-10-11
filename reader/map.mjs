@@ -106,10 +106,10 @@ export function focusBranch(root,id){
  }
  return null;
 }
-function wrapBranchLabel(value,ctx,maxWidth=410){
+function wrapBranchLabel(value,ctx,maxWidth=410,fontSize=19){
  const result=[],words=String(value).split(/\s+/);
  let line='';
- const width=s=>ctx?ctx.measureText(s).width:s.length*10;
+ const width=s=>ctx?ctx.measureText(s).width:s.length*fontSize*.52;
  const pushWord=(word)=>{
   // Split unbroken long tokens so no line can extend past the canvas.
   if(width(word)<=maxWidth){line=word;return;}
@@ -140,7 +140,7 @@ export function measureTree(root){
   const px=depth===0?25:depth===1?22:19;
   n.fontSize=px;
   if(ctx)ctx.font=(depth<=1?'700 ':'500 ')+px+'px system-ui';
-  n.lines=wrapBranchLabel(n.label,ctx,n===root?450:410);
+  n.lines=wrapBranchLabel(n.label,ctx,n===root?450:410,px);
   const widest=Math.max(...n.lines.map(line=>ctx?ctx.measureText(line).width:line.length*px*.52));
   n.width=Math.max(110,Math.ceil(widest)+34);
   n.height=n.lines.length*px*1.34+25;
