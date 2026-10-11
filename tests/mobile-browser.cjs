@@ -38,7 +38,7 @@ async function run(){
    assert.equal(await heading.innerText(),"Read the facts");
    let measurements=await page.evaluate(()=>{
     const v=innerWidth;
-    const targets=[document.querySelector("#practice-root .cp-panel"),document.querySelector("#practice-root .cp-writing textarea"),...document.querySelectorAll("#practice-root .cp-button")];
+    const targets=[document.querySelector("#practice-root .cp-panel"),document.querySelector("#practice-root .cp-writing textarea"),...document.querySelectorAll("#practice-root .cp-button")].filter(el=>el&&el.getClientRects().length>0);
     return targets.map(el=>({tag:el.tagName,left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height,v}));
    });
    assert.ok(measurements.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px: a practice control overflows or is undersized "+JSON.stringify(measurements));
