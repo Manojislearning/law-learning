@@ -23,6 +23,14 @@ function B(parent,text,click,alt){
  var el=E(parent,"button",text,"cp-button"+(alt?" alt":""));el.type="button";el.addEventListener("click",click);return el;
 }
 function reset(){session=null;pos=0;analysed=0;skipped=0;mode="mixed";transfers=[];transferIndex=0;transferDone=0;transferSkipped=0;host.replaceChildren();}
+function refreshHomeCaseCount(){
+ var el=document.getElementById("home-case-count");if(!el)return;
+ if(!caseReview){el.textContent="75 IRAC cases · review history unavailable";return;}
+ try{
+  var n=caseReview.total(root.localStorage);
+  el.textContent=n?(n+" saved case"+(n===1?"":"s")+" to revisit · 75 IRAC cases"):"75 IRAC cases · 5 subjects · changed-facts";
+ }catch(err){el.textContent="75 IRAC cases · saved review needs attention";}
+}
 function hydrateWeakCases(){
  if(!caseReview){saveWarning="Saved case review is unavailable on this version.";return;}
  try{
@@ -42,6 +50,7 @@ function saveWeakCase(c,status,missing){
    (caseReview.clear(root.localStorage,bankKey,c.id),null):
    caseReview.note(root.localStorage,bankKey,c.id,status,missing);
   saveWarning="";
+  refreshHomeCaseCount();
   if(record&&weak.has(c.id))weak.get(c.id).nextAt=record.nextAt;
  }catch(err){
   saveWarning="Case retry history could not be saved on this device. Existing saved data was not erased. "+err.message;
@@ -263,6 +272,7 @@ function finishTransfer(){
 }
 
 hydrateWeakCases();
+refreshHomeCaseCount();
 root.LawCasePracticeUI={show:dashboard,reset:reset,open:openCourse};
 root.LawAppCore.router.subscribe(function(route){
  if(route==="practice")dashboard();
