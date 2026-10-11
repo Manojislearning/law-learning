@@ -67,8 +67,9 @@ async function connect(token){
   await loadTree(token);
   state.token=token;
   $('#token').value='';
-  if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote});
-  const path=state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
+  if(!mapController)mapController=mountVaultMap({files:state.files,getNote:loadNote,readNote:openNote,onClose:()=>selectMobileNav('bottom-home')});
+  const firstTopic=state.files.find(f=>/\/Constitutional-Law-I\/Units\/Unit-01\/01 - /.test(f))||state.files.find(isTopic);
+  const path=openRequestedMap&&!isTopic(requestedPath)?(firstTopic||DEFAULT_PATH):state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
   await openNote(path);
   toast(token?'Notes connected.':'Public notes opened.');
   if(openRequestedMap&&isTopic(path))void mapController?.open(path);
@@ -342,10 +343,10 @@ function selectMobileNav(id){
   if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
  });
 }
-function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;selectMobileNav(state.filter==='saved'?'bottom-saved':'bottom-library');}
+function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;selectMobileNav('bottom-home');}
 function closeSidebar(){$('#sidebar').classList.remove('open');if($('#prefs').hidden)$('#scrim').hidden=true;selectMobileNav('bottom-home');}
-function openPrefs(){$('#prefs').hidden=false;selectMobileNav('bottom-text');if(window.innerWidth<=850)$('#scrim').hidden=false;}
-function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;selectMobileNav($('#sidebar').classList.contains('open')?'bottom-library':'bottom-home');}
+function openPrefs(){$('#prefs').hidden=false;if(window.innerWidth<=850)$('#scrim').hidden=false;}
+function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;selectMobileNav('bottom-home');}
 $('#menu-btn').addEventListener('click',openSidebar);
 $('#close-sidebar').addEventListener('click',closeSidebar);
 $('#settings-btn').addEventListener('click',()=>$('#prefs').hidden?openPrefs():closePrefs());
@@ -362,7 +363,7 @@ $('#disconnect-btn').addEventListener('click',()=>{
 });
 selectMobileNav('bottom-home');
 $('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
-const showMap=()=>{if(!isTopic(state.current)){toast('Open a topic note to view its branches.');return;}void mapController?.open(state.current);selectMobileNav('bottom-map');};
+const showMap=()=>{if(!isTopic(state.current)){toast('Choose a topic note first.');return;}void mapController?.open(state.current).then(success=>{if(success)selectMobileNav('bottom-map')});};
 $('#map-btn').addEventListener('click',showMap);
 $('#bottom-map').addEventListener('click',showMap);
 window.addEventListener('popstate',()=>{const path=new URLSearchParams(location.search).get('file');if(path&&state.files.includes(path))void openNote(path)});
