@@ -60,7 +60,8 @@ async function run(){
    assert.ok((await page.locator("#practice-root .cp-result").innerText()).includes("1 of 4"));
    for(let i=1;i<4;i++)await rubric.nth(i).check();
    assert.equal(await advice.count(),1,"All checked provides a measured reminder, not a score");
-   assert.ok((await advice.first().innerText()).includes("Confirm"));
+   await page.locator("#practice-root .cp-coaching summary").click();
+   assert.ok((await advice.first().innerText()).includes("Confirm"),"Opened optional coaching should show the all-checked reminder");
    assert.equal(errors.length,0,"Browser errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
