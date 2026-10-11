@@ -51,7 +51,7 @@
 #words-view .w-level{min-height:66px!important;max-height:none;padding:15px 12px;
   display:flex;justify-content:center;align-items:center;text-align:center;gap:0;border-radius:13px}
 #words-view .w-level strong{font-size:clamp(1.03rem,3vw,1.26rem);font-weight:780;letter-spacing:0;line-height:1.35}
-#words-view .w-level-position{font-size:.89rem;line-height:1.45;margin:0 0 10px}
+#words-view .w-level-position{font-size:1rem;line-height:1.45;margin:0 0 10px}
 #words-view .w-head{margin:10px 0}
 #words-view .w-head #w-position{display:none}
 .main-view > .section-head .eyebrow{display:none}
