@@ -62,6 +62,13 @@ var data={
       "publisher": "Karnataka State Law University",
       "kind": "official-syllabus-pdf",
       "verifiedScope": "The official 2018–19 PDF includes Contract–I Units I–II headings and topics. A current-cohort match is not established."
+    },
+    "kslu-2018-contract-unit3": {
+      "title": "KSLU official historical 3-year LL.B. syllabus — Contract–I (2018–19)",
+      "url": "https://kslu.karnataka.gov.in/storage/pdf-files/%E0%B3%A9%E0%B2%B5%E0%B2%B0%E0%B3%8D%E0%B2%B7%E0%B2%A6%20%E0%B2%8E%E0%B2%B2%E0%B3%8D%E0%B2%8E%E0%B2%B2%E0%B3%8D%20%E0%B2%AC%E0%B2%BF%20%E0%B2%AF%20%E0%B2%AA%E0%B2%B0%E0%B2%BF%E0%B2%B7%E0%B3%8D%E0%B2%95%E0%B3%83%E0%B2%A4%20%E0%B2%AA%E0%B2%A0%E0%B3%8D%E0%B2%AF%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B2%AE.pdf",
+      "publisher": "Karnataka State Law University",
+      "kind": "official-syllabus-pdf",
+      "verifiedScope": "Historical official course syllabus reference; Unit III wording and applicability to a particular admission cohort have not been independently confirmed."
     }
   },
   "units": [
@@ -196,10 +203,14 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "contract-act"
+        "contract-act",
+        "kslu-2018-contract-unit3"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [
+        "These lessons follow the imported Performance & Discharge outline. Confirm the syllabus prescribed for your admission cohort."
+      ],
+      "syllabusEditionEvidence": "Historical KSLU syllabus reference available; unit wording and current admission-cohort applicability require checking."
     },
     {
       "id": "sem1-c2-u4",
