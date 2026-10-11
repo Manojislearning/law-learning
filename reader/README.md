@@ -1,51 +1,25 @@
-# KSLU Vault Reader — private GitHub → Obsidian-style mobile reading
+# Law Notes — Mobile Reader
 
-Hosted as a standalone Progressive Web App at the public Law Learning site's `/reader/` path.
+The public reader lives at https://manojislearning.github.io/law-learning/reader/.
 
-## What it does
+## Reading
 
-- Reads from `Manojislearning/LAW-NOTES`, a **private** repo, via GitHub's REST API.
-- Shows the GitHub vault's Markdown files and Obsidian Canvas files by folder.
-- Renders Obsidian `[[wikilinks]]`, callouts, tables, checklists, headings, code and ordinary Markdown safely.
-- Provides font resizing, warm/bright paper, reading progress, bookmarks, text-to-speech, previous/next note, search by title/path, and installable PWA shell.
-- Fetches one private note at a time and never publishes, mirrors, exports, or permanently caches private note bodies.
-- Only the app shell is cached by the service worker; private GitHub API responses are never cached.
+- Opens `Manojislearning/LAW-NOTES` automatically in read-only mode. The repository is public. No GitHub access token is requested.
+- Browse Notes → Semester → Subject → Unit → Topic, or search by note title.
+- Default presentation: clean, continuous Markdown rendering.
+- **Markdown** in the note toolbar shows the original source. **Preview** switches back.
+- **Map** appears for individual topic notes, with rounded SVG branches, source links and touch pinch zoom.
+- Home / Previous / Next / Map appear along the bottom on phones. Unit/back navigation appears in the note header.
+- The landing loader uses CSS orbit animations; new notes display animated skeleton lines while they load.
+- Use Android Chrome → Add to Home screen to install.
 
-## Short study pages (October 2026)
+## Privacy and availability
 
-The reader opens Markdown notes with at least two substantive level-two sections in **Pages** mode by default: one section at a time with **Back**, **Next**, and a page counter. The **Pages / Scroll** toggle returns to continuous reading. This only changes the display: underlying Markdown content remains untouched.
+- No credentials, note contents or private repository data are stored by the app.
+- Bookmarks, text size, theme and last-opened filename are stored locally on the device.
+- Only the public app shell is cached for offline use. Content requires internet and public GitHub availability.
+- Read-only: edits belong in the LAW-NOTES Markdown vault.
 
-- The source footers and Continue links stay grouped with the final section, so reading does not require extra page taps.
-- Constitutional Law I, Unit 1 in the private LAW-NOTES vault now contains seven concise lessons, a revision sheet, and exam practice.
-- Bookmarks, text-to-speech, references, GitHub refresh, reduced-motion support and device-local display preferences still work.
-- Security: The read-only GitHub token is held only in memory; it is not saved into the public website or local preferences.
+## Development
 
-## Connect to the private LAW-NOTES vault
-
-1. Open the reader's URL in Android Chrome.
-2. Create a **fine-grained personal access token** at https://github.com/settings/personal-access-tokens/new and set:
-   - Resource owner: `Manojislearning`
-   - Repository access: **Only selected repositories** → `LAW-NOTES`
-   - Repository permissions → **Contents: Read-only** (metadata is implicitly readable)
-   - Expiration: choose a limited lifetime, such as 30 days.
-3. Paste the token in the reader. **Never send this token to anyone or paste it into ChatGPT.**
-4. In Android Chrome, use **Add to Home screen** to install the reader PWA.
-
-Security tradeoff: The token lives **only in volatile JavaScript memory** while the reader is open. Reloading/closing the reader requires a fresh token paste. We deliberately do not save credentials in localStorage, sessionStorage, source files or caches. Browser-stored bookmarks/preferences contain file paths, never note contents.
-
-## Hosting / deployment
-
-This folder is plain static HTML/CSS/ES modules; there is no build step or CDN requirement. Serve the repository with GitHub Pages from the `main` branch root (`/(root)`), or copy `reader/` to an existing HTTPS static host. GitHub Pages configuration is set via repository Settings → Pages.
-
-The repo is public **only for app code**. Do not commit `LAW-NOTES` content, tokens, generated `data/` copies or notes into this folder.
-
-## Limitations
-
-- Search currently searches filenames/folder paths, not full text across unloaded notes.
-- Obsidian Canvas appears as a readable list of linked notes, not a draggable visual canvas.
-- Embedded pictures/files are shown as attachment references instead of privately authenticated images.
-- The app is read-only and does not push note edits back to GitHub.
-- Offline mode caches the public app shell only. Reading new private notes requires a connection.
-- For production consumer authentication without manually created tokens, build a separate audited GitHub App OAuth backend.
-
-Run smoke tests with `node --test tests/reader.test.mjs` from the bundled source root.
+The app uses plain HTML/CSS/JavaScript, no build step. CI checks mobile navigation, Markdown view, rounded SVG, pinch zoom, source links and overflow.
