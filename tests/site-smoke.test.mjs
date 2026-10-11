@@ -133,7 +133,10 @@ test('Shared app core loads before app initialization and active scripts have on
     return /addEventListener\s*\(\s*["']hashchange["']/.test(source);
   });
   assert.deepEqual(externalRouters,[],'Feature modules must subscribe to LawAppCore.router');
-  assert.ok(file('app.js').includes('LawAppCore.router.start()'),'Legacy app must use shared router');
+  assert.ok(file('legacy-study-ui.js').includes('LawAppCore.router.start()'),'Legacy renderer must start the shared router');
+  assert.ok(!file('app.js').includes('function setupNavigation('),'App data module must not contain legacy renderer');
+  const order=scripts.indexOf('legacy-study-ui.js');
+  assert.ok(order>app && order<scripts.indexOf('word-experience.js'),'Legacy renderer must boot after data and before modern study UI');
   assert.ok(file('word-experience.js').includes('LawAppCore.progress.mark'),'Word game must use shared progress reducer');
 });
 
