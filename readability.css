@@ -1,0 +1,61 @@
+/* v58 readability pass: comfortable body text and two accessible word levels. */
+html{font-size:17px}
+body{font-size:1rem;line-height:1.55}
+p,li{overflow-wrap:break-word}
+.muted{font-size:clamp(1rem,2.5vw,1.08rem);line-height:1.7}
+.eyebrow{font-size:.82rem;letter-spacing:.07em}
+.home-intro .muted{font-size:1.06rem}
+.home-card p,.home-contract-body>span,.home-practice-copy>span{font-size:1rem;line-height:1.6}
+.home-card strong,.home-practice-card .home-practice-copy strong,.home-contract-body strong{font-size:clamp(1.15rem,3vw,1.35rem)}
+.home-index,.home-contract-body small{font-size:.83rem}
+button,input,select,textarea{line-height:1.45}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #4877b6;outline-offset:3px}
+.content-card p,.subject-card p,.question-card p,.notice p,.course-card p{font-size:1.02rem;line-height:1.7}
+.link-stack p,.resource-card p{font-size:1rem;line-height:1.6}
+
+/* News: readers should understand the image, headline and brief without zooming. */
+.news-heading .muted{font-size:1.03rem}
+.news-status,.news-count,.news-source,.news-note,.news-footnote{font-size:.91rem;line-height:1.6}
+.news-story{padding:clamp(16px,3vw,25px)}
+.news-story-meta{font-size:.86rem}
+.news-topic{font-size:.84rem}
+.news-title{font-size:clamp(1.34rem,4.2vw,1.68rem);line-height:1.34;margin-top:15px}
+.news-brief-label,.news-prompt-title,.news-media-label{font-size:.79rem}
+.news-brief .news-excerpt{font-size:clamp(1.02rem,3.1vw,1.12rem);line-height:1.65;-webkit-line-clamp:4}
+.news-prompt>p:last-child{font-size:1rem;line-height:1.65}
+.news-quiz-toggle,.news-filter,.news-action,.news-more{font-size:.98rem;min-height:48px}
+.news-filters{gap:9px}
+.news-source{margin-bottom:15px}
+
+/* Word game level selection, both levels immediately usable. */
+.w-levels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:0 0 12px}
+.w-level{appearance:none;display:flex;flex-direction:column;align-items:flex-start;min-width:0;min-height:111px;text-align:left;padding:15px 13px;border:1.5px solid var(--line);border-radius:16px;background:white;color:var(--text);font:inherit;gap:5px;cursor:pointer;transition:background .14s ease,border-color .14s ease}
+.w-level.active{background:#0d1321;color:#fff;border-color:#0d1321}
+.w-level>span{font-size:.78rem;letter-spacing:.075em;font-weight:850;opacity:.75}
+.w-level strong{font-size:clamp(1.07rem,3.4vw,1.32rem);letter-spacing:-.02em;line-height:1.2}
+.w-level small{font-size:clamp(.84rem,2.4vw,.95rem);font-weight:500;line-height:1.32;opacity:.83}
+.w-level-position{font-size:1rem;font-weight:750;color:var(--muted);margin:0 0 14px}
+.word-v19 .w-p{font-size:clamp(1.08rem,3vw,1.18rem)!important;line-height:1.7!important}
+.word-v19 .w-small,.word-v19 .w-compare p{font-size:1.01rem!important;line-height:1.65!important}
+.word-v19 .w-label,.word-v19 .w-eyebrow{font-size:.87rem!important}
+.word-v19 .w-option,.word-v19 .w-results button{font-size:1.02rem!important;line-height:1.55!important;min-height:48px}
+.word-v19 .w-compare strong{font-size:1.08rem!important}
+.word-v19 .w-news,.word-v19 .w-feedback{font-size:1rem!important;line-height:1.55!important}
+.word-v19 .w-tabs button,.word-v19 .w-btn,.word-v19 .w-nav button{font-size:1.02rem!important;min-height:48px}
+.word-v19 .w-bottomtop,.word-v19 .w-bottomtop button{font-size:.91rem!important}
+.word-v19 .w-bottomactions button{font-size:1.01rem!important;min-height:48px}
+.word-v19 .w-input{font-size:1.03rem!important;min-height:48px}
+.word-v19 .w-scrubber output{font-size:.92rem!important}
+.word-v19 .w-term{font-size:clamp(2rem,7.5vw,3.1rem);line-height:1.2}
+.word-v19 .w-card{padding:clamp(17px,4vw,25px)}
+.word-v19 .w-search{min-height:50px}
+.word-v19 .w-search input{font-size:1rem!important}
+.word-v19 .w-review button{font-size:1rem;min-height:44px}
+@media(max-width:370px){
+ .w-level{padding:12px 10px;min-height:120px}
+ .w-level strong{font-size:1.06rem}
+ .w-level small{font-size:.82rem}
+ .news-story{padding:15px}
+ .news-filter{font-size:.88rem;padding:8px 11px}
+}
+@media(prefers-reduced-motion:reduce){.w-level{transition:none}}
