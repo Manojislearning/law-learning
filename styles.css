@@ -1452,3 +1452,12 @@ h3 { line-height: 1.3; }
     min-height: 148px;
   }
 }
+
+/* First-year guided lesson: a single quiet action, not another home menu grid. */
+.home-contract-lesson{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;margin:5px 0 18px;padding:16px;border:1px solid #cbd3dc;border-radius:16px;background:#fff;color:#0d1321;text-align:left;cursor:pointer;box-shadow:0 3px 12px rgba(13,19,33,.03)}
+.home-contract-body{display:flex;flex-direction:column;gap:5px;min-width:0}
+.home-contract-body small{font-size:.68rem;color:#677483;font-weight:850;letter-spacing:.045em}
+.home-contract-body strong{font-size:1.07rem;line-height:1.35}
+.home-contract-body>span{font-size:.79rem;color:#687080;line-height:1.45}
+.home-contract-start{flex:none;background:#0d1321;color:white;font-weight:750;font-size:.81rem;border-radius:10px;padding:10px}
+.home-contract-lesson:focus-visible{outline:3px solid #6782ad;outline-offset:3px}
