@@ -13,7 +13,7 @@
     words:["Legal vocabulary","Learn Words"],
     review:["Contract–I · Revision","Review"],
     practice:["Contract–I · Exam Practice","Case Practice"],
-    "law-updates":["Statutory review · First Year","Current Law Check"],
+    "law-updates":["Statutory review · First Year","Law Updates"],
     news:["Legal current affairs","Law News"],
     student:["KSLU · Student Resources","Student"],
     syllabus:["KSLU · 3-Year LL.B","Syllabus"],
@@ -22,6 +22,7 @@
     papers:["Previous year questions","Past Papers"],
     notes:["Personal study space","Notes"],
     profile:["Local learning profile","Profile"],
+    settings:["Study preferences","Settings"],
     links:["Karnataka · Official resources","Important Links"]
   };
   var KEY="law-learning-progress-v2";
@@ -105,7 +106,7 @@
       });
       var back=doc.getElementById("back-home");
       if(back){
-        var inStudent=["syllabus","subjects","papers","exam","links"].includes(next);
+        var inStudent=["syllabus","subjects","papers","exam","links","profile","settings"].includes(next);
         back.hidden=next==="home";
         back.textContent=inStudent?"← Student":"← Home";
         back.setAttribute("aria-label",inStudent?"Back to Student":"Back to home");
@@ -132,7 +133,7 @@
     function onClick(event){
       var target=event.target;
       if(!target||typeof target.closest!=="function")return;
-      if(target.closest("#back-home")){event.preventDefault();navigate(["syllabus","subjects","papers","exam","links"].includes(current)?"student":"home");return;}
+      if(target.closest("#back-home")){event.preventDefault();navigate(["syllabus","subjects","papers","exam","links","profile","settings"].includes(current)?"student":"home");return;}
       var button=target.closest(".home-card[data-open]");
       if(button){event.preventDefault();navigate(button.dataset.open);}
     }
