@@ -83,7 +83,7 @@ test('Motor Vehicles subject is available from the same offline app, no user sto
   assert.ok(html.includes(file),'HTML lacks '+file);
   assert.ok(sw.includes(file),'SW lacks '+file);
  }
- assert.ok(view.includes('topic==="motor"'));
+ assert.ok(view.includes('defaultTopic==="motor"'),'Motor deep link must be recognised');
  assert.ok(sy.includes('open("motor")'));
  assert.ok(html.includes('Motor Vehicles 2026'));
  assert.ok(!view.includes('localStorage.'));
