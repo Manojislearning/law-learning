@@ -219,7 +219,7 @@ function showMarkdown(show){
  const button=$('#markdown-btn');
  button.setAttribute('aria-pressed',String(state.sourceMode));
  button.title=state.sourceMode?'Return to rendered notes':'Show original Markdown source';
- button.innerHTML=state.sourceMode?'◉ <span class="tool-word">Preview</span>':'&lt;/&gt; <span class="tool-word">Markdown</span>';
+ button.innerHTML=state.sourceMode?'<span class="markdown-mini">Aa</span><span class="tool-word">Preview</span>':'<span class="markdown-mini">MD</span><span class="tool-word">Markdown</span>';
  const article=$('#article');
  if(state.sourceMode){
   article.innerHTML='<div class="markdown-file-chip">Markdown · Read only</div><pre class="markdown-source"><code>'+esc(state.rawMarkdown)+'</code></pre>';
@@ -253,7 +253,7 @@ async function openNote(path,heading=''){
   state.renderedHtml=intro+headingHtml+tocHtml+note.html;
   article.innerHTML=state.renderedHtml;
   $('#markdown-btn').setAttribute('aria-pressed','false');
-  $('#markdown-btn').innerHTML='&lt;/&gt; <span class="tool-word">Markdown</span>';
+  $('#markdown-btn').innerHTML='<span class="markdown-mini">MD</span><span class="tool-word">Markdown</span>';
   $('#markdown-btn').title='Show original Markdown source';
   article.classList.remove('note-enter');
   // Retrigger a short, low-motion page entrance after a successful note change.
