@@ -324,5 +324,48 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(cp.errors,[]);
   cp.dom.window.close();
  }
+
+ {
+  const law=build("https://example.test/law-learning/index.html?law=consumer&v=45#law-updates");
+  const w=law.dom.window,d=law.doc,host=d.getElementById("law-updates-root");
+  assert.equal(w.LawAppCore.router.current(),"law-updates","Deep link must open current-law screen");
+  assert.ok(host.querySelector("h2").textContent.includes("Current Law Check"));
+  assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"),"Consumer deep link must select consumer data");
+  assert.ok(host.querySelector(".law-panel h3").textContent.includes("Syllabus history"));
+  assert.equal(host.querySelectorAll(".law-answer").length,3);
+  assert.equal(host.querySelector(".law-feedback").hidden,true);
+  const wrong=[...host.querySelectorAll(".law-answer")].find(x=>x.textContent.includes("1986 alone"));
+  assert.ok(wrong);wrong.click();
+  assert.equal(host.querySelector(".law-feedback").hidden,false,"Wrong answer should show reason");
+  assert.ok(host.querySelector(".law-answer.correct"));
+  assert.ok([...host.querySelectorAll(".law-source")].some(x=>x.href.includes('indiacode.nic.in')),"Government sources must be clickable");
+  const bns=[...host.querySelectorAll(".law-tab")].find(x=>x.textContent.includes("BNS"));
+  bns.click();
+  assert.ok(host.querySelector(".law-panel h3").textContent.includes("commenced"),"BNS must open commencement warning first");
+  assert.ok(host.textContent.includes("106(2)"));
+  assert.ok([...host.querySelectorAll(".law-source")].some(x=>x.href.includes("mha.gov.in")));
+  assert.equal(d.querySelectorAll(".home-law-check").length,1,"Home should have one entry");
+  w.LawAppCore.router.navigate("home");await settle();
+  d.querySelector(".home-law-check").click();await settle();
+  assert.equal(w.LawAppCore.router.current(),"law-updates","Home entry must navigate to law audit");
+  assert.deepEqual(law.errors,[]);
+  law.dom.window.close();
+ }
+ {
+  const syllabusLaw=build("https://example.test/law-learning/index.html?v=45#syllabus");
+  const w=syllabusLaw.dom.window,d=syllabusLaw.doc;
+  let syllabus=d.getElementById("syllabus-detail");
+  findButton(d,"First Year").click();
+  findButton(d,"Semester 1").click();
+  findButton(d,"Law of Torts").click();
+  findButton(d,"Unit V").click();
+  const current=findButton(d,"Current Law Check");
+  assert.ok(current,"Torts Unit V must link to modern 2019 consumer legal checks");
+  current.click();await settle();
+  assert.equal(w.LawAppCore.router.current(),"law-updates");
+  assert.ok(d.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"));
+  assert.deepEqual(syllabusLaw.errors,[]);
+  syllabusLaw.dom.window.close();
+ }
  console.log("DOM integration passed: Contract I lessons, spaced recall, balanced IRAC case practice and offline-safe navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
