@@ -33,7 +33,7 @@ function nameIncludes(scope,selector,part){return [...scope.querySelectorAll(sel
  assert.equal(d.querySelectorAll(".exam59-archive-link").length,5);
  assert.ok([...d.querySelectorAll(".exam59-archive-link")].some(a=>a.href.includes("bharatiya-nyaya-sanhita")));
  assert.ok(nameIncludes(d,".exam59-question","Define acceptance"),"Prior archived sample question missing");
- assert.ok(nameIncludes(d,".exam59-question","Common intention"),"New BNS answer missing");
+ assert.ok(nameIncludes(d,".exam59-question","common intention"),"New BNS answer missing");
 
  let b=nameIncludes(d,".exam59-chip","Criminal Law–I (BNS)");
  assert.ok(b);
