@@ -1,11 +1,34 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **43** — case-specific reasoning feedback and Chromium mobile accessibility regression checks; prior release histories follow.
+Latest user-visible release: **44** — page-linked KSLU edition audit for all 30 Semester I outlines, with current-cohort caveat; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 44 — Official KSLU first-year outline audit (11 October 2026)
+
+**Why:** The previous app attached official-source links but left all 30 imported semester units simply marked `needs-review`. That hid genuine edition-level evidence while offering users little help distinguishing the published syllabus from the rules actually applicable to their admission year.
+
+**Primary documents reviewed:**
+- KSLU official three-year LL.B. revised syllabus for **2018–19 onwards**, including printed pages 3–14: Semester I course list, Constitutional Law–I (pp.4–5), Contract–I (p.6), Torts (p.8), Hindu Law (p.10) and conditional English (pp.13–14).
+- University circular **KSLU/Aca/BOS/2024-25/1586 dated 26.9.2024**, introducing the three new criminal laws from 2024–25, with **BNS Criminal Law–I** Units I–V in Appendix I (pp.1–2).
+
+**Delivered:**
+1. Compared the **broad unit-topic summaries for all 30 imported Semester I units** against the corresponding official edition pages, without claiming a verbatim match or checking all teaching-note claims.
+2. Added `outlineAudit` provenance per unit: official source ID, printed page, comparison date, narrow audit scope and caution. Preserved `syllabusStatus: needs-review` and `publishedForCohort: unconfirmed`.
+3. Added direct primary-source PDF **page links** and honest comparison descriptions in the visible **Syllabus source audit** screen. The Home syllabus card now shows the work done while explicitly noting that admission-year scheme confirmation remains pending.
+4. Clarified that **English is listed for students who write examinations in Kannada** and that the 2018–19 Torts syllabus cites the **1986 Consumer Protection Act** even though modern legal study ordinarily concerns the 2019 legislation. Contract–I Unit V retains a pre-amendment Specific Relief outline.
+5. Added unit-by-unit provenance tests and simulated-browser source navigation checks, including truthful cohort warnings. Did not change user progress, saved reviews, essay drafts or backup format.
+
+**Evidence record:** `docs/kslu-syllabus-audit-v44.md` contains the full page map, official document links, comparison scope and six remaining law/curriculum verification tasks.
+
+**Still outstanding:** Authenticate any later 2025–26 / 2026–27 KSLU academic circulars for the learner's specific admission scheme. Perform independent paragraph/section-level legal and judgment review before calling each guided answer source-verified. Do not infer a statutory-law audit from outline-topic matching.
+
+**Next improvements:** Start with current-law substantive audit of BNS and Torts Unit V, or verify the precise admission-cohort scheme once the student's admission academic year is known. Follow with an accessible minimal legal-misconception learning loop.
+
+---
 
 ## Version 43 — Accessibility and specific reasoning feedback (11 October 2026)
 
