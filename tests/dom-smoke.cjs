@@ -66,5 +66,28 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.ok(direct.doc.querySelector("#syllabus-detail").textContent.includes("30 units"),"Direct source URL must open review dashboard");
  assert.deepEqual(direct.errors,[]);
  direct.dom.window.close();
- console.log("DOM integration passed: home -> syllabus -> sources -> Contract I -> Unit I, and direct source URL.");
+
+ const guided=build("https://example.test/law-learning/index.html?learn=contract1-unit1&v=36#syllabus");
+ const gd=guided.doc,gw=guided.dom.window;
+ assert.ok(gd.querySelector(".c1-card"),"Direct link must open guided Contract I lessons");
+ assert.ok(gd.querySelector(".c1-card h2").textContent.includes("Offer"),"First lesson should explain offer");
+ assert.equal(gw.ContractUnitOneUI.lessons.length,6,"Expected six source-checked lessons");
+ const options=[...gd.querySelectorAll(".c1-option")];
+ assert.equal(options.length,3,"Every concept check must have three options");
+ options[0].click();
+ assert.equal(gd.querySelector(".c1-feedback").hidden,false,"Quiz must show explanatory feedback");
+ gd.querySelector(".c1-next").click();
+ assert.ok(gd.querySelector(".c1-card h2").textContent.includes("acceptance"),"Next button must change lesson");
+ assert.deepEqual(guided.errors,[],"Guided lesson cannot throw during startup");
+ guided.dom.window.close();
+
+ const homepage=build("https://example.test/law-learning/index.html?v=36#home");
+ const btn=homepage.doc.getElementById("home-contract-lesson");
+ assert.ok(btn,"Homepage needs a single visible guided-lesson entry");
+ btn.click();await settle();
+ assert.equal(homepage.dom.window.LawAppCore.router.current(),"syllabus");
+ assert.ok(homepage.doc.querySelector(".c1-card"),"Home lesson entry should open a guided concept");
+ assert.deepEqual(homepage.errors,[]);
+ homepage.dom.window.close();
+ console.log("DOM integration passed: syllabus sources, Contract I guided quiz, deep link and home entry.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
