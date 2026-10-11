@@ -9,7 +9,7 @@
 var KEYS=["issue","rule","application","conclusion"];
 function validText(s,min){return typeof s==="string"&&s.trim().length>=min&&s.length<=2400;}
 function verify(bank){
- if(!bank||bank.schema!==1||!bank.sources||!Array.isArray(bank.cases))throw Error("Unknown practice bank.");
+ if(!bank||bank.schema!==1||!bank.sources||!Array.isArray(bank.cases)||!["contract1","torts"].includes(bank.subject||"contract1"))throw Error("Unknown practice bank.");
  if(!Array.isArray(bank.cases)||bank.cases.length!==15)throw Error("Practice bank requires fifteen cases.");
  var seen=new Set(),units=[0,0,0,0,0];
  for(var item of bank.cases){
@@ -21,10 +21,13 @@ function verify(bank){
   if(!item.outline||KEYS.some(function(k){return !validText(item.outline[k],40);}))throw Error("Incomplete marking outline.");
   if(!Array.isArray(item.sections)||!item.sections.length||!Array.isArray(item.sourceIds)||!item.sourceIds.length)throw Error("Statute sources missing.");
   item.sourceIds.forEach(function(id){
-   var src=bank.sources[id];if(!src||!validText(src.title,8)||!/^https:\/\/(www\.)?indiacode\.nic\.in\//.test(src.url))throw Error("Missing primary law source.");
+   var src=bank.sources[id];
+   if(!src||!validText(src.title,8)||typeof src.url!=="string")throw Error("Missing primary law source.");
+   var url;try{url=new URL(src.url);}catch(e){throw Error("Missing primary law source.");}
+   if(url.protocol!=="https:"||!["www.indiacode.nic.in","api.sci.gov.in","www.pib.gov.in","egazette.gov.in","consumeraffairs.gov.in"].includes(url.hostname))throw Error("Missing primary law source.");
   });
  }
- if(units.some(function(n){return n!==3;}))throw Error("Every Contract–I unit must have three cases.");
+ if(units.some(function(n){return n!==3;}))throw Error("Every course unit must have three cases.");
  return true;
 }
 function randomIndex(length,rng){
