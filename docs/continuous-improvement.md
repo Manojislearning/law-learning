@@ -1,11 +1,31 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **51** — 15 Constitutional Law–I IRAC cases and 5 changed-facts exercises, bringing practice to four first-semester subjects; prior release histories follow.
+Latest user-visible release: **52** — 15 original Hindu Family Law IRAC cases and 5 changed-facts exercises, expanding source-linked practice to five first-semester law subjects; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 52 — Statute-grounded Family Law–I issue spotting (11 October 2026)
+
+**Audit choice:** Releases 47–51 already delivered Contract, Torts, BNS and Constitutional Law independent practice, weak-case retries and changed-facts transfer. The next missing *substantive* Semester I law subject was Family Law–I: Hindu Law. A redundant new app section would have increased navigation friction.
+
+**Delivered:** Fifteen original Hindu-law fact patterns, exactly three per published KSLU unit, and five altered-fact transfer prompts, including codified sources/custom, Hindu Marriage Act voidness, coparcenary and daughter succession, women's inheritance, guardianship/adoption and maintenance. The existing Case Practice now offers **75 original IRAC cases and 25 changed-facts problems over five law subjects**, with no new user-state keys.
+
+**Original primary statutes:** Official India Code Hindu Marriage Act (1955), Hindu Succession Act (1956) including 2005 amendments, Hindu Adoptions and Maintenance Act (1956) and Hindu Minority and Guardianship Act (1956). Concepts that should never be casually collapsed include: a marriage's age breach versus express Section 11 voidness; an alleged custom versus statutory exceptions; joint family versus coparcenary property; Section 6(4) limits on pious-obligation liability; Section 14(1)/14(2) differing female-property interests; Section 15(2)(a)'s property-source exception; guardian's voidable unauthorised property sale under Section 8(3).
+
+**Learning design:** Reused the short written IRAC and self-check interaction; answers remain hidden until a typed attempt. Learners can rotate all cases by unit, retry skipped or self-identified weak cases, and apply one altered fact per unit. Cases contain no fabricated Supreme Court case citations, do not claim to grade essays and remain visible offline. The home tile and Family Law syllabus directly expose the practice.
+
+**Privacy / stability:** No essay uploads, permanent scores, streaks, review-history migration or backup modifications. All original Contract/Torts/BNS/Constitution legal studies remain intact.
+
+**Evidence record:** `docs/hindu-law-practice-v52.md`. The specific admission-cohort KSLU academic scheme and line-by-line legal/judgment correctness remain outstanding.
+
+**Testing:** Dedicated statutory-boundary cases, source-host validation, balanced session rotation and parent-linked fact-change tests, plus JSDOM and Chromium phone-size navigation/answer/focus tests. The only sufficient release condition is final-head quality and Pages success.
+
+**Next:** Authentic cohort syllabus verification and section-specific binding-case reasoning for Hindu and constitutional law; delayed assessment and physical accessibility checks. The conditional English paper must remain clearly identified as only for the relevant examination-language scheme.
+
+---
 
 ## Version 51 — Independent Constitutional Law I reasoning (11 October 2026)
 
