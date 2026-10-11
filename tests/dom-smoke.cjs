@@ -13,7 +13,7 @@ const scripts=[...html.matchAll(/<script\s+src="\.\/([^"]+\.js)(?:\?[^"]+)?"><\/
 const shell=html.replace(/<script\s+src="\.\/[^"]+"><\/script>/g,"");
 assert.ok(scripts.length>=10);
 
-function build(url){
+function build(url,stored){
  const errors=[];
  const output=new VirtualConsole();
  output.on("jsdomError",err=>errors.push(err));
@@ -24,6 +24,7 @@ function build(url){
    win.HTMLElement.prototype.scrollIntoView=function(){};
    win.matchMedia=function(){return {matches:false,addListener(){},removeListener(){},addEventListener(){},removeEventListener(){}};};
    win.speechSynthesis=undefined;
+   if(stored)Object.entries(stored).forEach(([key,value])=>win.localStorage.setItem(key,value));
   }
  });
  const doc=dom.window.document;
@@ -311,7 +312,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.equal(factsSeen.size,5);
   assert.ok(root.textContent.includes("You finished the set"));
   assert.ok(root.textContent.includes("No essay grade"));
-  assert.equal(w.localStorage.length,dataBefore,"Written practice must not create persistent data");
+  assert.ok(!JSON.stringify(w.LawCaseReviewCore.read(w.localStorage)).includes("The parties\u0027 rights depend"),"Written analysis must not be included in saved case-review records");
   const again=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set"));
   again.click();
   const fresh=root.querySelector(".cp-facts").textContent;
@@ -424,7 +425,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.equal(seenUnits.size,5,"Torts practice must cover all five syllabus units");
   assert.equal(facts.size,5);
   assert.ok(root.textContent.includes("You finished the set"));
-  assert.equal(w.localStorage.length,initialStorage,"Torts answers must not change local storage");
+  assert.ok(w.LawCaseReviewCore.read(w.localStorage).version===1,"Only validated review metadata may persist; not written torts answers");
   [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set")).click();
   assert.ok(!facts.has(root.querySelector(".cp-facts").textContent),"New Torts sets should prioritize unseen cases");
   [...root.querySelectorAll("button")].find(x=>x.textContent.includes("End practice")).click();
@@ -485,7 +486,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   }
   assert.equal(units.size,5);
   assert.equal(seen.size,5);
-  assert.equal(w.localStorage.length,startStorage,"Case drafts and ratings should not persist");
+  assert.ok(w.LawCaseReviewCore.read(w.localStorage).version===1,"Only limited case-revisit metadata may persist; not written answers");
   assert.ok(root.textContent.includes("You finished the set"));
   [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set")).click();
   assert.ok(!seen.has(root.querySelector(".cp-facts").textContent),"A second BNS set must prioritize unseen cases");
@@ -549,7 +550,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.ok(retryFacts.includes(skippedFacts),"The skipped case should return for a fresh attempt");
   assert.ok(area.textContent.includes("No cases currently flagged"),"Retried and fully self-checked cases leave no weak queue");
   assert.ok(![...area.querySelectorAll("button")].some(b=>b.textContent.includes("Retry 2 weak")));
-  assert.equal(w.localStorage.getItem("law-learning-practice-weak-v1"),null,"Case feedback flags must not be permanently stored");
+  assert.equal(w.LawCaseReviewCore.forSubject(w.localStorage,"contract",w.LawCaseData.cases).all.length,0,"Fully self-checked retried cases leave no weak-case records");
   assert.deepEqual(retry.errors,[]);
   retry.dom.window.close();
  }
@@ -652,7 +653,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   }
   assert.equal(units.size,5,"One scenario from each of the five syllabus units");
   assert.ok(area.textContent.includes("You finished the set"));
-  assert.equal(w.localStorage.length,count,"Constitution essays and self-checks must not change saved user data");
+  assert.ok(w.LawCaseReviewCore.read(w.localStorage).version===1,"Constitutional case metadata may persist without saving essays");
   w.LawAppCore.router.navigate("home");await settle();
   assert.equal(area.textContent,"","Leaving practice discards draft and rubric state");
   assert.deepEqual(constitutional.errors,[]);
@@ -694,7 +695,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   }
   assert.equal(units.size,5);
   assert.ok(area.textContent.includes("You finished the set"));
-  assert.equal(w.localStorage.length,count,"Family-law essays should never be stored");
+  assert.ok(w.LawCaseReviewCore.read(w.localStorage).version===1,"Family-law case metadata may persist without saving essays");
   [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Return to practice overview")).click();
   [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Changed-facts challenge")).click();
   assert.equal(area.querySelector(".cp-transfer-model").hidden,true);
@@ -712,6 +713,41 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.equal(w.LawAppCore.router.current(),"practice");
   assert.ok(d.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Hindu Law"));
   assert.deepEqual(via.errors,[]);via.dom.window.close();
+ }
+
+ {
+  const url="https://example.test/law-learning/index.html?v=53&course=torts#practice";
+  const first=build(url),win=first.dom.window,area=first.doc.getElementById("practice-root");
+  assert.ok(!area.textContent.includes("Saved review history is unavailable"));
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Start 5 cases")).click();
+  const unique="PRIVATE_CASE_ESSAY_SHOULD_NEVER_BE_STORED_2026_10_11";
+  area.querySelector("textarea").value=unique+" This analysis tests a legal rule.";
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Reveal reference reasoning")).click();
+  const checkboxes=[...area.querySelectorAll(".cp-rubric input")];
+  checkboxes[0].checked=true;checkboxes[0].dispatchEvent(new win.Event("change",{bubbles:true}));
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Next case")).click();
+  for(let n=1;n<5;n++)[...area.querySelectorAll("button")].find(b=>b.textContent==="Skip case").click();
+  const key=win.LawCaseReviewCore.KEY,raw=win.localStorage.getItem(key);
+  assert.ok(raw&&raw.includes('"cases"'),"Weak and skipped cases should be saved");
+  assert.ok(!raw.includes(unique),"No written essay text should enter local storage");
+  assert.equal(win.LawCaseReviewCore.total(win.localStorage),5);
+  const backup=win.LawBackupCore.exportBackup(win.localStorage);
+  const desc=win.LawBackupCore.describe(backup);
+  assert.equal(desc.caseReviewCount,5);
+  assert.equal(desc.hasCaseReview,true);
+  win.LawAppCore.router.navigate("home");await settle();
+  assert.equal(area.textContent,"","Essay must leave page immediately on navigation");
+  const restored=build(url,{[key]:raw}),w=restored.dom.window,d=restored.doc,screen=d.getElementById("practice-root");
+  assert.ok(screen.textContent.includes("5 saved weak or skipped cases"),"Reopening the app must restore weak-case queue");
+  assert.ok([...screen.querySelectorAll("button")].some(b=>b.textContent.includes("Retry 5 weak or skipped cases")));
+  [...screen.querySelectorAll("button")].find(b=>b.textContent.includes("Retry 5 weak or skipped cases")).click();
+  assert.ok(screen.textContent.includes("SECOND ATTEMPT"),"Restored cases should be actionable");
+  assert.equal(screen.querySelector(".cp-model").hidden,true,"A retry must not expose the old answer");
+  const corrupt=build(url,{[key]:'{"version":900,"cases":{}}'}),bad=corrupt.doc.getElementById("practice-root");
+  assert.ok(bad.textContent.includes("could not be read"),"Corrupted history must be reported without reset");
+  assert.equal(corrupt.dom.window.localStorage.getItem(key),'{"version":900,"cases":{}}');
+  assert.deepEqual(first.errors,[]);assert.deepEqual(restored.errors,[]);assert.deepEqual(corrupt.errors,[]);
+  first.dom.window.close();restored.dom.window.close();corrupt.dom.window.close();
  }
  console.log("DOM integration passed: Hindu, Constitution, Contract, Torts and BNS IRAC, changed-facts transfer and statutory checks.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
