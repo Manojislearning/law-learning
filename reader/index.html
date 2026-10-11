@@ -10,7 +10,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="./minimal.css?v=6">
-  <link rel="stylesheet" href="./map.css?v=3">
+  <link rel="stylesheet" href="./map.css?v=4">
   <link rel="stylesheet" href="./polish.css?v=2">
   <title>Law Notes · Reader</title>
 </head>
@@ -58,7 +58,7 @@
 
     <section id="map-overlay" class="map-overlay" aria-label="Interactive brain branches" hidden>
       <header class="map-top">
-        <div class="map-heading"><strong>Topic Branches</strong><small id="map-status">TOPIC</small></div>
+        <div class="map-heading"><strong>Brain Branches</strong><small id="map-status">TOPIC</small></div>
         <div class="map-controls">
           
           <span id="map-count">0 nodes</span>
@@ -70,14 +70,14 @@
         </div>
       </header>
       <div class="map-workspace">
-        <svg id="map-svg" class="map-canvas" viewBox="0 0 1200 800" role="img" aria-label="Interactive branches for the current topic and its Markdown points"><g id="map-scene"></g></svg>
+        <svg id="map-svg" class="map-canvas" viewBox="0 0 1200 800" role="img" aria-label="Interactive progressive brain branches for this topic"><g id="map-scene"></g></svg>
         <aside id="map-details" class="map-detail" hidden>
           <div class="map-detail-head"><strong id="map-note-title">Note</strong><button id="map-detail-close" type="button" aria-label="Close note content">×</button></div>
           <div id="map-note-body" class="map-detail-scroll article"></div>
           <button id="map-read-note" type="button" class="map-read-btn">Open linked topic ↗</button>
         </aside>
       </div>
-      <div class="map-footer"><span id="map-current">Tap a point to inspect it</span><span>Pinch to zoom · Drag to move · ↗ to Markdown</span></div>
+      <div class="map-footer"><span id="map-current">Tap a branch to open the next level</span><span>Tap to expand/fold · Pinch to zoom · Drag to move</span></div>
     </section>
     <div id="loading-screen" class="loading-screen" role="status" aria-live="polite" aria-label="Opening Law Notes">
       <div class="loading-art" aria-hidden="true">
