@@ -30,7 +30,7 @@ test('Fifteen Constitution I hypotheticals have legal reasoning and primary text
   item.sourceIds.forEach(id=>assert.ok(bank.sources[id]?.url.startsWith('https://'),item.id+' source '+id));
  }
 });
-test('Subject's five units cover citizenship, Article 12/13/14, Articles 15/16/19, arrest, and remedies',()=>{
+test('Five units cover citizenship, Articles 12–19, accused rights and remedies',()=>{
  const has=id=>{const x=bank.cases.find(c=>c.id===id);assert.ok(x,'missing '+id);return x;};
  assert.ok(has('u1-birth').sections.some(x=>x.includes('Citizenship Act')));
  assert.ok(has('u2-local-authority').outline.rule.includes('Article 12'));
