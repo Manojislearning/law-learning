@@ -66,6 +66,16 @@ async function main(){
    await home.first().click();
    await page.locator("#article h1").filter({hasText:"Constitutional Law I"}).waitFor();
    assert.match(await page.locator("#article").innerText(),/Constitutional Law I/);
+   await page.locator("#map-btn").click();
+   assert.equal(await page.locator("#map-overlay").isVisible(),true);
+   assert.ok(await page.locator("#map-scene [data-id]").count()>=5,"Map must contain actual note branches");
+   await page.locator("#map-scene [aria-label=\"Preamble\"]").click();
+   await page.locator("#map-details:not([hidden]) #map-note-body h1").first().waitFor();
+   assert.match(await page.locator("#map-note-body").innerText(),/Justice, liberty, equality/);
+   await page.locator("#map-fit").click();
+   await page.locator("#map-zoom-in").click();
+   await page.locator("#map-close").click();
+   assert.equal(await page.locator("#map-overlay").isVisible(),false);
    await page.locator("#save-btn").click();
    assert.equal(await page.locator("#save-btn").evaluate(el=>el.classList.contains("saved")),true);
    await page.locator("#font-btn").click();
