@@ -10,6 +10,10 @@ document.head.appendChild(sourceStyle);
 var dashboardStyle=document.createElement("style");
 dashboardStyle.textContent='.sf-source-entry{border-top:1px solid var(--line);padding-top:18px;margin-top:20px}.sf-source-entry .sf-choice{margin-top:8px}.sf-source-link{display:block;font-size:.9rem;line-height:1.5;font-weight:650;margin:13px 0;color:#275a8a;text-decoration:underline}.sf-source-small{font-size:.8rem!important;color:var(--muted)}';
 document.head.appendChild(dashboardStyle);
+var auditStyle=document.createElement("style");
+auditStyle.textContent='.sf-audit-proof{background:#fff;border:1px solid var(--line);border-left:3px solid #355878;border-radius:12px;padding:15px 17px;margin:13px 0;font-size:.87rem;line-height:1.6}.sf-audit-proof p{margin:9px 0}.sf-audit-proof .sf-audit-head{font-size:.87rem}.sf-audit-proof .sf-source-link{margin-top:12px}.sf-source-small{overflow-wrap:anywhere}';
+document.head.appendChild(auditStyle);
+
 
 host.replaceChildren();
 var statePath=[],direction="forward";
@@ -88,7 +92,8 @@ function screen(title,kicker,summary){
 function sourceCourseSummary(){
  var ledger=window.LawContentLedger;
  if(!ledger)return "Official source ledger is unavailable.";
- return ledger.data.units.length+" units • primary-source links • "+ledger.data.units.filter(function(u){return u.syllabusStatus==="needs-review";}).length+" awaiting unit-text review";
+ var n=ledger.data.units.filter(function(u){return u.outlineAudit&&u.outlineAudit.status==="published-outline-compared";}).length;
+ return n+"/"+ledger.data.units.length+" published-edition outlines compared · current cohort unconfirmed";
 }
 function sourceLink(parent,item){
  var a=E(parent,"a",item.title+" ↗","sf-source-link");
@@ -101,7 +106,20 @@ function sourceUnitPage(subject,unitIndex){
  var record=ledger&&ledger.getUnit(subject,unitIndex);
  var box=E(f,"div",undefined,"sf-info");
  E(box,"h3","Source status");
- E(box,"p",record&&record.syllabusStatus==="verified"?"Checked against the applicable official university syllabus.":"Needs review — full unit wording has not yet been confirmed against the applicable KSLU syllabus PDF.");
+ E(box,"p",record&&record.syllabusStatus==="verified"?"Checked against the applicable official university syllabus.":"Current admission-year scheme: not yet confirmed. The published-edition outline comparison below is narrower than full syllabus or lesson verification.");
+ if(record&&record.outlineAudit){
+  var audit=record.outlineAudit,proof=ledger.data.sources[audit.sourceId];
+  var evidence=E(f,"div",undefined,"sf-audit-proof");
+  E(evidence,"strong","Published topic outline compared","sf-audit-head");
+  E(evidence,"p",audit.scope);
+  E(evidence,"p","KSLU official document · printed page "+audit.printedPage+" · checked "+audit.checkedOn,"sf-source-small");
+  if(proof){
+   var page=proof.url+"#page="+(audit.printedPage+(audit.sourceId==="kslu-2024-criminal"?1:0));
+   var link=E(evidence,"a","View corresponding KSLU PDF page ↗","sf-source-link");
+   link.href=page;link.target="_blank";link.rel="noopener noreferrer";
+  }
+  E(evidence,"p",audit.caution,"sf-source-small");
+ }
  if(record){
   record.warnings.forEach(function(warning){
    var n=E(f,"div",warning,"sf-source-warning");
@@ -110,7 +128,7 @@ function sourceUnitPage(subject,unitIndex){
   var list=E(f,"div",undefined,"sf-info");
   E(list,"h3","Official references");
   ledger.getSources(record).forEach(function(item){sourceLink(list,item);});
-  E(list,"p","The linked sites establish reference sources; they do not independently verify the teaching notes.","sf-source-small");
+  E(list,"p","A source-page match does not verify case law, updated sections, current cohort rules or every teaching note.","sf-source-small");
  }
  var foot=E(f,"div",undefined,"sf-footer");
  B(foot,"Study this unit","Continue to topics →",function(){
@@ -136,15 +154,20 @@ function render(){
 
  if(source!==null){
   if(sourceCourse===null){
-   var sc=screen("Sources & review","FIRST YEAR · SEMESTER I",sourceCourseSummary());
+   var sc=screen("Syllabus source audit","KSLU · FIRST YEAR",sourceCourseSummary());
+   var explanation=E(sc,"div",undefined,"sf-info");
+   E(explanation,"h3","What is actually checked?");
+   E(explanation,"p","The imported topic summaries were compared with KSLU's official 2018–19 three-year LL.B. syllabus and the 2024–25 BNS amendment. This does not confirm the university scheme for your particular admission year, or certify every legal explanation.");
+   E(explanation,"p","The sixth listed paper, English, is intended for students writing examinations in Kannada.","sf-source-small");
    KSLU_FIRST_SEMESTER.courses.forEach(function(course,i){
-    B(sc,course.name,"5 units · review status and official references",function(){push("sourceCourse",i);});
+    var matched=window.LawContentLedger.data.units.filter(function(u){return u.courseIndex===i&&u.outlineAudit&&u.outlineAudit.status==="published-outline-compared";}).length;
+    B(sc,course.name,matched+"/5 outlines compared · admission scheme pending",function(){push("sourceCourse",i);});
    });
   } else if(sourceUnit===null){
    var course=KSLU_FIRST_SEMESTER.courses[sourceCourse];
    var cs=screen(course.name,"SOURCES & REVIEW","Select a unit to inspect its official references.");
    course.units.forEach(function(u,i){
-    B(cs,u.unit+" — "+u.title,"Source details →",function(){openSourceUnit(sourceCourse,i);});
+    B(cs,u.unit+" — "+u.title,"Published outline compared · open KSLU evidence →",function(){openSourceUnit(sourceCourse,i);});
    });
   }else sourceUnitPage(sourceCourse,sourceUnit);
   window.scrollTo({top:0,behavior:"auto"});return;
@@ -171,7 +194,7 @@ function render(){
    var course=KSLU_FIRST_SEMESTER.courses[subject];
    course.units.forEach(function(u,i){
     var meta=window.LawContentLedger&&window.LawContentLedger.getUnit(subject,i);
-    B(d,u.unit+" — "+u.title,meta?"Topics • Source status: needs review":"Learn topics →",function(){push("unit",i);});
+    B(d,u.unit+" — "+u.title,meta&&meta.outlineAudit?"Published outline compared · scheme pending":"Learn topics →",function(){push("unit",i);});
    });
   }else{
    var msg=E(d,"div",undefined,"sf-info");E(msg,"h3","Detailed unit outline not imported");
