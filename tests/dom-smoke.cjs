@@ -142,14 +142,46 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.deepEqual(u4.errors,[],"Unit IV must not throw browser errors");
  u4.dom.window.close();
 
- const homepage=build("https://example.test/law-learning/index.html?v=39#home");
+ const u5=build("https://example.test/law-learning/index.html?v=40&learn=contract1-unit5#syllabus");
+ const u5doc=u5.doc,u5win=u5.dom.window;
+ assert.equal(u5win.ContractUnitFiveUI.lessons.length,12,"Unit V must contain 12 lessons");
+ assert.ok(u5doc.querySelector(".c1-card h2").textContent.includes("specific relief"),"Direct link must open Unit V introduction");
+ assert.ok(u5doc.querySelector(".c1-lesson-number").textContent.includes("Unit V"),"Reader must show Unit V");
+ assert.ok(u5doc.querySelector(".c1-write"),"Legal written recall must be visible as an optional panel");
+ const recall=u5doc.querySelector(".c1-write");
+ recall.open=true;
+ const area=recall.querySelector("textarea");
+ assert.ok(area,"Short recall must allow writing");
+ area.value="Specific relief protects specific individual rights";area.dispatchEvent(new u5win.Event("input",{bubbles:true}));
+ recall.querySelector(".c1-compare").click();
+ assert.equal(recall.querySelector(".c1-model").hidden,false,"Comparison outline must be available");
+ const firstRight=u5win.ContractUnitFiveUI.lessons[0].choices[u5win.ContractUnitFiveUI.lessons[0].answer];
+ const btn=[...u5doc.querySelectorAll(".c1-option")].find(b=>b.textContent===firstRight);
+ assert.ok(btn);btn.click();u5doc.querySelector(".c1-next").click();
+ assert.ok(u5doc.querySelector(".c1-card h2").textContent.includes("Recovering possession"));
+ u5win.openContractGuidedUnit(4);
+ u5win.ContractUnitFiveUI.render(u5doc.getElementById("syllabus-detail"),{
+   index:2,direction:"forward",
+   onBack:function(){},onMove:function(){}
+ });
+ const irac=u5doc.querySelector(".c1-write");irac.open=true;
+ assert.equal(irac.querySelectorAll("textarea").length,4,"Case question must offer four IRAC fields");
+ const iracTextareas=[...irac.querySelectorAll("textarea")];
+ iracTextareas[0].value="Can the contract be specifically enforced?";
+ iracTextareas[0].dispatchEvent(new u5win.Event("input",{bubbles:true}));
+ irac.querySelector(".c1-compare").click();
+ assert.ok(irac.querySelector(".c1-model").textContent.includes("Section 10"),"Legal model should cite amended statutory rule");
+ assert.deepEqual(u5.errors,[],"Unit V and writing panel must not raise runtime errors");
+ u5.dom.window.close();
+
+ const homepage=build("https://example.test/law-learning/index.html?v=40#home");
  const btn=homepage.doc.getElementById("home-contract-lesson");
  assert.ok(btn,"Homepage needs a single visible guided-lesson entry");
  btn.click();await settle();
  assert.equal(homepage.dom.window.LawAppCore.router.current(),"syllabus");
  assert.ok(homepage.doc.querySelector(".c1-card"),"Home lesson entry should open a guided concept");
- assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("compensation"),"Homepage should launch Unit IV");
+ assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("specific relief"),"Homepage should launch Unit V");
  assert.deepEqual(homepage.errors,[]);
  homepage.dom.window.close();
- console.log("DOM integration passed: KSLU sources, Contract Units I–IV, questions, deep links and home course.");
+ console.log("DOM integration passed: KSLU sources, Contract Units I–V, questions, deep links and home course.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
