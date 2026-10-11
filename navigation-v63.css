@@ -1,0 +1,42 @@
+/* v63: neutral navigation, Student library and local Settings. */
+#home-view .home-grid .home-card[data-open="words"]{
+  background:#fff!important;color:var(--text)!important;border:1px solid var(--line)!important;
+  box-shadow:none
+}
+#home-view .home-grid .home-card[data-open="words"] .home-arrow{color:#4d688a!important}
+#home-view .home-grid .home-card[data-open="words"]:hover{background:#f7f9fc!important}
+#student-view #home-contract-lesson{
+  width:100%;min-height:76px;max-height:none;
+  display:flex;align-items:center;justify-content:space-between;gap:13px;
+  padding:17px 19px;box-sizing:border-box;
+  color:var(--text);background:var(--surface);
+  border:1px solid var(--line);border-radius:15px;box-shadow:none
+}
+#student-view #home-contract-lesson strong{
+  font-size:clamp(1.08rem,3vw,1.3rem);font-weight:780;line-height:1.35
+}
+#student-view #home-contract-lesson .student-hub-arrow{
+  position:static;flex:none;margin-left:auto;font-size:1.25rem;line-height:1
+}
+#student-view #home-contract-lesson:hover{border-color:#9eadc3;box-shadow:0 7px 22px rgba(13,19,33,.055)}
+#student-view #home-contract-lesson:focus-visible{outline:3px solid #557cae;outline-offset:3px}
+.settings63{max-width:650px;margin:12px auto 50px}
+.settings63 h2{font-size:clamp(1.65rem,5vw,2.1rem);margin:3px 0 20px}
+.settings63-card{border:1px solid var(--line);border-radius:18px;background:#fff;
+ padding:clamp(17px,4vw,26px)}
+.settings63-field{display:flex;align-items:center;justify-content:space-between;gap:15px;
+ min-height:66px;border-bottom:1px solid var(--line);font-size:1.05rem;font-weight:690;
+ color:var(--text)}
+.settings63-field select{max-width:180px;min-width:122px;min-height:44px;padding:9px;
+ border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--text);font:inherit}
+.settings63-field input[type="checkbox"]{width:23px;height:23px;flex:none;order:2}
+.settings63-save{min-width:180px;min-height:48px;margin-top:20px;padding:12px 15px;
+ border:0;border-radius:12px;background:#0d1321;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.settings63-status{font-size:.96rem;color:#315e44;min-height:24px;margin:12px 0 0}
+.settings63 input:focus-visible,.settings63 select:focus-visible,.settings63 button:focus-visible{
+ outline:3px solid #557cae;outline-offset:3px
+}
+@media(max-width:380px){
+ .settings63-field{font-size:.98rem}
+ .settings63-field select{min-width:110px;max-width:135px}
+}
