@@ -66,7 +66,7 @@ async function connect(token){
   await openNote(path);
   toast('Private LAW-NOTES library connected.');
  }catch(e){$('#connect-view').hidden=false;$('#reader-view').hidden=true;setStatus('Not connected');const err=$('#connect-error');err.textContent=e instanceof Error?e.message:'Could not connect.';err.hidden=false;}
- finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my reading library ';}
+ finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my library ';}
 }
 $('#connect-form').addEventListener('submit',event=>{event.preventDefault();const token=$('#token').value.trim();if(token)void connect(token)});
 $('#show-token').addEventListener('click',()=>{const input=$('#token');input.type=input.type==='password'?'text':'password';$('#show-token').textContent=input.type==='password'?'Show':'Hide'});
@@ -168,6 +168,10 @@ async function openNote(path,heading=''){
   const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
   const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
   article.innerHTML=intro+headingHtml+tocHtml+note.html;
+  article.classList.remove('note-enter');
+  // Retrigger a short, low-motion page entrance after a successful note change.
+  void article.offsetWidth;
+  article.classList.add('note-enter');
   $('#reading-scroll').scrollTop=0;$('#progress-line').style.width='0%';
   $('#save-btn').classList.toggle('saved',state.saved.has(path));
   $('#save-btn').innerHTML=state.saved.has(path)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
@@ -202,10 +206,17 @@ $('#speak-btn').addEventListener('click',()=>{
  const speech=new SpeechSynthesisUtterance(text);speech.rate=.95;speech.lang='en-IN';state.speaking=true;$('#speak-btn').innerHTML='■ <span class="tool-word">Stop</span>';
  speech.onend=speech.onerror=()=>{state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';};window.speechSynthesis.speak(speech);
 });
-function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;}
-function closeSidebar(){$('#sidebar').classList.remove('open');if($('#prefs').hidden)$('#scrim').hidden=true;}
-function openPrefs(){$('#prefs').hidden=false;if(window.innerWidth<=850)$('#scrim').hidden=false;}
-function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;}
+function selectMobileNav(id){
+ document.querySelectorAll('.bottom-nav button').forEach(button=>{
+  const active=button.id===id;
+  button.classList.toggle('active',active);
+  if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
+ });
+}
+function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;selectMobileNav(state.filter==='saved'?'bottom-saved':'bottom-library');}
+function closeSidebar(){$('#sidebar').classList.remove('open');if($('#prefs').hidden)$('#scrim').hidden=true;selectMobileNav('bottom-home');}
+function openPrefs(){$('#prefs').hidden=false;selectMobileNav('bottom-text');if(window.innerWidth<=850)$('#scrim').hidden=false;}
+function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;selectMobileNav($('#sidebar').classList.contains('open')?'bottom-library':'bottom-home');}
 $('#menu-btn').addEventListener('click',openSidebar);
 $('#close-sidebar').addEventListener('click',closeSidebar);
 $('#settings-btn').addEventListener('click',()=>$('#prefs').hidden?openPrefs():closePrefs());
@@ -220,7 +231,8 @@ $('#disconnect-btn').addEventListener('click',()=>{
  $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;
  $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
 });
-$('#bottom-library').addEventListener('click',openSidebar);
+selectMobileNav('bottom-home');
+$('#bottom-library').addEventListener('click',()=>{state.filter='all';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));renderSidebar();openSidebar()});
 $('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
 $('#bottom-saved').addEventListener('click',()=>{state.filter='saved';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='saved'));renderSidebar();openSidebar()});
 $('#bottom-text').addEventListener('click',openPrefs);
