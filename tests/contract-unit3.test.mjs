@@ -47,7 +47,7 @@ test('Historical KSLU edition and legal sources are correctly marked and limited
 });
 test('Unit III route and both previous units are linked in version 38',()=>{
  const html=read('index.html'),sw=read('sw.js'),nav=read('syllabus-flow.js'),ui=read('contract-unit1-ui.js');
- for(const asset of ['contract-unit3-data.js?v=38','contract-unit1-ui.js?v=38','syllabus-flow.js?v=38']){
+ for(const asset of ['contract-unit3-data.js?v=38','contract-unit1-ui.js?v=39','syllabus-flow.js?v=39']){
   assert.ok(html.includes(asset),'Missing HTML asset '+asset);
   assert.ok(sw.includes(asset),'Missing offline asset '+asset);
  }
