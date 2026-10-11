@@ -7,9 +7,9 @@
   if (root) root.LawBackupCore = api;
 })(typeof globalThis === "object" ? globalThis : this, function() {
   "use strict";
-  var APP = "law-learning", VERSION = 2, MAX_BYTES = 1024 * 1024;
-  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1"];
-  var PROGRESS = KEYS[0], NOTES = KEYS[1], PROFILE = KEYS[2];
+  var APP = "law-learning", VERSION = 3, MAX_BYTES = 1024 * 1024;
+  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1"];
+  var PROGRESS = KEYS[0], NOTES = KEYS[1], PROFILE = KEYS[2], REVIEW=KEYS[3];
 
   function fail(message) { throw new Error(message); }
   function plain(x) { return x !== null && typeof x === "object" && !Array.isArray(x) &&
@@ -49,6 +49,11 @@
       if(value.length>700000)fail("An individual backup record is too large.");
       if(key===PROGRESS)checkProgress(JSON.parse(value));
       if(key===PROFILE)checkProfile(JSON.parse(value));
+      if(key===REVIEW){
+        var reviewCore=(root&&root.LawReviewCore)||(typeof require==="function"?require("./review-core.js"):null);
+        if(!reviewCore||typeof reviewCore.parse!=="function")fail("Review validation engine is not loaded.");
+        reviewCore.parse(value);
+      }
       out[key]=value;count++;
     });
     if(!count)fail("Backup contains no recognised saved records.");
@@ -59,11 +64,11 @@
     var parsed;
     try{parsed=JSON.parse(input);}catch(e){fail("The backup is not valid JSON.");}
     if(!plain(parsed)||parsed.app!==APP)fail("This is not a Law Learning backup.");
-    if(parsed.schema!==1 && parsed.schema!==VERSION)fail("Unsupported backup version. Update the app first.");
+    if(parsed.schema!==1 && parsed.schema!==2 && parsed.schema!==VERSION)fail("Unsupported backup version. Update the app first.");
     var records=checkedRecords(parsed.records);
     var created=(typeof parsed.created==="string" && Number.isFinite(Date.parse(parsed.created))) ?
       parsed.created : new Date().toISOString();
-    return {app:APP,schema:VERSION,created:created,records:records,migratedFrom:parsed.schema===1?1:null};
+    return {app:APP,schema:VERSION,created:created,records:records,migratedFrom:parsed.schema<VERSION?parsed.schema:null};
   }
   function exportBackup(storage, timestamp) {
     var records=Object.create(null),count=0;
@@ -80,7 +85,8 @@
     var keys=Object.keys(b.records),p=b.records[PROGRESS]?JSON.parse(b.records[PROGRESS]):null;
     return {
       hasProgress:keys.includes(PROGRESS),hasNotes:keys.includes(NOTES),
-      hasProfile:keys.includes(PROFILE),
+      hasProfile:keys.includes(PROFILE),hasReview:keys.includes(REVIEW),
+      reviewCards:keys.includes(REVIEW)?Object.keys(JSON.parse(b.records[REVIEW]).cards).length:0,
       learned:p&&Array.isArray(p.learned)?p.learned.length:0,
       review:p&&Array.isArray(p.difficult)?p.difficult.length:0,
       migratedFrom:b.migratedFrom
