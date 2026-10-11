@@ -1,5 +1,5 @@
 /* Network-first application worker: keep user data in localStorage, never cache stale navigations. */
-const CACHE = "law-learning-v61";
+const CACHE = "law-learning-v62";
 const ASSETS = [
   "./",
   "./index.html",
@@ -9,6 +9,7 @@ const ASSETS = [
   "./exam-papers.css?v=59",
   "./student-menu.css?v=60",
   "./menu-simple.css?v=61",
+  "./word-game-v62.css?v=62",
   "./advanced-english-words.js?v=58",
   "./news-feed.js?v=57",
   "./case-review-core.js?v=55",
@@ -19,10 +20,10 @@ const ASSETS = [
   "./brain-map.css?v=1",
   "./brain-map.js?v=1",
   "./brain-map.html",
-  "./app-core.js?v=61",
+  "./app-core.js?v=62",
   "./app.js?v=58",
   "./legacy-study-ui.js?v=35",
-  "./word-experience.js?v=61",
+  "./word-experience.js?v=62",
   "./content-ledger.js?v=46",
   "./contract-unit1-data.js?v=36",
   "./contract-unit2-data.js?v=37",
