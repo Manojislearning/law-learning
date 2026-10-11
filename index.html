@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="62" />
+  <meta name="app-version" content="63" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./student-menu.css?v=60" />
   <link rel="stylesheet" href="./menu-simple.css?v=61" />
   <link rel="stylesheet" href="./word-game-v62.css?v=62" />
+  <link rel="stylesheet" href="./navigation-v63.css?v=63" />
 </head>
 <body>
   <div class="app-shell">
@@ -38,12 +39,11 @@
       <section id="home-view" class="home-view active">
         <div class="home-intro">
           <h2>Start learning</h2>
-          <button id="profile-open" type="button" style="background:none;border:0;padding:10px 0;color:#384e74;font:inherit;font-size:.85rem;font-weight:750;cursor:pointer;">Profile &amp; backups →</button>
         </div>
 
         <button type="button" class="home-card home-contract-lesson home-law-check" data-open="law-updates">
           <span class="home-contract-body">
-            <strong>Current Law Check</strong>
+            <strong>Law Updates</strong>
           </span>
           <span class="home-contract-start">Check →</span>
         </button>
@@ -64,19 +64,11 @@
           <span class="home-arrow">→</span>
         </button>
 
-        <button id="home-contract-lesson" type="button" class="home-contract-lesson">
-          <span class="home-contract-body">
-            <strong>Continue Contract–I</strong>
-          </span>
-          <span class="home-contract-start">Start →</span>
-        </button>
-
         <div class="home-grid">
-          <button class="home-card primary-card" data-open="words" type="button"><strong>Learn Words</strong><span class="home-arrow" aria-hidden="true">→</span></button>
+          <button class="home-card" data-open="words" type="button"><strong>Learn Words</strong><span class="home-arrow" aria-hidden="true">→</span></button>
           <button class="home-card student-home-card" data-open="student" type="button"><strong>Student</strong><span class="home-arrow" aria-hidden="true">→</span></button>
-          <button class="home-card" data-open="notes" type="button"><strong>Notes</strong><span class="home-arrow" aria-hidden="true">→</span></button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 62 · <a href="./refresh.html?build=62" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 63 · <a href="./refresh.html?build=63" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="student-view" class="main-view" aria-label="Student study resources">
         <div class="student-hub">
@@ -89,6 +81,9 @@
             <a class="home-card student-hub-card" href="./reader/"><strong>Law Notes</strong><span class="student-hub-arrow" aria-hidden="true">→</span></a>
             <button class="home-card student-hub-card" type="button" data-open="exam"><strong>Exam Pattern</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
             <button class="home-card student-hub-card" type="button" data-open="links"><strong>Important Links</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <button id="home-contract-lesson" class="home-card student-hub-card" type="button"><strong>Continue Contract–I</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <button class="home-card student-hub-card" type="button" data-open="profile"><strong>Profile</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <button class="home-card student-hub-card" type="button" data-open="settings"><strong>Settings</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
           </nav>
         </div>
       </section>
@@ -353,6 +348,7 @@
       </section>
 
       <section id="profile-view" class="main-view"><div id="profile-root"></div></section>
+      <section id="settings-view" class="main-view"><div id="settings-root"></div></section>
 
       <section id="notes-view" class="main-view">
         <div class="section-head">
@@ -421,7 +417,7 @@
   <script src="./exam-words-2.js"></script>
   <script src="./exam-words-3.js"></script>
   <script src="./exam-words-4.js"></script>
-  <script src="./app-core.js?v=62"></script>
+  <script src="./app-core.js?v=63"></script>
   <script src="./advanced-english-words.js?v=58"></script>
   <script src="./app.js?v=58"></script>
   <script src="./legacy-study-ui.js?v=35"></script>
@@ -445,6 +441,7 @@
   <script src="./case-review-core.js?v=55"></script>
   <script src="./backup-core.js?v=53"></script>
   <script src="./profile-local.js?v=53"></script>
+  <script src="./settings-view-v63.js?v=63"></script>
   <script src="./review-view.js?v=41"></script>
   <script src="./case-practice-data.js?v=42"></script>
   <script src="./torts-case-practice-data.js?v=47"></script>
