@@ -69,6 +69,13 @@ var data={
       "publisher": "Karnataka State Law University",
       "kind": "official-syllabus-pdf",
       "verifiedScope": "Historical official course syllabus reference; Unit III wording and applicability to a particular admission cohort have not been independently confirmed."
+    },
+    "specific-relief-amended-pdf": {
+      "title": "Specific Relief Act, 1963 as amended (India Code PDF)",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/1583/7/A1963-47.pdf",
+      "publisher": "India Code, Government of India",
+      "kind": "statute-primary-text",
+      "verifiedScope": "Contains the 2018 substituted provisions for Sections 10, 14 and 20 and chapter/section texts through Section 42; verify future amendments before use."
     }
   },
   "units": [
@@ -243,12 +250,16 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "specific-relief"
+        "specific-relief",
+        "specific-relief-amended-pdf"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
-        "The imported Specific Relief section list may reflect an older syllabus. Check current amendments before studying."
-      ]
+        "The imported Specific Relief section list may reflect an older syllabus. Check current amendments before studying.",
+        "Historical syllabus section references may predate the Specific Relief (Amendment) Act, 2018: Section 10 is now qualified by statutory bars, Section 14 was substituted, and Section 20 now concerns substituted performance.",
+        "Rectification, cancellation and declaratory decrees fall under Sections 26, 31 and 34 respectively, beyond the imported Unit V section list. These distinctions are included as clearly labelled related study material."
+      ],
+      "syllabusEditionEvidence": "Imported Specific Relief topics derive from a historical KSLU outline; applicable admission-year syllabus has not been verified."
     },
     {
       "id": "sem1-c3-u1",
