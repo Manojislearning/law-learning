@@ -287,7 +287,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
    const m=model.textContent.match(/Contract–I · Unit (I|II|III|IV|V) ·/);
    assert.ok(m,"Case explanation should disclose actual unit only after attempt");
    observedUnits.add(m[1]);
-   assert.equal(model.querySelectorAll("a[href*='indiacode.nic.in']").length>=0,true);
+   assert.ok(model.querySelectorAll("a[href*='indiacode.nic.in']").length>0,"Every case must link primary legislation");
    const ticks=[...rubric.querySelectorAll('input[type="checkbox"]')];
    assert.equal(ticks.length,4);
    ticks[0].checked=true;ticks[0].dispatchEvent(new w.Event("change",{bubbles:true}));
