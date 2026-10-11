@@ -76,11 +76,23 @@ async function main(){
    assert.ok(radius>=20,"The notes surface needs visibly rounded edges, at "+width+"px");
    await page.locator("#map-btn").click();
    assert.equal(await page.locator("#map-overlay").isVisible(),true);
-   assert.ok(await page.locator("#map-scene [data-id]").count()>=6,"Map contains this topic's real points");
+   assert.equal(await page.locator("#map-scene [data-id]").count(),4,
+     "Only the current topic and its three immediate headings are visible");
    assert.equal(await page.locator("#map-scene [aria-label='Semester I']").count(),0);
-   assert.equal(await page.locator("#map-scene .map-node rect").first().getAttribute("rx"),"30","SVG cards have rounded corners");
+   assert.equal(await page.locator("#map-scene .map-node rect").count(),0,
+     "Previous rounded topic cards are not rendered");
+   assert.equal(await page.locator("#map-scene [aria-label='Meaning']").getAttribute("aria-expanded"),"false");
    await page.locator("#map-scene [aria-label='Meaning']").click();
-   await page.locator("#map-details:not([hidden]) #map-note-body h2").first().waitFor();
+   assert.equal(await page.locator("#map-scene [data-id]").count(),6,
+     "Clicking Meaning reveals only its two next-level branches");
+   assert.equal(await page.locator("#map-scene [aria-label='Meaning']").getAttribute("aria-expanded"),"true");
+   await page.locator("#map-scene [aria-label='Meaning']").click();
+   assert.equal(await page.locator("#map-scene [data-id]").count(),4,
+     "Clicking the open branch folds it again");
+   await page.locator("#map-scene [aria-label='Meaning']").click();
+   await page.locator("#map-scene [aria-label='Justice, liberty, equality and fraternity.']").click();
+   await page.locator("#map-details:not([hidden]) #map-note-body p").first().waitFor();
+   await page.locator("#map-detail-close").click();
    await page.locator("#map-fit").click();
    const first=Number((await page.locator("#map-svg").getAttribute("viewBox")).split(" ")[2]);
    await page.locator("#map-zoom-in").click();
@@ -97,7 +109,14 @@ async function main(){
    });
    assert.ok(pinch.after<pinch.before,"Two-finger zoom works on mobile map");
    await page.locator("#map-fit").click();
-   await page.locator("#map-scene [aria-label='Constitutionalism'] [data-open-note]").click();
+   await page.locator("#map-scene [aria-label='Constitutionalism']").click();
+   await page.locator("#map-scene [aria-label='Rule of Law']").waitFor();
+   assert.equal(await page.locator("#map-scene [aria-label='Constitutionalism']").getAttribute("aria-expanded"),"true",
+     "Linked note branches expand inside the current map");
+   await page.locator("#map-scene [aria-label='Rule of Law']").click();
+   await page.locator("#map-scene [aria-label='Power is restrained by constitutional limits.']").click();
+   await page.locator("#map-details:not([hidden]) #map-note-body p").first().waitFor();
+   await page.locator("#map-read-note").click();
    await page.locator("#article h1").filter({hasText:"Constitutionalism"}).waitFor();
    assert.equal(await page.locator("#map-overlay").isVisible(),false);
    if(mobile)await page.locator("#bottom-next").click();
@@ -127,7 +146,7 @@ async function main(){
    assert.ok(layout.page<=width+2,width+"px horizontal overflow: "+JSON.stringify(layout));
    assert.ok(layout.elements.every(x=>x.left>=-2&&x.right<=width+2),width+"px controls overflow");
    assert.deepEqual(errors,[],"Browser errors at "+width+"px");
-   console.log("Reader "+width+"px: automatic public notes, loading, rounded cards, Markdown, maps, backlinks and navigation pass");
+   console.log("Reader "+width+"px: progressive brain branches, mobile unfold, linked note expansion, pinch, Markdown and navigation pass");
    await context.close();
   }
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve))}
