@@ -3,8 +3,9 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 const Core=require('../backup-core.js');
+const Review=require('../review-core.js');
 
-const PROGRESS='law-learning-progress-v2',NOTES='law-learning-notes-v1',PROFILE='law-learning-profile-v1';
+const PROGRESS='law-learning-progress-v2',NOTES='law-learning-notes-v1',PROFILE='law-learning-profile-v1',REVIEW='law-learning-review-v1';
 const progress={currentWord:8,score:40,learned:[1,3,8],difficult:[5],streak:2};
 const profile={nickname:'Law student',goal:'10',language:'English',reduceMotion:true,largeText:false};
 function mockStore(initial={},failAt=0){
@@ -21,7 +22,7 @@ const v1={app:'law-learning',schema:1,created:'2026-01-02T00:00:00.000Z',
  records:{[PROGRESS]:JSON.stringify(progress),[NOTES]:'Private draft: offer vs acceptance',[PROFILE]:JSON.stringify(profile)}};
 test('Legacy v1 imports into current version while retaining progress and notes',()=>{
  const b=Core.parseBackup(JSON.stringify(v1));
- assert.equal(b.schema,2);
+ assert.equal(b.schema,3);
  assert.equal(b.migratedFrom,1);
  const store=mockStore();
  Core.restoreBackup(store,JSON.stringify(v1));
@@ -29,10 +30,10 @@ test('Legacy v1 imports into current version while retaining progress and notes'
  assert.equal(store.getItem(NOTES),v1.records[NOTES]);
  assert.equal(Core.describe(b).learned,3);
 });
-test('v2 round-trip exports notes profile and scores unchanged',()=>{
+test('v3 export round-trip preserves old progress, notes and profile',()=>{
  const initial=mockStore(v1.records);
  const data=Core.exportBackup(initial,'2026-01-02T00:00:00.000Z');
- assert.equal(JSON.parse(data).schema,2);
+ assert.equal(JSON.parse(data).schema,3);
  const restored=mockStore();
  Core.restoreBackup(restored,data);
  assert.deepEqual(restored.asObject(),initial.asObject());
@@ -68,5 +69,53 @@ test('Writes rollback on a partial restore failure',()=>{
 });
 test('Import refuses empty datasets and future schemas',()=>{
  assert.throws(()=>Core.parseBackup(JSON.stringify({app:'law-learning',schema:2,records:{}})));
- assert.throws(()=>Core.parseBackup(JSON.stringify({app:'law-learning',schema:3,records:v1.records})));
+ assert.throws(()=>Core.parseBackup(JSON.stringify({app:'law-learning',schema:4,records:v1.records})));
+});
+
+test('Legacy schema-2 backups import without erasing new review dates',()=>{
+ const store=mockStore({[REVIEW]:JSON.stringify({version:1,cards:{}}),[NOTES]:'Other notes'});
+ const old={app:'law-learning',schema:2,records:{[PROGRESS]:JSON.stringify(progress)}};
+ const parsed=Core.parseBackup(JSON.stringify(old));
+ assert.equal(parsed.schema,3);assert.equal(parsed.migratedFrom,2);
+ Core.restoreBackup(store,JSON.stringify(old));
+ assert.equal(store.getItem(REVIEW),JSON.stringify({version:1,cards:{}}));
+ assert.equal(store.getItem(NOTES),'Other notes');
+});
+test('Review schedule round-trip includes due date, stage and typed grading counts',()=>{
+ const records={...v1.records};
+ const store=mockStore(records),when=1781200000000;
+ Review.recognize(store,'contract1-unit1:proposal',false,when);
+ Review.recall(store,'contract1-unit2:capacity','good',when+600000);
+ const body=Core.exportBackup(store,'2026-10-11T00:00:00.000Z');
+ const parsed=Core.parseBackup(body),description=Core.describe(parsed);
+ assert.equal(description.hasReview,true);assert.equal(description.reviewCards,2);
+ const fresh=mockStore();Core.restoreBackup(fresh,body);
+ assert.equal(fresh.getItem(REVIEW),store.getItem(REVIEW));
+ assert.equal(JSON.parse(body).schema,3);
+});
+test('Tampered or corrupt review schedule is rejected before other records are written',()=>{
+ const old=mockStore({[NOTES]:'preserve me'});
+ const malformed=[
+   '{"version":1,"cards":{"constructor":{"stage":2}}}',
+   '{"version":2,"cards":{}}',
+   '{"version":1,"cards":{"contract1-unit2:capacity":{"stage":999}}}'
+ ];
+ for(const value of malformed){
+   const backup={app:'law-learning',schema:3,records:{[NOTES]:'new notes',[REVIEW]:value}};
+   assert.throws(()=>Core.restoreBackup(old,JSON.stringify(backup)));
+   assert.equal(old.getItem(NOTES),'preserve me');
+ }
+});
+test('Review history is restored on a partial import failure',()=>{
+ const when=1781200000000;
+ const seed=mockStore({[NOTES]:'old'});
+ Review.recognize(seed,'contract1-unit1:proposal',true,when);
+ const original=seed.asObject(),prepared=mockStore();
+ Review.recall(prepared,'contract1-unit2:capacity','good',when);
+ const backup={app:'law-learning',schema:3,records:{
+  [NOTES]:'new notes',[REVIEW]:prepared.getItem(REVIEW)
+ }};
+ const failing=mockStore(original,2);
+ assert.throws(()=>Core.restoreBackup(failing,JSON.stringify(backup)),/Previous data restored/);
+ assert.deepEqual(failing.asObject(),original);
 });
