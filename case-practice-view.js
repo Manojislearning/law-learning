@@ -3,11 +3,14 @@
  */
 (function(root){
 "use strict";
-var host=document.getElementById("practice-root"),core=root.LawCaseCore,bank=root.LawCaseData;
+var host=document.getElementById("practice-root"),core=root.LawCaseCore;
+var banks={contract:root.LawCaseData,torts:root.LawTortsCaseData};
+var bankKey=new URLSearchParams(root.location.search).get("course")==="torts"?"torts":"contract";
+var bank=banks[bankKey];
 if(!host||!core||!bank)return;
-var history=new Map(),session=null,pos=0,analysed=0,skipped=0;
-try{core.verify(bank);}catch(err){host.textContent="Case practice is unavailable: "+err.message;return;}
-var css=document.createElement("style");css.textContent=".cp-wrap{max-width:710px;margin:0 auto;padding:9px 0 58px}.cp-wrap p{line-height:1.65;font-size:.91rem}.cp-eyebrow{font-size:.72rem;font-weight:850;letter-spacing:.055em;color:var(--muted);text-transform:uppercase}.cp-wrap h2{font-size:clamp(1.6rem,4.8vw,2rem);line-height:1.2;margin:8px 0 14px}.cp-panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:clamp(16px,4vw,24px);margin:13px 0}.cp-banner{background:#f4f6f8;border-radius:12px;padding:12px 15px;color:#243044;font-size:.84rem;line-height:1.5;margin:14px 0}.cp-button{display:block;width:100%;margin-top:12px;background:#101c2d;color:#fff;border:1px solid #101c2d;border-radius:12px;padding:12px 15px;font:inherit;font-weight:780;cursor:pointer}.cp-button.alt{background:white;color:#101c2d;border-color:var(--line)}.cp-button:focus-visible,.cp-wrap textarea:focus-visible,.cp-rubric input:focus-visible,.cp-wrap a:focus-visible{outline:3px solid #7691b3;outline-offset:3px}.cp-meta{display:flex;gap:10px;align-items:center;justify-content:space-between;color:var(--muted);font-size:.78rem;font-weight:800;margin-bottom:16px}.cp-facts{font-size:1rem!important;line-height:1.8!important;color:var(--text)}.cp-question{border-left:3px solid #1c304f;padding:8px 13px;margin:14px 0;font-weight:700}.cp-writing{display:block;font-size:.84rem;font-weight:750;margin-top:16px}.cp-writing textarea{width:100%;display:block;margin-top:9px;padding:12px;border:1px solid #b5c0ce;border-radius:12px;box-sizing:border-box;font:inherit;font-size:16px;line-height:1.6;resize:vertical;min-height:160px;background:#fff;color:var(--text)}.cp-help{font-size:.82rem;color:var(--muted);margin:16px 0}.cp-help summary{cursor:pointer;font-weight:750}.cp-error{color:#864324;font-size:.85rem;min-height:22px;margin-top:9px}.cp-model{background:#f2f5f8;border-radius:12px;padding:15px;margin:16px 0}.cp-model h3{font-size:.89rem;margin:17px 0 4px}.cp-model h3:first-child{margin-top:0}.cp-model p{margin:3px 0 12px}.cp-rubric{border:1px solid var(--line);border-radius:13px;padding:13px;margin-top:16px}.cp-rubric legend{font-size:.87rem;font-weight:800;padding:0 5px}.cp-rubric label{display:flex;gap:12px;align-items:flex-start;font-size:.85rem;line-height:1.5;margin:11px 0}.cp-rubric input{width:20px;height:20px;flex:none;accent-color:#1e4c71}.cp-result{font-size:.83rem;background:#f5f7f8;border-radius:10px;padding:12px;margin-top:10px}.cp-case-source{display:block;font-size:.82rem;color:#285988;margin:9px 0;line-height:1.5}.cp-topic{font-size:.85rem;color:var(--muted)}.cp-wrap [hidden]{display:none!important}.cp-coaching{margin:14px 0 0;background:#f1f5f8;border-radius:12px;padding:12px}.cp-coaching summary{min-height:44px;padding:9px 2px;cursor:pointer;font-size:.86rem;font-weight:760}.cp-coaching-list{padding-left:20px;margin:0}.cp-coaching-list li{line-height:1.6;font-size:.85rem;margin:8px 0;overflow-wrap:anywhere}.cp-coaching-list li:first-child{margin-top:0}.cp-coaching-list li:last-child{margin-bottom:0}.cp-rubric label{min-height:44px;padding:7px 0;cursor:pointer}.cp-rubric input{width:24px;height:24px}.cp-help summary{min-height:44px;padding:10px 2px;display:list-item}.cp-case-source{min-height:40px;padding:9px 0;overflow-wrap:anywhere}.cp-wrap button{min-height:44px}.cp-wrap h2:focus,.cp-model:focus{outline:none}.cp-wrap h2:focus-visible,.cp-model:focus-visible{outline:3px solid #7691b3;outline-offset:4px}@media(max-width:350px){.cp-panel{padding:14px}.cp-meta{flex-wrap:wrap}.cp-coaching{padding:10px}}";document.head.appendChild(css);
+var histories={contract:new Map(),torts:new Map()},history=histories[bankKey],session=null,pos=0,analysed=0,skipped=0;
+try{core.verify(banks.contract);core.verify(banks.torts);}catch(err){host.textContent="Case practice is unavailable: "+err.message;return;}
+var css=document.createElement("style");css.textContent=".cp-wrap{max-width:710px;margin:0 auto;padding:9px 0 58px}.cp-wrap p{line-height:1.65;font-size:.91rem}.cp-eyebrow{font-size:.72rem;font-weight:850;letter-spacing:.055em;color:var(--muted);text-transform:uppercase}.cp-wrap h2{font-size:clamp(1.6rem,4.8vw,2rem);line-height:1.2;margin:8px 0 14px}.cp-panel{background:#fff;border:1px solid var(--line);border-radius:17px;padding:clamp(16px,4vw,24px);margin:13px 0}.cp-banner{background:#f4f6f8;border-radius:12px;padding:12px 15px;color:#243044;font-size:.84rem;line-height:1.5;margin:14px 0}.cp-button{display:block;width:100%;margin-top:12px;background:#101c2d;color:#fff;border:1px solid #101c2d;border-radius:12px;padding:12px 15px;font:inherit;font-weight:780;cursor:pointer}.cp-button.alt{background:white;color:#101c2d;border-color:var(--line)}.cp-button:focus-visible,.cp-wrap textarea:focus-visible,.cp-rubric input:focus-visible,.cp-wrap a:focus-visible{outline:3px solid #7691b3;outline-offset:3px}.cp-meta{display:flex;gap:10px;align-items:center;justify-content:space-between;color:var(--muted);font-size:.78rem;font-weight:800;margin-bottom:16px}.cp-facts{font-size:1rem!important;line-height:1.8!important;color:var(--text)}.cp-question{border-left:3px solid #1c304f;padding:8px 13px;margin:14px 0;font-weight:700}.cp-writing{display:block;font-size:.84rem;font-weight:750;margin-top:16px}.cp-writing textarea{width:100%;display:block;margin-top:9px;padding:12px;border:1px solid #b5c0ce;border-radius:12px;box-sizing:border-box;font:inherit;font-size:16px;line-height:1.6;resize:vertical;min-height:160px;background:#fff;color:var(--text)}.cp-help{font-size:.82rem;color:var(--muted);margin:16px 0}.cp-help summary{cursor:pointer;font-weight:750}.cp-error{color:#864324;font-size:.85rem;min-height:22px;margin-top:9px}.cp-model{background:#f2f5f8;border-radius:12px;padding:15px;margin:16px 0}.cp-model h3{font-size:.89rem;margin:17px 0 4px}.cp-model h3:first-child{margin-top:0}.cp-model p{margin:3px 0 12px}.cp-rubric{border:1px solid var(--line);border-radius:13px;padding:13px;margin-top:16px}.cp-rubric legend{font-size:.87rem;font-weight:800;padding:0 5px}.cp-rubric label{display:flex;gap:12px;align-items:flex-start;font-size:.85rem;line-height:1.5;margin:11px 0}.cp-rubric input{width:20px;height:20px;flex:none;accent-color:#1e4c71}.cp-result{font-size:.83rem;background:#f5f7f8;border-radius:10px;padding:12px;margin-top:10px}.cp-case-source{display:block;font-size:.82rem;color:#285988;margin:9px 0;line-height:1.5}.cp-topic{font-size:.85rem;color:var(--muted)}.cp-wrap [hidden]{display:none!important}.cp-coaching{margin:14px 0 0;background:#f1f5f8;border-radius:12px;padding:12px}.cp-coaching summary{min-height:44px;padding:9px 2px;cursor:pointer;font-size:.86rem;font-weight:760}.cp-coaching-list{padding-left:20px;margin:0}.cp-coaching-list li{line-height:1.6;font-size:.85rem;margin:8px 0;overflow-wrap:anywhere}.cp-coaching-list li:first-child{margin-top:0}.cp-coaching-list li:last-child{margin-bottom:0}.cp-rubric label{min-height:44px;padding:7px 0;cursor:pointer}.cp-rubric input{width:24px;height:24px}.cp-help summary{min-height:44px;padding:10px 2px;display:list-item}.cp-case-source{min-height:40px;padding:9px 0;overflow-wrap:anywhere}.cp-wrap button{min-height:44px}.cp-wrap h2:focus,.cp-model:focus{outline:none}.cp-wrap h2:focus-visible,.cp-model:focus-visible{outline:3px solid #7691b3;outline-offset:4px}.cp-subjects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:15px 0}.cp-subjects .cp-button{margin:0;min-height:48px;min-width:0}.cp-subjects .cp-button[aria-pressed="true"]{background:#101c2d;color:white;border-color:#101c2d}@media(max-width:350px){.cp-panel{padding:14px}.cp-meta{flex-wrap:wrap}.cp-coaching{padding:10px}}";document.head.appendChild(css);
 function E(parent,tag,text,cl){
  var n=document.createElement(tag);if(cl)n.className=cl;if(text!==undefined)n.textContent=String(text);
  parent.appendChild(n);return n;
@@ -18,17 +21,29 @@ function B(parent,text,click,alt){
 function reset(){session=null;pos=0;analysed=0;skipped=0;host.replaceChildren();}
 function shell(){host.replaceChildren();return E(host,"div",undefined,"cp-wrap");}
 function goHome(){root.LawAppCore.router.navigate("home");}
+function courseName(){return bankKey==="torts"?"Law of Torts":"Contract–I";}
+function openCourse(next){
+ if(!Object.prototype.hasOwnProperty.call(banks,next))return false;
+ bankKey=next;bank=banks[next];history=histories[next];dashboard();
+ if(root.LawAppCore.router.current()!=="practice")root.LawAppCore.router.navigate("practice");
+ return true;
+}
 function dashboard(){
  reset();
  var wrap=shell();
- E(wrap,"p","FIRST YEAR · CONTRACT–I","cp-eyebrow");
+ E(wrap,"p","FIRST YEAR · "+courseName(),"cp-eyebrow");
  var dashboardTitle=E(wrap,"h2","Practise legal reasoning");
  dashboardTitle.tabIndex=-1;
- E(wrap,"p","Five unfamiliar fact patterns, one from each unit. Read the facts first, write your own issue–rule–application–conclusion answer, then check the model reasoning.");
+ E(wrap,"p","Practise "+courseName()+" with five unfamiliar fact patterns, one from each syllabus unit. Write your own issue–rule–application–conclusion answer before reading the reference reasoning.");
+ var subjects=E(wrap,"div",undefined,"cp-subjects");
+ [["contract","Contract–I"],["torts","Law of Torts"]].forEach(function(entry){
+  var btn=B(subjects,entry[1],function(){openCourse(entry[0]);},true);
+  btn.setAttribute("aria-pressed",String(entry[0]===bankKey));
+ });
  E(wrap,"p","These are original study problems, not official KSLU examination questions or examiner-marked answers.","cp-banner");
  var panel=E(wrap,"section",undefined,"cp-panel");
  E(panel,"h3","Mixed five-case practice");
- E(panel,"p","Questions arrive in a different order each session. After three sets, all fifteen cases will have appeared if you complete the sets in this open visit.");
+ E(panel,"p","Each set mixes five units. The least-used selection prioritises unseen questions, so completing three sets in the same subject covers fifteen distinct problems.");
  B(panel,"Start 5 cases →",start);
  var notes=E(wrap,"details",undefined,"cp-help");
  E(notes,"summary","What is IRAC?");
@@ -52,7 +67,7 @@ function draw(){
  E(wrap,"p","EXAM PRACTICE · NO TOPIC HINTS","cp-eyebrow");
  var box=E(wrap,"article",undefined,"cp-panel");
  var meta=E(box,"div",undefined,"cp-meta");
- E(meta,"span","Case "+(pos+1)+" / "+session.length);E(meta,"span","Contract–I");
+ E(meta,"span","Case "+(pos+1)+" / "+session.length);E(meta,"span",courseName());
  var heading=E(box,"h2","Read the facts");heading.tabIndex=-1;
  E(box,"p",c.facts,"cp-facts");
  E(box,"p",c.task,"cp-question");
@@ -70,14 +85,14 @@ function draw(){
   if(typeof model.focus==="function")model.focus();
  });
  var model=E(box,"section",undefined,"cp-model");model.hidden=true;model.tabIndex=-1;
- E(model,"p","Contract–I · Unit "+["","I","II","III","IV","V"][c.unit]+" · "+c.title,"cp-eyebrow");
+ E(model,"p",courseName()+" · Unit "+["","I","II","III","IV","V"][c.unit]+" · "+c.title,"cp-eyebrow");
  ["issue","rule","application","conclusion"].forEach(function(key){
   E(model,"h3",key[0].toUpperCase()+key.slice(1));
   E(model,"p",c.outline[key]);
  });
  E(model,"h3","Common mistake");E(model,"p",c.trap);
  E(model,"p","Reference analysis only. Alternative legally sound conclusions may be justified by additional facts or authorities.","cp-topic");
- var refs=E(model,"details",undefined,"cp-help");E(refs,"summary","Open primary legislation");
+ var refs=E(model,"details",undefined,"cp-help");E(refs,"summary","Open source judgments and legislation");
  c.sourceIds.forEach(function(id){
   var src=bank.sources[id],link=E(refs,"a",src.title+" ↗","cp-case-source");
   link.href=src.url;link.target="_blank";link.rel="noopener noreferrer";
@@ -131,7 +146,7 @@ function finish(){
  B(wrap,"Home",goHome,true);
  if(typeof finishedTitle.focus==="function")finishedTitle.focus();
 }
-root.LawCasePracticeUI={show:dashboard,reset:reset};
+root.LawCasePracticeUI={show:dashboard,reset:reset,open:openCourse};
 root.LawAppCore.router.subscribe(function(route){
  if(route==="practice")dashboard();
  else if(session)reset(); /* Discard essay drafts when leaving. */
