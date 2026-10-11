@@ -14,6 +14,7 @@
     review:["Contract–I · Revision","Review"],
     practice:["Contract–I · Exam Practice","Case Practice"],
     "law-updates":["Statutory review · First Year","Current Law Check"],
+    news:["Legal current affairs","Law News"],
     syllabus:["KSLU · 3-Year LL.B","Syllabus"],
     subjects:["KSLU · Legal concepts","Subjects"],
     exam:["Exam preparation","Exam Pattern"],
