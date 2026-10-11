@@ -35,14 +35,16 @@ function setup(hash){
  const student=d.querySelector("#student-view");
  assert.equal(home.querySelectorAll('[data-open="student"]').length,1);
  assert.equal(home.querySelectorAll('[data-open="syllabus"],[data-open="subjects"],[data-open="papers"],a[href="./reader/?map=1"]').length,0);
- assert.equal(student.querySelectorAll('.student-hub-card').length,4);
+ assert.equal(student.querySelectorAll('.student-hub-card').length,7);
+ assert.ok(student.querySelector('a[href="./reader/"]'));
+ assert.ok(!home.querySelector('[data-open="exam"],[data-open="links"],a[href="./reader/"]'));
  assert.ok(student.querySelector('a[href="./reader/?map=1"]'));
  home.querySelector('[data-open="student"]').click();
  await settle();
  assert.equal(w.LawAppCore.router.current(),"student");
  assert.equal(student.classList.contains("active"),true);
  assert.equal(d.getElementById("section-title").textContent,"Student");
- const links=["syllabus","subjects","papers"];
+ const links=["syllabus","subjects","papers","exam","links"];
  for(const route of links){
    const button=student.querySelector('[data-open="'+route+'"]');
    assert.ok(button,"Student missing "+route);
@@ -66,5 +68,5 @@ function setup(hash){
  assert.equal(direct.w.LawAppCore.router.current(),"student");
  assert.equal(direct.d.getElementById("student-view").classList.contains("active"),true);
  direct.dom.window.close();
- console.log("Student hub DOM: four relocated links, direct entry and contextual Back navigation passed.");
+ console.log("Student hub DOM: seven relocated links, direct entry and contextual Back navigation passed.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
