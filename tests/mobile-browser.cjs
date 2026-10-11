@@ -411,7 +411,7 @@ async function run(){
     assert.equal(errors.length,0,"Exam reader browser errors "+width+"px: "+errors.join("; "));
     await context.close();
    }
-   // Student hub v62: seven title-only study entries and contextual Back navigation.
+   // Student hub v63: ten title-only study entries and contextual Back navigation.
    for(const width of [320,390,768]){
     const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
     const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
@@ -422,13 +422,13 @@ async function run(){
     await page.waitForURL(/#student$/);
     const student=page.locator("#student-view");
     await student.waitFor({state:"visible"});
-    assert.equal(await student.locator(".student-hub-card").count(),7);
+    assert.equal(await student.locator(".student-hub-card").count(),10);
     assert.equal(await student.locator('a[href="./reader/?map=1"]').count(),1);
     const rectangles=await student.locator(".student-hub-card").evaluateAll(nodes=>nodes.map(node=>{
       const r=node.getBoundingClientRect();return {left:r.left,right:r.right,height:r.height};
     }));
     assert.ok(rectangles.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px Student hub item overflow or touch target too small: "+JSON.stringify(rectangles));
-    for(const route of ["syllabus","subjects","papers","exam","links"]){
+    for(const route of ["syllabus","subjects","papers","exam","links","profile","settings"]){
       await student.locator('[data-open="'+route+'"]').tap();
       await page.waitForURL(new RegExp("#"+route+"$"));
       await page.waitForFunction(() => document.querySelector("#back-home")?.textContent === "← Student");
@@ -436,8 +436,25 @@ async function run(){
       await page.locator("#back-home").tap();
       await page.waitForURL(/#student$/);
     }
+    // Preferences must use the original profile record and remain available offline.
+    await student.locator('[data-open="settings"]').tap();
+    await page.waitForURL(/#settings$/);
+    await page.locator("#settings63-goal").selectOption("20");
+    await page.locator("#settings63-large").check();
+    await page.locator(".settings63-save").tap();
+    assert.ok((await page.locator(".settings63-status").innerText()).includes("saved"));
+    assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem("law-learning-profile-v1")).goal),"20");
+    await page.locator("#back-home").tap();
+    await page.waitForURL(/#student$/);
+    await student.locator("#home-contract-lesson").tap();
+    await page.waitForURL(/#syllabus$/);
+    await page.locator("#back-home").tap();
+    await page.waitForURL(/#student$/);
     await page.locator("#back-home").tap();
     await page.waitForURL(/#home$/);
+    assert.equal(await page.locator('#home-view [data-open="notes"],#home-view #profile-open,#home-view #home-contract-lesson').count(),0);
+    const wordsTile=page.locator('#home-view [data-open="words"]');
+    assert.ok((await wordsTile.evaluate(el=>getComputedStyle(el).backgroundColor))!=="rgb(13, 19, 33)","Learn Words must not have black background");
     assert.equal(errors.length,0,"Student navigation browser error at "+width+"px: "+errors.join("; "));
     await context.close();
    }
