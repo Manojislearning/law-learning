@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#f4f5f7">
-  <meta name="description" content="A calm, private, Obsidian-style mobile reader for your GitHub LAW-NOTES vault.">
+  <meta name="description" content="Read public KSLU law notes with Markdown and interactive topic brain branches.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src https://api.github.com; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./minimal.css?v=5">
-  <link rel="stylesheet" href="./map.css?v=2">
+  <link rel="stylesheet" href="./minimal.css?v=6">
+  <link rel="stylesheet" href="./map.css?v=3">
   <title>Law Notes · Reader</title>
 </head>
 <body>
@@ -23,7 +23,7 @@
       <div class="top-actions">
         <span id="status-badge" class="status-badge"><span></span> Not connected</span>
         <button id="refresh-btn" type="button" class="icon-btn" aria-label="Refresh vault from GitHub" title="Refresh vault" disabled><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2 6M20 4v7h-7"/></svg></button>
-        <button id="settings-btn" type="button" class="icon-btn" aria-label="Reading settings" title="Reading settings"><svg viewBox="0 0 24 24"><path d="M4 8h16M7 4v8M4 17h16m-5-4v8"/></svg></button>
+        <button id="settings-btn" type="button" class="icon-btn" aria-label="Display settings" title="Reading settings"><svg viewBox="0 0 24 24"><path d="M4 8h16M7 4v8M4 17h16m-5-4v8"/></svg></button>
       </div>
     </header>
 
@@ -39,32 +39,18 @@
       </aside>
 
       <section class="reader-pane" aria-live="polite">
-        <div id="connect-view" class="connect-wrap">
-          <div class="connect-card">
-            <div class="connect-eyebrow"><span class="pill-star">✦</span> PRIVATE GITHUB LIBRARY</div>
-            <div class="connect-icon" aria-hidden="true">▤</div>
-            <h1>Law Notes</h1>
-            <p class="connect-lead">Subjects · Units · Topics · Brain Maps</p>
-            <div class="vault-summary"><span class="vault-avatar">LN</span><span><strong>LAW-NOTES</strong><small>Manojislearning / LAW-NOTES</small></span><span class="private-chip">◉ Private</span></div>
-            <button id="public-connect-btn" type="button" class="public-connect-btn">Open public notes <span aria-hidden="true">→</span></button>
-            <div class="connect-divider">Private repository access</div>
-            <form id="connect-form" autocomplete="off">
-              <label class="field-label" for="token">GitHub access token</label>
-              <div class="token-row"><input id="token" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false" required><button id="show-token" type="button" aria-label="Show or hide token" title="Show or hide token">Show</button></div>
-              <button id="connect-btn" class="primary-btn" type="submit">Open my library <span aria-hidden="true">→</span></button>
-            </form>
-            <p class="connect-error" id="connect-error" role="alert" hidden></p>
-            <details class="setup-help"><summary>How do I get a read-only GitHub token?</summary><div>
-              <ol><li>Open <a href="https://github.com/settings/personal-access-tokens/new?name=KSLU-Vault-Reader&target_name=Manojislearning&expires_in=30&contents=read" target="_blank" rel="noopener noreferrer">GitHub's fine-grained token page</a>.</li><li>Choose the <strong>Manojislearning</strong> owner and select <strong>Only select repositories → LAW-NOTES</strong>.</li><li>Set <strong>Contents: Read-only</strong>. Do not grant write permissions.</li><li>Generate the token and paste it above. Keep it secret.</li></ol>
-              <p>The token stays only in memory while this page is open, is sent only to GitHub’s API, and is never saved to this phone or committed to the website. Reopening the app requires reconnecting.</p>
-            </div></details>
-            <div class="trust-line">Read only <span>·</span> Original Markdown</div>
+        <div id="connect-view" class="connect-wrap" hidden>
+          <div class="connect-card notes-error-card">
+            <span class="notes-error-symbol" aria-hidden="true">↻</span>
+            <h1>Notes unavailable</h1>
+            <p id="connect-error" class="notes-error-message" role="alert">Could not open the notes.</p>
+            <button id="public-connect-btn" class="primary-btn" type="button">Try again <span aria-hidden="true">→</span></button>
           </div>
         </div>
 
         <div id="reader-view" class="reader-view" hidden>
-          <div class="reader-toolbar"><button id="up-note" type="button" class="up-note" hidden>← Unit</button><div class="breadcrumb" id="breadcrumb"></div><div class="reader-tools"><button id="save-btn" type="button" class="tool-btn" aria-label="Save bookmark" title="Save note">☆ <span class="tool-word">Save</span></button><button id="speak-btn" type="button" class="tool-btn" aria-label="Read note aloud" title="Read aloud">▶ <span class="tool-word">Listen</span></button><button id="map-btn" type="button" class="tool-btn map-open-btn" hidden aria-label="Open Brain Map" title="Open interactive brain map">◇ <span class="tool-word">Map</span></button><button id="pages-btn" type="button" class="tool-btn pages-btn" aria-pressed="true" title="Switch between short pages and continuous reading">▤ <span class="tool-word">Pages</span></button><button id="font-btn" type="button" class="tool-btn" aria-label="Change font size" title="Text settings">Aa</button></div></div>
-          <div id="reading-scroll" class="reading-scroll"><div id="progress-line" class="progress-line"></div><article id="article" class="article"></article><nav id="study-pager" class="study-pager" aria-label="Study note pages" hidden><button id="page-prev" type="button">← Back</button><span id="page-count" aria-live="polite">1 / 1</span><button id="page-next" type="button">Next →</button></nav><div class="reading-footer"><div class="chapter-nav"><button id="prev-note" type="button" class="chapter-btn" disabled><span>← PREVIOUS NOTE</span><strong id="prev-title">—</strong></button><button id="next-note" type="button" class="chapter-btn" disabled><span>NEXT NOTE →</span><strong id="next-title">—</strong></button></div></div></div>
+          <div class="reader-toolbar"><button id="up-note" type="button" class="up-note" hidden>← Unit</button><div class="breadcrumb" id="breadcrumb"></div><div class="reader-tools"><button id="save-btn" type="button" class="tool-btn" aria-label="Save bookmark" title="Save note">☆ <span class="tool-word">Save</span></button><button id="speak-btn" type="button" class="tool-btn" aria-label="Read note aloud" title="Read aloud">▶ <span class="tool-word">Listen</span></button><button id="map-btn" type="button" class="tool-btn map-open-btn" hidden aria-label="Open Brain Map" title="Open interactive brain map">◇ <span class="tool-word">Map</span></button><button id="markdown-btn" type="button" class="tool-btn markdown-btn" aria-pressed="false" title="View Markdown source">&lt;/&gt; <span class="tool-word">Markdown</span></button><button id="font-btn" type="button" class="tool-btn" aria-label="Change font size" title="Text settings">Aa</button></div></div>
+          <div id="reading-scroll" class="reading-scroll"><div id="progress-line" class="progress-line"></div><article id="article" class="article"></article><div class="reading-footer"><div class="chapter-nav"><button id="prev-note" type="button" class="chapter-btn" disabled><span>← PREVIOUS NOTE</span><strong id="prev-title">—</strong></button><button id="next-note" type="button" class="chapter-btn" disabled><span>NEXT NOTE →</span><strong id="next-title">—</strong></button></div></div></div>
         </div>
       </section>
     </main>
@@ -92,8 +78,19 @@
       </div>
       <div class="map-footer"><span id="map-current">Tap a point to inspect it</span><span>Pinch to zoom · Drag to move · ↗ to Markdown</span></div>
     </section>
+    <div id="loading-screen" class="loading-screen" role="status" aria-live="polite" aria-label="Opening Law Notes">
+      <div class="loading-art" aria-hidden="true">
+        <span class="loading-orbit orbit-one"></span>
+        <span class="loading-orbit orbit-two"></span>
+        <span class="loading-orbit orbit-three"></span>
+        <span class="loading-core">L<span>·</span>N</span>
+      </div>
+      <div class="loading-title">Law Notes</div>
+      <div id="loading-message" class="loading-description">Opening your notes</div>
+      <div class="loading-bounce" aria-hidden="true"><i></i><i></i><i></i></div>
+    </div>
     <div id="scrim" class="scrim" hidden></div>
-    <div id="prefs" class="prefs" role="dialog" aria-label="Reading settings" hidden><div class="prefs-title"><strong>Reading preferences</strong><button id="close-prefs" type="button" class="icon-btn" aria-label="Close preferences">×</button></div><label>Text size <output id="font-size-label">19px</output><input id="font-size" type="range" min="16" max="26" step="1" value="19"></label><label class="toggle-row">Warm paper theme <input id="warm-toggle" type="checkbox" checked></label><p>Settings are stored on this device. Note content and access tokens are not stored permanently.</p><button id="disconnect-btn" class="disconnect-btn" type="button">Disconnect GitHub session</button></div>
+    <div id="prefs" class="prefs" role="dialog" aria-label="Reading settings" hidden><div class="prefs-title"><strong>Display</strong><button id="close-prefs" type="button" class="icon-btn" aria-label="Close preferences">×</button></div><label>Text size <output id="font-size-label">19px</output><input id="font-size" type="range" min="16" max="26" step="1" value="19"></label><label class="toggle-row">Warm paper theme <input id="warm-toggle" type="checkbox" checked></label><p>Text size and appearance are saved on this device.</p></div>
     <nav class="bottom-nav" aria-label="Note navigation"><button id="bottom-home" type="button"><span>⌂</span> Home</button><button id="bottom-prev" type="button" disabled><span>←</span> Previous</button><button id="bottom-next" type="button" disabled><span>→</span> Next</button><button id="bottom-map" type="button" disabled><span>◇</span> Map</button></nav>
     <div id="toast" class="toast" role="status" hidden></div>
   </div>
