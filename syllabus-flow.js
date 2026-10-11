@@ -7,6 +7,10 @@ var sheet=document.createElement("style");sheet.textContent="\n#syllabus-view>.s
 var sourceStyle=document.createElement("style");
 sourceStyle.textContent='.sf-sources{border:1px solid var(--line);border-radius:12px;background:#fff;margin:14px 0}.sf-sources summary{font-size:.83rem;font-weight:750;padding:13px;cursor:pointer}.sf-sources-body{border-top:1px solid var(--line);padding:11px 14px}.sf-sources-body p{color:var(--muted);font-size:.8rem;line-height:1.6}.sf-sources-body a{display:block;font-size:.83rem;line-height:1.5;color:#265b90;text-decoration:underline;margin:10px 0}.sf-source-warning{border-left:3px solid #ad6324;background:#fff5e8;color:#70440d;border-radius:0 9px 9px 0;padding:12px;font-size:.81rem;line-height:1.5;margin:12px 0}';
 document.head.appendChild(sourceStyle);
+var dashboardStyle=document.createElement("style");
+dashboardStyle.textContent='.sf-source-entry{border-top:1px solid var(--line);padding-top:18px;margin-top:20px}.sf-source-entry .sf-choice{margin-top:8px}.sf-source-link{display:block;font-size:.9rem;line-height:1.5;font-weight:650;margin:13px 0;color:#275a8a;text-decoration:underline}.sf-source-small{font-size:.8rem!important;color:var(--muted)}';
+document.head.appendChild(dashboardStyle);
+
 host.replaceChildren();
 var statePath=[],direction="forward";
 var otherSemesters={"2":["Constitutional Law – II","Contract – II","Labour Law – I","Property Law","Family Law – II: Mohammedan Law & Indian Succession Act","Kanoonu Kannada / Kannada Kali"],"3":["Jurisprudence","Labour Law – I","Law of Taxation","Criminal Law – II: Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023"],"4":["Public International Law","Optional I: Human Rights Law and Practice / Insurance Law","Optional II: Banking Law / Right to Information","Clinical I: Professional Ethics and Professional Accounting System","Clinical II: Alternative Dispute Resolution Systems"],"5":["Company Law","Civil Procedure Code and Limitation Act","Optional III: Intellectual Property Rights I / Penology & Victimology","Optional IV: Interpretation of Statutes and Principles of Legislation / Competition Law","Clinical III: Drafting, Pleading and Conveyance"],"6":["Bharatiya Sakshya Adhiniyam (BSA), 2023","Environmental Law","Optional V: Intellectual Property Rights II / White Collar Crimes","Optional VI: Land Law / Law relating to International Trade Economics","Clinical IV: Moot Court Exercise and Internship"]};
@@ -72,12 +76,67 @@ function screen(title,kicker,summary){
  E(head,"p",kicker||"3-Year LL.B","sf-eyebrow");E(head,"h2",title,"sf-title");
  if(summary)E(box,"p",summary,"sf-sub");return box;
 }
+
+function sourceCourseSummary(){
+ var ledger=window.LawContentLedger;
+ if(!ledger)return "Official source ledger is unavailable.";
+ return ledger.data.units.length+" units • primary-source links • "+ledger.data.units.filter(function(u){return u.syllabusStatus==="needs-review";}).length+" awaiting unit-text review";
+}
+function sourceLink(parent,item){
+ var a=E(parent,"a",item.title+" ↗","sf-source-link");
+ a.href=item.url;a.target="_blank";a.rel="noopener noreferrer";
+}
+function openSourceUnit(subject,unit){push("sourceUnit",unit);}
+function sourceUnitPage(subject,unitIndex){
+ var c=KSLU_FIRST_SEMESTER.courses[subject],u=c.units[unitIndex],ledger=window.LawContentLedger;
+ var f=screen(u.title,c.name+" · "+u.unit,"Official reference links and review status.");
+ var record=ledger&&ledger.getUnit(subject,unitIndex);
+ var box=E(f,"div",undefined,"sf-info");
+ E(box,"h3","Source status");
+ E(box,"p",record&&record.syllabusStatus==="verified"?"Checked against the applicable official university syllabus.":"Needs review — full unit wording has not yet been confirmed against the applicable KSLU syllabus PDF.");
+ if(record){
+  record.warnings.forEach(function(warning){
+   var n=E(f,"div",warning,"sf-source-warning");
+   n.setAttribute("role","note");
+  });
+  var list=E(f,"div",undefined,"sf-info");
+  E(list,"h3","Official references");
+  ledger.getSources(record).forEach(function(item){sourceLink(list,item);});
+  E(list,"p","The linked sites establish reference sources; they do not independently verify the teaching notes.","sf-source-small");
+ }
+ var foot=E(f,"div",undefined,"sf-footer");
+ B(foot,"Study this unit","Continue to topics →",function(){
+  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:subject},{level:"unit",value:unitIndex}];
+  direction="forward";render();
+ });
+}
 function render(){
  host.replaceChildren();
  var year=active("year"),sem=active("semester"),subject=active("subject"),unit=active("unit"),topic=active("topic");
+ var source=active("source"),sourceCourse=active("sourceCourse"),sourceUnit=active("sourceUnit");
+ if(source!==null){
+  if(sourceCourse===null){
+   var sc=screen("Sources & review","FIRST YEAR · SEMESTER I",sourceCourseSummary());
+   KSLU_FIRST_SEMESTER.courses.forEach(function(course,i){
+    B(sc,course.name,"5 units · review status and official references",function(){push("sourceCourse",i);});
+   });
+  } else if(sourceUnit===null){
+   var course=KSLU_FIRST_SEMESTER.courses[sourceCourse];
+   var cs=screen(course.name,"SOURCES & REVIEW","Select a unit to inspect its official references.");
+   course.units.forEach(function(u,i){
+    B(cs,u.unit+" — "+u.title,"Source details →",function(){openSourceUnit(sourceCourse,i);});
+   });
+  }else sourceUnitPage(sourceCourse,sourceUnit);
+  window.scrollTo({top:0,behavior:"auto"});return;
+ }
+
  if(year===null){
   var a=screen("Syllabus","KSLU · 3-Year LL.B","Choose a year to begin.");
   ["First Year","Second Year","Third Year"].forEach(function(name,i){B(a,name,"Semesters "+(i*2+1)+"–"+(i*2+2),function(){push("year",i+1);});});
+  var info=E(a,"div",undefined,"sf-source-entry");
+  E(info,"p","SOURCE TRANSPARENCY","sf-eyebrow");
+  B(info,"Sources & review",sourceCourseSummary(),function(){push("source",true);});
+
  }else if(sem===null){
   var b=screen(["","First Year","Second Year","Third Year"][year],"Syllabus","Choose a semester.");
   [year*2-1,year*2].forEach(function(s){B(b,"Semester "+s,currentCourses(s).length+" subjects",function(){push("semester",s);});});
@@ -90,7 +149,10 @@ function render(){
   var currentName=currentCourses(sem)[subject],d=screen(currentName,"Semester "+sem,"Select a unit to learn.");
   if(sem===1){
    var course=KSLU_FIRST_SEMESTER.courses[subject];
-   course.units.forEach(function(u,i){B(d,u.unit+" — "+u.title,"Learn topics →",function(){push("unit",i);});});
+   course.units.forEach(function(u,i){
+    var meta=window.LawContentLedger&&window.LawContentLedger.getUnit(subject,i);
+    B(d,u.unit+" — "+u.title,meta?"Topics • Source status: needs review":"Learn topics →",function(){push("unit",i);});
+   });
   }else{
    var msg=E(d,"div",undefined,"sf-info");E(msg,"h3","Detailed unit outline not imported");
    E(msg,"p","The subject title is shown from the 2024–25 KSLU programme listing. The detailed units for this semester have not been added or verified.");
