@@ -59,7 +59,7 @@ test('Outdated official links and tampered answer data cannot pass legal lesson 
  wrong.sources['consumer-act'].url='http://example.org/tamper';
  assert.throws(()=>core.verify(wrong),/Unofficial/);
  const dup=JSON.parse(JSON.stringify(bank));dup.cards[1].id=dup.cards[0].id;
- assert.throws(()=>core.verify(dup),/repeated/);
+ assert.throws(()=>core.verify(dup),/Invalid statutory card identifier/);
 });
 test('All 5 BNS and Torts Consumer units flag partial law checks without falsely verifying the syllabus',()=>{
  const rows=ledger.data.units.filter(x=>x.lawAudit);
