@@ -1,11 +1,31 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **52** — 15 original Hindu Family Law IRAC cases and 5 changed-facts exercises, expanding source-linked practice to five first-semester law subjects; prior release histories follow.
+Latest user-visible release: **53** — durable, private weak-case revisit schedules and portable backup schema 4 across five first-year law subjects; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 53 — Durable weak-case revisit without storing essays (11 October 2026)
+
+**Audit finding:** The 75 original IRAC cases and 25 changed-facts exercises covered five law subjects, but the self-reported weak/skipped-case list was intentionally cleared on navigation. A student could not return tomorrow to practise the exact legal issue they found difficult. This made weak-case review essentially a one-session feature.
+
+**Delivered:**
+1. A new privacy-limited `law-learning-case-review-v1` local record holds only the course, stable case ID, **student-identified missing IRAC element names**, skipped/unassessed status and revisit timestamp. **No written answer, question facts, detailed feedback, user name, grade or misleading mastery score** is stored.
+2. Self-reported missing IRAC elements schedule a revisit for the next day. Skips/unassessed cases remain immediately revisit-able. The Case Practice dashboard shows due and upcoming counts and allows deliberate earlier retry. Fully self-checked later attempts clear the specific weak flag; this means only that the student reported including all four elements, not that the legal answer was actually correct.
+3. Home's Case Practice entry now exposes the number of saved cases to revisit. All five law-subject queues remain isolated, so a weak BNS case does not confuse Contract/Torts/Constitution/Hindu review.
+4. Backups upgrade from schema **3 to 4**. Older v1, v2 and v3 backups are accepted without erasing omitted modern records; the new case record is validated before any restore writes, using the existing atomic rollback strategy. Profile import confirmation names the number of case-revisit records, and a damaged saved record is not silently overwritten.
+5. Old essay-writing UX, shuffled case selection, changed-facts prompts and source links remain in place; cases still require an attempted written explanation before revealing reference reasoning.
+6. Regression checks cover due timing, skip and missing-element differences, tampered JSON, storage write failure, portable backup round-trip and simulated browser leave/reload/resume with private essay text absent from storage.
+
+**Comparison with study-app failures:** Saving unverified automatic essay scores can misrepresent legal skill; forgetting weak questions after every session makes spaced review unreliable. This release saves only the student's own learning priorities, not an assessment of legal competence. Date-based revisits are a simple reminder, not an adaptive FSRS algorithm.
+
+**Limitations:** Browser-local storage is not encrypted or cross-device synced; users must keep exported backups private. Clearing browser storage or uninstalling the PWA can erase records. Real Android Chrome/TalkBack and learning-effect studies are still needed. The edition-level KSLU syllabus audits remain cohort-unconfirmed, and some individual legal explanations await further source validation.
+
+**Next:** Audit whether the existing cases genuinely sample legal reasoning at varied difficulty levels; introduce a carefully limited *answer-quality checklist with evidence/counterargument prompts* for unseen facts rather than automatic grading. Evaluate the accessibility of completing long IRAC answers on Android and improve ways to navigate directly from a weak case to the relevant statute/lesson.
+
+---
 
 ## Version 52 — Statute-grounded Family Law–I issue spotting (11 October 2026)
 
