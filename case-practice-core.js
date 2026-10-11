@@ -80,5 +80,34 @@ function missingGuidance(item,checked){
  };
  return KEYS.filter(function(k,i){return !checked[i];}).map(function(k){return {key:k,message:advice[k]};});
 }
-return {criteria:KEYS.slice(),verify:verify,select:select,recordUsage:recordUsage,missingGuidance:missingGuidance};
+
+/* Map a case to the existing official syllabus unit, not to a new router.
+ * Course order: Constitution, Contract, Torts, Hindu Law, BNS.
+ */
+function syllabusTarget(subject,unit){
+ var courses={constitution:0,contract:1,torts:2,hindu:3,bns:4};
+ if(!Object.prototype.hasOwnProperty.call(courses,subject)||!Number.isInteger(unit)||unit<1||unit>5)
+  throw Error("Invalid syllabus study target.");
+ return {semester:1,subject:courses[subject],unit:unit-1};
+}
+/* Offer the learner's own missing structural steps on a later visit.
+ * No past essay, rule text, grade, or confidential writing is needed.
+ */
+function revisitReminder(entry){
+ if(!entry||!Array.isArray(entry.missing))return [];
+ var result=[];
+ entry.missing.forEach(function(k){
+  if(!KEYS.includes(k))throw Error("Unexpected review criterion.");
+  if(!result.includes(k))result.push(k);
+ });
+ return result;
+}
+function reasoningPrompts(){
+ return [
+  "Which specific fact supports your conclusion, and how does it satisfy an element of the rule?",
+  "Which fact or statutory exception could support the other side?",
+  "What additional fact would change your outcome?"
+ ];
+}
+return {criteria:KEYS.slice(),verify:verify,select:select,recordUsage:recordUsage,missingGuidance:missingGuidance,syllabusTarget:syllabusTarget,revisitReminder:revisitReminder,reasoningPrompts:reasoningPrompts};
 });
