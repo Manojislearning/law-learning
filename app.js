@@ -356,7 +356,7 @@ const WORDS = CORE_WORDS.concat(buildExamWords(window.EXAM_WORD_ROWS || []));
 
 const KSLU_FIRST_SEMESTER = {
   "title": "KSLU 3-Year LL.B · Semester I",
-  "note": "Semester I only. Course titles follow the 2024–25 program structure in your KSLU PDF. The detailed course pages supplied in the same PDF carry the older 2018–19 heading, while Criminal Law I is updated to BNS, 2023.",
+  "note": "Semester I draft, compared to KSLU’s published 2018–19 three-year LL.B. unit outlines and its 26 September 2024 BNS syllabus circular. English is listed for students writing examinations in Kannada. Confirm your admission-year scheme with your college; old Consumer Protection and Specific Relief references need current-law checks.",
   "courses": [
     {
       "name": "Constitutional Law – I",
