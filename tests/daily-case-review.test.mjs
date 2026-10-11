@@ -76,7 +76,7 @@ test('Bad records, illegal sizes and unknown subjects are not silently normalise
  assert.throws(()=>Review.dailyPlan(bad,banks,T),/Unsupported/);
  assert.equal(bad.getItem(Review.KEY),'{"version":999,"cases":{}}');
 });
-test('Daily queue's user-visible scripts preserve original ID references and backup schema',()=>{
+test('Daily queue scripts preserve original ID references and backup schema',()=>{
  const html=readFileSync(resolve(root,'index.html'),'utf8');
  const sw=readFileSync(resolve(root,'sw.js'),'utf8');
  const ui=readFileSync(resolve(root,'case-practice-view.js'),'utf8');
