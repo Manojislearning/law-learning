@@ -145,7 +145,7 @@ async function main(){
     elements:[...document.querySelectorAll(".masthead,.reader-toolbar,#article,.bottom-nav")].filter(e=>e.offsetWidth>0).map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right}))
    }));
    assert.ok(layout.page<=width+2,width+"px horizontal overflow: "+JSON.stringify(layout));
-   assert.ok(layout.elements.every(x=>x.left>=-2&&x.right<=width+2),width+"px controls overflow");
+   assert.ok(layout.elements.every(x=>x.left>=-2&&x.right<=width+2),width+"px controls overflow: "+JSON.stringify(layout));
    assert.deepEqual(errors,[],"Browser errors at "+width+"px");
    console.log("Reader "+width+"px: progressive brain branches, mobile unfold, linked note expansion, pinch, one font setting and navigation pass");
    await context.close();
