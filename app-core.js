@@ -10,7 +10,7 @@
   "use strict";
   var ROUTES={
     home:["3-Year LL.B · Study App","Law Learning"],
-    words:["Legal vocabulary","Words"],
+    words:["Legal vocabulary","Learn Words"],
     review:["Contract–I · Revision","Review"],
     practice:["Contract–I · Exam Practice","Case Practice"],
     "law-updates":["Statutory review · First Year","Current Law Check"],
