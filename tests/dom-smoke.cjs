@@ -450,5 +450,65 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(via.errors,[]);
   via.dom.window.close();
  }
- console.log("DOM integration passed: Contract I & Torts mixed IRAC, spaced recall, source-grounded statutes and navigation.");
+
+ {
+  const bns=build("https://example.test/law-learning/index.html?course=bns&v=48#practice");
+  const w=bns.dom.window,d=bns.doc,root=d.getElementById("practice-root");
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.equal(w.LawBnsCaseData.cases.length,15);
+  assert.equal(w.LawTortsCaseData.cases.length,15);
+  assert.equal(w.LawCaseData.cases.length,15);
+  assert.ok(root.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("BNS"));
+  assert.equal(root.querySelectorAll(".cp-subjects button").length,3);
+  const launch=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases"));
+  assert.ok(launch);launch.click();
+  const seen=new Set(),units=new Set(),startStorage=w.localStorage.length;
+  for(let i=0;i<5;i++){
+   assert.ok(root.textContent.includes("Case "+(i+1)+" / 5"));
+   const facts=root.querySelector(".cp-facts").textContent;
+   assert.ok(facts.length>70);
+   seen.add(facts);
+   const ref=root.querySelector(".cp-model");
+   assert.equal(ref.hidden,true,"BNS issue and rule must be concealed before writing");
+   const show=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning"));
+   show.click();assert.equal(ref.hidden,true,"Empty BNS answer must not open reference");
+   root.querySelector("textarea").value="Issue: determine the offence. Rule: use BNS elements. Application: assess facts and limits. Conclusion: qualified result.";
+   show.click();assert.equal(root.querySelector(".cp-model").hidden,false);
+   const label=root.querySelector(".cp-model .cp-eyebrow").textContent;
+   const match=label.match(/Criminal Law–I · BNS · Unit (I|II|III|IV|V) ·/);
+   assert.ok(match,"Model answer should disclose the BNS unit only after written recall");
+   units.add(match[1]);
+   assert.ok([...root.querySelectorAll(".cp-case-source")].some(a=>a.href.includes("indiacode.nic.in")),"Primary BNS law must be linked");
+   assert.equal(root.querySelectorAll(".cp-rubric input").length,4);
+   assert.ok(root.querySelector(".cp-coaching").tagName==="DETAILS");
+   [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Next case")).click();
+  }
+  assert.equal(units.size,5);
+  assert.equal(seen.size,5);
+  assert.equal(w.localStorage.length,startStorage,"Case drafts and ratings should not persist");
+  assert.ok(root.textContent.includes("You finished the set"));
+  [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set")).click();
+  assert.ok(!seen.has(root.querySelector(".cp-facts").textContent),"A second BNS set must prioritize unseen cases");
+  [...root.querySelectorAll("button")].find(x=>x.textContent.includes("End practice")).click();
+  const tortBtn=[...root.querySelectorAll(".cp-subjects button")].find(x=>x.textContent.includes("Law of Torts"));
+  assert.ok(tortBtn);tortBtn.click();
+  assert.ok(root.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Law of Torts"));
+  assert.deepEqual(bns.errors,[]);
+  bns.dom.window.close();
+ }
+ {
+  const nav=build("https://example.test/law-learning/index.html?v=48#syllabus");
+  const w=nav.dom.window,d=nav.doc;
+  findButton(d,"First Year").click();
+  findButton(d,"Semester 1").click();
+  findButton(d,"Criminal Law").click();
+  const link=findButton(d,"BNS Case Practice");
+  assert.ok(link,"BNS subject must provide a direct IRAC practice entry");
+  link.click();await settle();
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.ok(d.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("BNS"));
+  assert.deepEqual(nav.errors,[]);
+  nav.dom.window.close();
+ }
+ console.log("DOM integration passed: Contract, Torts and BNS IRAC, recall, statutory checks and navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
