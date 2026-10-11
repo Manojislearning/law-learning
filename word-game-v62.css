@@ -1,0 +1,38 @@
+/* v62 — two-step word selection, static card progress and inline spelling */
+#words-view .w-chooser[hidden],#words-view .w-practice[hidden]{display:none!important}
+#words-view .w-chooser{display:grid;grid-template-columns:1fr;gap:12px;margin:18px 0 24px}
+#words-view .w-chooser .w-level{
+ width:100%;min-height:88px!important;
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:20px 22px!important;text-align:left;
+ border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--text);
+ font:inherit;cursor:pointer;box-sizing:border-box;
+}
+#words-view .w-chooser .w-level strong{font-size:clamp(1.22rem,3.7vw,1.5rem);font-weight:800}
+#words-view .w-chooser .w-level span{font-size:1.45rem;line-height:1;color:#4d688a}
+#words-view .w-chooser .w-level:focus-visible,#words-view .w-change-level:focus-visible,
+#words-view .w-spell-blank:focus-visible{outline:3px solid #557db8;outline-offset:3px}
+#words-view .w-change-level{display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+ border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--text);
+ padding:8px 13px;margin:0 0 12px;font:inherit;font-size:1rem;font-weight:750;cursor:pointer}
+#words-view .w-progress{width:100%;height:6px;overflow:hidden;border-radius:999px;background:#e1e5ed;margin:5px 0 17px}
+#words-view .w-progress-fill{display:block;height:100%;width:10%;border-radius:999px;background:#0d1321;
+ transition:width .16s ease}
+#words-view .w-spell-form{display:flex;flex-direction:column;align-items:flex-start;gap:17px}
+#words-view .w-inline-spelling{display:flex;flex-wrap:wrap;align-items:center;gap:3px 2px;
+ width:100%;min-height:60px;font:500 clamp(1.35rem,5.5vw,2.35rem)/1.6 Georgia,serif}
+#words-view .w-spell-letter{display:inline-flex;align-items:center;justify-content:center;
+ min-width:.53em;min-height:1.35em;white-space:pre;line-height:1.2}
+#words-view .w-spell-blank{display:inline-flex;width:1.12em;min-width:25px;height:1.38em;
+ box-sizing:border-box;padding:0 1px;align-items:center;justify-content:center;
+ border:0;border-bottom:3px solid #60748d;border-radius:3px 3px 0 0;
+ background:#edf3f9;color:#0d1321;text-align:center;
+ font:500 inherit; font-family:Georgia,serif;font-size:inherit;line-height:1.25}
+#words-view .w-spell-blank:focus{border-bottom-color:#1c558a;background:#e3eefb;outline-offset:1px}
+#words-view .w-spell-blank:disabled{opacity:.76;cursor:default}
+#words-view .w-spell-form .w-btn{min-height:48px;margin-top:0}
+#words-view .w-spell-form + .w-feedback{font-size:1.03rem}
+@media (max-width:370px){#words-view .w-chooser .w-level{padding:16px 17px!important}
+ #words-view .w-inline-spelling{gap:3px 1px;font-size:1.3rem}
+ #words-view .w-spell-blank{min-width:23px}}
+@media (prefers-reduced-motion:reduce){#words-view .w-progress-fill{transition:none}}
