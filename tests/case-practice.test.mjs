@@ -86,8 +86,8 @@ test('App exposes practice route without introducing separate hash navigation or
  assert.ok(source.includes('model.hidden=false'));
  assert.ok(source.includes('no-upload-sentinel')===false);
  assert.ok(!source.includes('draft.value')||!source.includes('localStorage.setItem'),'Draft text must not be written to storage directly');
- assert.ok(html.includes('case-review-core.js?v=53'));
- assert.ok(sw.includes('case-review-core.js?v=53'));
+ assert.ok(html.includes('case-review-core.js?v=55'));
+ assert.ok(sw.includes('case-review-core.js?v=55'));
 });
 
 
