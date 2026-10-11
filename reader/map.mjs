@@ -91,6 +91,45 @@ export function toggleBranch(root,id){
  }
  return null;
 }
+// Re-root the visible map at a selected branch without changing source note data.
+export function focusBranch(root,id){
+ const pending=[root];
+ while(pending.length){
+  const branch=pending.pop();
+  if(branch.id===id){
+   const collapse=node=>{for(const child of node.children){child.collapsed=child.children.length>0;collapse(child)}};
+   collapse(branch);
+   branch.collapsed=false;
+   return branch;
+  }
+  pending.push(...branch.children);
+ }
+ return null;
+}
+function wrapBranchLabel(value,ctx,maxWidth=410){
+ const result=[],words=String(value).split(/\s+/);
+ let line='';
+ const width=s=>ctx?ctx.measureText(s).width:s.length*10;
+ const pushWord=(word)=>{
+  // Split unbroken long tokens so no line can extend past the canvas.
+  if(width(word)<=maxWidth){line=word;return;}
+  let segment='';
+  for(const char of word){
+   if(segment&&width(segment+char)>maxWidth){result.push(segment);segment=''}
+   segment+=char;
+  }
+  line=segment;
+ };
+ for(const word of words){
+  if(!word)continue;
+  const combined=line?line+' '+word:word;
+  if(line&&width(combined)>maxWidth){result.push(line);pushWord(word)}
+  else if(!line&&width(word)>maxWidth)pushWord(word);
+  else line=combined;
+ }
+ if(line)result.push(line);
+ return result.length?result:[''];
+}
 export function measureTree(root){
  const visible=visibleBranches(root);
  const widths=[],ctx=typeof document!=='undefined'&&document.createElement?document.createElement('canvas').getContext('2d'):null;
@@ -101,9 +140,10 @@ export function measureTree(root){
   const px=depth===0?25:depth===1?22:19;
   n.fontSize=px;
   if(ctx)ctx.font=(depth<=1?'700 ':'500 ')+px+'px system-ui';
-  const measured=ctx?ctx.measureText(n.label).width:n.label.length*px*.52;
-  n.width=Math.max(110,Math.ceil(measured)+34);
-  n.height=px+28;
+  n.lines=wrapBranchLabel(n.label,ctx,n===root?450:410);
+  const widest=Math.max(...n.lines.map(line=>ctx?ctx.measureText(line).width:line.length*px*.52));
+  n.width=Math.max(110,Math.ceil(widest)+34);
+  n.height=n.lines.length*px*1.34+25;
   widths[depth]=Math.max(widths[depth]||0,n.width);
  }
  const x=[40];
@@ -127,7 +167,7 @@ export function measureTree(root){
 export function mountVaultMap({files,getNote,readNote,onClose}){
  const panel=document.querySelector('#map-overlay'),svg=document.querySelector('#map-svg'),scene=document.querySelector('#map-scene');
  const drawer=document.querySelector('#map-details'),body=document.querySelector('#map-note-body'),title=document.querySelector('#map-note-title'),status=document.querySelector('#map-status');
- let root=null,nodes=[],topic='',active=null,bounds={width:1000,height:700},v={x:0,y:0,w:1200,h:800};
+ let root=null,focusRoot=null,parents=[],nodes=[],topic='',active=null,bounds={width:1000,height:700},v={x:0,y:0,w:1200,h:800};
  const pointers=new Map();let pinch=null,moved=false;
  const rect=()=>svg.getBoundingClientRect();
  const size=()=>({w:Math.max(1,rect().width),h:Math.max(1,rect().height)});
@@ -138,19 +178,19 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  }
  function zoom(f,x,y){
   const r=rect(),u=Math.max(0,Math.min(1,(x-r.left)/Math.max(1,r.width))),t=Math.max(0,Math.min(1,(y-r.top)/Math.max(1,r.height)));
-  const w=Math.max(240,Math.min(90000,v.w*f)),h=w*size().h/size().w;
+  const w=Math.max(110,Math.min(90000,v.w*f)),h=w*size().h/size().w;
   v={x:v.x+v.w*u-w*u,y:v.y+v.h*t-h*t,w,h};apply();
  }
  function zoomMiddle(f){const r=rect();zoom(f,r.left+r.width/2,r.top+r.height/2)}
  function showDetails(show){drawer.hidden=!show;panel.classList.toggle('has-details',show)}
  function paint(){
-  if(!root)return;
-  nodes=visibleBranches(root);
-  bounds=measureTree(root);
+  if(!focusRoot)return;
+  nodes=visibleBranches(focusRoot);
+  bounds=measureTree(focusRoot);
   const edges=tag('g'),labels=tag('g');
   scene.replaceChildren(edges,labels);
   for(const n of nodes){
-   if(n.parent){
+   if(n!==focusRoot&&n.parent){
     const p=n.parent,x1=p.x+p.width-12,x2=n.x-16,mid=(x1+x2)/2;
     const d='M'+x1+' '+p.y+' C'+mid+' '+p.y+' '+mid+' '+n.y+' '+x2+' '+n.y;
     edges.append(attrs(tag('path'),{class:'map-link',d,style:'stroke:'+n.color}));
@@ -161,10 +201,14 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
     class:'map-branch '+(n.kind==='root'?'root-node':n.depth===1?'heading-node':'point-node')+(n===active?' selected':'')});
    // Transparent tap target: SVG has no visual cards.
    g.append(attrs(tag('rect'),{x:n.x-16,y:n.y-n.height/2-7,width:n.width+42,height:n.height+18,rx:4,class:'map-branch-hit'}));
-   const name=text(n.label,n.x,n.y+5,'map-branch-text');
-   attrs(name,{'font-size':n.fontSize,'font-weight':n.depth===0?800:n.depth===1?700:520});
-   g.append(name);
-   const underY=n.y+Math.max(12,n.fontSize*.65);
+   const lineHeight=n.fontSize*1.34;
+   const firstY=n.y-(n.lines.length-1)*lineHeight/2+n.fontSize*.34;
+   n.lines.forEach((line,i)=>{
+    const name=text(line,n.x,firstY+i*lineHeight,'map-branch-text');
+    attrs(name,{'font-size':n.fontSize,'font-weight':n.depth===0?800:n.depth===1?700:520});
+    g.append(name);
+   });
+   const underY=n.y+n.height/2-6;
    g.append(attrs(tag('line'),{x1:n.x,y1:underY,x2:n.x+n.width-18,y2:underY,stroke:n.color,'stroke-width':n.depth===0?4:2.2,class:'map-branch-underline'}));
    if(n.children.length){
     const cx=n.x+n.width+5,cy=n.y;
@@ -180,38 +224,56 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
   document.querySelector('#map-count').textContent=nodes.length+' visible branches';
  }
  const find=id=>nodes.find(n=>n.id===id);
+ const backButton=document.querySelector('#map-back');
+ const noteTitle=()=>document.querySelector('#map-current');
+ function updateNavigation(){
+  backButton.textContent=parents.length?'← Back':'← Note';
+  backButton.title=parents.length?'Return to previous branch':'Return to topic note';
+  status.textContent=focusRoot?.label||'Topic';
+  noteTitle().textContent=parents.length
+   ? 'Exploring '+focusRoot.label+' · Back returns to the previous branch'
+   : 'Select any branch to make it the new starting point';
+ }
  function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
+ function back(){
+  if(!parents.length){close();return;}
+  focusRoot=parents.pop();
+  focusRoot.collapsed=false;
+  active=null;showDetails(false);paint();fit();updateNavigation();
+ }
  function read(n){
   if(!n)return;const dest=n.link||{path:n.sourcePath||topic,heading:n.section||''};
   close();void readNote(dest.path,dest.heading||'');
  }
  function select(n){
   if(!n)return;
-  active=n;
-  title.textContent=n.label;
+  active=n;title.textContent=n.label;
   body.innerHTML=renderMarkdown(n.source||n.label).html;
   document.querySelector('#map-read-note').textContent=n.link?'Open linked note ↗':'Read this in notes ↗';
-  showDetails(true);
-  paint();
+  showDetails(true);paint();
+ }
+ function enterBranch(n){
+  if(!n||n===focusRoot)return;
+  const focused=focusBranch(root,n.id);
+  if(!focused)return;
+  parents.push(focusRoot);focusRoot=focused;
+  active=null;showDetails(false);paint();fit();updateNavigation();
  }
  async function activate(n){
   if(!n)return;
-  if(n.children.length){
-   toggleBranch(root,n.id);active=null;showDetails(false);paint();fit();return;
-  }
-  if(n.link?.path&&n.link.path!==topic&&n.depth<7&&!n.loaded){
+  if(n.children.length){enterBranch(n);return;}
+  if(n.link?.path&&n.link.path!==(n.sourcePath||topic)&&n.depth<9&&!n.loaded){
    n.loaded=true;
    try{
     const linked=noteBranches(await getNote(n.link.path),n.link.path,files);
     n.children=linked.children.slice(0,55);
     const attach=(child,index,parent)=>{
-     child.id=parent.id+'-'+index;
-     child.parent=parent;
+     child.id=parent.id+'-'+index;child.parent=parent;
      child.children.forEach((sub,i)=>attach(sub,i,child));
     };
     n.children.forEach((child,i)=>attach(child,i,n));
-    if(n.children.length){n.collapsed=false;active=null;showDetails(false);paint();fit();return;}
-   }catch(e){n.loaded=false;console.warn('Could not expand linked note',e);}
+    if(n.children.length){enterBranch(n);return;}
+   }catch(error){n.loaded=false;console.warn('Could not expand linked note',error);}
   }
   select(n);
  }
@@ -223,8 +285,7 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  scene.addEventListener('keydown',e=>{
   if(!['Enter',' '].includes(e.key))return;
   const branch=e.target.closest('[data-id]');
-  if(!branch)return;
-  e.preventDefault();void activate(find(branch.dataset.id));
+  if(!branch)return;e.preventDefault();void activate(find(branch.dataset.id));
  });
  svg.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.12:.89,e.clientX,e.clientY)},{passive:false});
  const gesture=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2,d:Math.hypot(a.x-b.x,a.y-b.y)});
@@ -251,10 +312,10 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  function finish(e){pointers.delete(e.pointerId);pinch=null;if(!pointers.size)setTimeout(()=>{moved=false},80)}
  svg.addEventListener('pointerup',finish);svg.addEventListener('pointercancel',finish);
  document.querySelector('#map-fit').addEventListener('click',fit);
- document.querySelector('#map-zoom-in').addEventListener('click',()=>zoomMiddle(.75));
- document.querySelector('#map-zoom-out').addEventListener('click',()=>zoomMiddle(1.3));
+ document.querySelector('#map-zoom-in').addEventListener('click',()=>zoomMiddle(1/1.25));
+ document.querySelector('#map-zoom-out').addEventListener('click',()=>zoomMiddle(1.25));
  document.querySelector('#map-close').addEventListener('click',close);
- document.querySelector('#map-back').addEventListener('click',close);
+ document.querySelector('#map-back').addEventListener('click',back);
  document.querySelector('#map-detail-close').addEventListener('click',()=>showDetails(false));
  document.querySelector('#map-read-note').addEventListener('click',()=>read(active||root));
  async function open(path){
@@ -262,8 +323,8 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
   topic=path;panel.hidden=false;showDetails(false);status.textContent='Loading topic…';
   try{
    root=noteBranches(await getNote(path),path,files);
-   active=null;paint();fit();status.textContent=root.label;
-   document.querySelector('#map-current').textContent='Click a branch to reveal the next level · click again to fold';
+   focusRoot=root;parents=[];active=null;
+   paint();fit();updateNavigation();
    document.querySelector('#map-close').focus();return true;
   }catch(e){status.textContent=String(e.message||e);return false}
  }
