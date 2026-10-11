@@ -37,8 +37,8 @@ test("Existing local review and score indexes remain stable, and each level navi
   assert.ok(js.includes("function previousWord()"));
   assert.ok(js.includes("window.LawAppCore.progress.mark"));
   assert.ok(!js.includes('#home-view .home-card:not('),"Old home filtering must not hide Law News or Case Practice");
-  assert.ok(sw.includes("law-learning-v60"));
-  for(const asset of ["./advanced-english-words.js?v=58","./readability.css?v=58","./app.js?v=58","./word-experience.js?v=58"])assert.ok(sw.includes(asset),"Missing offline asset "+asset);
+  assert.ok(sw.includes("law-learning-v61"));
+  for(const asset of ["./advanced-english-words.js?v=58","./readability.css?v=58","./app.js?v=58","./word-experience.js?v=61"])assert.ok(sw.includes(asset),"Missing offline asset "+asset);
 });
 
 test("Typography stays readable on small screens and remains anchored to CSS units",()=>{
