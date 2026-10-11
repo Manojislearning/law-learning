@@ -811,7 +811,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const seen=new Set();
   for(let n=0;n<5;n++){
    const subtitle=screen.querySelector(".cp-meta").textContent;seen.add(subtitle.replace(/Case \d+ \/ \d+/,"").trim());
-   assert.ok(screen.textContent.includes("DELAYED RETRIEVAL"));
+   assert.ok(screen.textContent.includes("DAILY REVIEW · DELAYED RETRIEVAL"));
    assert.equal(screen.querySelector(".cp-model").hidden,true,"Daily review cannot pre-reveal previous answer");
    if(n===1){
      [...screen.querySelectorAll("button")].find(x=>x.textContent==="Skip case").click();
