@@ -84,7 +84,7 @@ test('Student hub groups exactly the four relocated study destinations', () => {
   assert.ok(home.includes('data-open="news"'),'Law News remains on Home');
   assert.ok(home.includes('data-open="practice"'),'Case Practice remains on Home');
   assert.ok(sw.includes('./student-menu.css?v=60'),'Student style must be available offline');
-  assert.ok(sw.includes('./app-core.js?v=60'),'Updated Student router must be available offline');
+  assert.ok(sw.includes('./app-core.js?v=61'),'Updated Student router must be available offline');
 });
 
 test('Static HTML has no duplicate element IDs', () => {
@@ -175,5 +175,5 @@ test('Visible syllabus source entry and linked review pages are retained',()=>{
   assert.ok(screen.includes('sourceUnitPage(sourceCourse,sourceUnit)'),'Source review must have a dedicated unit details screen');
   assert.ok(screen.includes('record.syllabusStatus==="verified"'),'Verification status must be explicit');
   assert.ok(ledger.includes('needs-review'),'Unreviewed KSLU unit text must stay marked as pending verification');
-  assert.ok(html.includes('30 Semester I outlines compared'),'Home must explain where to see this release');
+  assert.ok(html.includes('data-open="syllabus"'),'Student hub must retain access to the KSLU source audit');
 });
