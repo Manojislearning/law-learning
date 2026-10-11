@@ -341,3 +341,51 @@ button,a,input{touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* Compact lesson pages: one section per view, clear next/back actions. */
+.pages-btn{border:1px solid #e4e8ee;background:#f6f8fa;font-size:13px;min-height:41px;display:flex;align-items:center;gap:6px}
+.pages-btn[aria-pressed="true"]{background:#0d1321;color:#fff;border-color:#0d1321}
+.pages-btn:disabled{opacity:.42;background:#f3f5f7;color:#64748b}
+.article.paged-study{padding-bottom:16px}
+.article .study-page{max-width:100%;animation:vr-page-in .2s ease both}
+.article .study-page h2:first-child{margin-top:12px}
+.article .study-page[hidden]{display:none!important}
+.study-pager{
+  position:sticky;bottom:14px;z-index:10;
+  display:grid;grid-template-columns:minmax(62px,1fr) minmax(0,2fr) minmax(65px,1fr);
+  align-items:center;gap:7px;
+  margin:10px auto 25px;width:calc(100% - 32px);max-width:730px;
+  padding:8px;
+  background:rgba(255,255,255,.96);
+  border:1px solid #e3e8ef;border-radius:18px;
+  box-shadow:0 12px 38px #0d13211f;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+}
+.study-pager button{
+  min-height:46px;border:0;border-radius:12px;
+  font:750 13px/1.2 ui-sans-serif,system-ui;
+  color:#fff;background:#0d1321;
+  padding:8px 11px;
+  transition:transform .14s,background .14s;
+}
+.study-pager button:not(:disabled):active{transform:scale(.96)}
+.study-pager button:disabled{background:#eef1f5;color:#95a0ac}
+.study-pager #page-count{
+  font:750 12px/1.32 ui-sans-serif,system-ui;
+  color:#455872;text-align:center;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;
+}
+@media(max-width:850px){
+  .reader-toolbar{gap:5px}
+  .pages-btn{padding:9px 10px;min-width:44px}
+  .study-pager{bottom:8px;border-radius:15px;width:calc(100% - 24px);padding:7px}
+  .study-pager button{font-size:13px;min-height:45px}
+  .study-pager #page-count{font-size:11px}
+  .article.paged-study{padding-bottom:12px}
+}
+@media(max-width:370px){
+ .pages-btn{min-width:40px;padding:9px 7px}
+ .reader-tools .tool-btn{min-width:36px;padding:8px 6px}
+}
+@media(prefers-reduced-motion:reduce){.article .study-page{animation:none}}
