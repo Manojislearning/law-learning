@@ -1,5 +1,5 @@
 import {esc, slug, renderMarkdown, resolveLink} from './markdown.mjs';
-import {mountVaultMap} from './map.mjs';
+import {mountVaultMap,isTopic} from './map.mjs';
 
 const REPO='Manojislearning/LAW-NOTES';
 const API=`https://api.github.com/repos/${REPO}`;
@@ -61,6 +61,7 @@ async function loadTree(token=state.token){
  renderSidebar();
 }
 async function connect(token){
+ const openRequestedMap=new URLSearchParams(location.search).get('map')==='1';
  $('#connect-error').hidden=true;$('#connect-btn').disabled=true;$('#connect-btn').firstChild.textContent='Connecting to GitHub… ';
  try{
   await loadTree(token);
@@ -70,7 +71,7 @@ async function connect(token){
   const path=state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
   await openNote(path);
   toast(token?'Notes connected.':'Public notes opened.');
-  if(new URLSearchParams(location.search).get('map')==='1')mapController?.open();
+  if(openRequestedMap&&isTopic(path))void mapController?.open(path);
  }catch(e){$('#connect-view').hidden=false;$('#reader-view').hidden=true;setStatus('Not connected');const err=$('#connect-error');err.textContent=e instanceof Error?e.message:'Could not connect.';err.hidden=false;}
  finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my library ';}
 }
@@ -163,8 +164,33 @@ function renderCanvas(content,path){
   return {meta:{status:'visual-map-index'},toc:[],text:content,html:`<h1>${esc(niceName(path))}</h1><p>This visual Canvas map is shown as a list of linked notes in reading mode. Tap a topic to read it.</p><ul class="canvas-list">${parts.join('')}</ul>`};
 }
 function siblingNotes(path){const folder=path.split('/').slice(0,-1).join('/');return state.files.filter(f=>f.split('/').slice(0,-1).join('/')===folder)}
+function upLink(path){
+ const match=/^(.*\/Units\/Unit-\d\d)\/.+\.md$/i.exec(path);
+ if(match){
+  const file=path.split('/').pop();
+  if(!file.startsWith('00 - '))return state.files.find(f=>f.startsWith(match[1]+'/00 - '))||'';
+  const subject=match[1].split('/Units/')[0];
+  return state.files.find(f=>f.startsWith(subject+'/00 - ')&&!f.includes('Books'))||'';
+ }
+ if(path.includes('/Topics/')){
+  const dir=path.split('/Topics/')[0];
+  return state.files.find(f=>f.startsWith(dir+'/00 - ')&&!f.includes('Books'))||'';
+ }
+ if(path.startsWith('01-Semester-1/')&&path.split('/').length===3)return '01-Semester-1/00 - Semester I Notes.md';
+ if(path.startsWith('01-Semester-1/')&&path.split('/').length===2)return DEFAULT_PATH;
+ return '';
+}
 function navigation(path){const peers=siblingNotes(path),idx=peers.indexOf(path),prev=peers[idx-1],next=peers[idx+1];
  $('#prev-note').disabled=!prev;$('#next-note').disabled=!next;
+ $('#bottom-prev').disabled=!prev;$('#bottom-next').disabled=!next;
+ $('#bottom-prev').title=prev?'Previous: '+niceName(prev):'No previous note';
+ $('#bottom-next').title=next?'Next: '+niceName(next):'No next note';
+ $('#bottom-map').disabled=!isTopic(path);
+ $('#map-btn').hidden=!isTopic(path);
+ const up=upLink(path);
+ $('#up-note').hidden=!up||up===path;
+ $('#up-note').dataset.note=up||'';
+ $('#up-note').textContent=path.includes('/Units/Unit-')&&!path.split('/').pop().startsWith('00 - ')?'← Unit':'← Back';
  $('#prev-title').textContent=prev?niceName(prev):'Beginning of section';
  $('#next-title').textContent=next?niceName(next):'End of section';
  $('#prev-note').dataset.note=prev||'';$('#next-note').dataset.note=next||'';
@@ -293,6 +319,10 @@ $('#article').addEventListener('click',event=>{
 });
 $('#prev-note').addEventListener('click',()=>{if($('#prev-note').dataset.note)void openNote($('#prev-note').dataset.note)});
 $('#next-note').addEventListener('click',()=>{if($('#next-note').dataset.note)void openNote($('#next-note').dataset.note)});
+$('#up-note').addEventListener('click',()=>{const p=$('#up-note').dataset.note;if(p)void openNote(p)});
+$('#bottom-prev').addEventListener('click',()=>{const p=$('#prev-note').dataset.note;if(p)void openNote(p)});
+$('#bottom-next').addEventListener('click',()=>{const p=$('#next-note').dataset.note;if(p)void openNote(p)});
+$('#brand-home').addEventListener('click',()=>{if(state.files.length)void openNote(DEFAULT_PATH)});
 $('#reading-scroll').addEventListener('scroll',saveReadingPosition,{passive:true});
 $('#save-btn').addEventListener('click',()=>{if(!state.current)return;if(state.saved.has(state.current))state.saved.delete(state.current);else state.saved.add(state.current);
  $('#save-btn').classList.toggle('saved',state.saved.has(state.current));$('#save-btn').innerHTML=state.saved.has(state.current)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
@@ -331,10 +361,8 @@ $('#disconnect-btn').addEventListener('click',()=>{
  $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
 });
 selectMobileNav('bottom-home');
-$('#bottom-library').addEventListener('click',()=>{state.filter='all';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));renderSidebar();openSidebar()});
 $('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
-$('#bottom-saved').addEventListener('click',()=>{state.filter='saved';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='saved'));renderSidebar();openSidebar()});
-const showMap=()=>{if(!state.files.length){toast('Open notes first.');return;}mapController?.open();selectMobileNav('bottom-map');};
+const showMap=()=>{if(!isTopic(state.current)){toast('Open a topic note to view its branches.');return;}void mapController?.open(state.current);selectMobileNav('bottom-map');};
 $('#map-btn').addEventListener('click',showMap);
 $('#bottom-map').addEventListener('click',showMap);
 window.addEventListener('popstate',()=>{const path=new URLSearchParams(location.search).get('file');if(path&&state.files.includes(path))void openNote(path)});
