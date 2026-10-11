@@ -147,3 +147,14 @@ test('Retired duplicate UI scripts are not loaded or cached',()=>{
     assert.ok(!sw.includes(script),'Obsolete UI unexpectedly cached: '+script);
   }
 });
+
+
+test('Visible syllabus source entry and linked review pages are retained',()=>{
+  const screen=file('syllabus-flow.js');
+  const ledger=file('content-ledger.js');
+  assert.ok(screen.includes('B(info,"Sources & review"'),'Syllabus landing page must visibly link to source status');
+  assert.ok(screen.includes('sourceUnitPage(sourceCourse,sourceUnit)'),'Source review must have a dedicated unit details screen');
+  assert.ok(screen.includes('record.syllabusStatus==="verified"'),'Verification status must be explicit');
+  assert.ok(ledger.includes('needs-review'),'Unreviewed KSLU unit text must stay marked as pending verification');
+  assert.ok(html.includes('View first-year sources and review status.'),'Home must explain where to see this release');
+});
