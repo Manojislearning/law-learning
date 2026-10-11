@@ -71,8 +71,8 @@ test('Mixed Constitution sessions sample all five units before repeating previou
  assert.equal(used.size,15);
 });
 test('Changed facts cover Constitution units and use the corresponding parent case legal authorities',()=>{
- assert.equal(transfer.items.length,20);
- assert.equal(transferCore.verify(transfer,all),true);
+ assert.equal(transfer.items.length,25);
+ assert.equal(transferCore.verify(transfer,{...all,hindu:require("../hindu-case-practice-data.js")}),true);
  const variants=transfer.items.filter(x=>x.subject==='constitution');
  assert.equal(variants.length,5);
  const parents=variants.map(v=>bank.cases.find(c=>c.id===v.parentId));
@@ -83,17 +83,17 @@ test('Changed facts cover Constitution units and use the corresponding parent ca
   assert.ok(x.application.length>=75);
   assert.ok(x.trap.length>=75);
  }
- assert.equal(transferCore.select(transfer,all,'constitution',null,()=>0.32).length,5);
+ assert.equal(transferCore.select(transfer,{...all,hindu:require("../hindu-case-practice-data.js")},'constitution',null,()=>0.32).length,5);
  assert.equal(transferCore.select(transfer,all,'constitution',['u5-writs'],()=>0.32).length,1);
 });
 test('Version 51 loads four subject modules offline and preserves previous subject choice',()=>{
  const html=read('index.html'),sw=read('sw.js'),sy=read('syllabus-flow.js'),ui=read('case-practice-view.js');
- const assets=['constitution-case-practice-data.js?v=51','case-practice-core.js?v=51','case-transfer-data.js?v=51','case-transfer-core.js?v=51','case-practice-view.js?v=51','syllabus-flow.js?v=51'];
+ const assets=['constitution-case-practice-data.js?v=51','case-practice-core.js?v=52','case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=52','syllabus-flow.js?v=52'];
  for(const asset of assets){assert.ok(html.includes(asset),'HTML missing '+asset);assert.ok(sw.includes(asset),'PWA missing '+asset);}
- assert.ok(html.indexOf('constitution-case-practice-data.js?v=51')<html.indexOf('case-practice-view.js?v=51'));
+ assert.ok(html.indexOf('constitution-case-practice-data.js?v=51')<html.indexOf('case-practice-view.js?v=52'));
  assert.ok(ui.includes('constitution:root.LawConstitutionCaseData'));
  assert.ok(ui.includes('Constitutional Law–I'));
  assert.ok(sy.includes('open("constitution")'));
- assert.ok(html.includes('60 IRAC cases'));
+ assert.ok(html.includes('75 IRAC cases'));
  assert.ok(!ui.includes('localStorage.setItem'),'Original essays must not be silently persisted');
 });
