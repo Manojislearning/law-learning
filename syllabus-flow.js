@@ -4,6 +4,9 @@
 var host=document.getElementById("syllabus-detail");
 if(!host||typeof KSLU_FIRST_SEMESTER==="undefined")return;
 var sheet=document.createElement("style");sheet.textContent="\n#syllabus-view>.section-head{display:none!important}\n#syllabus-detail{max-width:670px;margin:0 auto;padding:4px 0 42px}\n.sf-top{margin:7px 0 22px;display:flex;align-items:center;gap:11px}\n.sf-back{background:white;border:1px solid var(--line);border-radius:11px;min-width:41px;height:41px;color:var(--text);font:inherit;font-weight:750;cursor:pointer}\n.sf-headings{min-width:0;flex:1}\n.sf-eyebrow{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:0 0 4px}\n.sf-title{font-size:clamp(1.55rem,5vw,2rem);line-height:1.18;letter-spacing:-.02em;margin:0}\n.sf-sub{font-size:.85rem;line-height:1.52;color:var(--muted);margin:0 0 17px}\n.sf-choice{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:70px;background:#fff;border:1px solid var(--line);border-radius:15px;text-align:left;padding:16px;margin-bottom:10px;cursor:pointer;color:var(--text);font:inherit;box-shadow:0 4px 17px rgba(13,19,33,.025)}\n.sf-choice strong{display:block;font-size:1rem;line-height:1.38}\n.sf-choice small{display:block;color:var(--muted);font-size:.77rem;margin-top:5px;line-height:1.4}\n.sf-choice>span:last-child{font-size:1.4rem;color:var(--muted);flex:none}\n.sf-choice:focus-visible{outline:3px solid #7991ac;outline-offset:2px}\n.sf-pill{display:inline-block;font-size:.73rem;font-weight:750;padding:6px 10px;border-radius:8px;background:#eef0f4;color:var(--text);margin:0 5px 9px 0}\n.sf-info{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px;margin:14px 0;line-height:1.63;font-size:.92rem}\n.sf-info p{margin:6px 0}\n.sf-info h3{font-size:1rem;margin:0 0 8px}\n.sf-note{color:var(--muted);font-size:.82rem;line-height:1.6;margin:16px 0}\n.sf-learnword{display:inline-block;border:1px solid var(--line);background:#f7f8fa;border-radius:10px;padding:9px 12px;font:inherit;font-size:.8rem;font-weight:700;color:var(--text);margin:4px 5px 4px 0;cursor:pointer}\n.sf-footer{border-top:1px solid var(--line);margin-top:25px;padding-top:16px}\n@keyframes sf-from-right{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:translateX(0)}}\n@keyframes sf-from-left{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:translateX(0)}}\n@media(prefers-reduced-motion:no-preference){.sf-screen.forward{animation:sf-from-right .25s cubic-bezier(.2,.7,.2,1) both}.sf-screen.backward{animation:sf-from-left .25s cubic-bezier(.2,.7,.2,1) both}}\n";document.head.appendChild(sheet);
+var sourceStyle=document.createElement("style");
+sourceStyle.textContent='.sf-sources{border:1px solid var(--line);border-radius:12px;background:#fff;margin:14px 0}.sf-sources summary{font-size:.83rem;font-weight:750;padding:13px;cursor:pointer}.sf-sources-body{border-top:1px solid var(--line);padding:11px 14px}.sf-sources-body p{color:var(--muted);font-size:.8rem;line-height:1.6}.sf-sources-body a{display:block;font-size:.83rem;line-height:1.5;color:#265b90;text-decoration:underline;margin:10px 0}.sf-source-warning{border-left:3px solid #ad6324;background:#fff5e8;color:#70440d;border-radius:0 9px 9px 0;padding:12px;font-size:.81rem;line-height:1.5;margin:12px 0}';
+document.head.appendChild(sourceStyle);
 host.replaceChildren();
 var statePath=[],direction="forward";
 var otherSemesters={"2":["Constitutional Law – II","Contract – II","Labour Law – I","Property Law","Family Law – II: Mohammedan Law & Indian Succession Act","Kanoonu Kannada / Kannada Kali"],"3":["Jurisprudence","Labour Law – I","Law of Taxation","Criminal Law – II: Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023"],"4":["Public International Law","Optional I: Human Rights Law and Practice / Insurance Law","Optional II: Banking Law / Right to Information","Clinical I: Professional Ethics and Professional Accounting System","Clinical II: Alternative Dispute Resolution Systems"],"5":["Company Law","Civil Procedure Code and Limitation Act","Optional III: Intellectual Property Rights I / Penology & Victimology","Optional IV: Interpretation of Statutes and Principles of Legislation / Competition Law","Clinical III: Drafting, Pleading and Conveyance"],"6":["Bharatiya Sakshya Adhiniyam (BSA), 2023","Environmental Law","Optional V: Intellectual Property Rights II / White Collar Crimes","Optional VI: Land Law / Law relating to International Trade Economics","Clinical IV: Moot Court Exercise and Internship"]};
@@ -111,6 +114,23 @@ function render(){
   var exam=E(f,"div",undefined,"sf-info");E(exam,"h3","Check your understanding");
   E(exam,"p","Can you define this concept, explain its essential requirements, identify exceptions and apply the rule to a practical example?");
   E(exam,"p","For exam answers, connect the definition to the relevant statutory text or leading authority.");
+
+  var ledger=window.LawContentLedger;
+  var unitSource=ledger&&ledger.getUnit(subject,unit);
+  if(unitSource){
+    unitSource.warnings.forEach(function(message){
+      var warning=E(f,"p",message,"sf-source-warning");warning.setAttribute("role","note");
+    });
+    var sources=E(f,"details",undefined,"sf-sources");
+    E(sources,"summary","Sources and review status");
+    var body=E(sources,"div",undefined,"sf-sources-body");
+    E(body,"p","Syllabus wording: not yet independently verified against the applicable KSLU unit PDF.");
+    ledger.getSources(unitSource).forEach(function(source){
+      var link=E(body,"a",source.title+" ↗");
+      link.href=source.url;link.target="_blank";link.rel="noopener noreferrer";
+    });
+    E(body,"p","Official links are for verification. Confirm amendments and applicable course requirements.");
+  }
   var words=legalWords(t);
   if(words.length){
    E(f,"p","Related vocabulary","sf-eyebrow");
