@@ -1,3 +1,14 @@
+## Version 60 — Student hub navigation
+
+Home now has **one Student card** instead of separate cards for Syllabus, Topic Brain Branches, Subjects and Exam Papers & Answers. Selecting **Student** opens an accessible, responsive four-entry hub:
+
+- **Syllabus** — existing 30 KSLU Semester I outlines and source-review links
+- **Topic Brain Branches** — existing `./reader/?map=1` visual topic mapping and vault-backed study notes
+- **Subjects** — existing subject library, unchanged
+- **Exam Papers & Answers** — existing 16-answer reader, archive links and writing exercises
+
+The shared router has a real `#student` deep link. Internal study screens return to Student with **← Student**; Student itself returns to Home with **← Home**. Previously shared deep links (such as `#syllabus` and `#papers`) still work. No learning progress, notes, backup format, paper content or syllabus content was deleted or migrated. `student-menu.css` and router v60 are cached for offline operation. Automated DOM and mobile Chromium coverage checks the menu regrouping and back navigation.
+
 ## Version 59 — KSLU exam papers with complete worked answers
 
 **Exam Papers & Answers** (the existing `#papers` route) now features a **16-answer bank** covering five Semester I core subjects: **four Contract–I** (two independently authored answers attached to 2022 archive-attributed questions plus two new model prompts), **three Constitutional Law–I**, **three Law of Torts**, **three Family Law–I: Hindu Law**, and **three Criminal Law–I: BNS, 2023**. The 14 newly authored questions are explicitly labelled **original syllabus-aligned model questions**; they are **not claimed to have appeared in past exams**.
