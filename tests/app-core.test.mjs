@@ -87,7 +87,7 @@ test('One router drives home, syllabus and profile and notifies subscribers',()=
  r.start();r.start();
  assert.equal(b.words.classList.active,true);
  assert.equal(b.home.classList.active,false);
- assert.equal(b.title.textContent,'Words');
+ assert.equal(b.title.textContent,'Learn Words');
  assert.equal(b.listeners.hashchange.length,1,'Only one browser hash listener');
  assert.equal(b.click('syllabus'),true);
  assert.equal(b.syllabus.classList.active,true);
