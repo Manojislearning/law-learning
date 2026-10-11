@@ -5,13 +5,13 @@ var host=document.getElementById("words-view");
 if(!host||typeof WORDS==="undefined"||!WORDS.length)return;
 var s=document.createElement("style");s.textContent="\n#words-view > :not(.word-v19){display:none!important}\n.word-v19{max-width:650px;margin:12px auto;padding-bottom:150px}\n.w-search{display:flex;align-items:center;gap:9px;min-height:43px;padding:0 12px;border-radius:13px;border:1px solid var(--line);background:#fff}\n.w-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;font:inherit;font-size:16px;color:var(--text)}\n.w-search button{background:transparent;border:0;font:inherit;font-size:1.2rem;color:var(--muted)}\n.w-results{margin-top:7px;border-radius:12px;background:#fff;border:1px solid var(--line);overflow:hidden}\n.w-results button{display:block;width:100%;padding:13px;text-align:left;border:0;border-bottom:1px solid var(--line);background:#fff;font:inherit}\n.w-results button:last-child{border-bottom:0}\n.w-results p{margin:10px;color:var(--muted)}\n.w-head{display:flex;align-items:center;justify-content:space-between;margin:14px 0;gap:10px}\n.w-head span{font-size:.76rem;color:var(--muted);font-weight:750}\n.w-head button{border:0;background:transparent;color:var(--text);font:inherit;font-size:.83rem;font-weight:750;padding:8px}\n.w-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}\n.w-tabs button{padding:12px 5px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--text);font:inherit;font-weight:750;font-size:.9rem}\n.w-tabs button.active{background:var(--text);color:white}\n.w-card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:clamp(16px,4vw,23px);min-height:255px}\n.w-card[hidden],.w-results[hidden],.w-review[hidden]{display:none!important}\n.w-eyebrow{font-size:.74rem;font-weight:800;color:var(--muted);margin:0 0 16px}\n.w-term{font:500 clamp(1.85rem,8vw,3.2rem)/1.15 Georgia,serif;overflow-wrap:anywhere;margin:0 0 17px}\n.w-p{font-size:.99rem;line-height:1.6;margin:0 0 14px}\n.w-small{font-size:.84rem;line-height:1.55;color:var(--muted);margin:0 0 12px}\n.w-label{margin:17px 0 6px;font-weight:800;font-size:.73rem;text-transform:uppercase;color:var(--muted)}\n.w-options{display:grid;gap:9px}\n.w-option{width:100%;display:block;background:#f8f9fb;color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:left;font:inherit;font-size:.91rem;line-height:1.5}\n.w-option.right{background:#e6f5ec;border-color:#298153}\n.w-option.wrong{background:#fff0ef;border-color:#bd514e}\n.w-input{display:block;width:100%;min-width:0;border:1px solid var(--line);border-radius:12px;padding:12px;font:inherit;font-size:16px}\n.w-btn{background:var(--text);color:white;border:0;border-radius:12px;padding:11px 14px;font:inherit;font-weight:750;margin-top:11px}\n.w-feedback{font-size:.87rem;font-weight:750;margin:14px 0 0;line-height:1.45}\n.w-news{display:block;color:#2259a3;text-decoration:underline;font-size:.88rem;font-weight:750;line-height:1.5;margin-top:13px}\n.w-compare{margin:9px 0;border:1px solid var(--line);border-radius:13px;padding:13px;background:#f9fafb}\n.w-compare strong{font-size:.94rem}\n.w-compare p{margin:6px 0 0;font-size:.87rem;line-height:1.55}\n.w-nav{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:13px}\n.w-nav button{min-height:44px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-weight:750}\n.w-nav button:last-child{background:var(--text);color:white}\n.w-nav button:disabled{opacity:.35}\n.w-dots{display:flex;gap:4px;margin-bottom:13px}\n.w-dots span{height:4px;flex:1;background:var(--line);border-radius:3px}\n.w-dots span.done{background:var(--text)}\n.w-bottom{position:fixed;bottom:calc(8px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:24;width:min(calc(100% - 20px),650px);padding:10px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.97);box-shadow:0 10px 35px rgba(13,19,33,.13);backdrop-filter:blur(10px)}\n.w-bottomtop{display:flex;align-items:center;justify-content:space-between;margin:1px 3px 8px;font-size:.76rem;font-weight:750;color:var(--muted)}\n.w-bottomtop button{border:0;background:transparent;color:var(--text);font:inherit;font-size:.79rem;font-weight:750}\n.w-bottomactions{display:grid;grid-template-columns:1fr 1fr;gap:9px}\n.w-bottomactions button{min-height:43px;border-radius:12px;border:1px solid var(--text);font:inherit;font-size:.9rem;font-weight:750}\n.w-bottomactions button:first-child{background:var(--text);color:#fff}\n.w-bottomactions button:last-child{background:white;color:var(--text)}\n.w-review{border:1px solid var(--line);border-radius:12px;background:#fff;margin:13px 0;padding:13px}\n.w-review button{border:1px solid var(--line);border-radius:9px;padding:8px;margin:4px;background:#f8f9fb;font:inherit}\n@media(prefers-reduced-motion:no-preference){@keyframes inCard{from{opacity:0;transform:translateY(14px) scale(.986)}to{opacity:1;transform:translateY(0) scale(1)}}.w-card.motion{animation:inCard .3s ease both}}\n";document.head.appendChild(s);
 host.insertAdjacentHTML("afterbegin",
-'<div class="word-v19"><section class="w-levels" aria-label="Choose vocabulary level"><button type="button" class="w-level active" data-wlevel="legal" aria-pressed="true"><strong>Legal Words</strong></button><button type="button" class="w-level" data-wlevel="advanced" aria-pressed="false"><strong>Difficult Words</strong></button></section><p id="w-level-position" class="w-level-position"></p><div class="w-search"><span aria-hidden="true">⌕</span><input id="w-search" type="search" placeholder="Search this level…" aria-label="Search current vocabulary level" autocomplete="off"><button id="w-clear" type="button" aria-label="Clear search" hidden>×</button></div><div class="w-results" id="w-results" hidden></div>'+
+'<div class="word-v19"><section id="w-chooser" class="w-chooser" aria-label="Choose words"><button type="button" class="w-level" data-wlevel="legal"><strong>Legal Words</strong><span aria-hidden="true">→</span></button><button type="button" class="w-level" data-wlevel="advanced"><strong>Difficult Words</strong><span aria-hidden="true">→</span></button></section><div id="w-practice" class="w-practice" hidden><button type="button" id="w-change-level" class="w-change-level">← Learn Words</button><p id="w-level-position" class="w-level-position"></p><div class="w-search"><span aria-hidden="true">⌕</span><input id="w-search" type="search" placeholder="Search this level…" aria-label="Search current vocabulary level" autocomplete="off"><button id="w-clear" type="button" aria-label="Clear search" hidden>×</button></div><div class="w-results" id="w-results" hidden></div>'+
 '<div class="w-head"><span id="w-position"></span><button id="w-next-word" type="button">Next word →</button></div>'+
 '<div class="w-tabs"><button data-wtab="game" class="active">Game</button><button data-wtab="learn">Learn</button><button data-wtab="compare">Compare</button></div>'+
-'<div id="w-game"><div class="w-scrubber"><input id="w-scrub" type="range" min="1" max="10" value="1" step="1" aria-label="Move to a lesson card"><output id="w-scrub-label" for="w-scrub">1 / 10</output></div><div id="w-dots" class="w-dots" hidden></div><article id="w-deck" class="w-card"></article><div class="w-nav"><button id="w-back">← Previous</button><button id="w-forward">Next card →</button></div></div>'+
+'<div id="w-game"><div id="w-progress" class="w-progress" role="progressbar" aria-label="Game card progress" aria-valuemin="1" aria-valuemax="10" aria-valuenow="1"><span id="w-progress-fill" class="w-progress-fill"></span></div><article id="w-deck" class="w-card"></article><div class="w-nav"><button id="w-back">← Previous</button><button id="w-forward">Next card →</button></div></div>'+
 '<article id="w-learn" class="w-card" hidden></article><article id="w-compare" class="w-card" hidden></article>'+
 '<div id="w-review" class="w-review" hidden></div>'+
-'<div class="w-bottom"><div class="w-bottomtop"><span id="w-stats"></span><button id="w-revision">Revision (0)</button></div><div class="w-bottomactions"><button id="w-got">Got it</button><button id="w-revise">Revise later</button></div></div></div>');
+'<div class="w-bottom"><div class="w-bottomtop"><span id="w-stats"></span><button id="w-revision">Revision (0)</button></div><div class="w-bottomactions"><button id="w-got">Got it</button><button id="w-revise">Revise later</button></div></div></div></div>');
 var $=function(id){return document.getElementById(id)};
 var index=typeof state!=="undefined"&&Number.isInteger(state.currentWord)&&state.currentWord>=0&&state.currentWord<WORDS.length?state.currentWord:0;
 var LEGAL_LEVEL="legal",ADVANCED_LEVEL="advanced",LEVEL_KEY="law-learning-word-level-v1";
@@ -35,7 +35,7 @@ function pool(){return pools[currentLevel]||pools.legal;}
 function previousWord(){var seq=pool(),pos=seq.indexOf(index);return seq[(pos-1+seq.length)%seq.length];}
 function nextWordIndex(){var seq=pool(),pos=seq.indexOf(index);return seq[(pos+1)%seq.length];}
 var tab="game",cardIndex=0,answers={},points={};
-var stages=["The word","In the news","Spell it","Find the meaning","Simple explanation","True or false","Spot the distinction","In a sentence","Remember the term","Explain it"];
+var stages=["Definition","In the news","Spell it","Find the meaning","Simple explanation","True or false","Spot the distinction","In a sentence","Remember the term","Explain it"];
 var clusters=[
 ["Appeal","Review","Review petition","Revision","Petition","Writ jurisdiction"],
 ["Bail","Anticipatory bail","Default bail","Interim bail","Acquittal","Parole","Presumption of innocence","Benefit of doubt"],
@@ -138,7 +138,7 @@ function yesno(box,statement,truth,explain){
 }
 function renderDeck(){
  var box=$("w-deck");box.replaceChildren();put(box,"p","w-eyebrow",(cardIndex+1)+" / 10 · "+(cardIndex===1&&currentLevel===ADVANCED_LEVEL?"In a law answer":stages[cardIndex]));var word=w(),rel=related(),near=rel.length?WORDS[rel[0]]:null;
- if(cardIndex===0){title(box,word.term);}
+ if(cardIndex===0){title(box,word.term);p(box,word.definition);}
  if(cardIndex===1){if(currentLevel===ADVANCED_LEVEL){title(box,"In a law answer");p(box,(word.examples&&word.examples[0])||word.definition);small(box,"See how the word fits a legal note or examination answer.");}else{title(box,"A real-world example");newsView(box);}}
  if(cardIndex===2){
  var spell=spelling(word.term);title(box,spell.masked);small(box,"Fill the missing letters in order.");p(box,word.definition);
@@ -220,7 +220,7 @@ function update(){
   document.querySelectorAll("#words-view [data-wlevel]").forEach(function(b){
     var active=b.dataset.wlevel===currentLevel;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));
   });
- var scrub=$("w-scrub");scrub.value=String(cardIndex+1);scrub.style.setProperty("--fill",((cardIndex/9)*100)+"%");$("w-scrub-label").textContent=(cardIndex+1)+" / 10";
+ var progress=$("w-progress");progress.setAttribute("aria-valuenow",String(cardIndex+1));$("w-progress-fill").style.width=(((cardIndex+1)/10)*100)+"%";
  $("w-back").disabled=cardIndex===0;$("w-forward").textContent=cardIndex===9?"Next word →":"Next card →";
  if(typeof state!=="undefined"){var learned=Array.from(state.learned).filter(function(i){return currentPool.includes(i);}).length;var due=Array.from(state.difficult).filter(function(i){return currentPool.includes(i);}).length;$("w-stats").textContent=learned+" / "+currentPool.length+" learned";$("w-revision").textContent="Revision ("+due+")";}
 }
@@ -271,7 +271,9 @@ $("w-revision").addEventListener("click",function(){
  });
 });
 
-var gestureStyle=document.createElement("style");gestureStyle.textContent="\n.w-head{display:none!important}\n.w-dots{display:none!important}\n.w-scrubber{display:flex;align-items:center;gap:15px;padding:4px 4px 12px}\n.w-scrubber input{appearance:none;-webkit-appearance:none;min-width:0;flex:1;height:7px;border:0;border-radius:999px;background:linear-gradient(90deg,#0d1321 var(--fill,0%),#d7dbe1 var(--fill,0%));cursor:pointer;touch-action:none}\n.w-scrubber input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#0d1321;border:3px solid #fff;box-shadow:0 1px 6px rgba(13,19,33,.27)}\n.w-scrubber input::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#0d1321;border:3px solid #fff;box-shadow:0 1px 6px rgba(13,19,33,.27)}\n.w-scrubber output{white-space:nowrap;min-width:48px;text-align:right;font-size:.76rem;font-weight:800;color:var(--muted)}\n.w-card{will-change:transform,opacity}\n@media (prefers-reduced-motion:no-preference){.w-card.motion{animation:none!important}}\n";document.head.appendChild(gestureStyle);
+var gestureStyle=document.createElement("style");
+gestureStyle.textContent=".w-card{will-change:transform,opacity}@media(prefers-reduced-motion:no-preference){.w-card.motion{animation:none!important}}";
+document.head.appendChild(gestureStyle);
 var swipeStyle=document.createElement("style");
 swipeStyle.textContent='#w-next-word{display:none!important}.w-head::after{content:"Swipe left or right";font-size:.8rem;font-weight:700;color:var(--muted)}#w-deck,#w-learn,#w-compare{touch-action:pan-y}';
 document.head.appendChild(swipeStyle);
@@ -309,15 +311,6 @@ function moveBySwipe(direction){
   }else choose(direction<0?nextWordIndex():previousWord());
  });
 }
-$("w-scrub").addEventListener("input",function(){
- var next=Number(this.value);$("w-scrub-label").textContent=next+" / 10";
- this.style.setProperty("--fill",((next-1)/9*100)+"%");
-});
-$("w-scrub").addEventListener("change",function(){
- var target=Number(this.value)-1,old=cardIndex;
- if(target===old)return;
- changeWithMotion(target>old?-1:1,function(){cardIndex=target;renderDeck();});
-});
 ["w-deck","w-learn","w-compare"].forEach(function(id){
  var surface=$(id),start=null;
  surface.addEventListener("touchstart",function(e){
