@@ -1,11 +1,31 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **53** — durable, private weak-case revisit schedules and portable backup schema 4 across five first-year law subjects; prior release histories follow.
+Latest user-visible release: **54** — optional evidence/counterargument practice, targeted weak-case reminders and syllabus jump after answer review; prior releases follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 54 — Explain factual reasoning and connect weak cases to the syllabus (11 October 2026)
+
+**Why this release:** The repository already has 75 original IRAC cases spanning five LL.B. Semester I subjects, 25 changed-facts exercises, and backup-safe weak-case review (v53). Adding another bank merely because the user requested “Next” would repeat prior work. The highest-value gap was **getting from a weak written answer to a targeted learning action**.
+
+**Comparative learning principle:** Evidence for retrieval practice and transfer of learning indicates that recall with explanatory feedback can improve application to new problems, but a checkbox alone is not a reliable automatic essay mark. See [Pan & Rickard, Psychological Bulletin (2018)](https://pubmed.ncbi.nlm.nih.gov/29733621/), [Carpenter, Pan & Butler, Nature Reviews Psychology (2022)](https://www.nature.com/articles/s44159-022-00089-1) and [Agarwal, retrieval practice and explanatory feedback (2018)](https://www.retrievalpractice.org/strategies/2018/5/25/feedback).
+
+**Shipped:**
+1. Every case now has an **optional pre-answer evidence and counterargument prompt**. It invites students to identify an actual supporting fact, a limiting fact or exception and an additional fact that could change the result. It does not reveal the relevant statute, legal solution, course unit or model answer.
+2. On a **saved weak-case retry**, only the learner's own previously selected missing IRAC structure (Issue, Rule, Application, Conclusion) is surfaced. Essay text and past reference answers are not displayed or retrieved.
+3. After the learner attempts an answer and reveals the reference outline, an optional **evidence and opposing-argument debrief** explains the application and the common misconception for that case. It is not automatic essay feedback; the app makes no unverified claim that it interpreted the student's draft.
+4. A **Study this KSLU syllabus unit** button appears inside the gated reference-answer panel, uses the existing `window.openSyllabusUnit(1, subjectIndex, unitIndex)` navigation, and maps all five subjects and units correctly. If the case has not been self-assessed, only its safe case-level revisit metadata is retained when the student moves to study. Previously saved IRAC gaps are not overwritten.
+5. Existing `law-learning-case-review-v1` data, durable review scheduling and backup **schema 4** remain unchanged. The app still does not save the student's essay or invent proficiency scores.
+6. Separate deterministic tests validate all **25 subject–unit combinations**, reject malformed study targets, and check that private IRAC reminders contain only allowed criterion labels. Browser integration checks verify the first-answer gate, stored weak-case revisit, appropriate exact syllabus route and no private essay leakage. Chromium checks exercise 320/390 CSS-pixel views and the post-answer study link.
+
+**What remains uncertain:** Actual exam-grade improvement, legal validity of every authored hypothetical for the student's admission cohort, and TalkBack operation on a physical Android device require independent validation. This is scaffolding for better answers, not AI essay grading.
+
+**Next improvement:** Make the *quality of applying facts* easier to practise by carefully reviewed counterexample pairs within each subject, and validate the exact KSLU cohort's course scheme. Consider a short feedback collection mechanism that does not persist confidential legal essays.
+
+---
 
 ## Version 53 — Durable weak-case revisit without storing essays (11 October 2026)
 
