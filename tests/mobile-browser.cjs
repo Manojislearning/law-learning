@@ -264,7 +264,31 @@ async function run(){
    assert.equal(errors.length,0,"Hindu legal practice errors "+width+": "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
+
+  for(const width of [320,390]){
+   const context=await browser.newContext({viewport:{width,height:740},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",err=>errors.push(err.message));
+   await page.goto(address.replace("v=43#practice","v=54&course=torts#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   await area.getByRole("button",{name:/Start 5 cases/}).tap();
+   const structure=area.locator(".cp-reasoning").first();
+   assert.equal(await structure.count(),1,"Case writing should offer optional fact/counterargument prompts");
+   assert.ok((await structure.innerText()).includes("Improve your fact analysis"));
+   assert.equal(await area.locator(".cp-model").isVisible(),false,"Case statute stays hidden before retrieval");
+   await area.locator(".cp-writing textarea").fill("Issue: identify duty, breach or statutory claim. Rule: state the relevant legal test. Application: cite supporting facts and counterargument. Conclusion: a qualified outcome.");
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   const unit=area.locator(".cp-unit-link");
+   assert.equal(await unit.isVisible(),true,"Related syllabus unit appears only after answer");
+   const rect=await unit.boundingBox();
+   assert.ok(rect&&rect.height>=44&&rect.x>=0&&rect.x+rect.width<=width+1,"Study-unit link must remain usable at "+width+"px");
+   await unit.tap();
+   await page.waitForURL(/#syllabus$/);
+   assert.ok((await page.locator("#syllabus-detail").innerText()).includes("Unit"),"Expected directly mapped syllabus unit");
+   assert.equal(errors.length,0,"No case-to-unit browser errors: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
