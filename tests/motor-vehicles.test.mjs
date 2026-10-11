@@ -85,6 +85,6 @@ test('Motor Vehicles subject is available from the same offline app, no user sto
  }
  assert.ok(view.includes('defaultTopic==="motor"'),'Motor deep link must be recognised');
  assert.ok(sy.includes('open("motor")'));
- assert.ok(html.includes('Motor Vehicles 2026'));
+ assert.ok(html.includes('data-open="law-updates"') && html.includes('Current Law Check'),"Current Law Check remains available without a descriptive subtitle");
  assert.ok(!view.includes('localStorage.'));
 });
