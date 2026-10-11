@@ -52,18 +52,24 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  const src=findButton(doc,"Sources & review");
  assert.ok(src,"Sources & review entry must be a navigable button");
  src.click();
- assert.ok(doc.querySelector("#syllabus-detail").textContent.includes("30 units"),"Source summary must reflect imported units");
- const contract=findButton(doc,"Contract – I");
+ assert.ok(doc.querySelector("#syllabus-detail").textContent.includes("30/30"),"Source summary must reflect imported units");
+ assert.ok(doc.querySelector("#syllabus-detail").textContent.includes("English"),"Official conditional English note should appear on audit page");
+  const contract=findButton(doc,"Contract – I");
  assert.ok(contract,"Contract course source status must be listed");contract.click();
  const unit=findButton(doc,"Unit I");
  assert.ok(unit,"Contract I unit must be selectable");unit.click();
  assert.ok(doc.querySelector("#syllabus-detail").textContent.includes("Official references"),"References page must render");
  assert.ok([...doc.querySelectorAll("#syllabus-detail a")].some(a=>a.href.includes("indiacode.nic.in")),"Primary legislation must be linked");
+ const proof=doc.querySelector(".sf-audit-proof");
+ assert.ok(proof,"Published-edition outline evidence must be visible at unit level");
+ assert.ok(proof.textContent.includes("printed page 6"),"Contract I should point to the official syllabus page 6");
+ assert.ok([...proof.querySelectorAll("a")].some(a=>a.href.includes("#page=6")),"Source audit should link directly to original page");
+ assert.ok(doc.querySelector("#syllabus-detail").textContent.includes("Current admission-year scheme: not yet confirmed"),"Historical match must never imply cohort verification");
  assert.deepEqual(errors,[]);
  dom.window.close();
 
  const direct=build("https://example.test/law-learning/index.html?sources=1&v=34#syllabus");
- assert.ok(direct.doc.querySelector("#syllabus-detail").textContent.includes("30 units"),"Direct source URL must open review dashboard");
+ assert.ok(direct.doc.querySelector("#syllabus-detail").textContent.includes("30/30"),"Direct source URL must open review dashboard");
  assert.deepEqual(direct.errors,[]);
  direct.dom.window.close();
 
