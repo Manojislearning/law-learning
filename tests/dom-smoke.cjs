@@ -110,14 +110,46 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.deepEqual(u3.errors,[],"Unit III must not trigger browser runtime errors");
  u3.dom.window.close();
 
- const homepage=build("https://example.test/law-learning/index.html?v=38#home");
+ const u4=build("https://example.test/law-learning/index.html?learn=contract1-unit4&v=39#syllabus");
+ const u4d=u4.doc,u4w=u4.dom.window;
+ assert.equal(u4w.ContractUnitFourUI.lessons.length,12,"Unit IV must include 12 lessons");
+ assert.ok(u4d.querySelector(".c1-card h2").textContent.includes("compensation"),"Unit IV direct URL must open damages lesson");
+ assert.ok(u4d.querySelector(".c1-lesson-number").textContent.includes("Unit IV"));
+ for(let i=0;i<u4w.ContractUnitFourUI.lessons.length;i++){
+  const lesson=u4w.ContractUnitFourUI.lessons[i];
+  const correct=lesson.choices[lesson.answer];
+  const opts=[...u4d.querySelectorAll(".c1-option")];
+  assert.equal(opts.length,3,"Every guided question has three answer choices");
+  assert.equal(u4d.querySelector(".c1-next").hidden,true,"Must answer before Next button");
+  const target=opts.find(b=>i===0?b.textContent!==correct:b.textContent===correct);
+  assert.ok(target,"Expected correct or deliberately incorrect option");
+  target.click();
+  assert.equal(u4d.querySelector(".c1-feedback").hidden,false,"Every answer gets explanatory feedback");
+  assert.ok(u4d.querySelector(".c1-option.correct"),"Correct answer must be highlighted regardless of display position");
+  if(i<u4w.ContractUnitFourUI.lessons.length-1)u4d.querySelector(".c1-next").click();
+ }
+ const retry=u4d.querySelector(".c1-retry:not([hidden])");
+ assert.ok(retry&&retry.textContent.includes("Review 1"),"The unit must offer review of missed concepts");
+ retry.click();
+ assert.ok(u4d.querySelector(".c1-count").textContent.includes("REVIEW"),"Missed review must enter review mode");
+ const first=u4w.ContractUnitFourUI.lessons[0],right=first.choices[first.answer];
+ const retryAnswer=[...u4d.querySelectorAll(".c1-option")].find(b=>b.textContent===right);
+ assert.ok(retryAnswer);
+ retryAnswer.click();
+ assert.ok(u4d.querySelector(".c1-next").textContent.includes("Finish review"),"Correct retry must clear missed queue");
+ u4d.querySelector(".c1-next").click();
+ assert.ok(!u4d.querySelector(".c1-card"),"Finishing review returns to Unit IV topics");
+ assert.deepEqual(u4.errors,[],"Unit IV must not throw browser errors");
+ u4.dom.window.close();
+
+ const homepage=build("https://example.test/law-learning/index.html?v=39#home");
  const btn=homepage.doc.getElementById("home-contract-lesson");
  assert.ok(btn,"Homepage needs a single visible guided-lesson entry");
  btn.click();await settle();
  assert.equal(homepage.dom.window.LawAppCore.router.current(),"syllabus");
  assert.ok(homepage.doc.querySelector(".c1-card"),"Home lesson entry should open a guided concept");
- assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("performance"),"Homepage should launch Unit III");
+ assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("compensation"),"Homepage should launch Unit IV");
  assert.deepEqual(homepage.errors,[]);
  homepage.dom.window.close();
- console.log("DOM integration passed: KSLU sources, Contract Units I–III, questions, deep links and home course.");
+ console.log("DOM integration passed: KSLU sources, Contract Units I–IV, questions, deep links and home course.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
