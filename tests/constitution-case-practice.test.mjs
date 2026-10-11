@@ -88,9 +88,9 @@ test('Changed facts cover Constitution units and use the corresponding parent ca
 });
 test('Version 51 loads four subject modules offline and preserves previous subject choice',()=>{
  const html=read('index.html'),sw=read('sw.js'),sy=read('syllabus-flow.js'),ui=read('case-practice-view.js');
- const assets=['constitution-case-practice-data.js?v=51','case-practice-core.js?v=52','case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=52','syllabus-flow.js?v=52'];
+ const assets=['constitution-case-practice-data.js?v=51','case-practice-core.js?v=52','case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=53','syllabus-flow.js?v=52'];
  for(const asset of assets){assert.ok(html.includes(asset),'HTML missing '+asset);assert.ok(sw.includes(asset),'PWA missing '+asset);}
- assert.ok(html.indexOf('constitution-case-practice-data.js?v=51')<html.indexOf('case-practice-view.js?v=52'));
+ assert.ok(html.indexOf('constitution-case-practice-data.js?v=51')<html.indexOf('case-practice-view.js?v=53'));
  assert.ok(ui.includes('constitution:root.LawConstitutionCaseData'));
  assert.ok(ui.includes('Constitutional Law–I'));
  assert.ok(sy.includes('open("constitution")'));
