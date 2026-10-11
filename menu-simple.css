@@ -1,0 +1,62 @@
+/* v61 — titles only, no decorative subtitles in primary navigation. */
+#section-kicker{display:none!important}
+#home-view .home-intro{padding:13px 2px 14px}
+#home-view .home-intro h2{font-size:clamp(1.55rem,5vw,1.95rem);margin:0 0 9px}
+#home-view .home-intro .muted,#student-view .student-hub-heading .muted{display:none!important}
+#home-view .home-grid{gap:10px}
+#home-view .home-grid .home-card,
+#student-view .student-hub-grid .student-hub-card{
+  display:flex;align-items:center;justify-content:space-between;gap:13px;
+  min-height:76px;max-height:none;padding:17px 19px;
+  border-radius:15px;text-align:left;text-decoration:none;
+  box-sizing:border-box;overflow:visible
+}
+#home-view .home-grid .home-card strong,
+#student-view .student-hub-grid .student-hub-card strong{
+  font-size:clamp(1.08rem,3vw,1.3rem);font-weight:780;line-height:1.35;
+  margin:0!important;max-width:none;overflow-wrap:break-word
+}
+#home-view .home-grid .home-card .home-arrow,
+#student-view .student-hub-grid .student-hub-card .student-hub-arrow{
+  position:static;align-self:center;flex:none;margin-left:auto;
+  font-size:1.25rem;line-height:1
+}
+#home-view .home-grid .home-card p,
+#student-view .student-hub-grid .student-hub-card p,
+#student-view .student-hub-number,
+#student-view .student-hub-footnote{display:none!important}
+#student-view .student-hub{max-width:780px}
+#student-view .student-hub-heading{margin:8px 0 14px}
+#student-view .student-hub-heading h2{font-size:clamp(1.55rem,5vw,2.05rem);margin:0}
+#student-view .student-hub-grid{gap:10px}
+#home-view .home-practice-card,#home-view .home-review-card,
+#home-view .home-contract-lesson{
+  min-height:69px;max-height:none;padding:14px 18px;
+  margin:0 0 10px;border-radius:15px;box-sizing:border-box
+}
+#home-view .home-practice-card .home-practice-copy{gap:0}
+#home-view .home-practice-card strong,
+#home-view .home-review-card strong,
+#home-view .home-contract-lesson strong{
+  font-size:clamp(1.08rem,3vw,1.3rem);line-height:1.35;
+  margin:0!important;font-weight:780
+}
+#home-view .home-contract-lesson .home-contract-body{gap:0}
+#home-view .home-contract-lesson .home-contract-body small,
+#home-view .home-contract-lesson .home-contract-body > span{display:none}
+#home-view .home-grid .home-card.primary-card{background:#0d1321;color:#fff}
+#home-view .home-grid .home-card.primary-card .home-arrow{color:white}
+.menu-sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;border:0!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important}
+#words-view .w-levels{gap:10px;margin:0 0 13px}
+#words-view .w-level{min-height:66px!important;max-height:none;padding:15px 12px;
+  display:flex;justify-content:center;align-items:center;text-align:center;gap:0;border-radius:13px}
+#words-view .w-level strong{font-size:clamp(1.03rem,3vw,1.26rem);font-weight:780;letter-spacing:0;line-height:1.35}
+#words-view .w-level-position{font-size:.89rem;line-height:1.45;margin:0 0 10px}
+#words-view .w-head{margin:10px 0}
+#words-view .w-head #w-position{display:none}
+.main-view > .section-head .eyebrow{display:none}
+@media(max-width:599px){
+ #home-view .home-grid{grid-template-columns:1fr}
+ #student-view .student-hub-grid{grid-template-columns:1fr}
+}
+@media(min-width:600px){#home-view .home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
