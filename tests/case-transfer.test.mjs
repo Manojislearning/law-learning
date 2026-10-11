@@ -12,7 +12,7 @@ const banks={
  constitution:require('../constitution-case-practice-data.js')
 };
 const read=p=>readFileSync(resolve(root,p),'utf8');
-test('Exactly 15 original changed-fact prompts map to real original cases, one per unit and course',()=>{
+test('Exactly 20 original changed-fact prompts map to real original cases, one per unit and course',()=>{
  assert.equal(core.verify(data,banks),true);
  assert.equal(data.items.length,20);
  for(const course of ['contract','torts','bns','constitution']){
@@ -56,9 +56,9 @@ test('Changed facts explicitly contrast high-risk legal mistakes without claims 
  const b=data.items.find(x=>x.parentId==='u2-cruelty-dowry');
  assert.ok(b.rule.includes('Section 80'));
  assert.ok(b.trap.includes('automatically'));
- assert.ok(data.disclaimer.includes('not official KSLU'));
+ assert.ok(data.disclaimer.toLowerCase().includes('not official kslu'));
 });
-test('Version 50 loads changed-facts assets before practice reader and precaches both',()=>{
+test('Version 51 loads changed-facts assets before practice reader and precaches both',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('case-practice-view.js');
  for(const asset of ['case-transfer-data.js?v=51','case-transfer-core.js?v=51','case-practice-view.js?v=51']){
   assert.ok(html.includes(asset),'Missing browser asset '+asset);
