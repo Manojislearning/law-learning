@@ -346,6 +346,32 @@ async function run(){
     assert.equal(errors.length,0,"News browser errors: "+errors.join("; "));
     await context.close();
    }
+   // Readability and two word levels: actual Chromium on narrow viewports.
+   for(const width of [320,390,768]){
+    const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+    const page=await context.newPage(),errors=[];page.on("pageerror",err=>errors.push(err.message));
+    await page.goto(address.replace("v=43#practice","v=58#words"),{waitUntil:"load"});
+    const levels=page.locator(".w-level");
+    assert.equal(await levels.count(),2,"Legal and Advanced English levels should be visible");
+    assert.ok((await page.locator("#w-level-position").innerText()).includes("415"));
+    const advanced=levels.filter({hasText:"Advanced English"});
+    const bounds=await advanced.boundingBox();
+    assert.ok(bounds&&bounds.width>100&&bounds.height>=44&&bounds.x>=0&&bounds.x+bounds.width<=width+1,"Advanced level button is not accessible at "+width+"px");
+    await advanced.tap();
+    assert.ok((await page.locator("#w-level-position").innerText()).includes("115"));
+    assert.ok((await page.locator("#w-deck").innerText()).includes("Cogent"));
+    await page.locator("#w-forward").tap();
+    assert.ok((await page.locator("#w-deck").innerText()).includes("law answer"),"Writing example should be visible");
+    const sizes=await page.evaluate(()=>{
+      const selectors=["#w-level-position",".w-level.active strong","#w-deck .w-p"];
+      return selectors.map(s=>{const n=document.querySelector(s);return {selector:s,size:parseFloat(getComputedStyle(n).fontSize),right:n.getBoundingClientRect().right};});
+    });
+    assert.ok(sizes.every(x=>x.size>=16&&x.right<=width+1),width+"px font too small or text overflowing "+JSON.stringify(sizes));
+    await page.locator(".w-level").filter({hasText:"Legal Words"}).tap();
+    assert.ok((await page.locator("#w-level-position").innerText()).includes("415"),"Level switch must retain original legal words");
+    assert.equal(errors.length,0,"Word game v58 browser errors at "+width+"px: "+errors.join("; "));
+    await context.close();
+   }
    console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
