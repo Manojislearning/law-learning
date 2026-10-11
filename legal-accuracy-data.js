@@ -1,8 +1,8 @@
 /* Carefully scoped primary-source statutory corrections for KSLU Semester I. */
 (function(root){"use strict";var data={
   "schema": 1,
-  "edition": "Statutory source check · 11 October 2026",
-  "claimScope": "Selected statutory section mappings and commencement/rule distinctions have been checked against cited government primary texts. This is not a complete review of the Acts, all amendments, case-law applications or the student's current KSLU cohort.",
+  "edition": "Statutory source check · 11 October 2026 · Motor Vehicles 2026 amendments",
+  "claimScope": "Selected BNS, Consumer Protection and Motor Vehicles statutory topics are linked to official government text and notifications. Motor Vehicles content distinguishes 2019/2022 changes, the 2025 cashless-treatment scheme and 2026 Jan Vishwas amendments; commencement and later amendments must always be checked. This is not a complete statute, case-law or cohort audit.",
   "topics": [
     {
       "id": "bns",
@@ -15,6 +15,12 @@
       "name": "Torts · Consumer Protection",
       "short": "Consumer",
       "description": "2019 Act, definitions and 2021 jurisdiction rules"
+    },
+    {
+      "id": "motor",
+      "name": "Torts · Motor Vehicles",
+      "short": "Motor Vehicles",
+      "description": "Accident compensation, hit-and-run, insurance and Claims Tribunals; 2026 changes"
     }
   ],
   "sources": {
@@ -41,6 +47,30 @@
     "consumer-rules": {
       "title": "Department of Consumer Affairs — Consumer Protection Acts and Rules",
       "url": "https://consumeraffairs.gov.in/pages/consumer-protection-acts"
+    },
+    "motor-act": {
+      "title": "Motor Vehicles Act, 1988 — India Code consolidated text",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/1798/1/a1988-59.pdf"
+    },
+    "motor-hitrun": {
+      "title": "MoRTH press release — Hit-and-run compensation scheme, 2022",
+      "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1801656&lang=2&reg=48"
+    },
+    "motor-2026": {
+      "title": "Jan Vishwas (Amendment of Provisions) Act, 2026 — official Gazette (Act 8 of 2026)",
+      "url": "https://egazette.gov.in/WriteReadData/2026/271642.pdf"
+    },
+    "motor-2026-commence": {
+      "title": "Motor Vehicles 2026 amendments — S.O. 4100(E), 24 July 2026, official Gazette",
+      "url": "https://egazette.gov.in/WriteReadData/2026/274798.pdf"
+    },
+    "motor-2025-scheme": {
+      "title": "MoRTH, Cashless Treatment for Road Accident Victims Scheme, 2025 — government briefing (2026)",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2220125&lang=1&reg=6"
+    },
+    "motor-code-index": {
+      "title": "Motor Vehicles Act — India Code section index",
+      "url": "https://www.indiacode.nic.in/handle/123456789/18644?sam_handle=&view_type=browse"
     }
   },
   "cards": [
@@ -369,6 +399,207 @@
       "refs": [
         "consumer-act",
         "consumer-rules"
+      ]
+    },
+    {
+      "id": "motor-no-fault",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act, 1988 · Section 164",
+      "title": "No-fault compensation under Section 164",
+      "rule": "Section 164, brought into the current compensation framework through the 2019 amendment, provides ₹5 lakh for death and ₹2.5 lakh for grievous hurt arising out of use of a motor vehicle, subject to statutory conditions. A claimant need not prove wrongful act, neglect or default for this statutory claim.",
+      "example": "A road accident causes grievous hurt. Before deciding the route, compare the fixed Section 164 claim with a claim examined on its distinct evidentiary basis under the Act.",
+      "mistake": "Do not use the superseded Sections 140 or 163A as if their earlier no-fault framework were unchanged. Section 164 is not the same as the hit-and-run scheme under Section 161.",
+      "question": "Which section provides statutory ₹5 lakh death and ₹2.5 lakh grievous-hurt compensation without requiring proof of fault?",
+      "choices": [
+        "Section 166(3)",
+        "Section 164",
+        "Section 161"
+      ],
+      "answer": 1,
+      "why": "Section 164 establishes fixed no-fault death and grievous-hurt sums under its conditions. The specific hit-and-run scheme is addressed in Section 161.",
+      "refs": [
+        "motor-act",
+        "motor-code-index"
+      ]
+    },
+    {
+      "id": "motor-hit-run",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Section 161; 2022 Hit-and-run Scheme",
+      "title": "Hit-and-run has its own compensation",
+      "rule": "Section 161 and the Compensation to Victims of Hit and Run Motor Accidents Scheme, 2022 provide ₹2 lakh for death and ₹50,000 for grievous hurt in qualifying hit-and-run accidents, effective under that scheme from 1 April 2022. A hit-and-run claim is distinct from the fixed Section 164 route.",
+      "example": "The offending vehicle cannot be identified despite reasonable efforts. Check the statutory hit-and-run definition and 2022 Scheme, not just whether its driver left the scene.",
+      "mistake": "Do not confuse Section 161's ₹2 lakh / ₹50,000 hit-and-run amounts with Section 164's ₹5 lakh / ₹2.5 lakh. A driver departing the scene does not automatically meet the scheme's unidentified-vehicle criteria.",
+      "question": "What amount does the 2022 hit-and-run scheme specify for grievous hurt?",
+      "choices": [
+        "₹2.5 lakh",
+        "₹50,000",
+        "₹5 lakh"
+      ],
+      "answer": 1,
+      "why": "The 2022 scheme provides ₹50,000 for qualifying grievous hurt and ₹2 lakh for death in hit-and-run cases.",
+      "refs": [
+        "motor-act",
+        "motor-hitrun"
+      ]
+    },
+    {
+      "id": "motor-cashless",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Section 162; 2025 Cashless Treatment Scheme",
+      "title": "Cashless treatment is separate from damages",
+      "rule": "Under the Cashless Treatment for Road Accident Victims Scheme, 2025 issued pursuant to Section 162, cashless medical-treatment cover is up to ₹1.5 lakh per victim, subject to a maximum of seven days from the accident and scheme requirements. It is a treatment mechanism, not the same as an award from a Claims Tribunal.",
+      "example": "An accident victim needs hospital stabilisation immediately. Examine eligibility and the designated-hospital and procedural rules under the 2025 scheme rather than calculating an automatic compensation award.",
+      "mistake": "Do not treat the ₹1.5 lakh treatment ceiling as a universal claim payout, or confuse it with the separate Section 161 hit-and-run compensation.",
+      "question": "Which provision underlies the 2025 road-accident cashless treatment scheme?",
+      "choices": [
+        "Section 162",
+        "Section 146",
+        "Section 166"
+      ],
+      "answer": 0,
+      "why": "Section 162 mandates the cashless treatment scheme; the 2025 notification addresses eligible treatment and the seven-day/₹1.5 lakh caps.",
+      "refs": [
+        "motor-act",
+        "motor-2025-scheme"
+      ]
+    },
+    {
+      "id": "motor-insurance",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Sections 146–147",
+      "title": "Why third-party insurance is mandatory",
+      "rule": "Section 146 generally requires a policy covering third-party risk before using, or allowing use of, a motor vehicle in a public place, subject to its exceptions. Section 147 describes the requirements and limits of the relevant policy; not every insurance policy necessarily covers every category of loss.",
+      "example": "An owner has optional own-damage insurance but no legally compliant third-party policy. Examine Section 146 rather than assuming every vehicle policy is interchangeable.",
+      "mistake": "Do not equate 'comprehensive', 'own-damage' and statutory third-party liability insurance, or assert every insurer must pay in all circumstances.",
+      "question": "Which section states the general requirement for third-party motor insurance?",
+      "choices": [
+        "Section 166",
+        "Section 147 alone",
+        "Section 146"
+      ],
+      "answer": 2,
+      "why": "Section 146 establishes the obligation concerning third-party insurance; Section 147 deals with policy requirements.",
+      "refs": [
+        "motor-act",
+        "motor-code-index"
+      ]
+    },
+    {
+      "id": "motor-insurer",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Sections 149–150",
+      "title": "Insurer settlement and award obligations",
+      "rule": "After the 2019 amendment framework, Section 149 addresses settlement by insurers and its procedures. Section 150 separately concerns insurers' duty to satisfy qualifying judgments and awards against insured persons for third-party risks, subject to statutory defences and conditions.",
+      "example": "An insurance company receives an accident claim and disputes responsibility. Check the procedural route and legally available defences before claiming either automatic payment or absolute freedom to reject.",
+      "mistake": "Older notes can assign the insurers' award-satisfaction duty to Section 149 without accounting for the renumbered provisions. In the amended structure, distinguish Sections 149 and 150.",
+      "question": "In the amended Motor Vehicles Act, which section concerns the duty of insurers to satisfy qualifying third-party awards?",
+      "choices": [
+        "Section 149",
+        "Section 150",
+        "Section 161"
+      ],
+      "answer": 1,
+      "why": "Section 150 concerns the duty to satisfy judgments and awards; Section 149 deals with settlement and related procedures in the amended structure.",
+      "refs": [
+        "motor-act",
+        "motor-code-index"
+      ]
+    },
+    {
+      "id": "motor-mact",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Sections 165–166",
+      "title": "What is the Motor Accidents Claims Tribunal?",
+      "rule": "Section 165 empowers the establishment of Motor Accidents Claims Tribunals (MACTs) for specified motor-accident compensation claims. Section 166 concerns applications, including who can apply, with requirements affected by later amendments.",
+      "example": "The legal representatives of a person killed in a qualifying motor accident consider a claim. Determine the proper claimant and Claims Tribunal route, as well as any applicable time limits.",
+      "mistake": "Do not call the Claims Tribunal a criminal court deciding guilt, or treat every insurance dispute as necessarily identical to a MACT claim.",
+      "question": "Which Motor Vehicles Act section concerns Claims Tribunals?",
+      "choices": [
+        "Section 165",
+        "Section 161",
+        "Section 147"
+      ],
+      "answer": 0,
+      "why": "Section 165 concerns Claims Tribunals; applications are addressed under Section 166.",
+      "refs": [
+        "motor-act",
+        "motor-code-index"
+      ]
+    },
+    {
+      "id": "motor-2026-limitation",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Section 166(3), proviso inserted by Jan Vishwas Act 2026",
+      "title": "Filing time: important 2026 change",
+      "rule": "Section 166(3) stipulates an initial six-month filing period for accident-compensation applications. The Jan Vishwas (Amendment of Provisions) Act, 2026 inserts a proviso empowering the Claims Tribunal to entertain a later application within a further period not exceeding twelve months if sufficient cause prevented timely filing. The motor-vehicle provisions were notified to commence on 15 August 2026.",
+      "example": "A claimant applies nine months after the accident and shows documented reasons preventing an earlier filing. Analyse the amended proviso and its condition; do not declare the claim automatically valid or automatically time-barred.",
+      "mistake": "Do not teach 'six months, with no possibility of condonation' as the complete law after the relevant 2026 amendment. Do not presume every late filing is excused: the sufficient-cause test and statutory limits matter.",
+      "question": "Under the 2026 proviso to Section 166(3), what may permit a claim filed after the initial six months?",
+      "choices": [
+        "Automatic acceptance of any delay",
+        "A Claims Tribunal finding of sufficient cause within the specified further period",
+        "A verbal promise from the insurer"
+      ],
+      "answer": 1,
+      "why": "The amended proviso allows a Claims Tribunal to entertain specified delayed claims on sufficient cause within a further period not exceeding twelve months.",
+      "refs": [
+        "motor-act",
+        "motor-2026",
+        "motor-2026-commence"
+      ]
+    },
+    {
+      "id": "motor-ex-gratia",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Sections 163, 164; Jan Vishwas Act 2026",
+      "title": "Do ex-gratia payments reduce Section 164?",
+      "rule": "The 2026 amendment adds Section 164(4), providing that ex-gratia payments relating to death or grievous hurt from use of a motor vehicle are not reduced from Section 164 compensation. It also adds Section 163(3) addressing non-refund of qualifying ex-gratia amounts to the Motor Vehicle Accident Fund. These amendments are distinct from statutory coordination of other compensation.",
+      "example": "A road-accident victim's family receives an ex-gratia relief payment and also pursues compensation under Section 164. Analyse amended Section 164(4) instead of deducting relief automatically.",
+      "mistake": "Do not apply the old general reduction clause mechanically to ex-gratia relief after the 2026 amendment; likewise do not assume all unrelated overlapping awards are exempt from adjustment.",
+      "question": "What is the significance of Section 164(4) introduced in 2026?",
+      "choices": [
+        "It removes all third-party insurance",
+        "It makes no-fault compensation conditional on fault",
+        "It protects qualifying ex-gratia relief from deduction from Section 164 compensation"
+      ],
+      "answer": 2,
+      "why": "Section 164(4) specifically addresses qualifying ex-gratia payments; their treatment differs from compensation coordinated under Section 164(3).",
+      "refs": [
+        "motor-act",
+        "motor-2026",
+        "motor-2026-commence"
+      ]
+    },
+    {
+      "id": "motor-2026-transfer",
+      "topic": "motor",
+      "unit": 4,
+      "section": "Motor Vehicles Act · Section 157(2); Jan Vishwas Act 2026",
+      "title": "Insurance transfer: 14 days became 30",
+      "rule": "The Jan Vishwas (Amendment of Provisions) Act, 2026 substituted 'thirty days' for the former 'fourteen days' under Section 157(2), concerning an application by a vehicle transferee to the insurer for necessary policy/certificate changes. The relevant Motor Vehicles amendments were notified with effect from 15 August 2026.",
+      "example": "A used vehicle changes ownership. Study the updated transferee notification timeline under Section 157(2), alongside the proper transfer procedure and policy obligations.",
+      "mistake": "Do not rely on older notes stating Section 157(2) has an unqualified fourteen-day application window; the 2026 amendment changed its wording.",
+      "question": "Under amended Section 157(2), what application period replaces the earlier fourteen days?",
+      "choices": [
+        "Thirty days",
+        "Six months",
+        "Seven days"
+      ],
+      "answer": 0,
+      "why": "The 2026 amendment substitutes a thirty-day period for the former fourteen-day wording in Section 157(2).",
+      "refs": [
+        "motor-act",
+        "motor-2026",
+        "motor-2026-commence"
       ]
     }
   ]
