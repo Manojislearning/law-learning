@@ -84,7 +84,7 @@ test('Changed facts cover Constitution units and use the corresponding parent ca
   assert.ok(x.trap.length>=75);
  }
  assert.equal(transferCore.select(transfer,{...all,hindu:require("../hindu-case-practice-data.js")},'constitution',null,()=>0.32).length,5);
- assert.equal(transferCore.select(transfer,all,'constitution',['u5-writs'],()=>0.32).length,1);
+ assert.equal(transferCore.select(transfer,{...all,hindu:require('../hindu-case-practice-data.js')},'constitution',['u5-writs'],()=>0.32).length,1);
 });
 test('Version 51 loads four subject modules offline and preserves previous subject choice',()=>{
  const html=read('index.html'),sw=read('sw.js'),sy=read('syllabus-flow.js'),ui=read('case-practice-view.js');
