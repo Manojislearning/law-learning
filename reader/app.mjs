@@ -5,16 +5,17 @@ const API=`https://api.github.com/repos/${REPO}`;
 const KEY='kslu-vault-reader-v1';
 const DEFAULT_PATH='HOME - Start Here.md';
 const $=s=>document.querySelector(s);
-const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false};
+const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false,paged:true,pageIndex:0,pages:[]};
 let scrollSaveAt=0,toastTimer=null,requestedPath='';
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
  state.saved=new Set(Array.isArray(saved.saved)?saved.saved:[]);
  state.font=Number.isFinite(saved.font)?Math.max(16,Math.min(26,saved.font)):19;
  state.warm=saved.warm!==false;
+ state.paged=saved.paged!==false;
  requestedPath=new URLSearchParams(location.search).get('file')||saved.last||DEFAULT_PATH;
 }catch{requestedPath=DEFAULT_PATH;}
-function settingsSave(){try{localStorage.setItem(KEY,JSON.stringify({saved:[...state.saved],font:state.font,warm:state.warm,last:state.current}))}catch{}}
+function settingsSave(){try{localStorage.setItem(KEY,JSON.stringify({saved:[...state.saved],font:state.font,warm:state.warm,paged:state.paged,last:state.current}))}catch{}}
 function toast(message){const el=$('#toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3800)}
 function applyPrefs(){document.documentElement.style.setProperty('--reader-size',state.font+'px');document.body.classList.toggle('cool',!state.warm);$('#font-size').value=state.font;$('#font-size-label').textContent=state.font+'px';$('#warm-toggle').checked=state.warm;$('#saved-number').textContent=state.saved.size;}
 applyPrefs();
@@ -73,7 +74,25 @@ $('#show-token').addEventListener('click',()=>{const input=$('#token');input.typ
 $('#refresh-btn').addEventListener('click',async()=>{if(!state.token)return;try{state.notes.clear();await loadTree();if(state.current)await openNote(state.current);toast('Latest notes loaded from GitHub.')}catch(e){toast(e.message)}});
 
 function iconFolder(name){return name.startsWith('01-')||name.startsWith('02-')?'▱':'▦'}
-function niceName(path){return path.split('/').pop().replace(/\.(md|canvas)$/i,'').replace(/^\d\d - /,'').replace(/-+/g,' ').replace(/\s+/g,' ').trim()}
+const unitOneShortTitles={
+ '00 - Unit 01 - Constitution, Preamble and citizenship.md':'Unit 1 · Start here',
+ '01 - Meaning and definition of Constitution.md':'01 · What is a Constitution?',
+ '02 - Kinds of Constitution.md':'02 · Types of Constitutions',
+ '03 - Constitutionalism.md':'03 · Constitutionalism',
+ '04 - Salient features of the Indian Constitution.md':'04 · Key Indian Features',
+ '05 - Preamble- meaning, scope and importance.md':'05 · The Preamble',
+ '06 - Preamble- objectives and values.md':'06 · Four Values',
+ '07 - Citizenship- acquisition and termination.md':'07 · Citizenship',
+ '08 - Unit 1 Quick Revision.md':'08 · Quick Revision',
+ '09 - Unit 1 Exam Practice.md':'09 · Exam Practice'
+};
+function niceName(path){
+ const name=path.split('/').pop();
+ if(path.includes('/Constitutional-Law-I/Units/Unit-01/')){
+  if(unitOneShortTitles[name])return unitOneShortTitles[name];
+ }
+ return name.replace(/\.(md|canvas)$/i,'').replace(/^\d\d - /,'').replace(/-+/g,' ').replace(/\s+/g,' ').trim();
+}
 function renderSidebar(){
  const area=$('#sidebar-content');if(!state.tree){area.textContent='Connect to GitHub to browse.';return;}
  const term=$('#search').value.trim().toLowerCase();
@@ -143,10 +162,82 @@ function navigation(path){const peers=siblingNotes(path),idx=peers.indexOf(path)
  $('#prev-note').dataset.note=prev||'';$('#next-note').dataset.note=next||'';
 }
 function saveReadingPosition(){if(!state.current)return;const area=$('#reading-scroll'),length=area.scrollHeight-area.clientHeight;
- const fraction=length>0?Math.max(0,Math.min(1,area.scrollTop/length)):1;
+ const fraction=state.paged&&state.pages.length>=2?(state.pageIndex+1)/state.pages.length:(length>0?Math.max(0,Math.min(1,area.scrollTop/length)):1);
  $('#progress-line').style.width=Math.round(fraction*100)+'%';
  if(Date.now()-scrollSaveAt>750){scrollSaveAt=Date.now();try{localStorage.setItem(KEY+':progress:'+state.current,Math.round(fraction*100))}catch{}}
 }
+// Divide long Markdown into compact H2 sections, without losing or editing content.
+// The original document is still available through the Scroll toggle.
+function splitIntoReadingPages(){
+ const article=$('#article');
+ state.pages=[];
+ const headings=[...article.children].filter(element=>element.tagName==='H2');
+ if(headings.length<2){setPageView();return;}
+ for(const heading of headings){
+  const section=document.createElement('section');
+  section.className='study-page';
+  article.insertBefore(section,heading);
+  let cursor=heading;
+  while(cursor && (cursor===heading || cursor.tagName!=='H2')){
+   const next=cursor.nextSibling;
+   section.appendChild(cursor);
+   cursor=next;
+  }
+  state.pages.push(section);
+ }
+ state.pageIndex=0;
+ setPageView();
+}
+function setPageView(){
+ const usePages=state.paged && state.pages.length>=2;
+ state.pageIndex=Math.min(Math.max(state.pageIndex,0),Math.max(state.pages.length-1,0));
+ for(const [index,page] of state.pages.entries()){
+  page.hidden=usePages && index!==state.pageIndex;
+ }
+ $('#article').classList.toggle('paged-study',usePages);
+ $('#study-pager').hidden=!usePages;
+ $('#pages-btn').disabled=state.pages.length<2;
+ $('#pages-btn').setAttribute('aria-pressed',String(usePages));
+ $('#pages-btn').innerHTML=usePages?'▤ <span class="tool-word">Pages</span>':'▥ <span class="tool-word">Scroll</span>';
+ $('#pages-btn').title=usePages?'Show all sections as one long note':'Read in short pages';
+ if(usePages){
+  const label=state.pages[state.pageIndex]?.querySelector('h2')?.textContent?.trim()||'Section';
+  $('#page-count').textContent=(state.pageIndex+1)+' / '+state.pages.length+' · '+label;
+  $('#page-prev').disabled=state.pageIndex===0;
+  $('#page-next').disabled=state.pageIndex===state.pages.length-1;
+  $('#progress-line').style.width=Math.round(100*(state.pageIndex+1)/state.pages.length)+'%';
+ }
+}
+function nextReadingPage(delta){
+ const target=state.pageIndex+delta;
+ if(target<0||target>=state.pages.length)return;
+ state.pageIndex=target;
+ setPageView();
+ $('#reading-scroll').scrollTo({top:0,behavior:'instant'});
+ const heading=state.pages[target].querySelector('h2');
+ heading?.focus?.({preventScroll:true});
+}
+function revealHeading(id){
+ const target=document.getElementById(id);
+ if(!target)return false;
+ const parent=target.closest('.study-page');
+ if(parent && state.paged){
+  state.pageIndex=state.pages.indexOf(parent);
+  setPageView();
+ }
+ target.scrollIntoView({behavior:'smooth',block:'start'});
+ return true;
+}
+$('#pages-btn').addEventListener('click',()=>{
+ if(state.pages.length<2)return;
+ state.paged=!state.paged;
+ setPageView();
+ settingsSave();
+ $('#reading-scroll').scrollTo({top:0,behavior:'smooth'});
+});
+$('#page-prev').addEventListener('click',()=>nextReadingPage(-1));
+$('#page-next').addEventListener('click',()=>nextReadingPage(1));
+
 async function openNote(path,heading=''){
  if(!state.files.includes(path)){toast('That note is not available in this vault.');return;}
  if(state.loading)return;
@@ -156,7 +247,7 @@ async function openNote(path,heading=''){
   if('speechSynthesis' in window)window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';
   const markdown=await loadNote(path),note=/\.canvas$/i.test(path)?renderCanvas(markdown,path):renderMarkdown(markdown),meta=note.meta;
   state.current=path;requestedPath=path;
-  const title=niceName(path);
+  const title=meta.title || niceName(path);
   const sourceParts=path.split('/');
   $('#breadcrumb').innerHTML='<strong>'+esc(sourceParts.slice(0,-1).join(' / ')||'Vault')+'</strong> &nbsp;/&nbsp; '+esc(title);
   const status=meta.status?'<span class="property">'+esc(meta.status.replace(/-/g,' '))+'</span>':'';
@@ -168,6 +259,7 @@ async function openNote(path,heading=''){
   const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
   const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
   article.innerHTML=intro+headingHtml+tocHtml+note.html;
+  splitIntoReadingPages();
   article.classList.remove('note-enter');
   // Retrigger a short, low-motion page entrance after a successful note change.
   void article.offsetWidth;
@@ -177,7 +269,7 @@ async function openNote(path,heading=''){
   $('#save-btn').innerHTML=state.saved.has(path)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
   navigation(path);renderSidebar();settingsSave();
   history.replaceState(null,'',location.pathname+'?file='+encodeURIComponent(path));
-  if(heading){requestAnimationFrame(()=>{const el=document.getElementById(slug(heading));if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else toast('Opened note; heading not found.')})}
+  if(heading){requestAnimationFrame(()=>{const el=document.getElementById(slug(heading));if(!revealHeading(slug(heading)))toast('Opened note; heading not found.')})}
  }catch(error){article.innerHTML=`<div class="empty"><h2>Could not open this note</h2><p>${esc(error.message)}</p><button type="button" class="primary-btn" id="retry-note">Retry</button></div>`;$('#retry-note').addEventListener('click',()=>void openNote(path));}
  finally{state.loading=false;}
 }
@@ -185,12 +277,12 @@ $('#article').addEventListener('click',event=>{
  const link=event.target.closest('a[data-target]');if(!link)return;
  event.preventDefault();const result=resolveLink(link.dataset.target,state.current,state.files);
  if(!result){toast('This link points to another file or an ambiguous note.');return;}
- if(result.path===state.current&&result.heading){document.getElementById(slug(result.heading))?.scrollIntoView({behavior:'smooth'});return;}
+ if(result.path===state.current&&result.heading){revealHeading(slug(result.heading));return;}
  void openNote(result.path,result.heading);
 });
 $('#article').addEventListener('click',event=>{
  const a=event.target.closest('a[data-heading]');if(!a)return;
- event.preventDefault();document.getElementById(a.dataset.heading)?.scrollIntoView({behavior:'smooth'});
+ event.preventDefault();revealHeading(a.dataset.heading);
 });
 $('#prev-note').addEventListener('click',()=>{if($('#prev-note').dataset.note)void openNote($('#prev-note').dataset.note)});
 $('#next-note').addEventListener('click',()=>{if($('#next-note').dataset.note)void openNote($('#next-note').dataset.note)});
@@ -228,7 +320,7 @@ $('#warm-toggle').addEventListener('change',event=>{state.warm=event.target.chec
 $('#disconnect-btn').addEventListener('click',()=>{
  state.token='';state.notes.clear();state.files=[];state.tree=null;state.current='';
  if('speechSynthesis' in window)window.speechSynthesis.cancel();
- $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;
+ $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;state.pages=[];setPageView();
  $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
 });
 selectMobileNav('bottom-home');
