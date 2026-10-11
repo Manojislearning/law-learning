@@ -30,3 +30,23 @@ jobs:
         run: npm install --no-save --no-package-lock jsdom@26
       - name: Verify browser script startup and syllabus navigation
         run: node tests/dom-smoke.cjs
+
+  mobile_browser:
+    name: Chromium mobile viewport and keyboard checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright
+        run: npm install --no-save --no-package-lock playwright@1.55.0
+      - name: Install Chromium browser
+        run: npx playwright install --with-deps chromium
+      - name: Verify mobile browser test
+        run: |
+          node --check tests/mobile-browser.cjs
+          node tests/mobile-browser.cjs
