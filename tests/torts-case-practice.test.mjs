@@ -78,13 +78,13 @@ test('Reference documents are limited to Supreme Court and official statute/gove
 });
 test('App deep link and on-demand subject selection preserve private essays and backups',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('case-practice-view.js'),syllabus=read('syllabus-flow.js');
- for(const filename of ['torts-case-practice-data.js?v=47','case-practice-core.js?v=47','case-practice-view.js?v=47','syllabus-flow.js?v=47']){
+ for(const filename of ['torts-case-practice-data.js?v=47','case-practice-core.js?v=48','case-practice-view.js?v=48','syllabus-flow.js?v=48']){
   assert.ok(html.includes(filename),'HTML: '+filename);
   assert.ok(sw.includes(filename),'SW: '+filename);
  }
- assert.ok(view.includes('get("course")==="torts"'));
+ assert.ok(view.includes('get("course")'));
  assert.ok(view.includes('open:openCourse'));
- assert.ok(view.includes('histories={contract:new Map(),torts:new Map()}'));
+ assert.ok(view.includes('histories={contract:new Map(),torts:new Map(),bns:new Map()}'));
  assert.ok(view.includes('draft.value.trim().length<40'));
  assert.ok(view.includes('model.hidden=false'));
  assert.ok(syllabus.includes('LawCasePracticeUI.open("torts")'));
