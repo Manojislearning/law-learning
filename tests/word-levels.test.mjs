@@ -30,15 +30,15 @@ test("Existing local review and score indexes remain stable, and each level navi
   const html=file("index.html"),sw=file("sw.js");
   assert.match(html,/advanced-english-words\.js\?v=58/);
   assert.ok(html.indexOf("advanced-english-words.js")<html.indexOf("app.js?v=58"));
-  assert.match(html,/word-experience\.js\?v=61/);
+  assert.match(html,/word-experience\.js\?v=62/);
   assert.ok(js.includes('law-learning-word-level-v1'));
   assert.ok(js.includes('LAW_ADVANCED_ENGLISH')===false,"Level selection should be based on normalized word categories");
   assert.ok(js.includes("function nextWordIndex()"));
   assert.ok(js.includes("function previousWord()"));
   assert.ok(js.includes("window.LawAppCore.progress.mark"));
   assert.ok(!js.includes('#home-view .home-card:not('),"Old home filtering must not hide Law News or Case Practice");
-  assert.ok(sw.includes("law-learning-v61"));
-  for(const asset of ["./advanced-english-words.js?v=58","./readability.css?v=58","./app.js?v=58","./word-experience.js?v=61"])assert.ok(sw.includes(asset),"Missing offline asset "+asset);
+  assert.ok(sw.includes("law-learning-v62"));
+  for(const asset of ["./advanced-english-words.js?v=58","./readability.css?v=58","./app.js?v=58","./word-experience.js?v=62"])assert.ok(sw.includes(asset),"Missing offline asset "+asset);
 });
 
 test("Typography stays readable on small screens and remains anchored to CSS units",()=>{
