@@ -223,10 +223,14 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "contract-act"
+        "contract-act",
+        "kslu-2018-contract-unit3"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [
+        "These lessons follow the historical Unit IV damages/quasi-contract outline. Confirm the syllabus for your admission cohort."
+      ],
+      "syllabusEditionEvidence": "Historical KSLU Contract–I syllabus reference; edition applicability and exact Unit IV wording have not been audited for the current admission cohort."
     },
     {
       "id": "sem1-c2-u5",
