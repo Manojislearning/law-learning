@@ -156,8 +156,8 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  recall.querySelector(".c1-compare").click();
  assert.equal(recall.querySelector(".c1-model").hidden,false,"Comparison outline must be available");
  const firstRight=u5win.ContractUnitFiveUI.lessons[0].choices[u5win.ContractUnitFiveUI.lessons[0].answer];
- const btn=[...u5doc.querySelectorAll(".c1-option")].find(b=>b.textContent===firstRight);
- assert.ok(btn);btn.click();u5doc.querySelector(".c1-next").click();
+ const firstAnswer=[...u5doc.querySelectorAll(".c1-option")].find(b=>b.textContent===firstRight);
+ assert.ok(firstAnswer);firstAnswer.click();u5doc.querySelector(".c1-next").click();
  assert.ok(u5doc.querySelector(".c1-card h2").textContent.includes("Recovering possession"));
  u5win.openContractGuidedUnit(4);
  u5win.ContractUnitFiveUI.render(u5doc.getElementById("syllabus-detail"),{
