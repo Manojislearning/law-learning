@@ -24,7 +24,7 @@ test("Student menu lists ten destinations without descriptions",()=>{
  assert.ok(!/<p>|<small>|student-hub-number|student-hub-footnote/.test(nav));
  assert.ok(nav.includes('href="./reader/?map=1"'));
  assert.ok(nav.includes('href="./reader/"'));
- assert.ok(!grid || true);
+ assert.ok(nav.includes('data-open="settings"'));
  assert.ok(css.includes("min-height:76px"),"Menu is expected to be compact");
 });
 test("Learn Words shows Legal Words and Difficult Words without level names, preserving category and progress storage",()=>{
