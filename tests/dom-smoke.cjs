@@ -255,7 +255,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  }
 
  {
-  const cp=build("https://example.test/law-learning/index.html?v=42#practice");
+  const cp=build("https://example.test/law-learning/index.html?v=43#practice");
   const w=cp.dom.window,d=cp.doc,root=d.getElementById("practice-root");
   assert.equal(w.LawAppCore.router.current(),"practice");
   assert.ok(root.textContent.includes("Practise legal reasoning"),"Direct practice link should open exam set overview");
@@ -292,6 +292,12 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
    assert.equal(ticks.length,4);
    ticks[0].checked=true;ticks[0].dispatchEvent(new w.Event("change",{bubbles:true}));
    assert.ok(rubric.textContent.includes("1 of 4"),"The self-check should update without assigning an exam score");
+   const tips=rubric.querySelector(".cp-coaching");
+   assert.equal(tips.tagName,"DETAILS","Coaching stays optional until opened");
+   assert.equal(tips.querySelectorAll(".cp-coaching-list li").length,3,"Unchecked elements receive case-specific guidance");
+   assert.ok(tips.querySelector("summary").textContent.includes("3 unchecked"));
+   const status=rubric.querySelector(".cp-result");
+   assert.equal(status.getAttribute("aria-live"),"polite","Self-check updates should be accessible");
    const next=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Next case"));
    next.click();
   }
