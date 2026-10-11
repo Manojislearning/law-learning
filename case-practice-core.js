@@ -9,7 +9,7 @@
 var KEYS=["issue","rule","application","conclusion"];
 function validText(s,min){return typeof s==="string"&&s.trim().length>=min&&s.length<=2400;}
 function verify(bank){
- if(!bank||bank.schema!==1||!bank.sources||!Array.isArray(bank.cases)||!["contract1","torts","bns"].includes(bank.subject||"contract1"))throw Error("Unknown practice bank.");
+ if(!bank||bank.schema!==1||!bank.sources||!Array.isArray(bank.cases)||!["contract1","torts","bns","constitution"].includes(bank.subject||"contract1"))throw Error("Unknown practice bank.");
  if(!Array.isArray(bank.cases)||bank.cases.length!==15)throw Error("Practice bank requires fifteen cases.");
  var seen=new Set(),units=[0,0,0,0,0];
  for(var item of bank.cases){
