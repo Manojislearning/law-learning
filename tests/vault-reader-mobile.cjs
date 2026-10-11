@@ -64,6 +64,7 @@ async function main(){
    assert.equal(await page.locator(".bottom-nav").isVisible(),mobile);
    const home=page.locator("#article a.wiki");
    await home.first().click();
+   await page.locator("#article h1").filter({hasText:"Constitutional Law I"}).waitFor();
    assert.match(await page.locator("#article").innerText(),/Constitutional Law I/);
    await page.locator("#save-btn").click();
    assert.equal(await page.locator("#save-btn").evaluate(el=>el.classList.contains("saved")),true);
@@ -79,6 +80,7 @@ async function main(){
     await page.locator("#search").fill("Preamble");
     assert.ok((await page.locator("#sidebar-content [data-note]").count())>=1);
     await page.locator("#sidebar-content [data-note]").first().click();
+    await page.locator("#article h1").filter({hasText:"Preamble"}).waitFor();
     assert.match(await page.locator("#article").innerText(),/Justice, liberty, equality/);
     assert.equal(await page.locator("#sidebar").evaluate(el=>el.classList.contains("open")),false);
    }
