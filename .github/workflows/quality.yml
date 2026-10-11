@@ -36,6 +36,8 @@ jobs:
         run: node tests/word-levels-dom.cjs
       - name: Verify KSLU question archive, answer disclosure and search
         run: node tests/past-paper-dom.cjs
+      - name: Verify Student hub routes and contextual back navigation
+        run: node tests/student-hub-dom.cjs
 
   mobile_browser:
     name: Chromium mobile viewport and keyboard checks
