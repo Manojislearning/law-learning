@@ -1,11 +1,18 @@
 {
-  "name":"KSLU Vault Reader",
-  "short_name":"Vault Reader",
-  "description":"Private GitHub-powered Obsidian-style law notes reader",
-  "start_url":"./",
-  "scope":"./",
-  "display":"standalone",
-  "background_color":"#f4f5f7",
-  "theme_color":"#f4f5f7",
-  "icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "name": "Law Notes",
+  "short_name": "Law Notes",
+  "description": "KSLU law notes, Markdown and interactive topic branches",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8fb",
+  "theme_color": "#f7f8fb",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
 }
