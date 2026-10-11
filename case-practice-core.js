@@ -62,5 +62,20 @@ function recordUsage(history,chosen){
  });
  return history;
 }
-return {criteria:KEYS.slice(),verify:verify,select:select,recordUsage:recordUsage};
+
+/* Provide element-specific, case-grounded study feedback after the student self-checks.
+ * Never infer whether an essay is right from characters or checkbox selection.
+ */
+function missingGuidance(item,checked){
+ if(!item||!item.outline||!Array.isArray(checked)||checked.length!==4||checked.some(function(v){return typeof v!=="boolean";}))
+  throw Error("Invalid IRAC self-check.");
+ var advice={
+  issue:"Issue — Frame the legal question: "+item.outline.issue,
+  rule:"Rule — Name the governing provision: "+item.outline.rule,
+  application:"Application — Work through the supporting facts and possible limits: "+item.outline.application,
+  conclusion:"Conclusion — Give a qualified result grounded in your analysis: "+item.outline.conclusion
+ };
+ return KEYS.filter(function(k,i){return !checked[i];}).map(function(k){return {key:k,message:advice[k]};});
+}
+return {criteria:KEYS.slice(),verify:verify,select:select,recordUsage:recordUsage,missingGuidance:missingGuidance};
 });
