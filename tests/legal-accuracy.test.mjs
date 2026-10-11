@@ -77,7 +77,7 @@ test('All 5 BNS and Torts Consumer units flag partial law checks without falsely
 test('New primary-source experience is one route and precached, without new local storage keys',()=>{
  const html=read('index.html'),sw=read('sw.js'),app=read('app-core.js'),syllabus=read('syllabus-flow.js'),view=read('legal-accuracy-view.js');
  for(const name of ['legal-accuracy-data.js','legal-accuracy-core.js','legal-accuracy-view.js']){
-  assert.ok(html.includes(name+'?v=46'));assert.ok(sw.includes(name+'?v=46'));
+  var version=name==="legal-accuracy-view.js"?63:46;assert.ok(html.includes(name+'?v='+version));assert.ok(sw.includes(name+'?v='+version));
  }
  assert.ok(app.includes('"law-updates":'));
  assert.ok(html.includes('data-open="law-updates"'));
