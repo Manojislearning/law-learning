@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="41" />
+  <meta name="app-version" content="42" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -36,6 +36,12 @@
           <p class="muted">Practice legal vocabulary with animated cards and a short word game.</p>
           <button id="profile-open" type="button" style="background:none;border:0;padding:10px 0;color:#384e74;font:inherit;font-size:.85rem;font-weight:750;cursor:pointer;">Profile &amp; backups →</button>
         </div>
+
+        <button type="button" class="home-card home-practice-card" data-open="practice">
+          <strong>Case Practice</strong>
+          <p>5 exam-style problems · IRAC writing · self-check</p>
+          <span class="home-arrow">→</span>
+        </button>
 
         <button type="button" class="home-card home-review-card" data-open="review">
           <strong>Review due</strong>
@@ -102,7 +108,7 @@
             <span class="home-arrow">→</span>
           </button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 41 · <a href="./refresh.html?build=41" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 42 · <a href="./refresh.html?build=42" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="words-view" class="main-view">
         <div class="section-head compact">
@@ -296,6 +302,10 @@
         </section>
       </section>
 
+      <section id="practice-view" class="main-view">
+        <div id="practice-root"></div>
+      </section>
+
       <section id="review-view" class="main-view">
         <div id="review-root"></div>
       </section>
@@ -420,7 +430,7 @@
   <script src="./exam-words-2.js"></script>
   <script src="./exam-words-3.js"></script>
   <script src="./exam-words-4.js"></script>
-  <script src="./app-core.js?v=41"></script>
+  <script src="./app-core.js?v=42"></script>
   <script src="./app.js?v=32"></script>
   <script src="./legacy-study-ui.js?v=35"></script>
   <script src="./word-experience.js?v=32"></script>
@@ -441,5 +451,8 @@
   <script src="./backup-core.js?v=41"></script>
   <script src="./profile-local.js?v=41"></script>
   <script src="./review-view.js?v=41"></script>
+  <script src="./case-practice-data.js?v=42"></script>
+  <script src="./case-practice-core.js?v=42"></script>
+  <script src="./case-practice-view.js?v=42"></script>
 </body>
 </html>
