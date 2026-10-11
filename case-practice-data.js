@@ -84,12 +84,12 @@
       "id": "u2-minor",
       "unit": 2,
       "title": "A minor signs a studio lease",
-      "facts": "A 17-year-old student signs a two-year lease for a commercial photography studio, pays one month's rent and later refuses the remaining rent. The landlord argues the student looked older and should be personally bound. Separately, a supplier provided essential medicines to the student's dependent child when the student was hospitalised.",
+      "facts": "A 17-year-old student signs a two-year lease for a commercial photography studio, pays one month's rent and later refuses the remaining rent. The landlord argues the student looked older and should be personally bound. Separately, a supplier provided essential medicines to the minor while the minor was hospitalised.",
       "task": "Analyse capacity and distinguish the ordinary lease claim from the statutory remedy for necessaries.",
       "outline": {
         "issue": "Whether a minor can be bound by an ordinary agreement and whether a separate necessaries claim can be made.",
-        "rule": "Section 11 concerns competency; a minor's ordinary agreement is void ab initio under the established rule. Section 68 separately permits reimbursement from the property of a person incapable of contracting for qualifying necessaries supplied to them or dependants they are legally bound to support.",
-        "application": "The lease cannot simply be enforced as an adult's contract based on apparent age. The medicines require proof that they were suitable necessaries and that the child was legally entitled to support; recovery is property-based, not automatic personal debt liability.",
+        "rule": "Section 11 concerns competency; a minor's ordinary agreement is void ab initio under the established rule. Section 68 separately permits reimbursement from the property of a person incapable of contracting for qualifying necessaries supplied to them or people they are legally bound to support.",
+        "application": "The lease cannot simply be enforced as an adult's contract based on apparent age. The medicines require proof of suitable necessaries provided to the minor. Reimbursement is from the minor's property under Section 68, not automatically a personal contractual debt.",
         "conclusion": "The two claims must be analysed separately; the facts do not establish ordinary personal liability on the minor's lease."
       },
       "trap": "Section 68 does not turn every necessary supply into an unrestricted personal loan.",
