@@ -132,10 +132,10 @@ function sourceUnitPage(subject,unitIndex){
   if(record&&(subject===4||(subject===2&&unitIndex===4))){
    var cta=E(f,"div",undefined,"sf-footer");
    if(subject===4){
-    B(cta,"Current Law Check · BNS","Offence sections and commencement →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
+    B(cta,"Law Updates · BNS","Offence sections and commencement →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
    }else{
-    B(cta,"Current Law Check · Consumer","2019 Act and 2021 rules →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
-    B(cta,"Current Law Check · Motor Vehicles","Compensation, insurance and amended timelines →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
+    B(cta,"Law Updates · Consumer","2019 Act and 2021 rules →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
+    B(cta,"Law Updates · Motor Vehicles","Compensation, insurance and amended timelines →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
    }
   }
  }
@@ -256,11 +256,11 @@ function render(){
   }
   /* Modern statutory corrections are separate from the original university outline. */
   if(sem===1&&subject===4){
-   B(e,"Current Law Check · BNS","Selected section mappings, commencement and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
+   B(e,"Law Updates · BNS","Selected section mappings, commencement and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("bns");});
   }
   if(sem===1&&subject===2&&unit===4){
-   B(e,"Current Law Check · Consumer","2019 Act, 2021 rules and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
-   B(e,"Current Law Check · Motor Vehicles","No-fault claims, insurance, 2022–26 reforms →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
+   B(e,"Law Updates · Consumer","2019 Act, 2021 rules and exam traps →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("consumer");});
+   B(e,"Law Updates · Motor Vehicles","No-fault claims, insurance, 2022–26 reforms →",function(){if(window.LawAccuracyUI)window.LawAccuracyUI.open("motor");});
   }
   topicsCache.forEach(function(t,i){B(e,t,"Study this topic →",function(){push("topic",i);});});
   E(e,"p","The topic divisions are study aids based on the imported course outline.","sf-note");
