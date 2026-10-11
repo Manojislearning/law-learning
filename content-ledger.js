@@ -4,7 +4,7 @@
 var data={
   "schema": 1,
   "scope": "KSLU 3-year LL.B. — imported Semester I draft",
-  "reviewPolicy": "All 30 imported Semester I broad topic outlines were compared against KSLU's published 2018–19 syllabus and its 2024 BNS curriculum circular. This is edition-level outline matching ONLY; enrolled-cohort applicability, subsequent amendments, every legal teaching claim and examinations are not fully verified. Selected BNS and Consumer Act claims now have a separate narrow statutory lawAudit flag; no unit is thereby certified as fully source-verified.",
+  "reviewPolicy": "All 30 imported Semester I broad topic outlines were compared against KSLU's published 2018–19 syllabus and its 2024 BNS curriculum circular. This is edition-level outline matching ONLY; enrolled-cohort applicability, subsequent amendments, every legal teaching claim and examinations are not fully verified. Selected BNS and Consumer Act claims now have a separate narrow statutory lawAudit flag; no unit is thereby certified as fully source-verified. Selected Motor Vehicles provisions and schemes in Torts Unit V are separately linked with their amendment dates. Published syllabus verification remains independent of current-law checking.",
   "publishedForCohort": "unconfirmed",
   "sources": {
     "kslu-index": {
@@ -104,6 +104,41 @@ var data={
       "publisher": "Department of Consumer Affairs, Government of India",
       "kind": "official-gazette-rules",
       "verifiedScope": "Rules notified 30 December 2021 provide ₹50 lakh/₹2 crore commission pecuniary bands based on consideration paid. Check any later amendments."
+    },
+    "motor-act": {
+      "title": "Motor Vehicles Act, 1988 — India Code consolidated text",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/1798/1/a1988-59.pdf",
+      "publisher": "India Code, Government of India",
+      "kind": "statute-consolidated",
+      "verifiedScope": "The Act's section framework including insurance, no-fault claims and Claims Tribunals. Later 2026 amendments must be read separately."
+    },
+    "motor-hitrun-2022": {
+      "title": "Ministry of Road Transport & Highways — Hit-and-run Compensation Scheme, 2022",
+      "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=1801656&lang=2&reg=48",
+      "publisher": "Press Information Bureau, Ministry of Road Transport & Highways",
+      "kind": "official-scheme-announcement",
+      "verifiedScope": "From 1 April 2022, ₹2 lakh death and ₹50,000 grievous hurt for qualifying hit-and-run accidents under the statutory scheme."
+    },
+    "motor-cashless-2025": {
+      "title": "Ministry of Road Transport & Highways — Cashless Treatment Scheme, 2025",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2220125&lang=1&reg=6",
+      "publisher": "Press Information Bureau, Ministry of Road Transport & Highways",
+      "kind": "official-scheme-report",
+      "verifiedScope": "The 2025 road accident cashless treatment scheme under Section 162, up to ₹1.5 lakh and seven days, per 29 January 2026 government briefing."
+    },
+    "motor-janvishwas-2026": {
+      "title": "Jan Vishwas (Amendment of Provisions) Act, 2026 — Gazette",
+      "url": "https://egazette.gov.in/WriteReadData/2026/271642.pdf",
+      "publisher": "Gazette of India, Legislative Department",
+      "kind": "official-amendment-act",
+      "verifiedScope": "Act 8 of 2026 modifies Motor Vehicles Act Sections 157, 161, 163, 164, 166 and related provisions; check commencement and later amendments."
+    },
+    "motor-2026-commencement": {
+      "title": "Motor Vehicles amendments commencement S.O. 4100(E), July 2026",
+      "url": "https://egazette.gov.in/WriteReadData/2026/274798.pdf",
+      "publisher": "Gazette of India, Ministry of Road Transport & Highways",
+      "kind": "official-commencement-notification",
+      "verifiedScope": "Commencement of schedule item 51 of Jan Vishwas Act, 2026 on 15 August 2026."
     }
   },
   "units": [
@@ -488,12 +523,19 @@ var data={
         "kslu-index",
         "consumer-2019",
         "kslu-2018-llb",
-        "consumer-jurisdiction-2021"
+        "consumer-jurisdiction-2021",
+        "motor-act",
+        "motor-hitrun-2022",
+        "motor-cashless-2025",
+        "motor-janvishwas-2026",
+        "motor-2026-commencement"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "The imported unit refers to the Consumer Protection Act, 1986. Current study must distinguish the Consumer Protection Act, 2019 and verify the cohort's prescribed syllabus.",
-        "Consumer commission pecuniary bands under the 2021 Jurisdiction Rules are based on consideration paid: District up to ₹50 lakh, State above ₹50 lakh through ₹2 crore, National above ₹2 crore; recheck later amendments."
+        "Consumer commission pecuniary bands under the 2021 Jurisdiction Rules are based on consideration paid: District up to ₹50 lakh, State above ₹50 lakh through ₹2 crore, National above ₹2 crore; recheck later amendments.",
+        "The 2022 hit-and-run scheme provides ₹2 lakh for death and ₹50,000 for grievous hurt; this differs from the Section 164 no-fault sums of ₹5 lakh and ₹2.5 lakh.",
+        "Jan Vishwas Motor Vehicles amendments notified for 15 August 2026 affect Section 166(3) late applications, Section 164(4) ex-gratia payments, and Section 157(2) transfer notices. Older syllabus notes may be outdated."
       ],
       "outlineAudit": {
         "status": "published-outline-compared",
@@ -507,7 +549,11 @@ var data={
         "status": "selected-provisions-checked",
         "checkedOn": "2026-10-11",
         "studyRoute": "consumer",
-        "scope": "Selected provisions of Consumer Protection Act, 2019 and 2021 pecuniary jurisdiction rules checked. 1986 KSLU topic wording retained as historical syllabus evidence."
+        "scope": "Selected consumer 2019/2021 rules and Motor Vehicles 1988 accident-compensation provisions, the 2022 hit-and-run scheme, 2025 cashless treatment and 2026 Jan Vishwas amendments have source-linked study checks. Full motor/consumer content and cohort applicability remain unverified.",
+        "studyRoutes": [
+          "consumer",
+          "motor"
+        ]
       }
     },
     {
