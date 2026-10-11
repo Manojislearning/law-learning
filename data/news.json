@@ -1,5 +1,51 @@
 {
   "schema": 1,
-  "generatedAt": null,
-  "items": []
+  "generatedAt": "2026-10-11T10:17:07Z",
+  "items": [
+    {
+      "id": "d1f05771fe26332c",
+      "title": "SC to hold two-day national consultation on 10 years of Juvenile Justice Act",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-to-hold-two-day-national-consultation-on-10-years-of-juvenile-justice-act/134838500",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-09T16:26:48Z",
+      "category": "Latest",
+      "priority": 0
+    },
+    {
+      "id": "f0fffcc48bfab58d",
+      "title": "No question of restrictive live-streaming of court proceedings, says SC",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/no-question-of-restrictive-live-streaming-of-court-proceedings-says-sc/134838433",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-09T16:20:05Z",
+      "category": "Latest",
+      "priority": 0
+    },
+    {
+      "id": "10738671543af5ec",
+      "title": "Gujarat govt sets time-bound SOP for action on HC judgments, accountability for delays",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/gujarat-govt-sets-time-bound-sop-for-action-on-hc-judgments-accountability-for-delays/134764130",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-07T11:04:38Z",
+      "category": "Latest",
+      "priority": 0
+    },
+    {
+      "id": "0789a78a79aef6ca",
+      "title": "SC reserves verdict on pleas challenging HC order striking down attendance mandate for law students",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-reserves-verdict-on-pleas-challenging-hc-order-striking-down-attendance-mandate-for-law-students/134757902",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-07T06:12:56Z",
+      "category": "Latest",
+      "priority": 0
+    },
+    {
+      "id": "41cd237789c1c5b8",
+      "title": "Punjab Cabinet clears Ranjitgarh Development Authority Bill",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/punjab-cabinet-clears-ranjitgarh-development-authority-bill/134713041",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-05T17:04:58Z",
+      "category": "Legislation",
+      "priority": 0
+    }
+  ]
 }
