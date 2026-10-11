@@ -111,7 +111,37 @@ async function run(){
    assert.equal(errors.length,0,"Law check errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor statutory check and focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=47&course=torts#practice"),{waitUntil:"load"});
+   const root=page.locator("#practice-root");
+   assert.equal(await root.locator('.cp-subjects button[aria-pressed="true"]').innerText(),"Law of Torts");
+   const layout=await page.evaluate(()=>{
+    const box=document.querySelector("#practice-root .cp-subjects").getBoundingClientRect();
+    const items=[...document.querySelectorAll("#practice-root .cp-subjects button")].map(x=>x.getBoundingClientRect());
+    return {x:box.left,right:box.right,b:items.map(i=>({left:i.left,right:i.right,height:i.height}))};
+   });
+   assert.ok(layout.x>=-1&&layout.right<=width+1,width+"px Torts subject selector overflow");
+   assert.ok(layout.b.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px Torts selector hit target insufficient");
+   await root.getByRole("button",{name:/Start 5 cases/}).tap();
+   assert.ok((await root.innerText()).includes("Law of Torts"));
+   const model=root.locator(".cp-model");
+   assert.equal(await model.isHidden(),true);
+   await root.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isHidden(),true);
+   await root.locator("textarea").fill("I identify the tort issue and a relevant judicial or statutory rule, analyse the facts and possible defences, and reach a balanced conclusion.");
+   await root.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isVisible(),true);
+   assert.ok((await model.innerText()).includes("Law of Torts · Unit"));
+   assert.ok((await model.locator("a.cp-case-source").count())>0);
+   assert.equal(await root.locator(".cp-rubric input").count(),4);
+   assert.equal(errors.length,0,width+"px Torts Chromium errors: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts practice and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
