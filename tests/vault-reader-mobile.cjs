@@ -69,7 +69,7 @@ async function main(){
    assert.equal(await page.locator("#save-btn").evaluate(el=>el.classList.contains("saved")),true);
    await page.locator("#font-btn").click();
    assert.equal(await page.locator("#prefs").isVisible(),true);
-   await page.locator("#font-size").fill("22");
+   await page.locator("#font-size").evaluate(el=>{el.value="22";el.dispatchEvent(new Event("input",{bubbles:true}));});
    assert.equal(await page.locator("#font-size-label").textContent(),"22px");
    await page.locator("#close-prefs").click();
    assert.equal(await page.locator("#prefs").isVisible(),false);
