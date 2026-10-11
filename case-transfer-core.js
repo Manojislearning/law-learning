@@ -7,10 +7,10 @@
  if(root)root.LawTransferCore=api;
 })(typeof globalThis==="object"?globalThis:this,function(){
 "use strict";
-var keys=["contract","torts","bns","constitution"];
+var keys=["contract","torts","bns","constitution","hindu"];
 function verify(data,banks){
- if(!data||data.schema!==1||!Array.isArray(data.items)||data.items.length!==20||!banks)throw Error("Invalid changed-facts bank.");
- var ids=new Set(),counts={contract:0,torts:0,bns:0,constitution:0},unitSets={contract:new Set(),torts:new Set(),bns:new Set(),constitution:new Set()};
+ if(!data||data.schema!==1||!Array.isArray(data.items)||data.items.length!==25||!banks)throw Error("Invalid changed-facts bank.");
+ var ids=new Set(),counts={contract:0,torts:0,bns:0,constitution:0,hindu:0},unitSets={contract:new Set(),torts:new Set(),bns:new Set(),constitution:new Set(),hindu:new Set()};
  for(var entry of data.items){
   if(!entry||typeof entry.id!=="string"||ids.has(entry.id)||!keys.includes(entry.subject))throw Error("Duplicate or unknown challenge.");
   ids.add(entry.id);counts[entry.subject]++;
