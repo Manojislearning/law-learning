@@ -258,12 +258,11 @@ async function openNote(path,heading=''){
   const title=meta.title || niceName(path);
   const sourceParts=path.split('/');
   $('#breadcrumb').innerHTML='<strong>'+esc(sourceParts.slice(0,-1).join(' / ')||'Vault')+'</strong> &nbsp;/&nbsp; '+esc(title);
-  const status=meta.status?'<span class="property">'+esc(meta.status.replace(/-/g,' '))+'</span>':'';
-  const subject=meta.subject?'<span class="property">'+esc(meta.subject)+'</span>':'';
+
   const progress=localStorage.getItem(KEY+':progress:'+path)||'';
   const course=path.endsWith('.canvas')?'OBSIDIAN CANVAS':path.includes('01-Semester-1')?'SEMESTER I':path.includes('02-Semester-2')?'SEMESTER II':path.includes('10-Books')?'READING LIBRARY':'LAW NOTES';
   const toc=note.toc.filter(h=>h.level<=3);
-  const intro=`<div class="note-eyebrow">${course} · GITHUB VAULT${progress?' · '+esc(progress)+'% READ':''}</div><div class="note-properties"><span class="property">${esc(path)}</span>${subject}${status}</div>`;
+  const intro=`<div class="note-eyebrow">${course}${progress?' · '+esc(progress)+'% READ':''}</div>`;
   const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
   const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
   article.innerHTML=intro+headingHtml+tocHtml+note.html;
