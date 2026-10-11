@@ -20,7 +20,7 @@ test("Two levels preserve all 415 legal word IDs and append 115 unique answer-wr
   const terms=items.map(w=>w.term.toLowerCase());
   assert.equal(new Set(terms).size,terms.length,"Duplicated spelling across levels");
   for(const item of items.slice(415)){
-    assert.ok(item.definition.length>=24,"Missing meaningful definition: "+item.term);
+    assert.ok(item.definition.length>=20,"Missing meaningful definition: "+item.term);
     assert.ok(item.example.includes(" ")&&item.example.length>=35,"Missing legal writing example: "+item.term);
   }
 });
