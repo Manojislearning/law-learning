@@ -16,13 +16,14 @@ function mockBrowser(initial){
  function view(id){
    const el={id:id,hidden:false,classList:{active:false,
      toggle(name,bool){if(name==='active')this.active=!!bool;}},textContent:''};
-   els.set(id,el);return el;
+   el.setAttribute=function(name,value){this[name]=value;};
+    els.set(id,el);return el;
  }
- const home=view('home-view'),words=view('words-view'),syllabus=view('syllabus-view'),
+ const home=view('home-view'),student=view('student-view'),words=view('words-view'),syllabus=view('syllabus-view'),
  subjects=view('subjects-view'),profile=view('profile-view'),back=view('back-home'),
  kicker=view('section-kicker'),title=view('section-title');
  const doc={getElementById:(id)=>els.get(id)||null,
-    querySelectorAll:(sel)=>sel==='.main-view'?[words,syllabus,subjects,profile]:[],
+    querySelectorAll:(sel)=>sel==='.main-view'?[student,words,syllabus,subjects,profile]:[],
     addEventListener:(type,callback)=>{(listeners[type]||=[]).push(callback);}};
  const win={_hash:initial||'',scrollCalls:[],console:{error(){return;}},
    addEventListener:(type,cb)=>{(listeners[type]||=[]).push(cb);},
@@ -37,7 +38,7 @@ function mockBrowser(initial){
     return {dataset:{open:target}};return null;}},
   preventDefault(){prevented=true;}
  }));return prevented;}
- return {win,doc,home,words,syllabus,subjects,profile,back,kicker,title,click,listeners};
+ return {win,doc,home,student,words,syllabus,subjects,profile,back,kicker,title,click,listeners};
 }
 test('Progress loader uses existing key and preserves earned points and reviewed word IDs',()=>{
  const key='law-learning-progress-v2';
@@ -92,11 +93,14 @@ test('One router drives home, syllabus and profile and notifies subscribers',()=
  assert.equal(b.syllabus.classList.active,true);
  assert.equal(b.back.hidden,false);
  assert.equal(b.click('back'),true);
- assert.equal(b.home.classList.active,true);
- assert.equal(b.back.hidden,true);
- r.navigate('profile');assert.equal(b.profile.classList.active,true);
- assert.deepEqual(events.at(-1),['profile','home']);
- unsubscribe();r.navigate('words');assert.equal(events.length,4);
+  assert.equal(b.student.classList.active,true);
+  assert.equal(b.back.textContent,'← Home');
+  assert.equal(b.click('back'),true);
+  assert.equal(b.home.classList.active,true);
+  assert.equal(b.back.hidden,true);
+  r.navigate('profile');assert.equal(b.profile.classList.active,true);
+  assert.deepEqual(events.at(-1),['profile','home']);
+  unsubscribe();r.navigate('words');assert.equal(events.length,5);
 });
 test('Unknown or missing route safely displays home instead of breaking UI',()=>{
  const b=mockBrowser('#does-not-exist'),r=Core.createRouter(b.win,b.doc);
