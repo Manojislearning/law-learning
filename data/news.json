@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-11T10:18:42Z",
+  "generatedAt": "2026-10-11T10:27:06Z",
   "items": [
     {
       "id": "d1f05771fe26332c",
@@ -9,7 +9,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T16:26:48Z",
       "category": "Supreme Court",
-      "priority": 1
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134838500,imgsize-313552,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-to-hold-two-day-national-consultation-on-10-years-of-juvenile-justice-act.jpg",
+      "brief": "The Supreme Court of India is conducting a two-day national consultation to assess the Juvenile Justice Act, 2015, aiming to strengthen child protection systems…"
     },
     {
       "id": "f0fffcc48bfab58d",
@@ -18,7 +20,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T16:20:05Z",
       "category": "Supreme Court",
-      "priority": 1
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134838433,imgsize-113892,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/no-question-of-restrictive-live-streaming-of-court-proceedings-says-sc.jpg",
+      "brief": "The Supreme Court of India emphasizes no restrictions on live-streaming court proceedings but warns against commercial misuse and misrepresentation of video clips."
     },
     {
       "id": "2da64b70ebada4d1",
@@ -27,7 +31,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T10:14:55Z",
       "category": "Latest",
-      "priority": 0
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134830266,imgsize-121179,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/siemens-energy-india-says-russian-court-rejects-appeal-44-38-crore-order-stands.jpg",
+      "brief": "Siemens Energy India Limited's appeal against a Russian court order to pay ₹44.38 crore has been rejected, concluding all legal proceedings in Russia. The…"
     },
     {
       "id": "65c6a2d6aa7b008f",
@@ -36,7 +42,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-09T09:35:56Z",
       "category": "Latest",
-      "priority": 0
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134829307,imgsize-38744,width-1200,height=627,overlay-etlegal,resizemode-75/industry/blue-dart-appoints-rabindra-purohit-as-vp-legal-compliance-and-company-secretary.jpg",
+      "brief": "Blue Dart Express announces the appointment of Rabindra Purohit as Vice President of Legal, Compliance, and Company Secretary, succeeding Tushar Gunderia, effective October 10…"
     },
     {
       "id": "10738671543af5ec",
@@ -45,7 +53,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-07T11:04:38Z",
       "category": "Latest",
-      "priority": 1
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134764130,imgsize-209376,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/gujarat-govt-sets-time-bound-sop-for-action-on-hc-judgments-accountability-for-delays.jpg",
+      "brief": "Gujarat Government SOP: The Gujarat government has instituted a stringent time-bound Standard Operating Procedure (SOP) for state departments to act on High Court judgments…"
     },
     {
       "id": "0789a78a79aef6ca",
@@ -54,7 +64,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-07T06:12:56Z",
       "category": "Supreme Court",
-      "priority": 1
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134757902,imgsize-150984,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-reserves-verdict-on-pleas-challenging-hc-order-striking-down-attendance-mandate-for-law-students.jpg",
+      "brief": "Supreme Court Attendance Mandate: The Supreme Court has set to review a High Court ruling that prevents law colleges from barring students from exams…"
     },
     {
       "id": "41cd237789c1c5b8",
@@ -63,7 +75,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-10-05T17:04:58Z",
       "category": "Legislation",
-      "priority": 0
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134713041,imgsize-194592,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/punjab-cabinet-clears-ranjitgarh-development-authority-bill.jpg",
+      "brief": "The Punjab Cabinet, led by Chief Minister Bhagwant Mann, has approved the Ranjitgarh Development Authority Bill, 2026, aimed at eco-tourism and sustainable development around…"
     },
     {
       "id": "31c87150a1996724",
@@ -72,7 +86,9 @@
       "source": "ET LegalWorld",
       "publishedAt": "2026-09-28T10:48:34Z",
       "category": "Latest",
-      "priority": 0
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134538292,imgsize-470028,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/ai-has-become-a-necessity-for-legal-teams-says-lexisnexis-southeast-asia-md-gaythri-raman.jpg",
+      "brief": "Explore how LexisNexis' Protégé is transforming the legal landscape in India and Southeast Asia with innovative AI solutions and fostering trust in legal tech."
     }
   ]
 }
