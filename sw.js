@@ -6,7 +6,7 @@ const ASSETS = [
   "./backup-core.js?v=41",
   "./profile-local.js?v=41",
   "./refresh.html",
-  "./styles.css?v=36",
+  "./styles.css?v=42",
   "./brain-map.css?v=1",
   "./brain-map.js?v=1",
   "./brain-map.html",
