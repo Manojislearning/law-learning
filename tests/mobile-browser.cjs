@@ -372,6 +372,33 @@ async function run(){
     assert.equal(errors.length,0,"Word game v58 browser errors at "+width+"px: "+errors.join("; "));
     await context.close();
    }
+   // KSLU exam v59: 16 question navigation, readable answer copy and touch controls.
+   for(const width of [320,390,768]){
+    const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+    const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+    await page.goto(address.replace("v=43#practice","v=59#papers"),{waitUntil:"load"});
+    const library=page.locator("#papers-view");
+    assert.equal(await library.locator(".exam59-question").count(),16,"Model bank should have 16 answers");
+    const filter=library.locator(".exam59-chip").filter({hasText:"Criminal Law–I (BNS)"});
+    await filter.tap();
+    assert.equal(await library.locator(".exam59-question").count(),3,"BNS subject filter should show 3 worked answers");
+    await library.locator(".exam59-question").first().tap();
+    assert.equal(await library.locator(".exam59-answer").isHidden(),true,"Answers should start private for self-testing");
+    const reveal=library.locator(".exam59-reveal");
+    await reveal.tap();
+    assert.equal(await library.locator(".exam59-answer").isVisible(),true);
+    const bounds=await page.evaluate(()=>{
+     return [...document.querySelectorAll("#papers-view .exam59-reader .exam59-panel,#papers-view .exam59-reader .exam59-section p,#papers-view .exam59-reader button")].filter(e=>e.getClientRects().length).map(e=>{
+      const b=e.getBoundingClientRect(),style=getComputedStyle(e);
+      return {tag:e.tagName,width:b.width,left:b.left,right:b.right,height:b.height,font:parseFloat(style.fontSize)};
+     });
+    });
+    assert.ok(bounds.every(x=>x.left>=-1&&x.right<=width+1),width+"px KSLU exam content overflows "+JSON.stringify(bounds));
+    assert.ok(bounds.filter(x=>x.tag==="P").every(x=>x.font>=16),width+"px answer font must be readable");
+    assert.ok(bounds.filter(x=>x.tag==="BUTTON").every(x=>x.height>=44),"Question controls must meet touch minimum");
+    assert.equal(errors.length,0,"Exam reader browser errors "+width+"px: "+errors.join("; "));
+    await context.close();
+   }
    console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
