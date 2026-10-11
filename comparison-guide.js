@@ -55,5 +55,5 @@ function enhance(){
 }
 var observer=new MutationObserver(enhance);observer.observe(source,{childList:true,subtree:true});
 enhance();
-window.addEventListener("hashchange",function(){if(location.hash!=="#words")close();});
+window.LawAppCore.router.subscribe(function(route){if(route!=="words")close();});
 })();
