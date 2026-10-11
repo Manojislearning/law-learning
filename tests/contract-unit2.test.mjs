@@ -45,7 +45,7 @@ test('Official KSLU historical edition and government statutory sources stay sep
 });
 test('Both guided units are discoverable from current app and service worker',()=>{
  const html=read('index.html'),sw=read('sw.js'),nav=read('syllabus-flow.js'),ui=read('contract-unit1-ui.js');
- for(const file of ['contract-unit1-ui.js?v=38','contract-unit2-data.js?v=37','syllabus-flow.js?v=38']){
+ for(const file of ['contract-unit1-ui.js?v=39','contract-unit2-data.js?v=37','syllabus-flow.js?v=39']){
   assert.ok(html.includes(file),file+' not in HTML');
   assert.ok(sw.includes(file),file+' not offline cached');
  }
