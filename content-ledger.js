@@ -4,7 +4,7 @@
 var data={
   "schema": 1,
   "scope": "KSLU 3-year LL.B. — imported Semester I draft",
-  "reviewPolicy": "Contract–I Units I and II have references to the 2018–19 published KSLU syllabus; all units remain needs-review until a student cohort and precise applicable university PDF are confirmed.",
+  "reviewPolicy": "All 30 imported Semester I broad topic outlines were compared against KSLU's published 2018–19 syllabus and its 2024 BNS curriculum circular. This is edition-level outline matching ONLY; enrolled-cohort applicability, subsequent amendments, every legal teaching claim and examinations are not fully verified.",
   "publishedForCohort": "unconfirmed",
   "sources": {
     "kslu-index": {
@@ -76,6 +76,20 @@ var data={
       "publisher": "India Code, Government of India",
       "kind": "statute-primary-text",
       "verifiedScope": "Contains the 2018 substituted provisions for Sections 10, 14 and 20 and chapter/section texts through Section 42; verify future amendments before use."
+    },
+    "kslu-2018-llb": {
+      "title": "KSLU — Revised 3-year LL.B. syllabus, 2018–19 (university PDF)",
+      "url": "https://kslu.karnataka.gov.in/storage/pdf-files/%E0%B3%A9%E0%B2%B5%E0%B2%B0%E0%B3%8D%E0%B2%B7%E0%B2%A6%20%E0%B2%8E%E0%B2%B2%E0%B3%8D%E0%B2%8E%E0%B2%B2%E0%B3%8D%20%E0%B2%AC%E0%B2%BF%20%E0%B2%AF%20%E0%B2%AA%E0%B2%B0%E0%B2%BF%E0%B2%B7%E0%B3%8D%E0%B2%95%E0%B3%83%E0%B2%A4%20%E0%B2%AA%E0%B2%A0%E0%B3%8D%E0%B2%AF%E0%B2%95%E0%B3%8D%E0%B2%B0%E0%B2%AE.pdf",
+      "publisher": "Karnataka State Law University",
+      "kind": "official-syllabus-pdf",
+      "verifiedScope": "2018–19 printed pages 3–14, including semester subjects and original Units I–V for Constitution, Contract, Torts, Hindu Law and conditional English. Not independently certified for every later admission cohort."
+    },
+    "kslu-2024-criminal": {
+      "title": "KSLU circular KSLU/Aca/BOS/2024-25/1586: three new criminal laws",
+      "url": "https://kslu.karnataka.gov.in/storage/pdf-files/Syllabusof3NewCriminalLaws.pdf",
+      "publisher": "Karnataka State Law University",
+      "kind": "official-curriculum-amendment-pdf",
+      "verifiedScope": "Circular dated 26 September 2024 introduces BNS Criminal Law–I from academic year 2024–25. Appendix I printed pages 1–2 set out five BNS units. Subsequent cohort amendments must still be checked."
     }
   },
   "units": [
@@ -90,10 +104,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "constitution-source"
+        "constitution-source",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 4,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c1-u2",
@@ -106,10 +129,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "constitution-source"
+        "constitution-source",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 4,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c1-u3",
@@ -122,10 +154,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "constitution-source"
+        "constitution-source",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 4,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c1-u4",
@@ -138,10 +179,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "constitution-source"
+        "constitution-source",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 4,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c1-u5",
@@ -154,10 +204,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "constitution-source"
+        "constitution-source",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 5,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c2-u1",
@@ -171,13 +230,22 @@ var data={
       "sourceIds": [
         "kslu-index",
         "contract-act",
-        "kslu-2018-p6"
+        "kslu-2018-p6",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "The Unit I topic outline matches KSLU's official 2018–19 PDF; applicability to later admission cohorts still needs confirmation."
       ],
-      "syllabusEditionEvidence": "Official 2018–19 KSLU syllabus, printed page 6 (Contract–I Unit I); current admission-cohort match not confirmed"
+      "syllabusEditionEvidence": "Official 2018–19 KSLU syllabus, printed page 6 (Contract–I Unit I); current admission-cohort match not confirmed",
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 6,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c2-u2",
@@ -191,13 +259,22 @@ var data={
       "sourceIds": [
         "kslu-index",
         "contract-act",
-        "kslu-2018-p6"
+        "kslu-2018-p6",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "This lesson follows KSLU's official 2018–19 Contract–I Unit II outline; confirm the syllabus prescribed for your admission year."
       ],
-      "syllabusEditionEvidence": "Contract–I Unit II topic list appears in official KSLU 2018–19 syllabus PDF; applicability to a later admission cohort is unconfirmed."
+      "syllabusEditionEvidence": "Contract–I Unit II topic list appears in official KSLU 2018–19 syllabus PDF; applicability to a later admission cohort is unconfirmed.",
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 6,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c2-u3",
@@ -211,13 +288,22 @@ var data={
       "sourceIds": [
         "kslu-index",
         "contract-act",
-        "kslu-2018-contract-unit3"
+        "kslu-2018-contract-unit3",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "These lessons follow the imported Performance & Discharge outline. Confirm the syllabus prescribed for your admission cohort."
       ],
-      "syllabusEditionEvidence": "Historical KSLU syllabus reference available; unit wording and current admission-cohort applicability require checking."
+      "syllabusEditionEvidence": "Historical KSLU syllabus reference available; unit wording and current admission-cohort applicability require checking.",
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 6,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c2-u4",
@@ -231,13 +317,22 @@ var data={
       "sourceIds": [
         "kslu-index",
         "contract-act",
-        "kslu-2018-contract-unit3"
+        "kslu-2018-contract-unit3",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "These lessons follow the historical Unit IV damages/quasi-contract outline. Confirm the syllabus for your admission cohort."
       ],
-      "syllabusEditionEvidence": "Historical KSLU Contract–I syllabus reference; edition applicability and exact Unit IV wording have not been audited for the current admission cohort."
+      "syllabusEditionEvidence": "Historical KSLU Contract–I syllabus reference; edition applicability and exact Unit IV wording have not been audited for the current admission cohort.",
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 6,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c2-u5",
@@ -251,7 +346,8 @@ var data={
       "sourceIds": [
         "kslu-index",
         "specific-relief",
-        "specific-relief-amended-pdf"
+        "specific-relief-amended-pdf",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
@@ -259,7 +355,15 @@ var data={
         "Historical syllabus section references may predate the Specific Relief (Amendment) Act, 2018: Section 10 is now qualified by statutory bars, Section 14 was substituted, and Section 20 now concerns substituted performance.",
         "Rectification, cancellation and declaratory decrees fall under Sections 26, 31 and 34 respectively, beyond the imported Unit V section list. These distinctions are included as clearly labelled related study material."
       ],
-      "syllabusEditionEvidence": "Imported Specific Relief topics derive from a historical KSLU outline; applicable admission-year syllabus has not been verified."
+      "syllabusEditionEvidence": "Imported Specific Relief topics derive from a historical KSLU outline; applicable admission-year syllabus has not been verified.",
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 6,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "The historical Specific Relief unit contains wording and section numbers affected by the 2018 amendment."
+      }
     },
     {
       "id": "sem1-c3-u1",
@@ -271,10 +375,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 8,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c3-u2",
@@ -286,10 +399,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 8,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c3-u3",
@@ -301,10 +423,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 8,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c3-u4",
@@ -316,10 +447,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 8,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c3-u5",
@@ -332,12 +472,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "consumer-2019"
+        "consumer-2019",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "The imported unit refers to the Consumer Protection Act, 1986. Current study must distinguish the Consumer Protection Act, 2019 and verify the cohort's prescribed syllabus."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 8,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "The 2018 syllabus explicitly cites the repealed Consumer Protection Act, 1986; teaching current law requires checking the 2019 Act."
+      }
     },
     {
       "id": "sem1-c4-u1",
@@ -349,10 +498,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 10,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c4-u2",
@@ -365,10 +523,19 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "hindu-marriage"
+        "hindu-marriage",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 10,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c4-u3",
@@ -380,10 +547,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 10,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c4-u4",
@@ -395,10 +571,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 10,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c4-u5",
@@ -410,10 +595,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 10,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c5-u1",
@@ -426,12 +620,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "bns-2023"
+        "bns-2023",
+        "kslu-2024-criminal"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "Check the precise BNS section references against the official Act, including the relevant commencement dates."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2024-criminal",
+        "printedPage": 1,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c5-u2",
@@ -444,12 +647,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "bns-2023"
+        "bns-2023",
+        "kslu-2024-criminal"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "Check the precise BNS section references against the official Act, including the relevant commencement dates."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2024-criminal",
+        "printedPage": 1,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c5-u3",
@@ -462,12 +674,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "bns-2023"
+        "bns-2023",
+        "kslu-2024-criminal"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "Check the precise BNS section references against the official Act, including the relevant commencement dates."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2024-criminal",
+        "printedPage": 1,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c5-u4",
@@ -480,12 +701,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "bns-2023"
+        "bns-2023",
+        "kslu-2024-criminal"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "Check the precise BNS section references against the official Act, including the relevant commencement dates."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2024-criminal",
+        "printedPage": 2,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c5-u5",
@@ -498,12 +728,21 @@ var data={
       "lastReviewed": null,
       "sourceIds": [
         "kslu-index",
-        "bns-2023"
+        "bns-2023",
+        "kslu-2024-criminal"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
         "Check the precise BNS section references against the official Act, including the relevant commencement dates."
-      ]
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2024-criminal",
+        "printedPage": 2,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
+        "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      }
     },
     {
       "id": "sem1-c6-u1",
@@ -515,10 +754,21 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [
+        "English is listed by KSLU for students writing examinations in Kannada; check whether this paper applies to your examination language and scheme."
+      ],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 13,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "English is listed for students writing examinations in Kannada; do not treat it as compulsory for everyone."
+      }
     },
     {
       "id": "sem1-c6-u2",
@@ -530,10 +780,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 13,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "English is listed for students writing examinations in Kannada; do not treat it as compulsory for everyone."
+      }
     },
     {
       "id": "sem1-c6-u3",
@@ -545,10 +804,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 13,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "English is listed for students writing examinations in Kannada; do not treat it as compulsory for everyone."
+      }
     },
     {
       "id": "sem1-c6-u4",
@@ -560,10 +828,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 14,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "English is listed for students writing examinations in Kannada; do not treat it as compulsory for everyone."
+      }
     },
     {
       "id": "sem1-c6-u5",
@@ -575,10 +852,19 @@ var data={
       "syllabusStatus": "needs-review",
       "lastReviewed": null,
       "sourceIds": [
-        "kslu-index"
+        "kslu-index",
+        "kslu-2018-llb"
       ],
       "statuteStatus": "needs-review",
-      "warnings": []
+      "warnings": [],
+      "outlineAudit": {
+        "status": "published-outline-compared",
+        "sourceId": "kslu-2018-llb",
+        "printedPage": 14,
+        "checkedOn": "2026-10-11",
+        "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
+        "caution": "English is listed for students writing examinations in Kannada; do not treat it as compulsory for everyone."
+      }
     }
   ],
   "verifiedClaims": [
