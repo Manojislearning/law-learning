@@ -68,23 +68,25 @@ test('Every home navigation item points to a real route', () => {
   for(const route of routes)assert.ok(ids.has(route+'-view'),'Missing view for '+route);
 });
 
-test('Student hub groups exactly the four relocated study destinations', () => {
+test('Student hub groups all seven study destinations', () => {
   const home = html.split('<section id="home-view"')[1]?.split('<section id="student-view"')[0] || '';
   const student = html.split('<section id="student-view"')[1]?.split('<section id="words-view"')[0] || '';
   assert.ok(home.includes('data-open="student"'),'Student card absent from Home');
-  for(const moved of ['syllabus','subjects','papers']){
+  for(const moved of ['syllabus','subjects','papers','exam','links']){
     assert.ok(!home.includes('data-open="'+moved+'"'),moved+' must not be a separate Home card');
     assert.ok(student.includes('data-open="'+moved+'"'),moved+' missing inside Student');
   }
   assert.ok(!home.includes('href="./reader/?map=1"'),'Topic Brain Branches must leave Home');
   assert.ok(student.includes('href="./reader/?map=1"'),'Brain Branches must open the existing notes reader');
   assert.ok(student.includes('Topic Brain Branches'));
-  assert.equal((student.match(/class="home-card student-hub-card"/g)||[]).length,4,'Student should have four learning entries');
+  assert.ok(!home.includes('href="./reader/"'),'Law Notes must leave the home menu');
+  assert.ok(student.includes('href="./reader/"'),'Law Notes must stay available in Student');
+  assert.equal((student.match(/class="home-card student-hub-card"/g)||[]).length,7,'Student should have seven learning entries');
   assert.ok(home.includes('data-open="words"'),'Word game remains on Home');
   assert.ok(home.includes('data-open="news"'),'Law News remains on Home');
   assert.ok(home.includes('data-open="practice"'),'Case Practice remains on Home');
   assert.ok(sw.includes('./student-menu.css?v=60'),'Student style must be available offline');
-  assert.ok(sw.includes('./app-core.js?v=61'),'Updated Student router must be available offline');
+  assert.ok(sw.includes('./app-core.js?v=62'),'Updated Student router must be available offline');
 });
 
 test('Static HTML has no duplicate element IDs', () => {
