@@ -760,7 +760,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   const prompts=host.querySelector(".cp-reasoning");
   assert.ok(prompts&&prompts.textContent.includes("Which specific fact"),"Optional evidence/counterargument prompts must be available before reveal");
   assert.equal(host.querySelector(".cp-model").hidden,true,"The correct legal rule remains hidden");
-  assert.ok(!host.querySelector(".cp-unit-link"),"Study link should not exist outside the concealed answer");
+  assert.ok(host.querySelector(".cp-unit-link").closest(".cp-model").hidden,"Study link must remain concealed together with reference answer");
   const attempt="Issue: who is legally responsible? Rule: identify the current statute. Application: contrast the evidence and defence. Conclusion: reasoned outcome.";
   host.querySelector("textarea").value=attempt;
   [...host.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning")).click();
