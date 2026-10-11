@@ -49,7 +49,7 @@ test("New KSLU reader offers verified external archive navigation, source separa
   assert.ok(html.includes(asset),"HTML missing "+asset);
   assert.ok(sw.includes("./"+asset),"PWA missing "+asset);
  }
- assert.ok(sw.includes("law-learning-v61"));
+ assert.ok(sw.includes("law-learning-v62"));
  assert.ok(reader.includes("kslucorner.in/papers/llb/sem-1/"));
  assert.ok(reader.includes("Original model · Not an actual KSLU question"));
  assert.ok(reader.includes("Reveal full model answer"));
