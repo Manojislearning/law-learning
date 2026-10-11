@@ -352,9 +352,9 @@ async function run(){
     const page=await context.newPage(),errors=[];page.on("pageerror",err=>errors.push(err.message));
     await page.goto(address.replace("v=43#practice","v=58#words"),{waitUntil:"load"});
     const levels=page.locator(".w-level");
-    assert.equal(await levels.count(),2,"Legal and Advanced English levels should be visible");
+    assert.equal(await levels.count(),2,"Legal and Difficult Words choices should be visible");
     assert.ok((await page.locator("#w-level-position").innerText()).includes("415"));
-    const advanced=levels.filter({hasText:"Advanced English"});
+    const advanced=levels.filter({hasText:"Difficult Words"});
     const bounds=await advanced.boundingBox();
     assert.ok(bounds&&bounds.width>100&&bounds.height>=44&&bounds.x>=0&&bounds.x+bounds.width<=width+1,"Advanced level button is not accessible at "+width+"px");
     await advanced.tap();
