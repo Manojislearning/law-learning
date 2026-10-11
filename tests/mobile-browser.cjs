@@ -149,7 +149,7 @@ async function run(){
    await page.goto(address.replace("v=43#practice","v=48&course=bns#practice"),{waitUntil:"load"});
    const area=page.locator("#practice-root");
    assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("BNS"));
-   assert.equal(await area.locator(".cp-subjects button").count(),4,"Four subject choices must fit on mobile");
+   assert.equal(await area.locator(".cp-subjects button").count(),5,"Five subject choices must fit on mobile");
    const positions=await page.evaluate(()=>{
     const els=[...document.querySelectorAll("#practice-root .cp-subjects button")];
     return els.map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,height:e.getBoundingClientRect().height}));
@@ -220,7 +220,7 @@ async function run(){
    const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
    await page.goto(address.replace("v=43#practice","v=51&course=constitution#practice"),{waitUntil:"load"});
    const area=page.locator("#practice-root");
-   assert.equal(await area.locator(".cp-subjects button").count(),4);
+   assert.equal(await area.locator(".cp-subjects button").count(),5);
    assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("Constitution"));
    const bounds=await page.evaluate(()=>[...document.querySelectorAll("#practice-root .cp-subjects button")].map(el=>({left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height})));
    assert.ok(bounds.every(b=>b.left>=-1&&b.right<=width+1&&b.height>=44),width+"px Constitution subject controls overflow "+JSON.stringify(bounds));
@@ -239,7 +239,32 @@ async function run(){
    assert.equal(errors.length,0,"Constitution mobile errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Constitution/Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=52&course=hindu#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   assert.equal(await area.locator(".cp-subjects button").count(),5);
+   assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("Hindu Law"));
+   const targets=await page.evaluate(()=>[...document.querySelectorAll("#practice-root .cp-subjects button")].map(el=>({left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height})));
+   assert.ok(targets.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px Hindu subject chooser fails touch check "+JSON.stringify(targets));
+   await area.getByRole("button",{name:/Start 5 cases/}).tap();
+   const model=area.locator(".cp-model");
+   assert.equal(await model.isHidden(),true);
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isHidden(),true,"Model cannot reveal from blank answer");
+   await area.locator("textarea").fill("Issue: determine applicable Hindu statute. Rule: cite statutory section. Application: check dates, conditions and exceptions. Conclusion: reasoned result.");
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isVisible(),true);
+   assert.ok((await model.innerText()).toLowerCase().includes("hindu law"));
+   assert.ok(await model.locator("a[href*='indiacode.nic.in']").count()>0);
+   await area.locator(".cp-rubric input").nth(0).check();
+   assert.ok((await area.locator(".cp-coaching summary").innerText()).includes("3 unchecked"));
+   assert.equal(errors.length,0,"Hindu legal practice errors "+width+": "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
