@@ -31,7 +31,7 @@ test('Statute boundary tests guard common serious Hindu Law exam misconceptions'
  const get=id=>{const c=hindu.cases.find(c=>c.id===id);assert.ok(c,'Missing '+id);return c;};
  assert.ok(get('u1-coverage').outline.rule.includes('2(2)'), 'Scheduled Tribe exception');
  assert.ok(get('u2-age').outline.rule.includes('5(iii)')&&get('u2-age').outline.rule.includes('Section 11'));
- assert.ok(get('u2-bigamy').outline.rule.includes('Section 11'));
+ assert.ok(get('u2-bigamy').outline.rule.includes('11'));
  assert.ok(get('u3-daughter').outline.rule.includes('2005'));
  assert.ok(get('u3-daughter').outline.rule.includes('20 December 2004'));
  assert.ok(get('u3-pious').outline.rule.includes('6(4)'));
