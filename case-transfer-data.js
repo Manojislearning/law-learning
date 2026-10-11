@@ -2,7 +2,7 @@
 (function(root){"use strict";var data={
   "schema": 1,
   "title": "Changed Facts · Apply the Rule",
-  "disclaimer": "Original changed-fact hypotheticals for Contract, Torts, BNS and Constitutional Law–I. Not official KSLU papers, automated essay grades or definitive court outcomes. Source references are linked through their parent cases; saved written answers are not retained.",
+  "disclaimer": "Original changed-fact hypotheticals for Contract, Torts, BNS, Constitutional Law and Hindu Family Law. Not official KSLU past papers, court rulings, automatic essay grades or legal advice. Source links come from the verified statutory-text references in each parent case; written answers are not saved.",
   "sourceDate": "2026-10-11",
   "items": [
     {
@@ -224,6 +224,61 @@
       "trap": "Do not say every contractual or statutory dispute automatically warrants a writ, or that Article 32 and 226 have identical jurisdiction.",
       "id": "constitution-u5-writs",
       "subject": "constitution"
+    },
+    {
+      "id": "hindu-u1-custom",
+      "subject": "hindu",
+      "parentId": "u1-custom",
+      "title": "A custom with express statutory recognition",
+      "changedFacts": "The asserted community custom concerns a ritual ceremony expressly recognised by the Hindu Marriage Act where a statutory exception permits it. Neither prospective spouse has a living partner, and evidence shows the precise ceremonial conditions and statutory text are satisfied.",
+      "question": "How does an express statutory permission for a proven custom change the analysis?",
+      "rule": "Hindu Marriage Act Sections 4, 5 and 7 distinguish general overriding effect from specific provisions that recognise ceremonies or permitted customs in defined circumstances.",
+      "application": "Unlike the earlier claim that any old custom supersedes the statute, this variant requires checking the precise statutory permission, proof of the custom and all applicable marriage conditions.",
+      "trap": "Do not swing from 'custom always overrides' to 'custom never matters'; recognise it only within the Act's stated legal conditions."
+    },
+    {
+      "id": "hindu-u2-age",
+      "subject": "hindu",
+      "parentId": "u2-age",
+      "title": "A living spouse replaces the age violation",
+      "changedFacts": "The couple now satisfy Section 5(iii)'s age thresholds. However, one person is already validly married under the Act and the first spouse is living; no legally effective dissolution is shown. Both still insist that age compliance alone validates the second wedding.",
+      "question": "Which statutory marriage condition and consequence have changed?",
+      "rule": "Sections 5(i) and 11 expressly address a marriage solemnised while an earlier spouse is living; the Section 5(iii) age condition has a distinct legal treatment.",
+      "application": "The original age problem did not by itself fit Section 11. This variation does fit a Section 11 condition, assuming a legally solemnised later marriage and a subsisting valid first marriage.",
+      "trap": "Do not collapse marriage age, bigamy, voidness, solemnisation proof and criminal ingredients into a single general label."
+    },
+    {
+      "id": "hindu-u3-daughter",
+      "subject": "hindu",
+      "parentId": "u3-daughter",
+      "title": "A pre-cut-off registered partition appears",
+      "changedFacts": "A daughter requests coparcenary rights under amended Section 6. This time certified records establish a genuine registered partition deed executed before 20 December 2004, concerning the specific disputed coparcenary parcel. The authenticity and effect of the deed can still be disputed.",
+      "question": "How does a supported historical partition affect the amended coparcenary claim?",
+      "rule": "Hindu Succession Act Section 6 recognises daughters as coparceners by birth but contains statutory protections for certain dispositions and partitions before the 20 December 2004 cut-off.",
+      "application": "The initial problem omitted any potentially saved disposition. The new registered deed demands examination of its actual legal validity, date, scope and protection under amended Section 6.",
+      "trap": "Do not say every alleged oral split defeats daughters' rights, nor that the 2005 amendment automatically reopens every pre-20 December 2004 transaction."
+    },
+    {
+      "id": "hindu-u4-femaleestate",
+      "subject": "hindu",
+      "parentId": "u4-femaleestate",
+      "title": "The property came from a fresh restricted grant",
+      "changedFacts": "The Hindu woman's land is now held under a new instrument that creates a limited estate on expressly stated terms; the facts say she had no earlier existing right to that property which this instrument merely recognised. She later seeks to alienate the land as absolute owner.",
+      "question": "How do the source of the property and the instrument change Section 14 analysis?",
+      "rule": "Hindu Succession Act Section 14(1) generally enlarges existing qualifying rights of female Hindus, while Section 14(2) addresses certain newly created restricted estates under a gift, will, decree, award or similar instrument.",
+      "application": "The original inheritance facts supported Section 14(1). Here the express limited interest and absence of a pre-existing underlying right require a careful Section 14(2) investigation.",
+      "trap": "Do not use either Section 14(1) or Section 14(2) mechanically without checking whether an instrument recognised a pre-existing right or created a genuinely new one."
+    },
+    {
+      "id": "hindu-u5-sale",
+      "subject": "hindu",
+      "parentId": "u5-sale",
+      "title": "Court consent and the minor's benefit are evidenced",
+      "changedFacts": "This time the natural guardian seeks court permission in advance for a sale of the minor's separately owned land. Evidence establishes a pressing estate necessity and fair value, and the court is asked to assess whether the sale offers an evident advantage to the minor.",
+      "question": "Does advance judicial permission with evidence of benefit change the guardianship analysis?",
+      "rule": "Hindu Minority and Guardianship Act Section 8 requires prior court permission for specified immovable-property transactions; permission is subject to necessity or evident advantage of the minor and applicable procedural safeguards.",
+      "application": "The original unilateral sale for the guardian's personal business lacked permission and benefit. A genuine court application and substantiated necessity now meet the correct statutory inquiry, though permission is not automatic.",
+      "trap": "Do not say a parent may sell a minor's land whenever useful, or that a court must consent whenever someone asserts financial need."
     }
   ]
 };
