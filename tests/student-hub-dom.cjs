@@ -30,6 +30,7 @@ function setup(hash){
 }
 (async()=>{
  const {dom,w,d,errors}=setup("#home");
+ const settle=()=>new Promise(resolve=>setTimeout(resolve,25));
  const home=d.querySelector("#home-view");
  const student=d.querySelector("#student-view");
  assert.equal(home.querySelectorAll('[data-open="student"]').length,1);
@@ -37,6 +38,7 @@ function setup(hash){
  assert.equal(student.querySelectorAll('.student-hub-card').length,4);
  assert.ok(student.querySelector('a[href="./reader/?map=1"]'));
  home.querySelector('[data-open="student"]').click();
+ await settle();
  assert.equal(w.LawAppCore.router.current(),"student");
  assert.equal(student.classList.contains("active"),true);
  assert.equal(d.getElementById("section-title").textContent,"Student");
@@ -45,13 +47,16 @@ function setup(hash){
    const button=student.querySelector('[data-open="'+route+'"]');
    assert.ok(button,"Student missing "+route);
    button.click();
+   await settle();
    assert.equal(w.LawAppCore.router.current(),route);
    assert.equal(d.getElementById("back-home").textContent,"← Student");
    d.getElementById("back-home").click();
+   await settle();
    assert.equal(w.LawAppCore.router.current(),"student");
    assert.equal(student.classList.contains("active"),true);
  }
  d.getElementById("back-home").click();
+ await settle();
  assert.equal(w.LawAppCore.router.current(),"home");
  assert.equal(home.classList.contains("active"),true);
  assert.equal(d.getElementById("back-home").hidden,true);
