@@ -13,6 +13,7 @@
     words:["Legal vocabulary","Words"],
     review:["Contract–I · Revision","Review"],
     practice:["Contract–I · Exam Practice","Case Practice"],
+    "law-updates":["Statutory review · First Year","Current Law Check"],
     syllabus:["KSLU · 3-Year LL.B","Syllabus"],
     subjects:["KSLU · Legal concepts","Subjects"],
     exam:["Exam preparation","Exam Pattern"],
