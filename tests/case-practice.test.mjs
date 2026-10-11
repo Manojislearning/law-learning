@@ -72,7 +72,7 @@ test('Official primary legislation links and sensitive caveats are present',()=>
 });
 test('App exposes practice route without introducing separate hash navigation or unnecessary data keys',()=>{
  const html=file('index.html'),sw=file('sw.js'),router=file('app-core.js');
- for(const [name,version] of [['case-practice-data.js',42],['torts-case-practice-data.js',47],['bns-case-practice-data.js',48],['constitution-case-practice-data.js',51],['hindu-case-practice-data.js',52],['case-practice-core.js',52],['case-practice-view.js',52]]){
+ for(const [name,version] of [['case-practice-data.js',42],['torts-case-practice-data.js',47],['bns-case-practice-data.js',48],['constitution-case-practice-data.js',51],['hindu-case-practice-data.js',52],['case-practice-core.js',52],['case-practice-view.js',53]]){
   assert.ok(html.includes(name+'?v='+version),'HTML missing '+name);
   assert.ok(sw.includes(name+'?v='+version),'Offline cache missing '+name);
  }
@@ -85,6 +85,9 @@ test('App exposes practice route without introducing separate hash navigation or
  assert.ok(source.includes('draft.value.trim().length<40'));
  assert.ok(source.includes('model.hidden=false'));
  assert.ok(source.includes('no-upload-sentinel')===false);
+ assert.ok(!source.includes('draft.value')||!source.includes('localStorage.setItem'),'Draft text must not be written to storage directly');
+ assert.ok(html.includes('case-review-core.js?v=53'));
+ assert.ok(sw.includes('case-review-core.js?v=53'));
 });
 
 
