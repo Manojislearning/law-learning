@@ -1,11 +1,31 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **47** — 15 source-linked unseen Torts problems within shared Contract/Torts IRAC practice, preserving offline learning progress; prior release histories follow.
+Latest user-visible release: **48** — 15 original BNS IRAC cases, three legal subjects and 45 original first-year legal problems; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 48 — Independent BNS issue-spotting (11 October 2026)
+
+**What improved:** Reused the proven written IRAC exercise instead of introducing a third redundant quiz UI. Added **15 original Criminal Law–I BNS fact patterns**, three in each of five KSLU published syllabus units. The existing Course Practice page now offers **Contract–I / Torts / BNS** selection and **45 total original cases**, with five varied questions per session and unseen material preferred before repetition.
+
+**Academic emphasis:** Students must distinguish (a) proper care from a claimed accident exception, child-age thresholds and private-defence limits, (b) abetment, conspiracy, and marriage-related offences, (c) murder definitions, negligent death, grievous hurt, (d) unlawful assembly, rioting, false criminal charges, and (e) theft, snatching, entrustment-based breach of trust, cheating and threats. Each case asks for a source-linked Issue / Rule / Application / Conclusion analysis, not just the correct section number.
+
+**Quality and safeguard choices:**
+- Court outcomes are never declared automatic. The model answers require statutory ingredient and fact-level analysis, with misconceptions highlighted.
+- The Section 106(2) problem concerns a hypothetical **10 July 2024** incident and correctly distinguishes the enacted provision from the 2024 MHA commencement notification. Later commencement notifications remain a distinct verification requirement; the app makes no perpetual non-commencement claim.
+- Source references are from the enacted India Code BNS, the official KSLU 2024 syllabus and the MHA commencement notice; the current admission cohort is not certified.
+- A learner must write before revealing the reference outline; rubric ticks are explicitly self-assessment, not an AI essay grade.
+- Existing Contract and Torts banks, local progress, notes, revision scheduler and backup schema remain untouched. No essays are persisted.
+- Added independent source and factual distinction tests, five-unit interleaving regression, simulated browser navigation and three real Chromium mobile viewport widths, including small touch-target layout.
+
+**Evidence record:** `docs/bns-case-practice-v48.md`.
+
+**Next highest-value work:** Study repeated learner mistakes without recording their private essays; offer targeted *contrastive worked examples* for commonly conflated offences, keep improving statutory subsection accuracy and complete real Android/TalkBack checks.
+
+---
 
 ## Version 47 — Independent Law of Torts exam practice (11 October 2026)
 
