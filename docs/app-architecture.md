@@ -4,15 +4,17 @@
 
 **Implemented and tested:** one in-page router, one shared learning-progress store, reusable safe text/DOM primitives, migration of active feature modules to router notifications, and removal of three unused duplicate UI scripts.
 
-**Not yet finished:** `app.js` remains a large legacy module. The old hidden vocabulary rendering remains loaded for compatibility. We must move legacy vocabulary and quiz rendering into independently tested feature modules before declaring the full monolith dismantled. **Do not delete HTML or old handler code until a real mobile-browser smoke test verifies the replacement.**
+**A3 extraction completed:** `app.js` now contains imported datasets and shared learning state; `legacy-study-ui.js` owns legacy quiz, note, and original UI handlers. The old hidden vocabulary rendering remains available for compatibility. Its eventual removal requires browser-level verification. **Do not delete HTML or old handler code until a real mobile-browser smoke test verifies the replacement.**
 
 ## Script ownership and startup
 
 ```
 exam-words-1..4.js      Loaded word rows
 app-core.js             Core router, saved progress, UI node helpers (FIRST)
-app.js                  Legacy datasets + current state + shared router start
+app.js                  Legacy datasets + current state (no renderer)
+legacy-study-ui.js      Legacy UI, quizzes, notes and shared router start
 word-experience.js      Ten-card word game, Learn, Compare, progress buttons
+content-ledger.js       Provenance links, syllabus review status and warnings
 syllabus-flow.js        One-screen-at-a-time syllabus browsing
 subjects-library.js     Subject explorer
 comparison-guide.js     Comparison deep dives
