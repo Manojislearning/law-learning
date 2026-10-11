@@ -78,7 +78,7 @@ Status legend: PLANNED means not implemented. Checkpoint requires a tested accep
 
 1. **A1 Repository quality gate (INITIAL CHECKS PASSING).** Node syntax checks, referenced-file checks, service-worker assets, data-schema checks. Build fails on missing script or duplicate routes.
 2. **A2 Backups and migration (IMPLEMENTED AND AUTOMATED TESTED; mobile import/export still needs hands-on validation).** Export/import local progress as JSON; version migrations, opt-in reset; test zero data loss between versions.
-3. **A3 Decompose app safely (PLANNED).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
+3. **A3 Decompose app safely (SHARED CORE SHIPPED; legacy renderer extraction pending).** Single router, state store, render loop; retire unused duplicate scripts after test coverage. Keep old URLs working.
 4. **A4 Content source ledger (PLANNED).** Stable content ID, syllabus year, unit, Act/section, case citation, source link, verified date, reviewer, correction record.
 
 ### Wave B — intuitive mobile UX
