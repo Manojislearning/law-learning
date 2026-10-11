@@ -1,11 +1,32 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Latest user-visible release: **41** — review due scheduling, durable local attempts and source-grounded recall; earlier release histories appear below.
+Latest user-visible release: **42** — interleaved independent IRAC exam practice with self-check; prior release histories follow.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 42 — Independent legal issue spotting (11 October 2026)
+
+**Why:** Guided lessons, recognition quizzes and the v40 example-linked IRAC activities can inadvertently cue the answer. Students need to see a genuinely new fact pattern, identify the issue without a label, retrieve the statutory rule, apply facts and formulate a qualified conclusion.
+
+**Implemented:**
+1. **Case Practice** directly accessible from Home or `#practice`. Each five-case session interleaves exactly one case from each Contract–I unit. Each unit has three original scenarios (15 total); an in-memory least-used selector cycles all three before repeating a case in that unit. Unit labels and case headings are concealed until after an attempted written answer.
+2. A single text field accepts the student's own IRAC response, with an optional generic IRAC prompt. The reference analysis remains hidden until at least a short typed attempt (40 characters). There is no fake automatic evaluation of legal correctness.
+3. After attempting, the learner sees separate **Issue, Rule, Application and Conclusion**, a common misconception or counterpoint, and links to primary legislative material. Four explicit self-check questions ask which elements genuinely appeared in the learner's original answer. The count is **not** an exam mark.
+4. Draft text and rubric selections remain in the current page only. Leaving the exercise discards it; no new localStorage key, backup schema change or external upload. Old review due, saved learning progress and backups are unaffected.
+5. The UI uses one compact home action, clear status messages, keyboard-focusable reference feedback, no gamified reward interruption and readable mobile text fields.
+
+**Quality controls:** Fifteen bank/schema tests, no-repeat interleaving tests, official statutory-link checks and simulated browser tests across all five units, with empty-draft gate, self-check interactivity and teardown. GitHub Pages deployment and full automated suite are separate release gates.
+
+**Legal source caution:** Scenarios are educational hypotheticals, not verified past KSLU exam papers and not examiner-approved marking rubrics. Contract Act references link to India Code. Post-2018 Specific Relief references must be checked against subsequent amendments and admission-cohort syllabus.
+
+**Comparison and risk reduction:** The app now combines Anki-like delayed recall (v41) with a fresh factual application task rather than adding more multiple-choice permutations. This addresses a common learning-app weakness: high quiz scores without transfer to unseen questions. No published claim of improved exam grades is justified until comparative testing with consenting students.
+
+**Next improvement priority:** (1) A real Android Chrome mobile accessibility and touch/keyboard smoke test; (2) validate official KSLU cohort syllabus unit-by-unit and resolve historical case/statute mappings; (3) improve distractor feedback and measure which legal concepts generate recurring mistakes without persisting private essays; (4) test whether students transfer learned statutory rules to unseen scenarios and simplify any UI steps that slow that task.
+
+---
 
 ## Version 41 — Spaced Review Due + portable retrieval history (11 October 2026)
 
