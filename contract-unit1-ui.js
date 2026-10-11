@@ -84,6 +84,15 @@ function render(container,opts){
    });
    if(!correct)btn.classList.add("wrong");
    result.textContent=(correct?"Correct. ":"Not quite. ")+info.why;
+   /* Exposure schedules a delayed recall but does NOT count as recalled mastery. */
+   if(root.LawReviewCore){
+    try{
+     root.LawReviewCore.recognize(root.localStorage,data.id+":"+info.id,correct);
+     if(root.LawReviewUI&&root.LawReviewUI.refresh)root.LawReviewUI.refresh();
+    }catch(storageError){
+     result.textContent+=" Review scheduling could not be saved on this device.";
+    }
+   }
    result.classList.toggle("correct",correct);
    result.hidden=false;
    if(retryMode){
