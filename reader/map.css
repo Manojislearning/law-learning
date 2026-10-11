@@ -99,3 +99,28 @@
  .map-footer span:last-child{display:none}
  .map-detail{height:min(58%,520px)}
 }
+
+
+/* Progressive Brain Branches — one level unfolds at a time.
+   Branch labels and colored strokes replace the previous rounded cards. */
+.map-overlay { background: #ffffff; color: #172237; }
+.map-canvas { background: #ffffff; }
+.map-branch { cursor: pointer; outline: none; }
+.map-branch-hit { fill: transparent; stroke: none; pointer-events: all; }
+.map-branch-text { font-family: Inter, ui-sans-serif, system-ui, sans-serif; fill: #1c293d;
+  dominant-baseline: auto; letter-spacing: -.025em; pointer-events: none; }
+.map-branch.root-node .map-branch-text { fill: #152236; }
+.map-branch.heading-node .map-branch-text { fill: #263955; }
+.map-branch.selected .map-branch-text,
+.map-branch:hover .map-branch-text,
+.map-branch:focus-visible .map-branch-text { fill: #1263a6; }
+.map-branch-underline { stroke-linecap: round; pointer-events: none; }
+.map-fold-circle, .map-fold-mark { pointer-events: none; }
+.map-branch:focus-visible .map-fold-circle { stroke-width: 4; }
+.map-link { fill: none; stroke-width: 2.8; stroke-linecap: round; opacity: .94; }
+.map-top .map-heading strong { font-size: 22px; }
+.map-footer { color: #687d96; }
+@media(max-width:850px) {
+ .map-top .map-heading strong { font-size: 19px; }
+ .map-footer { font-size: 11px; }
+}
