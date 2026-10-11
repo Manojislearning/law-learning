@@ -571,5 +571,59 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(skipped.errors,[]);
   skipped.dom.window.close();
  }
- console.log("DOM integration passed: Contract, Torts and BNS IRAC, recall, statutory checks and navigation.");
+
+ for(const subject of ["contract","torts","bns"]){
+  const transfer=build("https://example.test/law-learning/index.html?v=50&course="+subject+"#practice");
+  const w=transfer.dom.window,area=transfer.doc.getElementById("practice-root"),initial=w.localStorage.length;
+  const launcher=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Changed-facts challenge"));
+  assert.ok(launcher,"Changed-fact challenge must be visible in "+subject);
+  launcher.click();
+  for(let i=0;i<5;i++){
+   assert.ok(area.textContent.includes("Scenario "+(i+1)+" of 5"),"Transfer challenge numbering must advance");
+   const model=area.querySelector(".cp-transfer-model");
+   assert.equal(model.hidden,true,"Transfer reasoning must initially be hidden");
+   const reveal=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Compare with transfer reasoning"));
+   assert.ok(reveal);
+   reveal.click();
+   assert.equal(model.hidden,true,"Empty answers may not reveal transfer reasoning");
+   assert.ok(area.querySelector(".cp-error").textContent.includes("40 characters"));
+   const draft=area.querySelector("textarea");
+   assert.equal(draft.value,"","Changed-fact answer must not be prefilled");
+   draft.value="The altered facts change the legal elements and how the rule applies; a qualified outcome needs specific evidence.";
+   draft.dispatchEvent(new w.Event("input",{bubbles:true}));
+   reveal.click();
+   assert.equal(model.hidden,false,"Transfer reasoning must reveal after an original answer");
+   assert.ok(model.textContent.includes("Why the changed fact matters"));
+   assert.ok(model.textContent.includes("Mistake to avoid"));
+   assert.ok([...model.querySelectorAll("a")].some(a=>a.href.startsWith("https://")),"Transfer reasoning must retain original official authorities");
+   const next=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("changed fact →")||x.textContent.includes("Finish transfer practice"));
+   assert.ok(next);next.click();
+  }
+  assert.ok(area.textContent.includes("You tested changed facts"));
+  assert.ok(area.textContent.includes("5 scenarios compared"));
+  assert.equal(w.localStorage.length,initial,"Transfer answers must remain in memory only");
+  const again=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Another changed-facts set"));
+  again.click();
+  assert.equal(area.querySelector(".cp-transfer-model").hidden,true);
+  w.LawAppCore.router.navigate("home");await settle();
+  assert.equal(area.textContent,"","Leaving transfer practice must discard the answer screen");
+  assert.deepEqual(transfer.errors,[]);
+  transfer.dom.window.close();
+ }
+ {
+  const weak=build("https://example.test/law-learning/index.html?v=50&course=torts#practice");
+  const area=weak.doc.getElementById("practice-root");
+  [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases")).click();
+  for(let i=0;i<5;i++)[...area.querySelectorAll("button")].find(x=>x.textContent==="Skip case").click();
+  [...area.querySelectorAll("button")].find(x=>x.textContent.includes("Retry 5 weak or skipped")).click();
+  for(let i=0;i<5;i++)[...area.querySelectorAll("button")].find(x=>x.textContent==="Skip case").click();
+  const follow=[...area.querySelectorAll("button")].find(x=>x.textContent.includes("Try changed facts from these units"));
+  assert.ok(follow,"A weak-case retry must offer a changed-facts follow-up");
+  follow.click();
+  assert.ok(area.querySelector(".cp-facts").textContent.length>75);
+  assert.equal(area.querySelector(".cp-transfer-model").hidden,true);
+  assert.deepEqual(weak.errors,[]);
+  weak.dom.window.close();
+ }
+ console.log("DOM integration passed: Contract, Torts, BNS IRAC, changed-facts transfer, recall and statutory checks.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
