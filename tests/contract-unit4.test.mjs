@@ -46,7 +46,7 @@ test('Contract Unit IV source ledger keeps historical syllabus cohort pending',(
 });
 test('Unit IV guided route, previous units and offline files remain intact',()=>{
  const html=read('index.html'),worker=read('sw.js'),route=read('syllabus-flow.js'),ui=read('contract-unit1-ui.js');
- for(const file of ['contract-unit4-data.js?v=39','contract-unit1-ui.js?v=39','syllabus-flow.js?v=39']){
+ for(const file of ['contract-unit4-data.js?v=39','contract-unit1-ui.js?v=40','syllabus-flow.js?v=40']){
   assert.ok(html.includes(file),'Missing HTML file '+file);
   assert.ok(worker.includes(file),'Missing offline file '+file);
  }
