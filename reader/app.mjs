@@ -171,14 +171,14 @@ function saveReadingPosition(){if(!state.current)return;const area=$('#reading-s
 function splitIntoReadingPages(){
  const article=$('#article');
  state.pages=[];
- const headings=[...article.children].filter(element=>element.tagName==='H2');
+ const headings=[...article.children].filter(element=>element.tagName==='H2' && !/^(?:sources|continue|next note|keep studying)$/i.test(element.textContent.trim()));
  if(headings.length<2){setPageView();return;}
  for(const heading of headings){
   const section=document.createElement('section');
   section.className='study-page';
   article.insertBefore(section,heading);
   let cursor=heading;
-  while(cursor && (cursor===heading || cursor.tagName!=='H2')){
+  while(cursor && (cursor===heading || !headings.includes(cursor))){
    const next=cursor.nextSibling;
    section.appendChild(cursor);
    cursor=next;
@@ -242,7 +242,7 @@ async function openNote(path,heading=''){
  if(!state.files.includes(path)){toast('That note is not available in this vault.');return;}
  if(state.loading)return;
  state.loading=true;
- const article=$('#article');article.innerHTML='<div class="empty">Opening note from GitHub…</div>';
+ const article=$('#article');state.pages=[];article.innerHTML='<div class="empty">Opening note from GitHub…</div>';setPageView();
  try{
   if('speechSynthesis' in window)window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';
   const markdown=await loadNote(path),note=/\.canvas$/i.test(path)?renderCanvas(markdown,path):renderMarkdown(markdown),meta=note.meta;
