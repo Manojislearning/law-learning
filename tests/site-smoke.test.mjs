@@ -156,5 +156,5 @@ test('Visible syllabus source entry and linked review pages are retained',()=>{
   assert.ok(screen.includes('sourceUnitPage(sourceCourse,sourceUnit)'),'Source review must have a dedicated unit details screen');
   assert.ok(screen.includes('record.syllabusStatus==="verified"'),'Verification status must be explicit');
   assert.ok(ledger.includes('needs-review'),'Unreviewed KSLU unit text must stay marked as pending verification');
-  assert.ok(html.includes('View first-year sources and review status.'),'Home must explain where to see this release');
+  assert.ok(html.includes('30 Semester I outlines compared'),'Home must explain where to see this release');
 });
