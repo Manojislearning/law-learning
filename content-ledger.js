@@ -4,7 +4,7 @@
 var data={
   "schema": 1,
   "scope": "KSLU 3-year LL.B. — imported Semester I draft",
-  "reviewPolicy": "All 30 imported Semester I broad topic outlines were compared against KSLU's published 2018–19 syllabus and its 2024 BNS curriculum circular. This is edition-level outline matching ONLY; enrolled-cohort applicability, subsequent amendments, every legal teaching claim and examinations are not fully verified.",
+  "reviewPolicy": "All 30 imported Semester I broad topic outlines were compared against KSLU's published 2018–19 syllabus and its 2024 BNS curriculum circular. This is edition-level outline matching ONLY; enrolled-cohort applicability, subsequent amendments, every legal teaching claim and examinations are not fully verified. Selected BNS and Consumer Act claims now have a separate narrow statutory lawAudit flag; no unit is thereby certified as fully source-verified.",
   "publishedForCohort": "unconfirmed",
   "sources": {
     "kslu-index": {
@@ -90,6 +90,20 @@ var data={
       "publisher": "Karnataka State Law University",
       "kind": "official-curriculum-amendment-pdf",
       "verifiedScope": "Circular dated 26 September 2024 introduces BNS Criminal Law–I from academic year 2024–25. Appendix I printed pages 1–2 set out five BNS units. Subsequent cohort amendments must still be checked."
+    },
+    "bns-commencement-notification": {
+      "title": "MHA — BNS commencement S.O. 850(E), 23 February 2024",
+      "url": "https://www.mha.gov.in/sites/default/files/BhartiyaNyayaSanhita_24022024.pdf",
+      "publisher": "Ministry of Home Affairs, Government of India",
+      "kind": "official-commencement-notification",
+      "verifiedScope": "Notification sets 1 July 2024 commencement for BNS provisions except Section 106(2); later notifications must be checked for any subsequent change."
+    },
+    "consumer-jurisdiction-2021": {
+      "title": "Consumer Protection commission jurisdiction Rules, 2021",
+      "url": "https://consumeraffairs.gov.in/public/upload/files/232278_1732705181.pdf",
+      "publisher": "Department of Consumer Affairs, Government of India",
+      "kind": "official-gazette-rules",
+      "verifiedScope": "Rules notified 30 December 2021 provide ₹50 lakh/₹2 crore commission pecuniary bands based on consideration paid. Check any later amendments."
     }
   },
   "units": [
@@ -473,11 +487,13 @@ var data={
       "sourceIds": [
         "kslu-index",
         "consumer-2019",
-        "kslu-2018-llb"
+        "kslu-2018-llb",
+        "consumer-jurisdiction-2021"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
-        "The imported unit refers to the Consumer Protection Act, 1986. Current study must distinguish the Consumer Protection Act, 2019 and verify the cohort's prescribed syllabus."
+        "The imported unit refers to the Consumer Protection Act, 1986. Current study must distinguish the Consumer Protection Act, 2019 and verify the cohort's prescribed syllabus.",
+        "Consumer commission pecuniary bands under the 2021 Jurisdiction Rules are based on consideration paid: District up to ₹50 lakh, State above ₹50 lakh through ₹2 crore, National above ₹2 crore; recheck later amendments."
       ],
       "outlineAudit": {
         "status": "published-outline-compared",
@@ -486,6 +502,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with KSLU 2018–19 syllabus. Paraphrased headings, not an exact-text reproduction.",
         "caution": "The 2018 syllabus explicitly cites the repealed Consumer Protection Act, 1986; teaching current law requires checking the 2019 Act."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "consumer",
+        "scope": "Selected provisions of Consumer Protection Act, 2019 and 2021 pecuniary jurisdiction rules checked. 1986 KSLU topic wording retained as historical syllabus evidence."
       }
     },
     {
@@ -621,7 +643,8 @@ var data={
       "sourceIds": [
         "kslu-index",
         "bns-2023",
-        "kslu-2024-criminal"
+        "kslu-2024-criminal",
+        "bns-commencement-notification"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
@@ -634,6 +657,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
         "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "bns",
+        "scope": "Selected BNS statutory section mappings checked against the India Code enacted Act and commencement notification; full offences, case law and later notifications remain to be audited."
       }
     },
     {
@@ -648,7 +677,8 @@ var data={
       "sourceIds": [
         "kslu-index",
         "bns-2023",
-        "kslu-2024-criminal"
+        "kslu-2024-criminal",
+        "bns-commencement-notification"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
@@ -661,6 +691,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
         "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "bns",
+        "scope": "Selected BNS statutory section mappings checked against the India Code enacted Act and commencement notification; full offences, case law and later notifications remain to be audited."
       }
     },
     {
@@ -675,11 +711,13 @@ var data={
       "sourceIds": [
         "kslu-index",
         "bns-2023",
-        "kslu-2024-criminal"
+        "kslu-2024-criminal",
+        "bns-commencement-notification"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
-        "Check the precise BNS section references against the official Act, including the relevant commencement dates."
+        "Check the precise BNS section references against the official Act, including the relevant commencement dates.",
+        "BNS Section 106(2), the separate rash/negligent driving escape-and-failure-to-report provision, was expressly excluded from the 1 July 2024 commencement notification. Verify later gazette notifications before treating it as in force."
       ],
       "outlineAudit": {
         "status": "published-outline-compared",
@@ -688,6 +726,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
         "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "bns",
+        "scope": "Selected BNS statutory section mappings checked against the India Code enacted Act and commencement notification; full offences, case law and later notifications remain to be audited."
       }
     },
     {
@@ -702,7 +746,8 @@ var data={
       "sourceIds": [
         "kslu-index",
         "bns-2023",
-        "kslu-2024-criminal"
+        "kslu-2024-criminal",
+        "bns-commencement-notification"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
@@ -715,6 +760,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
         "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "bns",
+        "scope": "Selected BNS statutory section mappings checked against the India Code enacted Act and commencement notification; full offences, case law and later notifications remain to be audited."
       }
     },
     {
@@ -729,7 +780,8 @@ var data={
       "sourceIds": [
         "kslu-index",
         "bns-2023",
-        "kslu-2024-criminal"
+        "kslu-2024-criminal",
+        "bns-commencement-notification"
       ],
       "statuteStatus": "needs-review",
       "warnings": [
@@ -742,6 +794,12 @@ var data={
         "checkedOn": "2026-10-11",
         "scope": "Summary topics compared with Appendix I for Criminal Law–I: BNS, 2023 (introduced for academic year 2024–25).",
         "caution": "Confirm the prescribed scheme and any later circulars for this admission cohort."
+      },
+      "lawAudit": {
+        "status": "selected-provisions-checked",
+        "checkedOn": "2026-10-11",
+        "studyRoute": "bns",
+        "scope": "Selected BNS statutory section mappings checked against the India Code enacted Act and commencement notification; full offences, case law and later notifications remain to be audited."
       }
     },
     {
