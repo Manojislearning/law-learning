@@ -13,6 +13,10 @@ document.head.appendChild(dashboardStyle);
 
 host.replaceChildren();
 var statePath=[],direction="forward";
+if(location.hash==="#syllabus"&&new URLSearchParams(location.search).get("learn")==="contract1-unit1"){
+ statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:1},{level:"unit",value:0},{level:"guided",value:0}];
+}
+
 /* A direct link can open the source dashboard without five menu taps. */
 if(location.hash==="#syllabus"&&new URLSearchParams(location.search).get("sources")==="1")statePath=[{level:"source",value:true}];
 var otherSemesters={"2":["Constitutional Law – II","Contract – II","Labour Law – I","Property Law","Family Law – II: Mohammedan Law & Indian Succession Act","Kanoonu Kannada / Kannada Kali"],"3":["Jurisprudence","Labour Law – I","Law of Taxation","Criminal Law – II: Bharatiya Nagarik Suraksha Sanhita (BNSS), 2023"],"4":["Public International Law","Optional I: Human Rights Law and Practice / Insurance Law","Optional II: Banking Law / Right to Information","Clinical I: Professional Ethics and Professional Accounting System","Clinical II: Alternative Dispute Resolution Systems"],"5":["Company Law","Civil Procedure Code and Limitation Act","Optional III: Intellectual Property Rights I / Penology & Victimology","Optional IV: Interpretation of Statutes and Principles of Legislation / Competition Law","Clinical III: Drafting, Pleading and Conveyance"],"6":["Bharatiya Sakshya Adhiniyam (BSA), 2023","Environmental Law","Optional V: Intellectual Property Rights II / White Collar Crimes","Optional VI: Land Law / Law relating to International Trade Economics","Clinical IV: Moot Court Exercise and Internship"]};
@@ -116,6 +120,18 @@ function render(){
  host.replaceChildren();
  var year=active("year"),sem=active("semester"),subject=active("subject"),unit=active("unit"),topic=active("topic");
  var source=active("source"),sourceCourse=active("sourceCourse"),sourceUnit=active("sourceUnit");
+ var guided=active("guided");
+ if(guided!==null&&subject===1&&unit===0&&window.ContractUnitOneUI){
+   window.ContractUnitOneUI.render(host,{
+    index:guided,direction:direction,
+    onBack:function(){back();},
+    onMove:function(next,dir){
+     statePath[statePath.length-1].value=next;direction=dir;render();
+    }
+   });
+   return;
+ }
+
  if(source!==null){
   if(sourceCourse===null){
    var sc=screen("Sources & review","FIRST YEAR · SEMESTER I",sourceCourseSummary());
@@ -164,6 +180,10 @@ function render(){
   var course=KSLU_FIRST_SEMESTER.courses[subject],u=course.units[unit];
   topicsCache=splitTopics(u);
   var e=screen(u.title,course.name+" · "+u.unit,"Choose one core topic.");
+  if(sem===1&&subject===1&&unit===0&&window.ContractUnitOneUI){
+    B(e,"Study Contract–I Unit I","6 short lessons · examples · practice questions",function(){push("guided",0);});
+  }
+
   topicsCache.forEach(function(t,i){B(e,t,"Study this topic →",function(){push("topic",i);});});
   E(e,"p","The topic divisions are study aids based on the imported course outline.","sf-note");
  }else{
@@ -212,6 +232,16 @@ function render(){
  window.scrollTo({top:0,behavior:"auto"});
 }
 var navigatingFromSubject=false;
+window.openContractUnitOne=function(){
+  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:1},{level:"unit",value:0},{level:"guided",value:0}];
+  direction="forward";
+  navigatingFromSubject=location.hash!=="#syllabus";
+  if(navigatingFromSubject)window.LawAppCore.router.navigate("syllabus");
+  render();return true;
+};
+var launch=document.getElementById("home-contract-lesson");
+if(launch)launch.addEventListener("click",function(){window.openContractUnitOne();});
+
 window.openSyllabusUnit=function(semester,subject,unit){
  if(semester!==1||!KSLU_FIRST_SEMESTER.courses[subject]||!KSLU_FIRST_SEMESTER.courses[subject].units[unit])return false;
  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:subject},{level:"unit",value:unit}];
