@@ -550,7 +550,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.ok(retryFacts.includes(skippedFacts),"The skipped case should return for a fresh attempt");
   assert.ok(area.textContent.includes("No cases currently flagged"),"Retried and fully self-checked cases leave no weak queue");
   assert.ok(![...area.querySelectorAll("button")].some(b=>b.textContent.includes("Retry 2 weak")));
-  assert.equal(w.LawCaseReviewCore.forSubject(w.localStorage,"contract",w.LawCaseData.cases).all.length,0,"Fully self-checked retried cases leave no weak-case records");
+  assert.equal(w.LawCaseReviewCore.forSubject(w.localStorage,"torts",w.LawTortsCaseData.cases).all.length,0,"Fully self-checked retried Torts cases leave no weak-case records");
   assert.deepEqual(retry.errors,[]);
   retry.dom.window.close();
  }
@@ -568,7 +568,8 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.ok(area.querySelector(".cp-panel button").textContent.includes("Start 5 cases"));
   w.LawAppCore.router.navigate("home");await settle();
   w.LawAppCore.router.navigate("practice");await settle();
-  assert.ok(!area.textContent.includes("Retry 5 weak"),"Leaving the page discards session-only retry flags");
+  assert.ok(area.textContent.includes("Retry 5 weak"),"Returning to Case Practice must preserve the five skipped-case revisit flags");
+   assert.equal(w.LawCaseReviewCore.forSubject(w.localStorage,"bns",w.LawBnsCaseData.cases).all.length,5);
   assert.deepEqual(skipped.errors,[]);
   skipped.dom.window.close();
  }
