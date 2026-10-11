@@ -1,3 +1,9 @@
+## Version 57 — Illustrated, readable legal news cards
+
+The Law News screen (`#news`) now displays each publisher's linked preview photograph when available and a **brief, attributed publisher excerpt capped at about 24 words**. Images are linked directly from the publisher's HTTPS image URL; they are not copied into this repository or replaced with unrelated stock photography. Failed or missing images show a clearly neutral illustration. Missing publisher descriptions are identified rather than fabricated. Headlines, publication times, source links, local bookmarks, filters and the student reasoning prompt remain intact.
+
+The free RSS workflow enriches a bounded selection of ET LegalWorld articles using their own Open Graph preview image/description metadata, while preserving feed-level fallback fields. Publisher previews are not official judgments and should not be relied upon for the complete legal holding; always open the source, then consult the primary statute or judgment.
+
 ## Version 48 — BNS legal reasoning practice
 
 **Case Practice** now offers three first-year subjects: Contract–I, Law of Torts and Criminal Law–I (BNS), with **15 original hypotheticals each (45 total)**. The BNS set spans all five published KSLU units, adds legally grounded Issue–Rule–Application–Conclusion outlines and sources the BNS enacted law and MHA commencement notification. Written answers are local to the open page, not graded or saved. The historical 2024 section 106(2) commencement exclusion is discussed only for a dated 2024 scenario, not asserted as the current position for all future dates. Source audit: `docs/bns-case-practice-v48.md`.
