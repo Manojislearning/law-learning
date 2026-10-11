@@ -61,11 +61,11 @@ test('Changed facts explicitly contrast high-risk legal mistakes without claims 
 });
 test('Version 51 loads changed-facts assets before practice reader and precaches both',()=>{
  const html=read('index.html'),sw=read('sw.js'),view=read('case-practice-view.js');
- for(const asset of ['case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=54']){
+ for(const asset of ['case-transfer-data.js?v=52','case-transfer-core.js?v=52','case-practice-view.js?v=55']){
   assert.ok(html.includes(asset),'Missing browser asset '+asset);
   assert.ok(sw.includes(asset),'Missing offline asset '+asset);
  }
- assert.ok(html.indexOf('case-transfer-core.js?v=52')<html.indexOf('case-practice-view.js?v=54'));
+ assert.ok(html.indexOf('case-transfer-core.js?v=52')<html.indexOf('case-practice-view.js?v=55'));
  assert.ok(view.includes('startTransfer'));
  assert.ok(view.includes('finishTransfer'));
  assert.ok(view.includes('essay.value.trim().length<40'),'Reference answer must remain gated');
