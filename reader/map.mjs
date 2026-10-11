@@ -71,7 +71,7 @@ export function noteBranches(content,path,paths){
    addLine(value,base,currentHeading===root?'Overview':currentHeading.label);
   }
  }
- const fold=n=>{n.collapsed=n!==root&&n.children.length>0;n.children.forEach(fold);};
+ const fold=n=>{n.sourcePath=path;n.collapsed=n!==root&&n.children.length>0;n.children.forEach(fold);};
  fold(root);
  return root;
 }
@@ -153,7 +153,7 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
    if(n.parent){
     const p=n.parent,x1=p.x+p.width-12,x2=n.x-16,mid=(x1+x2)/2;
     const d='M'+x1+' '+p.y+' C'+mid+' '+p.y+' '+mid+' '+n.y+' '+x2+' '+n.y;
-    edges.append(attrs(tag('path'),{class:'map-link',d,stroke:n.color}));
+    edges.append(attrs(tag('path'),{class:'map-link',d,style:'stroke:'+n.color}));
    }
    const expanded=n.children.length>0&&!n.collapsed;
    const g=attrs(tag('g'),{'data-id':n.id,role:'button',tabindex:0,'aria-label':n.label,
@@ -182,7 +182,7 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
  const find=id=>nodes.find(n=>n.id===id);
  function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
  function read(n){
-  if(!n)return;const dest=n.link||{path:topic,heading:n.section||''};
+  if(!n)return;const dest=n.link||{path:n.sourcePath||topic,heading:n.section||''};
   close();void readNote(dest.path,dest.heading||'');
  }
  function select(n){
@@ -204,7 +204,12 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
    try{
     const linked=noteBranches(await getNote(n.link.path),n.link.path,files);
     n.children=linked.children.slice(0,55);
-    n.children.forEach(child=>{child.parent=n;});
+    const attach=(child,index,parent)=>{
+     child.id=parent.id+'-'+index;
+     child.parent=parent;
+     child.children.forEach((sub,i)=>attach(sub,i,child));
+    };
+    n.children.forEach((child,i)=>attach(child,i,n));
     if(n.children.length){n.collapsed=false;active=null;showDetails(false);paint();fit();return;}
    }catch(e){n.loaded=false;console.warn('Could not expand linked note',e);}
   }
