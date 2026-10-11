@@ -644,7 +644,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
    reveal.click();assert.equal(model.hidden,false);
    assert.ok([...model.querySelectorAll("a[href^='https://']")].some(a=>a.href.includes("legislative.gov.in")));
    const row=model.querySelector(".cp-eyebrow").textContent;
-   const match=row.match(/Unit (I|II|III|IV|V)/);assert.ok(match,"Constitution unit must be revealed after essay");
+   const match=row.match(/Unit (IV|III|II|I|V) ·/);assert.ok(match,"Constitution unit must be revealed after essay");
    units.add(match[1]);
    const picks=[...area.querySelectorAll(".cp-rubric input")];assert.equal(picks.length,4);
    picks.forEach(x=>{x.checked=true;x.dispatchEvent(new w.Event("change",{bubbles:true}));});
