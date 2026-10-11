@@ -5,7 +5,7 @@
 "use strict";
 var host=document.getElementById("practice-root"),core=root.LawCaseCore;
 var banks={contract:root.LawCaseData,torts:root.LawTortsCaseData,bns:root.LawBnsCaseData,constitution:root.LawConstitutionCaseData,hindu:root.LawHinduCaseData};
-var transferCore=root.LawTransferCore,transferData=root.LawTransferData;
+var transferCore=root.LawTransferCore,transferData=root.LawTransferData,caseReview=root.LawCaseReviewCore,saveWarning="";
 var requested=new URLSearchParams(root.location.search).get("course");
 var bankKey=Object.prototype.hasOwnProperty.call(banks,requested)?requested:"contract";
 var bank=banks[bankKey];
@@ -23,7 +23,30 @@ function B(parent,text,click,alt){
  var el=E(parent,"button",text,"cp-button"+(alt?" alt":""));el.type="button";el.addEventListener("click",click);return el;
 }
 function reset(){session=null;pos=0;analysed=0;skipped=0;mode="mixed";transfers=[];transferIndex=0;transferDone=0;transferSkipped=0;host.replaceChildren();}
-function forgetSelfChecks(){Object.keys(weakBySubject).forEach(function(k){weakBySubject[k].clear();});}
+function hydrateWeakCases(){
+ if(!caseReview){saveWarning="Saved case review is unavailable on this version.";return;}
+ try{
+  Object.keys(banks).forEach(function(subject){
+   var saved=caseReview.forSubject(root.localStorage,subject,banks[subject].cases);
+   weakBySubject[subject].clear();
+   saved.all.forEach(function(r){weakBySubject[subject].set(r.id,{status:r.status,missing:r.missing,nextAt:r.nextAt});});
+  });
+ }catch(err){
+  saveWarning="Previously saved case-review history could not be read. It has not been reset. "+err.message;
+ }
+}
+function saveWeakCase(c,status,missing){
+ if(!caseReview){saveWarning="Case reviews remain available only during this visit.";return;}
+ try{
+  var record=status===null?
+   (caseReview.clear(root.localStorage,bankKey,c.id),null):
+   caseReview.note(root.localStorage,bankKey,c.id,status,missing);
+  saveWarning="";
+  if(record&&weak.has(c.id))weak.get(c.id).nextAt=record.nextAt;
+ }catch(err){
+  saveWarning="Case retry history could not be saved on this device. Existing saved data was not erased. "+err.message;
+ }
+}
 function shell(){host.replaceChildren();return E(host,"div",undefined,"cp-wrap");}
 function goHome(){root.LawAppCore.router.navigate("home");}
 function courseName(){return bankKey==="torts"?"Law of Torts":bankKey==="bns"?"Criminal Law–I · BNS":bankKey==="constitution"?"Constitutional Law–I":bankKey==="hindu"?"Family Law–I · Hindu Law":"Contract–I";}
@@ -51,12 +74,17 @@ function dashboard(){
  E(panel,"p","Each set mixes five units. Completed cases count toward rotation; skipped cases remain eligible next time. Three completed sets cover all fifteen cases in this subject.");
  B(panel,"Start 5 cases →",start);
  B(panel,"Changed-facts challenge · 5 scenarios →",function(){startTransfer();},true);
+ if(weak.size){
+  var dueCount=Array.from(weak.values()).filter(function(x){return !x.nextAt||x.nextAt<=Date.now();}).length;
+  E(panel,"p",weak.size+" saved weak or skipped case"+(weak.size===1?"":"s")+". "+dueCount+" due for a fresh attempt; others scheduled for tomorrow but available to practise sooner.","cp-topic");
+ }
  if(weak.size)B(panel,"Retry "+weak.size+" weak or skipped case"+(weak.size===1?"":"s")+" →",startWeakReview,true);
  var notes=E(wrap,"details",undefined,"cp-help");
  E(notes,"summary","What is IRAC?");
  E(notes,"p","Issue: what legal question arises? Rule: which statute or principle applies? Application: connect the rule to facts for and against each side. Conclusion: give a qualified outcome.");
  B(wrap,"Back to home",goHome,true);
- E(wrap,"p","Your written answers and rubric choices stay on this page only, and are discarded when you leave the practice session. No account, upload, score or automatic legal grading.","cp-topic");
+ E(wrap,"p","Essays and individual checkbox responses are discarded when you leave. Only case IDs, missing IRAC element names and revisit dates are saved locally and included in Profile backups. No automated grading.","cp-topic");
+ if(saveWarning){var warning=E(wrap,"p",saveWarning,"cp-error");warning.setAttribute("role","status");}
  if(typeof dashboardTitle.focus==="function")dashboardTitle.focus();
 }
 function start(){
@@ -67,6 +95,7 @@ function start(){
 function startWeakReview(){
  var pending=bank.cases.filter(function(c){return weak.has(c.id);});
  if(!pending.length){dashboard();return;}
+ pending.sort(function(a,b){return (weak.get(a.id).nextAt||0)-(weak.get(b.id).nextAt||0);});
  session=pending.slice(0,5);mode="retry";pos=0;analysed=0;skipped=0;draw();
 }
 function advance(completed,checks,assessed){
@@ -75,12 +104,12 @@ function advance(completed,checks,assessed){
   analysed++;
   core.recordUsage(history,[c]);
   var missed=core.criteria.filter(function(key,i){return !checks[i];});
-  if(!assessed)weak.set(c.id,{status:"not self-assessed",missing:[]});
-  else if(missed.length)weak.set(c.id,{status:"self-identified gaps",missing:missed});
-  else weak.delete(c.id);
+  if(!assessed){weak.set(c.id,{status:"not self-assessed",missing:[]});saveWeakCase(c,"not self-assessed",[]);}
+  else if(missed.length){weak.set(c.id,{status:"self-identified gaps",missing:missed});saveWeakCase(c,"self-identified gaps",missed);}
+  else {weak.delete(c.id);saveWeakCase(c,null,[]);}
  }else{
   skipped++;
-  if(!weak.has(c.id))weak.set(c.id,{status:"skipped",missing:[]});
+  if(!weak.has(c.id)){weak.set(c.id,{status:"skipped",missing:[]});saveWeakCase(c,"skipped",[]);}
  }
  pos++;if(pos>=session.length)finish();else draw();
 }
@@ -164,7 +193,8 @@ function finish(){
  E(box,"p","PRACTICE SESSION COMPLETE","cp-eyebrow");
  var finishedTitle=E(box,"h2","You finished the set");finishedTitle.tabIndex=-1;
  E(box,"p",analysed+" case"+(analysed===1?"":"s")+" compared with reference reasoning; "+skipped+" skipped. Skips do not count as completed learning. No essay grade was assigned.");
- E(box,"p","The next set prioritises cases you have not completed in this open visit. Your self-checked missing IRAC steps can be retried with the reference answer hidden again.","cp-topic");
+ E(box,"p","Your weak-case list carries over to future visits and Profile backups. Retry starts with the earliest scheduled cases, and the answer remains hidden until you attempt it again.","cp-topic");
+ if(saveWarning){var warning=E(box,"p",saveWarning,"cp-error");warning.setAttribute("role","status");}
  if(mode==="retry"&&session&&session.length){
   B(box,"Try changed facts from these units →",function(){startTransfer(session.map(function(c){return c.id;}));});
  }
@@ -232,10 +262,11 @@ function finishTransfer(){
  if(typeof title.focus==="function")title.focus();
 }
 
+hydrateWeakCases();
 root.LawCasePracticeUI={show:dashboard,reset:reset,open:openCourse};
 root.LawAppCore.router.subscribe(function(route){
  if(route==="practice")dashboard();
- else {if(session||transfers.length)reset();forgetSelfChecks();} /* Discard all written answers, counterexamples and self-checks on departure. */
+ else if(session||transfers.length)reset(); /* Drop essays from the page, preserve only validated case-level revisit records. */
 });
 if(root.LawAppCore.router.current()==="practice")dashboard();
 })(typeof window!=="undefined"?window:globalThis);
