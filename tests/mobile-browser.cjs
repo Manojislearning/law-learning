@@ -399,6 +399,34 @@ async function run(){
     assert.equal(errors.length,0,"Exam reader browser errors "+width+"px: "+errors.join("; "));
     await context.close();
    }
+   // Student hub v60: a single Home tile with four comfortably tappable study destinations.
+   for(const width of [320,390,768]){
+    const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+    const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+    await page.goto(address.replace("v=43#practice","v=60#home"),{waitUntil:"load"});
+    assert.equal(await page.locator('#home-view [data-open="student"]').count(),1);
+    assert.equal(await page.locator('#home-view [data-open="syllabus"],#home-view [data-open="subjects"],#home-view [data-open="papers"],#home-view a[href="./reader/?map=1"]').count(),0);
+    await page.locator('#home-view [data-open="student"]').tap();
+    const student=page.locator("#student-view");
+    assert.equal(await student.isVisible(),true);
+    assert.equal(await student.locator(".student-hub-card").count(),4);
+    assert.equal(await student.locator('a[href="./reader/?map=1"]').count(),1);
+    const rectangles=await student.locator(".student-hub-card").evaluateAll(nodes=>nodes.map(node=>{
+      const r=node.getBoundingClientRect();return {left:r.left,right:r.right,height:r.height};
+    }));
+    assert.ok(rectangles.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px Student hub item overflow or touch target too small: "+JSON.stringify(rectangles));
+    for(const route of ["syllabus","subjects","papers"]){
+      await student.locator('[data-open="'+route+'"]').tap();
+      await page.waitForURL(new RegExp("#"+route+"$"));
+      assert.equal(await page.locator("#back-home").innerText(),"← Student");
+      await page.locator("#back-home").tap();
+      await page.waitForURL(/#student$/);
+    }
+    await page.locator("#back-home").tap();
+    await page.waitForURL(/#home$/);
+    assert.equal(errors.length,0,"Student navigation browser error at "+width+"px: "+errors.join("; "));
+    await context.close();
+   }
    console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Hindu/Constitution/Torts/BNS practice, retry workflow, changed-facts transfer, weak-case unit jump and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
