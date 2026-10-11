@@ -125,7 +125,7 @@ button,input,textarea,select{font-family:inherit}
  .masthead{height:64px;border-radius:0 0 19px 19px}
  .reader-pane{height:calc(100dvh - 64px - 82px - env(safe-area-inset-bottom))}
  .reader-toolbar{height:58px;margin:7px 9px 0;padding:0 7px;border-radius:17px;gap:3px}
- .article{margin:9px 10px 16px;border-radius:23px;padding:24px 19px;min-height:240px}
+ .article{width:calc(100% - 20px);margin:9px auto 16px;border-radius:23px;padding:24px 19px;min-height:240px}
  .article h1{font-size:clamp(27px,8vw,39px)}
  .article :is(p,li){line-height:1.75}
  .reader-tools{gap:2px}
@@ -143,7 +143,7 @@ button,input,textarea,select{font-family:inherit}
  .prefs{border-radius:23px}
 }
 @media(max-width:360px){
- .article{margin-inline:7px;padding:20px 15px}
+ .article{width:calc(100% - 14px);margin-inline:auto;padding:20px 15px}
  .reader-toolbar{margin-inline:6px}
  .reader-tools .tool-btn{padding:7px 5px;min-width:32px}
  .up-note{font-size:11px;padding:0 7px}
