@@ -121,3 +121,26 @@ test('Local learning progress and secure account limitations documented',()=>{
   const plan=file('docs/kslu-first-year-masterplan.md');
   assert.ok(plan.includes('REQUIRES BACKEND'),'Security dependencies must remain explicit');
 });
+
+
+test('Shared app core loads before app initialization and active scripts have one router',()=>{
+  const scripts=[...html.matchAll(/<script[^>]+src=["'](\.[^"']+\.js(?:\?[^"']*)?)["']/g)].map(m=>m[1].slice(2).split('?')[0]);
+  const core=scripts.indexOf('app-core.js'),app=scripts.indexOf('app.js');
+  assert.ok(core>=0 && app>core,'The shared core must load before app.js');
+  assert.equal(scripts.filter(x=>x==='app-core.js').length,1);
+  const externalRouters=scripts.filter(x=>x!=='app-core.js').filter(x=>{
+    const source=file(x);
+    return /addEventListener\s*\(\s*["']hashchange["']/.test(source);
+  });
+  assert.deepEqual(externalRouters,[],'Feature modules must subscribe to LawAppCore.router');
+  assert.ok(file('app.js').includes('LawAppCore.router.start()'),'Legacy app must use shared router');
+  assert.ok(file('word-experience.js').includes('LawAppCore.progress.mark'),'Word game must use shared progress reducer');
+});
+
+test('Retired duplicate UI scripts are not loaded or cached',()=>{
+  const unused=['compact-words.js','syllabus-tree.js','syllabus-learning.js'];
+  for(const script of unused){
+    assert.ok(!html.includes(script),'Obsolete UI unexpectedly loaded: '+script);
+    assert.ok(!sw.includes(script),'Obsolete UI unexpectedly cached: '+script);
+  }
+});
