@@ -141,7 +141,35 @@ async function run(){
    assert.equal(errors.length,0,width+"px Torts Chromium errors: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts practice and keyboard focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];
+   page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=48&course=bns#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("BNS"));
+   assert.equal(await area.locator(".cp-subjects button").count(),3);
+   const positions=await page.evaluate(()=>{
+    const els=[...document.querySelectorAll("#practice-root .cp-subjects button")];
+    return els.map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,height:e.getBoundingClientRect().height}));
+   });
+   assert.ok(positions.every(x=>x.left>=-1&&x.right<=width+1&&x.height>=44),width+"px BNS subject buttons overflow or undersized "+JSON.stringify(positions));
+   await area.getByRole("button",{name:/Start 5 cases/}).tap();
+   const model=area.locator(".cp-model");
+   assert.equal(await model.isHidden(),true);
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isHidden(),true);
+   await area.locator("textarea").fill("Issue: identify statutory offence. Rule: apply relevant BNS elements. Application: compare the stated facts and defences. Conclusion: qualified outcome.");
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isVisible(),true);
+   assert.ok((await model.locator(".cp-eyebrow").textContent()).includes("Criminal Law–I · BNS · Unit"));
+   assert.ok(await model.locator('a[href*="indiacode.nic.in"]').count()>0);
+   assert.equal(await area.locator(".cp-rubric input").count(),4);
+   assert.equal(errors.length,0,width+"px BNS practice errors: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts and BNS practice and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
