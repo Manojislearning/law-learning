@@ -419,6 +419,7 @@ async function run(){
     for(const route of ["syllabus","subjects","papers"]){
       await student.locator('[data-open="'+route+'"]').tap();
       await page.waitForURL(new RegExp("#"+route+"$"));
+      await page.waitForFunction(() => document.querySelector("#back-home")?.textContent === "← Student");
       assert.equal(await page.locator("#back-home").innerText(),"← Student");
       await page.locator("#back-home").tap();
       await page.waitForURL(/#student$/);
