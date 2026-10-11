@@ -72,7 +72,7 @@ test('Official primary legislation links and sensitive caveats are present',()=>
 });
 test('App exposes practice route without introducing separate hash navigation or unnecessary data keys',()=>{
  const html=file('index.html'),sw=file('sw.js'),router=file('app-core.js');
- for(const [name,version] of [['case-practice-data.js',42],['case-practice-core.js',43],['case-practice-view.js',43]]){
+ for(const [name,version] of [['case-practice-data.js',42],['torts-case-practice-data.js',47],['case-practice-core.js',47],['case-practice-view.js',47]]){
   assert.ok(html.includes(name+'?v='+version),'HTML missing '+name);
   assert.ok(sw.includes(name+'?v='+version),'Offline cache missing '+name);
  }
