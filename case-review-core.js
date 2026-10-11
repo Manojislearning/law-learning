@@ -98,7 +98,48 @@ function forSubject(storage,subject,cases,when){
  rows.sort(function(a,b){return a.nextAt-b.nextAt||a.id.localeCompare(b.id);});
  return {all:rows,due:rows.filter(function(r){return r.nextAt<=now;}),later:rows.filter(function(r){return r.nextAt>now;})};
 }
+/* Cross-subject daily queue. Does not mutate history or invent mastery.
+ * Uses only saved stable IDs and timestamps, not private answer text.
+ * Round-robin selection prevents a single subject dominating short sessions.
+ */
+function dailyPlan(storage,banks,when,limit){
+ var now=timestamp(when),max=limit===undefined?5:limit;
+ if(!Number.isInteger(max)||max<1||max>25||!banks||typeof banks!=="object")fail("Invalid daily review plan.");
+ var all=read(storage),groups={},dueTotal=0,upcoming=0,nextAt=null,bySubject={};
+ SUBJECTS.forEach(function(subject){
+  var bank=banks[subject];
+  if(!bank||!Array.isArray(bank.cases))fail("Missing daily review subject.");
+  var valid=new Set();
+  bank.cases.forEach(function(item){
+   key(subject,item.id);
+   if(valid.has(item.id))fail("Duplicate daily review case.");
+   valid.add(item.id);
+  });
+  var list=[];
+  Object.keys(all.cases).forEach(function(full){
+   if(!full.startsWith(subject+":"))return;
+   var id=full.slice(subject.length+1),record=all.cases[full];
+   if(!valid.has(id))return; // Older / removed case never leaks into the visible queue.
+   if(record.nextAt<=now)list.push({subject:subject,id:id,nextAt:record.nextAt,status:record.status,attempts:record.attempts});
+   else{upcoming++;if(nextAt===null||record.nextAt<nextAt)nextAt=record.nextAt;}
+  });
+  list.sort(function(a,b){return a.nextAt-b.nextAt||a.attempts-b.attempts||a.id.localeCompare(b.id);});
+  groups[subject]=list;bySubject[subject]=list.length;dueTotal+=list.length;
+ });
+ var queue=[];
+ while(queue.length<max){
+  var candidates=SUBJECTS.filter(function(s){return groups[s].length>0;});
+  if(!candidates.length)break;
+  // Oldest due subject starts each round; take at most one per subject per round.
+  candidates.sort(function(a,b){return groups[a][0].nextAt-groups[b][0].nextAt||SUBJECTS.indexOf(a)-SUBJECTS.indexOf(b);});
+  for(var subject of candidates){
+   if(queue.length>=max)break;
+   queue.push(groups[subject].shift());
+  }
+ }
+ return {due:dueTotal,upcoming:upcoming,nextAt:nextAt,bySubject:bySubject,queue:queue,total:Object.keys(all.cases).length};
+}
 function total(storage){return Object.keys(read(storage).cases).length;}
 return {KEY:KEY,VERSION:VERSION,CRITERIA:CRITERIA.slice(),SUBJECTS:SUBJECTS.slice(),
- key:key,parse:parse,read:read,write:write,note:note,clear:clear,forSubject:forSubject,total:total};
+ key:key,parse:parse,read:read,write:write,note:note,clear:clear,forSubject:forSubject,total:total,dailyPlan:dailyPlan};
 });
