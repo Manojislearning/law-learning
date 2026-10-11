@@ -1,0 +1,58 @@
+/* v59: KSLU paper library — readable full answers without nested scrolling */
+#papers-view .paper-toolbar,#papers-view #question-list,#papers-view .notice{display:none!important}
+#papers-view .section-head{max-width:780px;margin:4px auto 17px}
+#papers-view .section-head h2{font-size:clamp(1.65rem,5vw,2.25rem)}
+.exam59-home,.exam59-reader{max-width:800px;margin:0 auto 44px}
+.exam59-home[hidden],.exam59-reader[hidden],.exam59-panel[hidden]{display:none!important}
+.exam59-intro{font-size:1.04rem;line-height:1.7;color:var(--muted);margin:0 0 18px}
+.exam59-archives,.exam59-bank,.exam59-panel{padding:clamp(16px,3vw,24px);border:1px solid var(--line);border-radius:19px;background:var(--surface);margin:0 0 16px}
+.exam59-archives h3,.exam59-bank h3,.exam59-panel h3{font-size:clamp(1.18rem,3.2vw,1.4rem);line-height:1.35;margin:0 0 10px}
+.exam59-panel h4{font-size:1.15rem;margin:0 0 9px;line-height:1.45}
+.exam59-archive-links,.exam59-subjects,.exam59-vocab{display:flex;gap:9px;flex-wrap:wrap}
+.exam59-archive-link,.exam59-chip,.exam59-secondary,.exam59-word,.exam59-back{
+ font:inherit;font-size:.94rem;font-weight:760;line-height:1.38;
+ min-height:45px;display:inline-flex;align-items:center;
+ border:1px solid var(--line);border-radius:11px;padding:11px 13px;
+ text-align:left;text-decoration:none;color:var(--text);background:var(--surface-2);cursor:pointer
+}
+.exam59-archive-link{color:#234f82;background:#f4f7fb}
+.exam59-chip.active{color:white;background:#0d1321;border-color:#0d1321}
+.exam59-subjects{margin:14px 0 16px}
+.exam59-search{width:100%;min-width:0;min-height:50px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;font-size:1rem;background:white;color:var(--text)}
+.exam59-count{font-size:.9rem;color:var(--muted);margin:14px 0 10px}
+.exam59-list{min-width:0}
+.exam59-question{width:100%;min-height:100px;text-align:left;display:flex;flex-direction:column;align-items:flex-start;gap:9px;margin:11px 0 0;padding:17px 18px;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:15px;font:inherit;cursor:pointer}
+.exam59-question strong{font-size:clamp(1.08rem,3vw,1.3rem);line-height:1.47;letter-spacing:-.015em}
+.exam59-meta{font-size:.85rem;color:#526176;font-weight:720;line-height:1.45}
+.exam59-back{margin:6px 0 20px}
+.exam59-title{font-size:clamp(1.5rem,5vw,2rem);line-height:1.3;letter-spacing:-.03em;max-width:770px;margin:8px 0 14px}
+.exam59-origin{color:#274b77;font-weight:780;font-size:.95rem;margin:0 0 10px}
+.exam59-caution{font-size:.98rem;color:#49596c;border-left:3px solid #8194ab;padding:8px 0 8px 13px;line-height:1.6;margin:0 0 16px}
+.exam59-note{font-size:.95rem;color:var(--muted);line-height:1.64}
+.exam59-panel p,.exam59-panel li{font-size:clamp(1.03rem,2.7vw,1.13rem);line-height:1.75}
+.exam59-panel ol,.exam59-panel ul{padding-left:23px;margin:9px 0}
+.exam59-panel li{margin:8px 0;padding-left:3px}
+.exam59-lead{font-weight:780}
+.exam59-tools{display:flex;gap:10px;flex-wrap:wrap;margin:13px 0}
+.exam59-draft{width:100%;min-height:180px;min-width:0;resize:vertical;padding:15px;border-radius:13px;border:1px solid var(--line);font:inherit;font-size:1.06rem;line-height:1.7;color:var(--text)}
+.exam59-reveal{width:100%;min-height:54px;margin:3px 0 15px;padding:13px 17px;border:0;border-radius:13px;background:#0d1321;color:white;font:inherit;font-size:1.07rem;font-weight:850}
+.exam59-section{padding:0 0 19px;margin:0 0 20px;border-bottom:1px solid var(--line)}
+.exam59-section:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
+.exam59-section p{font-size:clamp(1.05rem,2.8vw,1.16rem);line-height:1.86}
+.exam59-source{display:block;color:#255d9f;text-decoration:underline;font-size:1rem;line-height:1.5;padding:9px 0;overflow-wrap:anywhere}
+.exam59-vocab{margin-top:12px}
+.exam59-word{font-size:.9rem}
+.exam59-question:hover{border-color:#abb9cb}
+.exam59-chip:focus-visible,.exam59-archive-link:focus-visible,.exam59-question:focus-visible,.exam59-reveal:focus-visible,.exam59-word:focus-visible,.exam59-back:focus-visible{outline:3px solid #507eb5;outline-offset:3px}
+@media(max-width:380px){
+ .exam59-archives,.exam59-bank,.exam59-panel{padding:15px}
+ .exam59-chip,.exam59-archive-link{padding:10px 11px;font-size:.88rem}
+ .exam59-question{padding:14px}
+}
+@media print {
+ .topbar,.home-view,.main-tabs,.exam59-back,.exam59-tools,.exam59-archives,.exam59-bank,.exam59-reveal,#papers-view .section-head,.exam59-panel:has(.exam59-draft){display:none!important}
+ .exam59-reader{display:block!important;max-width:none}
+ .exam59-answer[hidden]{display:block!important}
+ .exam59-panel{border:0;padding:0}
+ .exam59-section{break-inside:avoid}
+}
