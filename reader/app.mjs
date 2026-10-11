@@ -285,7 +285,7 @@ function selectMobileNav(id){
 function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;selectMobileNav('bottom-home');}
 function closeSidebar(){$('#sidebar').classList.remove('open');if($('#prefs').hidden)$('#scrim').hidden=true;selectMobileNav('bottom-home');}
 function openPrefs(){$('#prefs').hidden=false;if(window.innerWidth<=850)$('#scrim').hidden=false;}
-function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;selectMobileNav('bottom-home');}
+function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;selectMobileNav('bottom-home');document.querySelector('.app').scrollLeft=0;}
 $('#menu-btn').addEventListener('click',openSidebar);
 $('#close-sidebar').addEventListener('click',closeSidebar);
 $('#settings-btn').addEventListener('click',()=>$('#prefs').hidden?openPrefs():closePrefs());

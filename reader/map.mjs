@@ -234,7 +234,7 @@ export function mountVaultMap({files,getNote,readNote,onClose}){
    ? 'Exploring '+focusRoot.label+' · Back returns to the previous branch'
    : 'Select any branch to make it the new starting point';
  }
- function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.()}
+ function close(){panel.hidden=true;showDetails(false);active=null;pointers.clear();pinch=null;moved=false;onClose?.();document.querySelector('.app').scrollLeft=0}
  function back(){
   if(!parents.length){close();return;}
   const previous=parents.pop();

@@ -432,3 +432,17 @@ button,a,input{touch-action:manipulation}
  .reader-toolbar .tool-btn{min-width:35px!important;padding:8px 5px!important}
  .reader-toolbar .up-note{padding:0 7px;font-size:12px}
 }
+
+/* Keep the reader shell anchored on very narrow phones: prevent header
+   intrinsic widths and focused controls from scrolling its flex container. */
+@media(max-width:385px){
+ .app{overflow-x:clip;min-width:0;max-width:100%}
+ .masthead{min-width:0;max-width:100%;gap:7px}
+ .masthead-left{min-width:0;flex:1 1 auto;gap:8px}
+ .masthead-left .brand{min-width:0;gap:8px}
+ .brand-text{min-width:0;overflow:hidden}
+ .brand-text strong,.brand-text small{white-space:nowrap}
+ .top-actions{flex:0 0 auto;gap:1px}
+ .bottom-nav{min-width:0;max-width:100%}
+ .bottom-nav button{min-width:0}
+}
