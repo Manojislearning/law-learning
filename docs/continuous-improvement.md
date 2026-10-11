@@ -1,11 +1,45 @@
 # Continuous Improvement Record — Law Learning
 
 Date: 11 October 2026
-Release: **39** — Contract–I Unit IV, plus correction of cross-unit quiz weaknesses.
+Latest user-visible release: **41** — review due scheduling, durable local attempts and source-grounded recall; earlier release histories appear below.
 
 ## Principle
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
+
+## Version 41 — Spaced Review Due + portable retrieval history (11 October 2026)
+
+**Goal:** Recall the 50 existing Contract–I concepts after a delay instead of only recognising multiple-choice answers immediately after studying.
+
+### Comparative audit
+
+- **Anki** distinguishes failed and successful review responses and schedules future retrieval. This app adopts the simple *user-facing* Again/Good principle but **does not claim to implement Anki FSRS or calculate personalised memory stability**. https://docs.ankiweb.net/deck-options
+- A synthesis of spacing and retrieval evidence supports *actively producing an answer* and returning to it later rather than only repeatedly rereading or relying on fixed-position choices. https://www.nature.com/articles/s44159-022-00089-1 and https://www.annualreviews.org/content/journals/10.1146/annurev-psych-010419-051019
+- A common ineffective study-app pattern is equating a correct recognition response with true exam readiness. **Version 41 separates recognition (guided three-choice quiz) from self-rated retrieval (typed/aloud answer before seeing the rule).**
+
+### Delivered
+
+1. **Review due** is accessible directly from Home. It displays Due, Started and Not started. New learners can practise three unseen concepts without first creating synthetic due history; up to ten scheduled items form a manageable daily queue.
+2. **Schedule:** successful self-rated recall: 1, 3, 7, 14, 30 then 60 days; Again: retry after 10 minutes. This is a deliberately simple custom schedule that should be validated against real study outcomes before optimisation.
+3. **Guided quiz exposure** starts a next-day review after a correct recognition; wrong answers return in 10 minutes. Recognition alone never increments a recall stage. An overdue incorrect recognition is scheduled for 10 minutes in the future rather than remaining immediately overdue.
+4. **Review-first interaction:** questions appear before answers. The learner types at least a short response or indicates they answered aloud, then opens the reference answer and self-rates. No unsound automated essay grade or inflated word-game points.
+5. **Persistent and portable:** history is stored as `law-learning-review-v1`, keyed by stable lesson IDs. Profile export/import uses backup schema **3**, validates review records before any import write, and accepts historical v1 and v2 backups without deleting review records that aren't included.
+6. **No silent reset:** corrupt review JSON is not overwritten by an empty schedule. Storage quota errors surface to the learner. All backup writes remain atomic per storage operation with rollback on multi-key restore failure.
+7. **Automated checks:** deterministic interval tests, invalid-data tests, old-backup migrations, staged rollback, browser-like navigate → attempt → reveal → grade → export, and 50-item catalog integrity.
+
+### What this does not promise
+
+- Self-reported recall is *not* a scored exam response, ability diagnostic or professional legal competency measure.
+- The fixed interval schedule is not a scientific optimum for this specific student. It does not adapt to item difficulty, exam date, retention data or forgetting probabilities.
+- Drafted answers are not retained, but review ratings are saved in the browser. No account synchronisation or encryption is provided.
+- Android and keyboard accessibility testing in a real mobile browser remains to be completed.
+- The precise KSLU curriculum for the learner's admission cohort is still pending official-document verification.
+
+### Next high-value improvement
+
+Introduce an **interleaved legal issue-spotting practice set with diverse new fact patterns**, separate from the memorised lesson examples. Use a rubric that lets students explicitly self-check whether they identified (1) the issue, (2) the applicable statute/case principle, (3) facts that support and rebut the rule, and (4) a proportionate conclusion. Analyse recurring wrong choices by statutory concept—without adding coercive streaks or fake accuracy percentages. Follow with real mobile accessibility checks and cohort-appropriate syllabus audit.
+
+---
 
 ## Version 40 — Contract–I Unit V + optional legal writing (11 October 2026)
 
