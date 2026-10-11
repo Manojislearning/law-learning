@@ -14,8 +14,8 @@ document.head.appendChild(dashboardStyle);
 host.replaceChildren();
 var statePath=[],direction="forward";
 var requestedLesson=new URLSearchParams(location.search).get("learn");
-if(location.hash==="#syllabus"&&(requestedLesson==="contract1-unit1"||requestedLesson==="contract1-unit2")){
- var requestedUnit=requestedLesson==="contract1-unit2"?1:0;
+if(location.hash==="#syllabus"&&["contract1-unit1","contract1-unit2","contract1-unit3"].includes(requestedLesson)){
+ var requestedUnit=Number(requestedLesson.slice(-1))-1;
  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:1},{level:"unit",value:requestedUnit},{level:"guided",value:0}];
 }
 
@@ -122,7 +122,7 @@ function render(){
  host.replaceChildren();
  var year=active("year"),sem=active("semester"),subject=active("subject"),unit=active("unit"),topic=active("topic");
  var source=active("source"),sourceCourse=active("sourceCourse"),sourceUnit=active("sourceUnit");
- var guided=active("guided"),guide=unit===0?window.ContractUnitOneUI:unit===1?window.ContractUnitTwoUI:null;
+ var guided=active("guided"),guide=[window.ContractUnitOneUI,window.ContractUnitTwoUI,window.ContractUnitThreeUI][unit]||null;
  if(guided!==null&&subject===1&&guide){
    guide.render(host,{
     index:guided,direction:direction,
@@ -182,8 +182,8 @@ function render(){
   var course=KSLU_FIRST_SEMESTER.courses[subject],u=course.units[unit];
   topicsCache=splitTopics(u);
   var e=screen(u.title,course.name+" · "+u.unit,"Choose one core topic.");
-  if(sem===1&&subject===1&&(unit===0||unit===1)){
-    var courseUI=unit===0?window.ContractUnitOneUI:window.ContractUnitTwoUI;
+  if(sem===1&&subject===1&&unit>=0&&unit<=2){
+    var courseUI=[window.ContractUnitOneUI,window.ContractUnitTwoUI,window.ContractUnitThreeUI][unit];
     if(courseUI)B(e,"Start guided lessons",courseUI.lessons.length+" short lessons · examples · practice",function(){push("guided",0);});
   }
 
@@ -236,8 +236,8 @@ function render(){
 }
 var navigatingFromSubject=false;
 window.openContractGuidedUnit=function(index){
- if(index!==0&&index!==1)return false;
- var ui=index===0?window.ContractUnitOneUI:window.ContractUnitTwoUI;
+ if(!Number.isInteger(index)||index<0||index>2)return false;
+ var ui=[window.ContractUnitOneUI,window.ContractUnitTwoUI,window.ContractUnitThreeUI][index];
  if(!ui)return false;
  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:1},{level:"unit",value:index},{level:"guided",value:0}];
  direction="forward";
@@ -247,8 +247,9 @@ window.openContractGuidedUnit=function(index){
 };
 window.openContractUnitOne=function(){return window.openContractGuidedUnit(0);};
 window.openContractUnitTwo=function(){return window.openContractGuidedUnit(1);};
+window.openContractUnitThree=function(){return window.openContractGuidedUnit(2);};
 var launch=document.getElementById("home-contract-lesson");
-if(launch)launch.addEventListener("click",function(){window.openContractUnitTwo();});
+if(launch)launch.addEventListener("click",function(){window.openContractUnitThree();});
 
 window.openSyllabusUnit=function(semester,subject,unit){
  if(semester!==1||!KSLU_FIRST_SEMESTER.courses[subject]||!KSLU_FIRST_SEMESTER.courses[subject].units[unit])return false;
