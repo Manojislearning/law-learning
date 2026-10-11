@@ -81,13 +81,30 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  assert.deepEqual(guided.errors,[],"Guided lesson cannot throw during startup");
  guided.dom.window.close();
 
- const homepage=build("https://example.test/law-learning/index.html?v=36#home");
+
+ const u2=build("https://example.test/law-learning/index.html?learn=contract1-unit2&v=37#syllabus");
+ const u2d=u2.doc,u2w=u2.dom.window;
+ assert.equal(u2w.ContractUnitTwoUI.lessons.length,10,"Unit II must have ten concept lessons");
+ assert.ok(u2d.querySelector(".c1-card h2").textContent.includes("Who can make a contract?"),"Direct Unit II URL must open capacity");
+ assert.ok(u2d.querySelector(".c1-lesson-number").textContent.includes("Unit II"),"Lesson label must identify Unit II");
+ const u2answers=u2d.querySelectorAll(".c1-option");
+ assert.equal(u2answers.length,3);
+ u2answers[1].click();
+ assert.equal(u2d.querySelector(".c1-feedback").hidden,false,"Wrong answers must show explanatory feedback");
+ assert.ok(u2d.querySelector(".c1-option.correct"),"Correct answer must be revealed");
+ u2d.querySelector(".c1-next").click();
+ assert.ok(u2d.querySelector(".c1-card h2").textContent.includes("minor"),"Second lesson should explain minority");
+ assert.deepEqual(u2.errors,[],"Unit II navigation must not throw");
+ u2.dom.window.close();
+
+ const homepage=build("https://example.test/law-learning/index.html?v=37#home");
  const btn=homepage.doc.getElementById("home-contract-lesson");
  assert.ok(btn,"Homepage needs a single visible guided-lesson entry");
  btn.click();await settle();
  assert.equal(homepage.dom.window.LawAppCore.router.current(),"syllabus");
  assert.ok(homepage.doc.querySelector(".c1-card"),"Home lesson entry should open a guided concept");
+ assert.ok(homepage.doc.querySelector(".c1-card h2").textContent.includes("Who can make a contract?"),"Homepage should launch the new Unit II course");
  assert.deepEqual(homepage.errors,[]);
  homepage.dom.window.close();
- console.log("DOM integration passed: syllabus sources, Contract I guided quiz, deep link and home entry.");
+ console.log("DOM integration passed: KSLU sources, Unit I and Unit II lessons, quizzes, deep links and home course.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
