@@ -149,7 +149,7 @@ async function run(){
    await page.goto(address.replace("v=43#practice","v=48&course=bns#practice"),{waitUntil:"load"});
    const area=page.locator("#practice-root");
    assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("BNS"));
-   assert.equal(await area.locator(".cp-subjects button").count(),3);
+   assert.equal(await area.locator(".cp-subjects button").count(),4,"Four subject choices must fit on mobile");
    const positions=await page.evaluate(()=>{
     const els=[...document.querySelectorAll("#practice-root .cp-subjects button")];
     return els.map(e=>({left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,height:e.getBoundingClientRect().height}));
@@ -214,7 +214,32 @@ async function run(){
    assert.equal(errors.length,0,"Transfer mobile browser runtime errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
-  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
+
+  for(const width of [320,390,768]){
+   const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
+   const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
+   await page.goto(address.replace("v=43#practice","v=51&course=constitution#practice"),{waitUntil:"load"});
+   const area=page.locator("#practice-root");
+   assert.equal(await area.locator(".cp-subjects button").count(),4);
+   assert.ok((await area.locator('.cp-subjects button[aria-pressed="true"]').innerText()).includes("Constitution"));
+   const bounds=await page.evaluate(()=>[...document.querySelectorAll("#practice-root .cp-subjects button")].map(el=>({left:el.getBoundingClientRect().left,right:el.getBoundingClientRect().right,height:el.getBoundingClientRect().height})));
+   assert.ok(bounds.every(b=>b.left>=-1&&b.right<=width+1&&b.height>=44),width+"px Constitution subject controls overflow "+JSON.stringify(bounds));
+   await area.getByRole("button",{name:/Start 5 cases/}).tap();
+   const model=area.locator(".cp-model");
+   assert.equal(await model.isHidden(),true);
+   await area.locator("textarea").fill("Issue: identify the relevant constitutional provision. Rule: consider the Constitution. Application: analyse the facts. Conclusion: qualify the result.");
+   await area.getByRole("button",{name:/Reveal reference reasoning/}).tap();
+   assert.equal(await model.isVisible(),true);
+   assert.ok((await model.innerText()).includes("Constitutional Law–I"));
+   assert.ok(await model.locator("a[href*='legislative.gov.in']").count()>0);
+   const picks=area.locator(".cp-rubric input");
+   assert.equal(await picks.count(),4);
+   await picks.nth(1).check();
+   assert.ok((await area.locator(".cp-coaching summary").innerText()).includes("3 unchecked"));
+   assert.equal(errors.length,0,"Constitution mobile errors at "+width+"px: "+errors.join("; "));
+   await context.close();
+  }
+  console.log("Chromium UI passed: touch widths 320/390/768; answer reveal, four IRAC coaching stages; keyboard navigation, BNS/Consumer/Motor checks plus Constitution/Torts/BNS practice, retry workflow, changed-facts transfer and keyboard focus.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);server.close();process.exitCode=1;});
