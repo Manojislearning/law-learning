@@ -7,6 +7,30 @@ Release: **39** — Contract–I Unit IV, plus correction of cross-unit quiz wea
 
 When the user requests “Next,” choose the highest-value mix of **new syllabus content, learner-outcome improvement, usability repair, error correction and regression testing**. After the 32-stage roadmap, continue improving; never manufacture new features just to make a release.
 
+## Version 40 — Contract–I Unit V + optional legal writing (11 October 2026)
+
+**User-facing release:** 12 guided Specific Relief lessons from the amended Specific Relief Act, plus optional written recall on all five Contract–I units. Three Unit V case problems use Issue–Rule–Application–Conclusion fields and an educator-authored outline. Answers stay in session memory only; the app does not grade essay accuracy.
+
+**Legal-content quality:** Amended Sections 10, 14 and 20 are explicitly distinguished from pre-2018 rules. The source ledger flags the imported historical syllabus list and includes the primary India Code amended Act. Cohort-specific KSLU syllabus validation remains pending; extra related topics (Sections 26, 31, 34) are taught without implying they were expressly listed in the old extracted section list.
+
+**Why written recall rather than more multiple-choice:** Retrieval research supports practise producing an answer from memory, followed by corrective feedback. Results comparing answer formats vary by study and learner difficulty. For LL.B. exams, the ability to identify a legal issue and apply a statute to facts is more directly relevant than merely choosing among displayed terms. See:
+- https://doi.org/10.1146/annurev-psych-010419-051019
+- https://pmc.ncbi.nlm.nih.gov/articles/PMC11684041/
+- https://www.cmu.edu/teaching/resources/instructionalstrategies/activelearningstrategies/retrievalpractice/index.html
+
+**Design choice:** The written exercise is optional and collapsed, avoiding forced long forms during brief mobile study sessions. The learner reveals the outline voluntarily, making self-correction possible without fake AI grading.
+
+**Validation:** Unit V data and route tests; multi-unit data integrity; browser-like input, comparison-reveal and IRAC field tests; full GitHub Actions checks. Android device interaction is still not independently tested.
+
+**Next improvement focus (ranked):**
+1. Store *attempt outcomes* as a versioned, exportable local revision ledger, with backup migrations and tests. Review due concepts after delay; do not equate a correctly recognised multiple-choice item with full mastery.
+2. Add interleaved *unseen fact-pattern* short answers across Units I–V, with explicit rubric, reasoning checks and source-linked model answers. Avoid memorising only the same scenario.
+3. Validate official KSLU syllabus applicable to the learner's first-year cohort and audit Unit V legal propositions for later amendments.
+4. Test real Android accessibility, feedback announcement, touch scroll vs swipe and keyboard navigation.
+5. Improve poor distractors and add why-each-wrong responses, not merely a paragraph saying which answer is correct.
+
+---
+
 ## Version 39 review
 
 ### Evidence and comparative findings
