@@ -7,9 +7,9 @@
   if (root) root.LawBackupCore = api;
 })(typeof globalThis === "object" ? globalThis : this, function(root) {
   "use strict";
-  var APP = "law-learning", VERSION = 3, MAX_BYTES = 1024 * 1024;
-  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1"];
-  var PROGRESS = KEYS[0], NOTES = KEYS[1], PROFILE = KEYS[2], REVIEW=KEYS[3];
+  var APP = "law-learning", VERSION = 4, MAX_BYTES = 1024 * 1024;
+  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1","law-learning-case-review-v1"];
+  var PROGRESS = KEYS[0], NOTES = KEYS[1], PROFILE = KEYS[2], REVIEW=KEYS[3], CASES=KEYS[4];
 
   function fail(message) { throw new Error(message); }
   function plain(x) { return x !== null && typeof x === "object" && !Array.isArray(x) &&
@@ -49,6 +49,11 @@
       if(value.length>700000)fail("An individual backup record is too large.");
       if(key===PROGRESS)checkProgress(JSON.parse(value));
       if(key===PROFILE)checkProfile(JSON.parse(value));
+      if(key===CASES){
+        var caseCore=(root&&root.LawCaseReviewCore)||(typeof require==="function"?require("./case-review-core.js"):null);
+        if(!caseCore||typeof caseCore.parse!=="function")fail("Case review validation is unavailable.");
+        caseCore.parse(value);
+      }
       if(key===REVIEW){
         var reviewCore=(root&&root.LawReviewCore)||(typeof require==="function"?require("./review-core.js"):null);
         if(!reviewCore||typeof reviewCore.parse!=="function")fail("Review validation engine is not loaded.");
@@ -64,7 +69,7 @@
     var parsed;
     try{parsed=JSON.parse(input);}catch(e){fail("The backup is not valid JSON.");}
     if(!plain(parsed)||parsed.app!==APP)fail("This is not a Law Learning backup.");
-    if(parsed.schema!==1 && parsed.schema!==2 && parsed.schema!==VERSION)fail("Unsupported backup version. Update the app first.");
+    if(parsed.schema!==1 && parsed.schema!==2 && parsed.schema!==3 && parsed.schema!==VERSION)fail("Unsupported backup version. Update the app first.");
     var records=checkedRecords(parsed.records);
     var created=(typeof parsed.created==="string" && Number.isFinite(Date.parse(parsed.created))) ?
       parsed.created : new Date().toISOString();
@@ -86,6 +91,8 @@
     return {
       hasProgress:keys.includes(PROGRESS),hasNotes:keys.includes(NOTES),
       hasProfile:keys.includes(PROFILE),hasReview:keys.includes(REVIEW),
+      hasCaseReview:keys.includes(CASES),
+      caseReviewCount:keys.includes(CASES)?Object.keys(JSON.parse(b.records[CASES]).cases).length:0,
       reviewCards:keys.includes(REVIEW)?Object.keys(JSON.parse(b.records[REVIEW]).cards).length:0,
       learned:p&&Array.isArray(p.learned)?p.learned.length:0,
       review:p&&Array.isArray(p.difficult)?p.difficult.length:0,
