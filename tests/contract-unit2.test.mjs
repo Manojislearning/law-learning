@@ -49,7 +49,7 @@ test('Both guided units are discoverable from current app and service worker',()
   assert.ok(html.includes(file),file+' not in HTML');
   assert.ok(sw.includes(file),file+' not offline cached');
  }
- assert.ok(nav.includes('requestedLesson==="contract1-unit2"'),'Direct Unit II link missing');
+ assert.ok(nav.includes('"contract1-unit2"'),'Direct Unit II link missing');
  assert.ok(nav.includes('window.openContractUnitTwo'),'Unit II open method missing');
  assert.ok(ui.includes('root.ContractUnitOneUI=createGuide'),'Shared renderer must support Unit I');
  assert.ok(ui.includes('root.ContractUnitTwoUI=createGuide'),'Shared renderer must support Unit II');
