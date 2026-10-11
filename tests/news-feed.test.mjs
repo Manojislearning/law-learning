@@ -9,11 +9,11 @@ test("news route, accessible feed and refresh assets are connected",()=>{
   assert.match(html,/data-open="news"/);
   assert.match(html,/id="news-view"/);
   assert.match(html,/id="news-root"/);
-  assert.match(html,/news-feed\.js\?v=56/);
+  assert.match(html,/news-feed\.js\?v=57/);
   assert.match(core,/news:\["Legal current affairs","Law News"\]/);
-  assert.ok(sw.includes("./news-feed.js?v=56"));
+  assert.ok(sw.includes("./news-feed.js?v=57"));
   assert.ok(sw.includes("./data/news.json"));
-  assert.ok(sw.includes("./news.css?v=56"));
+  assert.ok(sw.includes("./news.css?v=57"));
 });
 test("news initial snapshot schema is stable and never has invented starter headlines",()=>{
   const feed=JSON.parse(file("data/news.json"));
@@ -33,4 +33,8 @@ test("news app does not publish raw HTML or pretend to verify rulings",()=>{
   assert.ok(js.includes("reported by")||js.includes("Reported by"));
   assert.ok(js.includes("raw.githubusercontent.com"));
   assert.ok(!js.includes("hashchange"));
+  assert.ok(js.includes("news-media"));
+  assert.ok(js.includes("publisher") || js.includes("PUBLISHER"));
+  assert.ok(js.includes("photo.loading="));
+  assert.ok(js.includes("validImage(item.image)"));
 });
