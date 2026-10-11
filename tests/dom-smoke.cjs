@@ -326,7 +326,7 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
  }
 
  {
-  const law=build("https://example.test/law-learning/index.html?law=consumer&v=45#law-updates");
+  const law=build("https://example.test/law-learning/index.html?law=consumer&v=46#law-updates");
   const w=law.dom.window,d=law.doc,host=d.getElementById("law-updates-root");
   assert.equal(w.LawAppCore.router.current(),"law-updates","Deep link must open current-law screen");
   assert.ok(host.querySelector("h2").textContent.includes("Current Law Check"));
@@ -352,20 +352,45 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   law.dom.window.close();
  }
  {
-  const syllabusLaw=build("https://example.test/law-learning/index.html?v=45#syllabus");
+  const syllabusLaw=build("https://example.test/law-learning/index.html?v=46#syllabus");
   const w=syllabusLaw.dom.window,d=syllabusLaw.doc;
   let syllabus=d.getElementById("syllabus-detail");
   findButton(d,"First Year").click();
   findButton(d,"Semester 1").click();
   findButton(d,"Law of Torts").click();
   findButton(d,"Unit V").click();
-  const current=findButton(d,"Current Law Check");
+  const current=findButton(d,"Current Law Check · Consumer");
   assert.ok(current,"Torts Unit V must link to modern 2019 consumer legal checks");
+  assert.ok(findButton(d,"Current Law Check · Motor Vehicles"),"Torts Unit V must also offer current motor-accident law");
   current.click();await settle();
   assert.equal(w.LawAppCore.router.current(),"law-updates");
   assert.ok(d.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"));
   assert.deepEqual(syllabusLaw.errors,[]);
   syllabusLaw.dom.window.close();
+ }
+
+ {
+  const mv=build("https://example.test/law-learning/index.html?law=motor&v=46#law-updates");
+  const w=mv.dom.window,doc=mv.doc,host=doc.getElementById("law-updates-root");
+  assert.equal(w.LawAppCore.router.current(),"law-updates");
+  assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Motor Vehicles"));
+  assert.ok(host.querySelector(".law-panel h3").textContent.includes("No-fault"));
+  assert.equal(w.LawAccuracyCore.cardsFor(w.LawAccuracyData,"motor").length,9);
+  assert.ok(host.textContent.includes("₹5 lakh"));
+  const controls=[...host.querySelectorAll(".law-tab")];
+  assert.equal(controls.length,3,"Existing law check must show all three subjects");
+  const next=host.querySelector(".law-forward");
+  const expected=["Hit-and-run","Cashless","third-party","Insurer","Motor Accidents","Filing time","ex-gratia","Insurance transfer"];
+  for(const name of expected){next.click();assert.ok(host.querySelector(".law-panel h3").textContent.includes(name),"Missing motor law card "+name);}
+  assert.ok(host.textContent.includes("thirty days"));
+  const details=host.querySelector(".law-references");assert.ok(details);
+  assert.ok([...details.querySelectorAll("a")].some(x=>x.href.includes("egazette.gov.in")),"2026 motor notes need official Gazette sources");
+  controls[0].click();
+  assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("BNS"));
+  controls[1].click();
+  assert.ok(host.querySelector(".law-tab[aria-pressed='true']").textContent.includes("Consumer"));
+  assert.deepEqual(mv.errors,[]);
+  mv.dom.window.close();
  }
  console.log("DOM integration passed: Contract I lessons, spaced recall, balanced IRAC case practice and offline-safe navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
