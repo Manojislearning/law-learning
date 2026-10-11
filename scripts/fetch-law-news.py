@@ -21,17 +21,20 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "news.json"
 SEARCHES = (
-    ('Supreme Court India judgment when:7d', 'Google News'),
-    ('Karnataka High Court judgment when:7d', 'Google News'),
-    ('Karnataka State Law University KSLU notice when:14d', 'Google News'),
-    ('India parliament bill law amendment gazette when:7d', 'Google News'),
-    ('Indian law legal rights court ruling when:7d', 'Google News'),
+    ('Supreme Court India when:7d', 'Google News'),
+    ('Karnataka High Court when:7d', 'Google News'),
+    ('KSLU Karnataka Law University when:14d', 'Google News'),
+    ('Indian parliament law amendment when:7d', 'Google News'),
+    ('Indian legal news when:7d', 'Google News'),
 )
 FEEDS = [
     ("https://news.google.com/rss/search?q=" + quote(q) + "&hl=en-IN&gl=IN&ceid=IN:en", src)
     for q, src in SEARCHES
 ] + [
     ("https://legal.economictimes.indiatimes.com/rss/topstories", "ET LegalWorld"),
+    ("https://legal.economictimes.indiatimes.com/rss/recentstories", "ET LegalWorld"),
+    ("https://legal.economictimes.indiatimes.com/rss/regulators", "ET LegalWorld"),
+    ("https://legal.economictimes.indiatimes.com/rss/corporate-business", "ET LegalWorld"),
     ("https://legal.economictimes.indiatimes.com/rss/litigation", "ET LegalWorld"),
     ("https://legal.economictimes.indiatimes.com/rss/law-policy", "ET LegalWorld"),
 ]
@@ -49,7 +52,7 @@ def category(title: str) -> str:
         return "KSLU"
     if re.search(r'karnataka|bengaluru|bangalore', t):
         return "Karnataka"
-    if re.search(r'supreme court|apex court|constitution bench|chief justice of india|\bcji\b', t):
+    if re.search(r'supreme court|apex court|constitution bench|chief justice of india|\bcji\b|\bsc\b', t):
         return "Supreme Court"
     if re.search(r'parliament|lok sabha|rajya sabha|\bbill\b|ordinance|gazette|amendment|legislation|new law', t):
         return "Legislation"
@@ -58,7 +61,7 @@ def category(title: str) -> str:
 def priority(title: str) -> int:
     t = title.lower()
     signal = re.search(r'constitution bench|landmark|strikes down|struck down|constitutional validity|fundamental rights|new criminal law|major amendment|supreme court rules|high court rules|kslu.*exam|kslu.*notification', t)
-    return 2 if signal else (1 if re.search(r'supreme court|high court|parliament|kslu|constitutional|amendment',t) else 0)
+    return 2 if signal else (1 if re.search(r'supreme court|high court|\bsc\b|\bhc\b|parliament|kslu|constitutional|amendment',t) else 0)
 
 def date_of(value: str):
     try:
@@ -82,10 +85,12 @@ def read_xml(url: str, origin: str):
         if len(payload) > 1_500_000:
             raise ValueError("Oversize feed")
     feed = ET.fromstring(payload)
+    raw_items = feed.findall("./channel/item")
+    print("Received",len(raw_items),"RSS entries from",url)
     now = datetime.now(timezone.utc)
     minimum = now - timedelta(days=14)
     items = []
-    for entry in feed.findall("./channel/item")[:75]:
+    for entry in raw_items[:75]:
         title = clean(entry.findtext("title",""))
         source = clean(entry.findtext("source","") or origin, 80)
         link = (entry.findtext("link","") or "").strip()
