@@ -1,4 +1,4 @@
-/* Law News v56: attributed headlines and study prompts, no invented legal summaries. */
+/* Law News v57: publisher preview images, source excerpts and study prompts. */
 (function () {
   "use strict";
   var root=document.getElementById("news-root");
@@ -9,6 +9,7 @@
   function el(tag,cls,txt){var n=document.createElement(tag);if(cls)n.className=cls;if(txt!==undefined)n.textContent=String(txt);return n;}
   function validLink(value){try{var u=new URL(value);return u.protocol==="https:"&&u.hostname.length>3;}catch(e){return false;}}
   function validItem(item){return item&&typeof item.id==="string"&&/^[a-f0-9]{16}$/.test(item.id)&&typeof item.title==="string"&&item.title.length>=10&&item.title.length<=280&&typeof item.source==="string"&&item.source.length<=90&&validLink(item.url)&&!Number.isNaN(Date.parse(item.publishedAt))&&TABS.includes(item.category);}
+  function validImage(value){return typeof value==="string"&&value.length<=1000&&validLink(value);}
   function readSaved(){try{var value=JSON.parse(localStorage.getItem(STORE)||"[]");return Array.isArray(value)?value.filter(function(s){return typeof s==="string"&&/^[a-f0-9]{16}$/.test(s);}).slice(0,200):[];}catch(e){return [];}}
   function saveItem(id){var saved=readSaved();var i=saved.indexOf(id);if(i>=0)saved.splice(i,1);else saved.unshift(id);try{localStorage.setItem(STORE,JSON.stringify(saved.slice(0,200)));}catch(e){state.error="Could not save on this device. Check private browsing or storage settings.";}render();}
   function formatted(iso){try{return new Intl.DateTimeFormat("en-IN",{day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit",timeZone:"Asia/Kolkata"}).format(new Date(iso))+" IST";}catch(e){return "Date unavailable";}}
@@ -57,8 +58,33 @@
       var card=el("article","news-story");
       var meta=el("div","news-story-meta");
       meta.append(el("span","news-topic",item.category),el("span","",formatted(item.publishedAt)));
-      card.append(meta,el("h3","news-title",item.title));
-      if(item.excerpt)card.append(paragraph("news-excerpt",item.excerpt));
+      card.append(meta);
+      var visual=el("div","news-media");
+      function showMissingPhoto(){
+        var fallback=el("div","news-media-fallback");
+        fallback.setAttribute("aria-label","No publisher image available");
+        fallback.append(el("span","news-media-symbol","§"),el("span","news-media-label",item.category+" · Legal news"));
+        visual.replaceChildren(fallback);
+      }
+      if(validImage(item.image)){
+        var photo=el("img","news-image");
+        photo.src=item.image;
+        photo.alt="Image provided with the publisher's news report";
+        photo.loading="lazy";
+        photo.decoding="async";
+        photo.referrerPolicy="no-referrer";
+        photo.addEventListener("error",showMissingPhoto,{once:true});
+        visual.append(photo);
+      }else showMissingPhoto();
+      card.append(visual,el("h3","news-title",item.title));
+      var brief=el("div","news-brief");
+      brief.append(el("span","news-brief-label","IN BRIEF · PUBLISHER EXCERPT"));
+      if(typeof item.brief==="string"&&item.brief.length>=18&&item.brief.length<=240){
+        brief.append(paragraph("news-excerpt",item.brief));
+      }else{
+        brief.append(paragraph("news-excerpt news-brief-unavailable","No publisher brief supplied. Open the source for the details."));
+      }
+      card.append(brief);
       var source=paragraph("news-source","Reported by "+item.source);card.append(source);
       var prompt=el("div","news-prompt");
       var promptTitle=el("p","news-prompt-title","Think like a law student");
@@ -76,7 +102,7 @@
     if(list.length>state.count){
       var more=el("button","news-more","Show more stories");more.type="button";more.addEventListener("click",function(){state.count+=12;render();});root.append(more);
     }
-    var note=paragraph("news-footnote","Publisher attribution and links are provided for research. Headlines can omit context; verify primary legal sources. Saved items are local to this device and are not part of the app backup.");
+    var note=paragraph("news-footnote","Images and short excerpts come from publishers when available. They are not verified legal summaries. Confirm court orders and statutes at the original source. Saved items stay on this device and are not included in backups.");
     root.append(note);
   }
   async function getJSON(url){
