@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="60" />
+  <meta name="app-version" content="61" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="./readability.css?v=58" />
   <link rel="stylesheet" href="./exam-papers.css?v=59" />
   <link rel="stylesheet" href="./student-menu.css?v=60" />
+  <link rel="stylesheet" href="./menu-simple.css?v=61" />
 </head>
 <body>
   <div class="app-shell">
@@ -35,121 +36,59 @@
     <main>
       <section id="home-view" class="home-view active">
         <div class="home-intro">
-          <p class="eyebrow">KSLU · 3-Year LL.B</p>
           <h2>Start learning</h2>
-          <p class="muted">Practice legal vocabulary with animated cards and a short word game.</p>
           <button id="profile-open" type="button" style="background:none;border:0;padding:10px 0;color:#384e74;font:inherit;font-size:.85rem;font-weight:750;cursor:pointer;">Profile &amp; backups →</button>
         </div>
 
         <button type="button" class="home-card home-contract-lesson home-law-check" data-open="law-updates">
           <span class="home-contract-body">
-            <small>UPDATED STATUTE REFERENCES · FIRST YEAR</small>
             <strong>Current Law Check</strong>
-            <span>BNS · Consumer Protection · Motor Vehicles 2026</span>
           </span>
           <span class="home-contract-start">Check →</span>
         </button>
 
         <button type="button" class="home-card home-practice-card home-news-card" data-open="news">
-          <span class="home-practice-copy"><strong>Law News</strong><span>Indian courts · Karnataka · legislation · KSLU · updated automatically</span></span>
+          <span class="home-practice-copy"><strong>Law News</strong></span>
           <span class="home-arrow">→</span>
         </button>
 
         <button type="button" class="home-card home-practice-card" data-open="practice">
-          <span class="home-practice-copy"><strong>Case Practice</strong><span id="home-case-count">75 IRAC cases · saved weak-case reviews · changed-facts</span></span>
+          <span class="home-practice-copy"><strong>Case Practice</strong><span id="home-case-count" class="menu-sr-only">75 IRAC cases</span></span>
           <span class="home-arrow">→</span>
         </button>
 
         <button type="button" class="home-card home-review-card" data-open="review">
-          <strong>Review due</strong>
-          <p id="review-dashboard-count">Loading your review schedule…</p>
+          <strong>Review</strong>
+          <p id="review-dashboard-count" class="menu-sr-only">Loading your review schedule…</p>
           <span class="home-arrow">→</span>
         </button>
 
         <button id="home-contract-lesson" type="button" class="home-contract-lesson">
           <span class="home-contract-body">
-            <small>CONTINUE LEARNING · FIRST YEAR</small>
-            <strong>Contract–I · Unit V</strong>
-            <span>12 lessons · specific performance, injunctions &amp; legal remedies</span>
+            <strong>Continue Contract–I</strong>
           </span>
           <span class="home-contract-start">Start →</span>
         </button>
 
         <div class="home-grid">
-          <button class="home-card primary-card" data-open="words" type="button">
-            <span class="home-index">01</span>
-            <strong>Words</strong>
-            <p>Two levels: Legal Words and Advanced English for strong exam answers.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <button class="home-card student-home-card" data-open="student" type="button">
-            <span class="home-index">02</span>
-            <strong>Student</strong>
-            <p>Syllabus, Topic Brain Branches, Subjects and Exam Papers &amp; Answers — all in one place.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <a class="home-card" href="./reader/" style="text-decoration:none;color:inherit;">
-            <span class="home-index">03</span>
-            <strong>Law Notes</strong>
-            <p>Open your notes directly · rounded Markdown cards, fast search and topic Brain Branches.</p>
-            <span class="home-arrow">→</span>
-          </a>
-
-          <button class="home-card" data-open="exam" type="button">
-            <span class="home-index">04</span>
-            <strong>Exam Pattern</strong>
-            <p>Understand how your Semester I papers are structured.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <button class="home-card" data-open="notes" type="button">
-            <span class="home-index">05</span>
-            <strong>Notes</strong>
-            <p>Your quick study notes, saved locally on this device.</p>
-            <span class="home-arrow">→</span>
-          </button>
-          <button class="home-card links-home-card" data-open="links" type="button">
-            <span class="home-index">06</span>
-            <strong>Important Links</strong>
-            <p>Official websites worth keeping as a Karnataka law student.</p>
-            <span class="home-arrow">→</span>
-          </button>
+          <button class="home-card primary-card" data-open="words" type="button"><strong>Learn Words</strong><span class="home-arrow" aria-hidden="true">→</span></button>
+          <button class="home-card student-home-card" data-open="student" type="button"><strong>Student</strong><span class="home-arrow" aria-hidden="true">→</span></button>
+          <a class="home-card" href="./reader/"><strong>Law Notes</strong><span class="home-arrow" aria-hidden="true">→</span></a>
+          <button class="home-card" data-open="exam" type="button"><strong>Exam Pattern</strong><span class="home-arrow" aria-hidden="true">→</span></button>
+          <button class="home-card" data-open="notes" type="button"><strong>Notes</strong><span class="home-arrow" aria-hidden="true">→</span></button>
+          <button class="home-card links-home-card" data-open="links" type="button"><strong>Important Links</strong><span class="home-arrow" aria-hidden="true">→</span></button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 60 · <a href="./refresh.html?build=60" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 61 · <a href="./refresh.html?build=61" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="student-view" class="main-view" aria-label="Student study resources">
         <div class="student-hub">
-          <header class="student-hub-heading">
-            <p class="eyebrow">KSLU · 3-Year LL.B</p>
-            <h2>Student</h2>
-            <p class="muted">Your study essentials in one place. Open the syllabus, explore connected topics, browse subjects or practise examination answers.</p>
-          </header>
+          <header class="student-hub-heading"><h2>Student</h2></header>
           <nav class="student-hub-grid" aria-label="Student resources">
-            <button class="home-card student-hub-card" type="button" data-open="syllabus">
-              <span class="student-hub-number">01 · COURSE OUTLINE</span>
-              <strong>Syllabus</strong>
-              <p>30 Semester I outlines compared with KSLU PDFs · admission-year confirmation pending.</p>
-              <span class="student-hub-arrow" aria-hidden="true">→</span>
-            </button>
-            <a class="home-card student-hub-card" href="./reader/?map=1">
-              <span class="student-hub-number">02 · VISUAL LEARNING</span>
-              <strong>Topic Brain Branches</strong>
-              <p>Explore visual topic branches and open the connected Markdown study notes.</p>
-              <span class="student-hub-arrow" aria-hidden="true">→</span>
-            </a>
-            <button class="home-card student-hub-card" type="button" data-open="subjects">
-              <span class="student-hub-number">03 · STUDY LIBRARY</span>
-              <strong>Subjects</strong>
-              <p>Review legal concepts across Contract, Constitutional Law, Torts, Hindu Law and more.</p>
-              <span class="student-hub-arrow" aria-hidden="true">→</span>
-            </button>
-            <button class="home-card student-hub-card" type="button" data-open="papers">
-              <span class="student-hub-number">04 · EXAM PREPARATION</span>
-              <strong>Exam Papers &amp; Answers</strong>
-              <p>Find past-paper scan links and practise 16 detailed model answers across five subjects.</p>
-              <span class="student-hub-arrow" aria-hidden="true">→</span>
-            </button>
+            <button class="home-card student-hub-card" type="button" data-open="syllabus"><strong>Syllabus</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <a class="home-card student-hub-card" href="./reader/?map=1"><strong>Topic Brain Branches</strong><span class="student-hub-arrow" aria-hidden="true">→</span></a>
+            <button class="home-card student-hub-card" type="button" data-open="subjects"><strong>Subjects</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
+            <button class="home-card student-hub-card" type="button" data-open="papers"><strong>Exam Papers &amp; Answers</strong><span class="student-hub-arrow" aria-hidden="true">→</span></button>
           </nav>
-          <p class="student-hub-footnote">Your saved notes, word progress and examination practice stay unchanged.</p>
         </div>
       </section>
 
@@ -481,11 +420,11 @@
   <script src="./exam-words-2.js"></script>
   <script src="./exam-words-3.js"></script>
   <script src="./exam-words-4.js"></script>
-  <script src="./app-core.js?v=60"></script>
+  <script src="./app-core.js?v=61"></script>
   <script src="./advanced-english-words.js?v=58"></script>
   <script src="./app.js?v=58"></script>
   <script src="./legacy-study-ui.js?v=35"></script>
-  <script src="./word-experience.js?v=58"></script>
+  <script src="./word-experience.js?v=61"></script>
   <script src="./content-ledger.js?v=46"></script>
   <script src="./contract-unit1-data.js?v=36"></script>
   <script src="./contract-unit2-data.js?v=37"></script>
