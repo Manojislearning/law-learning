@@ -11,7 +11,7 @@ const htmlFiles={
  "01-Semester-1/Constitutional-Law-I/00 - Constitutional Law I.md":
  "# Constitutional Law I\n\n## Unit 1\n\nThe [[Preamble]] sets out the Constitution's aims.",
  "01-Semester-1/Constitutional-Law-I/Preamble.md":
- "# Preamble\n\n## Meaning\n\nJustice, liberty, equality and fraternity."
+ "# Preamble\n\n## Meaning\n\nJustice, liberty, equality and fraternity.\n\n## Main Values\n\nEquality and fraternity.\n\n## Exam Points\n\nExplain constitutional ideals."
 };
 const paths=Object.keys(htmlFiles);
 function serve(req,res){
@@ -74,6 +74,20 @@ async function main(){
    assert.equal(await page.locator("#font-size-label").textContent(),"22px");
    await page.locator("#close-prefs").click();
    assert.equal(await page.locator("#prefs").isVisible(),false);
+   await page.locator("#article a.wiki").first().click();
+   await page.locator("#article h1").filter({hasText:"Preamble"}).waitFor();
+   assert.equal(await page.locator("#study-pager").isVisible(),true,"Multi-heading Markdown should start as short pages.");
+   assert.equal(await page.locator("#article .study-page:visible").count(),1);
+   await page.locator("#page-next").click();
+   assert.match(await page.locator("#page-count").innerText(),/2 \/ 3/);
+   assert.equal(await page.locator("#article .study-page:visible").count(),1);
+   await page.locator("#pages-btn").click();
+   assert.equal(await page.locator("#study-pager").isVisible(),false,"Scroll view shows original whole note.");
+   assert.equal(await page.locator("#article .study-page:visible").count(),3);
+   await page.locator("#pages-btn").click();
+   assert.equal(await page.locator("#study-pager").isVisible(),true);
+   assert.equal(await page.locator("#article .study-page:visible").count(),1);
+
    if(mobile){
     await page.locator("#bottom-library").click();
     assert.equal(await page.locator("#sidebar").evaluate(el=>el.classList.contains("open")),true);
