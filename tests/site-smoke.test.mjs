@@ -81,7 +81,7 @@ test('Student hub groups all ten study destinations', () => {
   assert.ok(student.includes('Topic Brain Branches'));
   assert.ok(!home.includes('href="./reader/"'),'Law Notes must leave the home menu');
   assert.ok(student.includes('href="./reader/"'),'Law Notes must stay available in Student');
-  assert.equal((student.match(/class="home-card student-hub-card"/g)||[]).length,9,'Student should have nine standard resource tiles');
+  assert.equal((student.match(/class="home-card student-hub-card"/g)||[]).length,10,'Student should have ten study resources');
   assert.ok(student.includes('id="home-contract-lesson"'),'Continue Contract must be inside Student');
   assert.ok(!home.includes('id="home-contract-lesson"'),'Continue Contract must leave Home');
   assert.ok(!home.includes('data-open="notes"'),'Remove Notes from Home');
