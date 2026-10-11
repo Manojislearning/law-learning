@@ -205,6 +205,11 @@ function render(){
     var meta=window.LawContentLedger&&window.LawContentLedger.getUnit(subject,i);
     B(d,u.unit+" — "+u.title,meta&&meta.outlineAudit?"Published outline compared · scheme pending":"Learn topics →",function(){push("unit",i);});
    });
+   if(subject===0){
+    B(d,"Constitutional Law Case Practice","15 original problems · rights, citizenship and remedies · written IRAC →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("constitution");
+    });
+   }
    if(subject===2){
     B(d,"Torts Case Practice","15 original problems · five mixed units · written IRAC feedback →",function(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("torts");
@@ -224,6 +229,11 @@ function render(){
   var course=KSLU_FIRST_SEMESTER.courses[subject],u=course.units[unit];
   topicsCache=splitTopics(u);
   var e=screen(u.title,course.name+" · "+u.unit,"Choose one core topic.");
+  if(sem===1&&subject===0){
+    B(e,"Constitutional Law Case Practice","15 problems · independent issue spotting · self-check →",function(){
+     if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("constitution");
+    });
+  }
   if(sem===1&&subject===1&&unit>=0&&unit<=4){
     var courseUI=[window.ContractUnitOneUI,window.ContractUnitTwoUI,window.ContractUnitThreeUI,window.ContractUnitFourUI,window.ContractUnitFiveUI][unit];
     if(courseUI)B(e,"Start guided lessons",courseUI.lessons.length+" short lessons · examples · practice",function(){push("guided",0);});
