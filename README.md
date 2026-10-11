@@ -1,3 +1,7 @@
+## Version 48 — BNS legal reasoning practice
+
+**Case Practice** now offers three first-year subjects: Contract–I, Law of Torts and Criminal Law–I (BNS), with **15 original hypotheticals each (45 total)**. The BNS set spans all five published KSLU units, adds legally grounded Issue–Rule–Application–Conclusion outlines and sources the BNS enacted law and MHA commencement notification. Written answers are local to the open page, not graded or saved. The historical 2024 section 106(2) commencement exclusion is discussed only for a dated 2024 scenario, not asserted as the current position for all future dates. Source audit: `docs/bns-case-practice-v48.md`.
+
 # Law Learning
 
 Mobile-first, installable Progressive Web App (PWA) for studying law, KSLU LL.B. syllabus content and exam-oriented legal vocabulary.
