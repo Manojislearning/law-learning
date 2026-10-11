@@ -53,7 +53,7 @@ async function main(){
    });
    const url="http://127.0.0.1:"+server.address().port+"/reader/";
    await page.goto(url,{waitUntil:"load"});
-   assert.equal(await page.locator("h1").first().innerText(),"Your law notes.\nOne quiet place.");
+   assert.equal(await page.locator("h1").first().innerText(),"Law Notes");
    const welcome=await page.locator(".connect-card").evaluate(el=>({width:el.getBoundingClientRect().width,height:el.getBoundingClientRect().height}));
    assert.ok(welcome.width<=width-15,"Connect card is too wide at "+width);
    await page.locator("#token").fill("github_pat_example_synthetic_not_real");
