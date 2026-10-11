@@ -1,0 +1,229 @@
+import {esc, slug, renderMarkdown, resolveLink} from './markdown.mjs';
+
+const REPO='Manojislearning/LAW-NOTES';
+const API=`https://api.github.com/repos/${REPO}`;
+const KEY='kslu-vault-reader-v1';
+const DEFAULT_PATH='HOME - Start Here.md';
+const $=s=>document.querySelector(s);
+const state={token:'',files:[],tree:null,expanded:new Set(['01-Semester-1','00-Dashboard']),notes:new Map(),current:'',saved:new Set(),filter:'all',font:19,warm:true,loading:false,speaking:false};
+let scrollSaveAt=0,toastTimer=null,requestedPath='';
+try{
+ const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+ state.saved=new Set(Array.isArray(saved.saved)?saved.saved:[]);
+ state.font=Number.isFinite(saved.font)?Math.max(16,Math.min(26,saved.font)):19;
+ state.warm=saved.warm!==false;
+ requestedPath=new URLSearchParams(location.search).get('file')||saved.last||DEFAULT_PATH;
+}catch{requestedPath=DEFAULT_PATH;}
+function settingsSave(){try{localStorage.setItem(KEY,JSON.stringify({saved:[...state.saved],font:state.font,warm:state.warm,last:state.current}))}catch{}}
+function toast(message){const el=$('#toast');el.textContent=message;el.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.hidden=true,3800)}
+function applyPrefs(){document.documentElement.style.setProperty('--reader-size',state.font+'px');document.body.classList.toggle('cool',!state.warm);$('#font-size').value=state.font;$('#font-size-label').textContent=state.font+'px';$('#warm-toggle').checked=state.warm;$('#saved-number').textContent=state.saved.size;}
+applyPrefs();
+function setStatus(text,connected=false){const el=$('#status-badge');el.innerHTML='<span></span> '+esc(text);el.classList.toggle('connected',connected)}
+async function github(path,token=state.token){
+ const res=await fetch(API+path,{
+   method:'GET',headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+token,'X-GitHub-Api-Version':'2022-11-28'},
+   cache:'no-store',credentials:'omit',redirect:'error',referrerPolicy:'no-referrer'
+ });
+ if(!res.ok){
+   if(res.status===401)throw new Error('GitHub rejected the token. Create a new fine-grained token.');
+   if(res.status===403)throw new Error('Access denied or API limit reached. Check repository permissions.');
+   if(res.status===404)throw new Error('Private repository not accessible. Select LAW-NOTES and grant Contents: Read-only.');
+   throw new Error('GitHub could not load the vault (HTTP '+res.status+').');
+ }
+ return res.json();
+}
+function treeFromPaths(paths){
+ const root={name:'All notes',path:'',folders:new Map(),files:[],count:0};
+ for(const path of paths){const segments=path.split('/');let node=root;node.count++;
+   for(const segment of segments.slice(0,-1)){
+     if(!node.folders.has(segment))node.folders.set(segment,{name:segment,path:[node.path,segment].filter(Boolean).join('/'),folders:new Map(),files:[],count:0});
+     node=node.folders.get(segment);node.count++;
+   }
+   node.files.push(path);
+ }
+ return root;
+}
+function hideFile(path){return !/\.(md|canvas)$/i.test(path)||path.startsWith('.')||path.split('/').some(p=>p.startsWith('.'))||/^(?:untitled|welcome)(?:\s|\.|\/)/i.test(path);}
+async function loadTree(token=state.token){
+ const response=await github('/git/trees/main?recursive=1',token);
+ if(response.truncated)throw new Error('GitHub file listing is truncated. A smaller vault is needed.');
+ const paths=response.tree.filter(f=>f.type==='blob'&&!hideFile(f.path)).map(f=>f.path).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+ if(!paths.length)throw new Error('GitHub connected, but no Markdown notes were found.');
+ state.files=paths;state.tree=treeFromPaths(paths);
+ $('#repo-meta').textContent=paths.length+' Markdown & Canvas files · main branch';
+ $('#refresh-btn').disabled=false;
+ $('#connect-view').hidden=true;$('#reader-view').hidden=false;
+ setStatus('Connected',true);
+ renderSidebar();
+}
+async function connect(token){
+ $('#connect-error').hidden=true;$('#connect-btn').disabled=true;$('#connect-btn').firstChild.textContent='Connecting to GitHub… ';
+ try{
+  await loadTree(token);
+  state.token=token;
+  $('#token').value='';
+  const path=state.files.includes(requestedPath)?requestedPath:state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0];
+  await openNote(path);
+  toast('Private LAW-NOTES library connected.');
+ }catch(e){$('#connect-view').hidden=false;$('#reader-view').hidden=true;setStatus('Not connected');const err=$('#connect-error');err.textContent=e instanceof Error?e.message:'Could not connect.';err.hidden=false;}
+ finally{$('#connect-btn').disabled=false;$('#connect-btn').firstChild.textContent='Open my reading library ';}
+}
+$('#connect-form').addEventListener('submit',event=>{event.preventDefault();const token=$('#token').value.trim();if(token)void connect(token)});
+$('#show-token').addEventListener('click',()=>{const input=$('#token');input.type=input.type==='password'?'text':'password';$('#show-token').textContent=input.type==='password'?'Show':'Hide'});
+$('#refresh-btn').addEventListener('click',async()=>{if(!state.token)return;try{state.notes.clear();await loadTree();if(state.current)await openNote(state.current);toast('Latest notes loaded from GitHub.')}catch(e){toast(e.message)}});
+
+function iconFolder(name){return name.startsWith('01-')||name.startsWith('02-')?'▱':'▦'}
+function niceName(path){return path.split('/').pop().replace(/\.(md|canvas)$/i,'').replace(/^\d\d - /,'').replace(/-+/g,' ').replace(/\s+/g,' ').trim()}
+function renderSidebar(){
+ const area=$('#sidebar-content');if(!state.tree){area.textContent='Connect to GitHub to browse.';return;}
+ const term=$('#search').value.trim().toLowerCase();
+ if(term){const matches=state.files.filter(f=>(f.toLowerCase().includes(term)||niceName(f).toLowerCase().includes(term))&& (state.filter!=='saved'||state.saved.has(f))).slice(0,90);
+   area.innerHTML=`<div class="section-kicker search-kicker">${matches.length} RESULTS${matches.length===90?' (FIRST 90)':''}</div>`+matches.map(f=>`<button type="button" class="search-row${f===state.current?' active':''}" data-note="${esc(f)}" title="${esc(f)}">▤ &nbsp;${esc(niceName(f))}</button>`).join('')+(matches.length===0?'<p class="sidebar-placeholder">No matching notes found.</p>':'');
+   return;}
+ if(state.filter==='saved'){
+   const bookmarks=[...state.saved].filter(f=>state.files.includes(f)).sort((a,b)=>a.localeCompare(b));
+   area.innerHTML=bookmarks.length?bookmarks.map(f=>`<button type="button" class="note-row${f===state.current?' active':''}" data-note="${esc(f)}" title="${esc(f)}">${esc(niceName(f))}</button>`).join(''):'<div class="sidebar-placeholder"><strong>No saved notes yet</strong><p>Tap ☆ while reading a note to save it here.</p></div>';
+   return;
+ }
+ const chunks=[];
+ const walk=(folder,depth)=>{
+  for(const child of [...folder.folders.values()].sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}))){
+    const expanded=state.expanded.has(child.path);
+    chunks.push(`<button type="button" class="folder-row${expanded?' open':''}" data-folder="${esc(child.path)}" aria-expanded="${expanded}"><span class="arrow">›</span><span class="folder-icon">${iconFolder(child.name)}</span><span>${esc(child.name.replace(/^\d\d-/,'').replaceAll('-',' '))}</span><span class="count">${child.count}</span></button>`);
+    if(expanded){chunks.push('<div class="folder-children">');walk(child,depth+1);chunks.push('</div>');}
+  }
+  for(const path of folder.files){chunks.push(`<button type="button" class="note-row${state.current===path?' active':''}" data-note="${esc(path)}" title="${esc(path)}">${esc(niceName(path))}</button>`)}
+ };
+ // Root files first (HOME - Start Here.md, etc.)
+ for(const path of state.tree.files)chunks.push(`<button type="button" class="note-row${state.current===path?' active':''}" data-note="${esc(path)}">${esc(niceName(path))}</button>`);
+ walk(state.tree,0);area.innerHTML=chunks.join('');
+}
+$('#sidebar-content').addEventListener('click',event=>{
+ const folder=event.target.closest('[data-folder]');if(folder){const path=folder.dataset.folder;if(state.expanded.has(path))state.expanded.delete(path);else state.expanded.add(path);renderSidebar();return;}
+ const note=event.target.closest('[data-note]');if(note){void openNote(note.dataset.note);closeSidebar()}
+});
+$('#search').addEventListener('input',renderSidebar);
+$('#search').addEventListener('keydown',event=>{if(event.key==='Enter'){const first=$('#sidebar-content [data-note]');if(first){void openNote(first.dataset.note);closeSidebar();$('#search').blur()}}});
+document.addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){event.preventDefault();openSidebar();$('#search').focus()}if(event.key==='Escape'){closeSidebar();closePrefs()}});
+document.querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{state.filter=b.dataset.filter;document.querySelectorAll('[data-filter]').forEach(c=>c.classList.toggle('active',c===b));renderSidebar()}));
+
+async function loadNote(path){
+ if(state.notes.has(path))return state.notes.get(path);
+ const route=path.split('/').map(encodeURIComponent).join('/');
+ const payload=await github('/contents/'+route+'?ref=main');
+ if(payload.encoding!=='base64'||typeof payload.content!=='string')throw new Error('GitHub did not return Markdown content.');
+ const binary=atob(payload.content.replace(/\s/g,'')),buf=Uint8Array.from(binary,c=>c.charCodeAt(0));
+ const content=new TextDecoder('utf-8').decode(buf);
+ state.notes.set(path,content);return content;
+}
+function renderCanvas(content,path){
+  let map;try{map=JSON.parse(content)}catch{return {meta:{status:'invalid-canvas'},toc:[],html:'<p>This Canvas file is invalid JSON.</p>'}}
+  const nodes=Array.isArray(map.nodes)?map.nodes:[],edges=Array.isArray(map.edges)?map.edges:[];
+  const nodeById=new Map(nodes.map(n=>[n.id,n]));const incoming=new Set(edges.map(e=>e.toNode));
+  const rootNodes=nodes.filter(n=>!incoming.has(n.id));const sorted=[...rootNodes,...nodes];
+  const used=new Set(),parts=[];
+  const render=(n,depth)=>{
+    if(!n||used.has(n.id))return;used.add(n.id);
+    if(n.type==='file'&&typeof n.file==='string'){
+      const label=niceName(n.file);
+      parts.push(`<li class="canvas-item"><a class="wiki" href="#" data-target="${esc(n.file)}">${esc(label)}</a></li>`);
+    }else if(n.type==='text'&&typeof n.text==='string'){
+      parts.push(`<li class="canvas-item">${esc(n.text.slice(0,190))}</li>`);
+    }
+    for(const e of edges.filter(e=>e.fromNode===n.id))render(nodeById.get(e.toNode),depth+1);
+  };
+  for(const n of sorted)render(n,0);
+  return {meta:{status:'visual-map-index'},toc:[],text:content,html:`<h1>${esc(niceName(path))}</h1><p>This visual Canvas map is shown as a list of linked notes in reading mode. Tap a topic to read it.</p><ul class="canvas-list">${parts.join('')}</ul>`};
+}
+function siblingNotes(path){const folder=path.split('/').slice(0,-1).join('/');return state.files.filter(f=>f.split('/').slice(0,-1).join('/')===folder)}
+function navigation(path){const peers=siblingNotes(path),idx=peers.indexOf(path),prev=peers[idx-1],next=peers[idx+1];
+ $('#prev-note').disabled=!prev;$('#next-note').disabled=!next;
+ $('#prev-title').textContent=prev?niceName(prev):'Beginning of section';
+ $('#next-title').textContent=next?niceName(next):'End of section';
+ $('#prev-note').dataset.note=prev||'';$('#next-note').dataset.note=next||'';
+}
+function saveReadingPosition(){if(!state.current)return;const area=$('#reading-scroll'),length=area.scrollHeight-area.clientHeight;
+ const fraction=length>0?Math.max(0,Math.min(1,area.scrollTop/length)):1;
+ $('#progress-line').style.width=Math.round(fraction*100)+'%';
+ if(Date.now()-scrollSaveAt>750){scrollSaveAt=Date.now();try{localStorage.setItem(KEY+':progress:'+state.current,Math.round(fraction*100))}catch{}}
+}
+async function openNote(path,heading=''){
+ if(!state.files.includes(path)){toast('That note is not available in this vault.');return;}
+ if(state.loading)return;
+ state.loading=true;
+ const article=$('#article');article.innerHTML='<div class="empty">Opening note from GitHub…</div>';
+ try{
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';
+  const markdown=await loadNote(path),note=/\.canvas$/i.test(path)?renderCanvas(markdown,path):renderMarkdown(markdown),meta=note.meta;
+  state.current=path;requestedPath=path;
+  const title=niceName(path);
+  const sourceParts=path.split('/');
+  $('#breadcrumb').innerHTML='<strong>'+esc(sourceParts.slice(0,-1).join(' / ')||'Vault')+'</strong> &nbsp;/&nbsp; '+esc(title);
+  const status=meta.status?'<span class="property">'+esc(meta.status.replace(/-/g,' '))+'</span>':'';
+  const subject=meta.subject?'<span class="property">'+esc(meta.subject)+'</span>':'';
+  const progress=localStorage.getItem(KEY+':progress:'+path)||'';
+  const course=path.endsWith('.canvas')?'OBSIDIAN CANVAS':path.includes('01-Semester-1')?'SEMESTER I':path.includes('02-Semester-2')?'SEMESTER II':path.includes('10-Books')?'READING LIBRARY':'LAW NOTES';
+  const toc=note.toc.filter(h=>h.level<=3);
+  const intro=`<div class="note-eyebrow">${course} · GITHUB VAULT${progress?' · '+esc(progress)+'% READ':''}</div><div class="note-properties"><span class="property">${esc(path)}</span>${subject}${status}</div>`;
+  const headingHtml=note.toc.some(h=>h.level===1)?'':`<h1>${esc(title)}</h1>`;
+  const tocHtml=toc.length>3?`<details class="toc"><summary>ON THIS PAGE · ${toc.length} SECTIONS</summary>${toc.map(h=>`<a class="${h.level>2?'toc-nested':''}" href="#${esc(h.id)}" data-heading="${esc(h.id)}">${esc(h.title)}</a>`).join('')}</details>`:'';
+  article.innerHTML=intro+headingHtml+tocHtml+note.html;
+  $('#reading-scroll').scrollTop=0;$('#progress-line').style.width='0%';
+  $('#save-btn').classList.toggle('saved',state.saved.has(path));
+  $('#save-btn').innerHTML=state.saved.has(path)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
+  navigation(path);renderSidebar();settingsSave();
+  history.replaceState(null,'',location.pathname+'?file='+encodeURIComponent(path));
+  if(heading){requestAnimationFrame(()=>{const el=document.getElementById(slug(heading));if(el)el.scrollIntoView({behavior:'smooth',block:'start'});else toast('Opened note; heading not found.')})}
+ }catch(error){article.innerHTML=`<div class="empty"><h2>Could not open this note</h2><p>${esc(error.message)}</p><button type="button" class="primary-btn" id="retry-note">Retry</button></div>`;$('#retry-note').addEventListener('click',()=>void openNote(path));}
+ finally{state.loading=false;}
+}
+$('#article').addEventListener('click',event=>{
+ const link=event.target.closest('a[data-target]');if(!link)return;
+ event.preventDefault();const result=resolveLink(link.dataset.target,state.current,state.files);
+ if(!result){toast('This link points to another file or an ambiguous note.');return;}
+ if(result.path===state.current&&result.heading){document.getElementById(slug(result.heading))?.scrollIntoView({behavior:'smooth'});return;}
+ void openNote(result.path,result.heading);
+});
+$('#article').addEventListener('click',event=>{
+ const a=event.target.closest('a[data-heading]');if(!a)return;
+ event.preventDefault();document.getElementById(a.dataset.heading)?.scrollIntoView({behavior:'smooth'});
+});
+$('#prev-note').addEventListener('click',()=>{if($('#prev-note').dataset.note)void openNote($('#prev-note').dataset.note)});
+$('#next-note').addEventListener('click',()=>{if($('#next-note').dataset.note)void openNote($('#next-note').dataset.note)});
+$('#reading-scroll').addEventListener('scroll',saveReadingPosition,{passive:true});
+$('#save-btn').addEventListener('click',()=>{if(!state.current)return;if(state.saved.has(state.current))state.saved.delete(state.current);else state.saved.add(state.current);
+ $('#save-btn').classList.toggle('saved',state.saved.has(state.current));$('#save-btn').innerHTML=state.saved.has(state.current)?'★ <span class="tool-word">Saved</span>':'☆ <span class="tool-word">Save</span>';
+ settingsSave();applyPrefs();renderSidebar();toast(state.saved.has(state.current)?'Note saved on this device.':'Removed from saved notes.');
+});
+$('#speak-btn').addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){toast('Speech is not available on this phone or browser.');return;}
+ if(state.speaking){window.speechSynthesis.cancel();state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';return;}
+ const text=$('#article').innerText.slice(0,28000);if(!text.trim())return;
+ const speech=new SpeechSynthesisUtterance(text);speech.rate=.95;speech.lang='en-IN';state.speaking=true;$('#speak-btn').innerHTML='■ <span class="tool-word">Stop</span>';
+ speech.onend=speech.onerror=()=>{state.speaking=false;$('#speak-btn').innerHTML='▶ <span class="tool-word">Listen</span>';};window.speechSynthesis.speak(speech);
+});
+function openSidebar(){if(window.innerWidth>850)return;$('#sidebar').classList.add('open');$('#scrim').hidden=false;}
+function closeSidebar(){$('#sidebar').classList.remove('open');if($('#prefs').hidden)$('#scrim').hidden=true;}
+function openPrefs(){$('#prefs').hidden=false;if(window.innerWidth<=850)$('#scrim').hidden=false;}
+function closePrefs(){$('#prefs').hidden=true;if(!$('#sidebar').classList.contains('open'))$('#scrim').hidden=true;}
+$('#menu-btn').addEventListener('click',openSidebar);
+$('#close-sidebar').addEventListener('click',closeSidebar);
+$('#settings-btn').addEventListener('click',()=>$('#prefs').hidden?openPrefs():closePrefs());
+$('#close-prefs').addEventListener('click',closePrefs);
+$('#font-btn').addEventListener('click',openPrefs);
+$('#scrim').addEventListener('click',()=>{closeSidebar();closePrefs()});
+$('#font-size').addEventListener('input',event=>{state.font=Number(event.target.value);applyPrefs();settingsSave()});
+$('#warm-toggle').addEventListener('change',event=>{state.warm=event.target.checked;applyPrefs();settingsSave()});
+$('#disconnect-btn').addEventListener('click',()=>{
+ state.token='';state.notes.clear();state.files=[];state.tree=null;state.current='';
+ if('speechSynthesis' in window)window.speechSynthesis.cancel();
+ $('#reader-view').hidden=true;$('#connect-view').hidden=false;$('#refresh-btn').disabled=true;
+ $('#search').value='';setStatus('Not connected');renderSidebar();closeSidebar();closePrefs();toast('GitHub session disconnected.');
+});
+$('#bottom-library').addEventListener('click',openSidebar);
+$('#bottom-home').addEventListener('click',()=>{if(state.files.length)void openNote(state.files.includes(DEFAULT_PATH)?DEFAULT_PATH:state.files[0]);else toast('Connect your vault first.')});
+$('#bottom-saved').addEventListener('click',()=>{state.filter='saved';document.querySelectorAll('[data-filter]').forEach(b=>b.classList.toggle('active',b.dataset.filter==='saved'));renderSidebar();openSidebar()});
+$('#bottom-text').addEventListener('click',openPrefs);
+window.addEventListener('popstate',()=>{const path=new URLSearchParams(location.search).get('file');if(path&&state.files.includes(path))void openNote(path)});
+if('serviceWorker' in navigator&&location.protocol==='https:')navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{});
+// Authentication lives only in memory; a reload requires a new read-only token.

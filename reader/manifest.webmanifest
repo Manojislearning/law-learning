@@ -1,0 +1,11 @@
+{
+  "name":"KSLU Vault Reader",
+  "short_name":"Vault Reader",
+  "description":"Private GitHub-powered Obsidian-style law notes reader",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "background_color":"#f9f6ee",
+  "theme_color":"#111e30",
+  "icons":[{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}

@@ -105,3 +105,7 @@ Open the published site in Chrome → browser menu → **Install app** or **Add 
 ## Current content priority
 
 Verify the syllabus applicable to the learner’s admission cohort; add new unseen legal issue-spotting problems with examiner-style rubrics; evaluate scheduled recall effectiveness with consented learners; improve Android accessibility. Source documentation: `docs/continuous-improvement.md`.
+
+## Vault Reader — private GitHub-powered Obsidian reading on phones
+
+The standalone reader lives at [./reader/](./reader/) (GitHub Pages: `/law-learning/reader/`). It renders the private `Manojislearning/LAW-NOTES` repository through a user-provided fine-grained, read-only GitHub token held only in active page memory. The public repository contains **only app code**, not the private study notes. Features: Markdown and Obsidian links, Canvas note indexes, folder search, bookmarks, large reading typography, text-to-speech, and installable PWA shell. See [reader/README.md](reader/README.md) for security limitations and Android setup. Run `node --test tests/vault-reader.test.mjs` to verify reader tests.
