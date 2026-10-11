@@ -1,3 +1,11 @@
+## Version 59 — KSLU exam papers with complete worked answers
+
+**Exam Papers & Answers** (the existing `#papers` route) now features a **16-answer bank** covering five Semester I core subjects: **four Contract–I** (two independently authored answers attached to 2022 archive-attributed questions plus two new model prompts), **three Constitutional Law–I**, **three Law of Torts**, **three Family Law–I: Hindu Law**, and **three Criminal Law–I: BNS, 2023**. The 14 newly authored questions are explicitly labelled **original syllabus-aligned model questions**; they are **not claimed to have appeared in past exams**.
+
+Readers can browse separate, year-wise **scanned past-paper archives** for each subject through KSLU Corner (an independent, non-university site), filter subjects, search topics, decode the examiner's command, recall the relevant syllabus, view an *illustrative* ten-mark answer allocation, write an optional **unsaved** draft, reveal a detailed six-section answer, and copy a Markdown study version. Original 2022 question wording is marked *archive-attributed*, not certified against original university scans. All model answers identify statutes or official sources and warn that neither their wording nor indicative marks constitute a KSLU marking scheme.
+
+**Verification limits:** the university's historical 2018–19 syllabus and 2024–25 criminal-law circular establish broad course scope only. Cohort-specific examinations can use different 80/100-mark structures. Current substantive law and case holdings remain subject to source review; the 1986 Consumer Protection Act must not be presented as current law, and BNS answers must use current BNS section numbers with attention to separate commencement of section 106(2). This update does not provide official graded sample scripts or guarantee that a model question will appear in the examination.
+
 ## Version 58 — Readable text and two vocabulary levels
 
 **Reading comfort:** The News feed, article excerpts, study pages and interactive word game use larger mobile-friendly typography and minimum-size touch controls. Dedicated `readability.css` rules respect narrow screens. The older word game's CSS no longer hides the Home entries for News, Case Practice, Review and other features.
