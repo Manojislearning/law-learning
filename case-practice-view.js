@@ -155,7 +155,7 @@ function advance(completed,checks,assessed){
 function draw(){
  var c=currentCase();
  var wrap=shell();
- E(wrap,"p",mode==="retry"||mode==="daily"?"DELAYED RETRIEVAL · NO ANSWER HINTS":"EXAM PRACTICE · NO TOPIC HINTS","cp-eyebrow");
+ E(wrap,"p",mode==="retry"?"SECOND ATTEMPT · NO ANSWER HINTS":mode==="daily"?"DAILY REVIEW · DELAYED RETRIEVAL":"EXAM PRACTICE · NO TOPIC HINTS","cp-eyebrow");
  var box=E(wrap,"article",undefined,"cp-panel");
  var meta=E(box,"div",undefined,"cp-meta");
  E(meta,"span","Case "+(pos+1)+" / "+session.length);E(meta,"span",courseName());
