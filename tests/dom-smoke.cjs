@@ -510,5 +510,66 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(nav.errors,[]);
   nav.dom.window.close();
  }
+
+ {
+  const retry=build("https://example.test/law-learning/index.html?v=49&course=torts#practice");
+  const w=retry.dom.window,area=retry.doc.getElementById("practice-root");
+  assert.ok(area.querySelector(".cp-subjects button[aria-pressed='true']").textContent.includes("Law of Torts"));
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Start 5 cases")).click();
+  const skippedFacts=area.querySelector(".cp-facts").textContent;
+  [...area.querySelectorAll("button")].find(b=>b.textContent==="Skip case").click();
+  for(let k=0;k<4;k++){
+    const text=area.querySelector("textarea");
+    text.value="Issue: identify the issue. Rule: relevant law. Application: material facts. Conclusion: conditional outcome.";
+    text.dispatchEvent(new w.Event("input",{bubbles:true}));
+    const model=area.querySelector(".cp-model");
+    assert.equal(model.hidden,true,"The new and retried case must conceal its reference answer");
+    [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Reveal reference reasoning")).click();
+    assert.equal(model.hidden,false);
+    const ticks=[...area.querySelectorAll(".cp-rubric input")];
+    ticks.forEach((tick,i)=>{tick.checked=!(k===0&&i===1);tick.dispatchEvent(new w.Event("change",{bubbles:true}));});
+    [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Next case")).click();
+  }
+  assert.ok(area.textContent.includes("4 cases compared with reference reasoning; 1 skipped."),"A skipped case must not count as completed");
+  const restart=[...area.querySelectorAll("button")].find(b=>b.textContent.includes("Retry 2 weak or skipped cases"));
+  assert.ok(restart,"Review needs both skipped case and self-reported Rule gap");
+  restart.click();
+  assert.equal(area.querySelector(".cp-model").hidden,true);
+  assert.ok(area.querySelector(".cp-eyebrow").textContent.includes("SECOND ATTEMPT"));
+  const retryFacts=[];
+  for(let k=0;k<2;k++){
+    retryFacts.push(area.querySelector(".cp-facts").textContent);
+    const draft=area.querySelector("textarea");
+    assert.equal(draft.value,"","Retry must not prefill or store the previous essay");
+    draft.value="Issue: legal problem. Rule: applicable statute. Application: facts support and limit the claim. Conclusion: reasoned outcome.";
+    [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Reveal reference reasoning")).click();
+    [...area.querySelectorAll(".cp-rubric input")].forEach(b=>{b.checked=true;b.dispatchEvent(new w.Event("change",{bubbles:true}));});
+    [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Next case")).click();
+  }
+  assert.ok(retryFacts.includes(skippedFacts),"The skipped case should return for a fresh attempt");
+  assert.ok(area.textContent.includes("No cases currently flagged"),"Retried and fully self-checked cases leave no weak queue");
+  assert.ok(![...area.querySelectorAll("button")].some(b=>b.textContent.includes("Retry 2 weak")));
+  assert.equal(w.localStorage.getItem("law-learning-practice-weak-v1"),null,"Case feedback flags must not be permanently stored");
+  assert.deepEqual(retry.errors,[]);
+  retry.dom.window.close();
+ }
+ {
+  const skipped=build("https://example.test/law-learning/index.html?v=49&course=bns#practice");
+  const w=skipped.dom.window,area=skipped.doc.getElementById("practice-root");
+  w.Math.random=function(){return 0;};
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Start 5 cases")).click();
+  const initially=area.querySelector(".cp-facts").textContent;
+  for(let k=0;k<5;k++)[...area.querySelectorAll("button")].find(b=>b.textContent==="Skip case").click();
+  assert.ok(area.textContent.includes("0 cases compared with reference reasoning; 5 skipped."));
+  [...area.querySelectorAll("button")].find(b=>b.textContent.includes("Try a different set")).click();
+  assert.equal(area.querySelector(".cp-facts").textContent,initially,"Skipped cases must remain unseen under deterministic selection");
+  [...area.querySelectorAll("button")].find(b=>b.textContent==="End practice").click();
+  assert.ok(area.querySelector(".cp-panel button").textContent.includes("Start 5 cases"));
+  w.LawAppCore.router.navigate("home");await settle();
+  w.LawAppCore.router.navigate("practice");await settle();
+  assert.ok(!area.textContent.includes("Retry 5 weak"),"Leaving the page discards session-only retry flags");
+  assert.deepEqual(skipped.errors,[]);
+  skipped.dom.window.close();
+ }
  console.log("DOM integration passed: Contract, Torts and BNS IRAC, recall, statutory checks and navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
