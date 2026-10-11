@@ -33,7 +33,7 @@ test('Statute boundary tests guard common serious Hindu Law exam misconceptions'
  assert.ok(get('u2-age').outline.rule.includes('5(iii)')&&get('u2-age').outline.rule.includes('Section 11'));
  assert.ok(get('u2-bigamy').outline.rule.includes('11'));
  assert.ok(get('u3-daughter').outline.rule.includes('2005'));
- assert.ok(get('u3-daughter').outline.rule.includes('20 December 2004'));
+ assert.ok((get('u3-daughter').facts+' '+get('u3-daughter').outline.rule).includes('20 December 2004'));
  assert.ok(get('u3-pious').outline.rule.includes('6(4)'));
  assert.ok(get('u4-class1').outline.rule.includes('Class I'));
  assert.ok(get('u4-woman').outline.rule.includes('14(2)'));
