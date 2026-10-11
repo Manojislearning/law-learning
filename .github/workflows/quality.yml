@@ -34,6 +34,8 @@ jobs:
         run: node tests/news-dom.cjs
       - name: Verify both vocabulary levels and saved learning history
         run: node tests/word-levels-dom.cjs
+      - name: Verify KSLU question archive, answer disclosure and search
+        run: node tests/past-paper-dom.cjs
 
   mobile_browser:
     name: Chromium mobile viewport and keyboard checks
