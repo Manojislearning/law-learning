@@ -2,7 +2,7 @@
 (function(root){"use strict";var data={
   "schema": 1,
   "title": "Changed Facts · Apply the Rule",
-  "disclaimer": "Original hypothetical variations for self-assessment, not official KSLU questions. Legal effects are conditional on all material facts and current statutes. No essay scoring or permanent data storage.",
+  "disclaimer": "Original changed-fact hypotheticals for Contract, Torts, BNS and Constitutional Law–I. Not official KSLU papers, automated essay grades or definitive court outcomes. Source references are linked through their parent cases; saved written answers are not retained.",
   "sourceDate": "2026-10-11",
   "items": [
     {
@@ -169,6 +169,61 @@
       "rule": "BNS Section 318 addresses cheating by deception with the statutory requirements; Section 316 concerns criminal breach of trust involving entrustment and dishonest misuse.",
       "application": "The prior officer was entrusted with earmarked repairs funds and later diverted them. This version alleges dishonest inducement from the outset, raising the cheating route. Proof of initial intention and other ingredients remains essential.",
       "trap": "A simple unfulfilled supply contract is not automatically cheating without evidence of deception and the required intention."
+    },
+    {
+      "parentId": "u1-birth",
+      "title": "Both parents' details are now supplied",
+      "changedFacts": "The 2006-born child's file now establishes that at birth one parent was an Indian citizen and the other parent was not an illegal migrant under the applicable statutory definition. The birth certificate is authentic; no subsequent acquisition or termination facts are stated.",
+      "question": "How does adding verified parental citizenship and immigration status affect the 2006 birth claim?",
+      "rule": "Citizenship Act, 1955 Section 3 distinguishes birth dates and parental conditions; for a post-2004 birth the citizen-parent and other-parent-not-illegal-migrant circumstances can matter.",
+      "application": "The original version lacked parental data and could not support a categorical finding. These added facts address key statutory ingredients, though evidence, precise birth date and subsequent legal status still matter.",
+      "trap": "Do not infer from 'born in India' alone that the post-2004 rule is satisfied; distinguish the exact statutory qualification and later status changes.",
+      "id": "constitution-u1-birth",
+      "subject": "constitution"
+    },
+    {
+      "parentId": "u2-equality",
+      "title": "The fee distinction now has a public purpose",
+      "changedFacts": "This time the council publishes two market-stall fee tiers under a valid municipal rule. One group of vendors occupies much larger, serviced, permanent stalls and the other uses small temporary stalls. The fees reflect independently documented differences in space, utilities and maintenance cost.",
+      "question": "Does a documented, relevant difference alter the Article 14 equality analysis?",
+      "rule": "Article 14 does not prohibit all differentiation; a classification must have legally defensible grounds, with intelligible differentia and rational connection to the regulation's purpose, subject to other applicable equality standards.",
+      "application": "Unlike the officer's unexplained personal preference, these classes concern demonstrable service and cost differences. Examine evidence, proportionality where relevant and the actual delegated authority before deciding whether the fee gap is justified.",
+      "trap": "Do not write either 'every unequal fee violates Article 14' or 'any published classification is automatically constitutional' without testing its rational basis.",
+      "id": "constitution-u2-equality",
+      "subject": "constitution"
+    },
+    {
+      "parentId": "u3-speech",
+      "title": "A narrowly targeted safety measure",
+      "changedFacts": "Instead of forbidding all criticism, a duly authorised law limits the use of large amplified sound systems after midnight in crowded residential streets, regardless of political viewpoint. Ordinary posters and peaceful daytime discussions remain permitted. The authority supplies documented health and public-order concerns.",
+      "question": "What legal difference does a narrowly drafted, viewpoint-neutral rule with a specified public-order basis make?",
+      "rule": "Article 19(1)(a) protects expression, while reasonable restrictions must be anchored to the Article 19(2) grounds and valid law. Scope, proportionality and the actual evidence matter.",
+      "application": "The original order targeted embarrassing criticism and cited no recognised restriction ground. The revised measure targets late-night amplification with stated health and public-order reasons while leaving alternative means of expression available.",
+      "trap": "Do not assume mentioning 'public order' guarantees validity. Evaluate whether the actual statutory basis, necessity and restriction are reasonable.",
+      "id": "constitution-u3-speech",
+      "subject": "constitution"
+    },
+    {
+      "parentId": "u4-arrest",
+      "title": "Preventive detention requires separate treatment",
+      "changedFacts": "The person is now held under a claimed preventive-detention statute, rather than being arrested for trial of an ordinary cognisable offence. Officials provide no detention grounds and say the specific constitutional safeguards for preventive detainees can never apply. Whether the detention law is valid is disputed.",
+      "question": "How does a claimed preventive-detention order change the applicable Article 22 analysis?",
+      "rule": "Article 22(3) creates express distinctions for specified preventive-detention situations. Articles 22(4)–(7), including communication of grounds and representation safeguards, impose distinct constitutional conditions, subject to the text and valid legislation.",
+      "application": "It would be wrong simply to import the ordinary-arrest 24-hour magistrate test without checking Article 22(3). Yet the authorities cannot conclude preventive detention makes all safeguards disappear; examine grounds, representation and applicable statutory procedures.",
+      "trap": "Do not confuse Article 22's ordinary criminal-arrest rights with the different safeguards and exceptions for preventive detention.",
+      "id": "constitution-u4-arrest",
+      "subject": "constitution"
+    },
+    {
+      "parentId": "u5-writs",
+      "title": "No fundamental-rights claim is pleaded",
+      "changedFacts": "A contractor challenges a municipal authority's refusal to issue a statutory tax-clearance certificate. The contractor alleges that a valid procedural rule was misapplied but cannot identify a fundamental-rights violation. The contractor seeks either Supreme Court relief directly under Article 32 or High Court relief under Article 226.",
+      "question": "Which constitutional writ route is better explained by the new purely statutory dispute?",
+      "rule": "Article 32 is tied to enforcement of fundamental rights; Article 226 includes writ jurisdiction for fundamental rights and for any other purpose, subject to justiciability, maintainability, alternative remedies and other judicially applied limits.",
+      "application": "The modified facts assert misuse of a statutory procedure without pleading a fundamental-rights breach. This makes direct Article 32 jurisdiction harder to establish, while a properly framed Article 226 challenge may be considered by a jurisdictionally appropriate High Court.",
+      "trap": "Do not say every contractual or statutory dispute automatically warrants a writ, or that Article 32 and 226 have identical jurisdiction.",
+      "id": "constitution-u5-writs",
+      "subject": "constitution"
     }
   ]
 };
