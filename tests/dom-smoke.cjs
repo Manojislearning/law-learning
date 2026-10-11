@@ -391,5 +391,64 @@ async function settle(){await new Promise(r=>setTimeout(r,40));}
   assert.deepEqual(mv.errors,[]);
   mv.dom.window.close();
  }
- console.log("DOM integration passed: Contract I lessons, spaced recall, balanced IRAC case practice and offline-safe navigation.");
+
+ {
+  const t=build("https://example.test/law-learning/index.html?course=torts&v=47#practice");
+  const w=t.dom.window,doc=t.doc,root=doc.getElementById("practice-root");
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.ok(root.textContent.includes("Law of Torts"));
+  assert.ok(root.querySelector('.cp-subjects .cp-button[aria-pressed="true"]').textContent.includes("Law of Torts"));
+  assert.equal(w.LawTortsCaseData.cases.length,15);
+  assert.equal(w.LawCaseData.cases.length,15,"Old Contract I cases must still load");
+  const start=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases"));
+  assert.ok(start);start.click();
+  const seenUnits=new Set(),facts=new Set(),initialStorage=w.localStorage.length;
+  for(let k=0;k<5;k++){
+   assert.ok(root.textContent.includes("Case "+(k+1)+" / 5"));
+   const fact=root.querySelector(".cp-facts").textContent;assert.ok(fact.length>65);
+   facts.add(fact);
+   const answer=root.querySelector(".cp-model");assert.ok(answer.hidden,"Reference must start hidden");
+   const button=[...root.querySelectorAll("button")].find(x=>x.textContent.includes("Reveal reference reasoning"));
+   button.click();assert.equal(answer.hidden,true,"Torts case requires a written attempt");
+   root.querySelector("textarea").value="Issue: evaluate the relevant wrong. Rule: apply the appropriate law. Application: balance the facts. Conclusion: reasoned outcome.";
+   button.click();assert.equal(root.querySelector(".cp-model").hidden,false);
+   const header=root.querySelector(".cp-model .cp-eyebrow").textContent;
+   const matched=header.match(/Law of Torts · Unit (I|II|III|IV|V) ·/);
+   assert.ok(matched,"The unit must only be disclosed with the model answer");
+   seenUnits.add(matched[1]);
+   assert.ok(root.querySelectorAll(".cp-case-source[href^='https://']").length>0);
+   assert.equal(root.querySelectorAll(".cp-rubric input").length,4);
+   assert.ok(root.querySelector(".cp-coaching").tagName==="DETAILS");
+   [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Next case")).click();
+  }
+  assert.equal(seenUnits.size,5,"Torts practice must cover all five syllabus units");
+  assert.equal(facts.size,5);
+  assert.ok(root.textContent.includes("You finished the set"));
+  assert.equal(w.localStorage.length,initialStorage,"Torts answers must not change local storage");
+  [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Try a different set")).click();
+  assert.ok(!facts.has(root.querySelector(".cp-facts").textContent),"New Torts sets should prioritize unseen cases");
+  [...root.querySelectorAll("button")].find(x=>x.textContent.includes("End practice")).click();
+  const contract=[...root.querySelectorAll(".cp-subjects button")].find(x=>x.textContent.includes("Contract"));
+  assert.ok(contract);contract.click();
+  assert.ok(root.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Contract"));
+  [...root.querySelectorAll("button")].find(x=>x.textContent.includes("Start 5 cases")).click();
+  assert.ok(root.textContent.includes("Contract–I"),"Switching back must launch original Contract I questions");
+  assert.deepEqual(t.errors,[]);
+  t.dom.window.close();
+ }
+ {
+  const via=build("https://example.test/law-learning/index.html?v=47#syllabus");
+  const w=via.dom.window,d=via.doc;
+  findButton(d,"First Year").click();
+  findButton(d,"Semester 1").click();
+  findButton(d,"Law of Torts").click();
+  const tortButton=findButton(d,"Torts Case Practice");
+  assert.ok(tortButton,"Torts syllabus should directly link to mixed reasoning practice");
+  tortButton.click();await settle();
+  assert.equal(w.LawAppCore.router.current(),"practice");
+  assert.ok(d.querySelector('.cp-subjects button[aria-pressed="true"]').textContent.includes("Law of Torts"));
+  assert.deepEqual(via.errors,[]);
+  via.dom.window.close();
+ }
+ console.log("DOM integration passed: Contract I & Torts mixed IRAC, spaced recall, source-grounded statutes and navigation.");
 })().catch(err=>{console.error(err);process.exitCode=1;});
