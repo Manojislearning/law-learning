@@ -420,7 +420,7 @@ renderQuestions();
 setupNotes();
 renderWord();
 
-if ("speechSynthesis" in window) {
+if (window.speechSynthesis && typeof window.speechSynthesis.getVoices === "function") {
   window.speechSynthesis.getVoices();
 }
 
