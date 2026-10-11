@@ -93,6 +93,7 @@ async function main(){
      return {initial,result};
    });
    assert.ok(pinch.result<pinch.initial,"Two-finger pinch out must zoom in");
+   await page.locator("#map-fit").click();
    await page.locator("#map-scene [aria-label='Constitutionalism'] [data-open-note]").click();
    await page.locator("#article h1").filter({hasText:"Constitutionalism"}).waitFor();
    assert.equal(await page.locator("#map-overlay").isVisible(),false,"Backlink opens the Markdown note");
@@ -121,7 +122,7 @@ async function main(){
    assert.equal(await page.locator("#article .study-page:visible").count(),1);
 
    if(mobile){
-    await page.locator("#bottom-library").click();
+    await page.locator("#menu-btn").click();
     assert.equal(await page.locator("#sidebar").evaluate(el=>el.classList.contains("open")),true);
     await page.locator("#search").fill("Preamble");
     assert.ok((await page.locator("#sidebar-content [data-note]").count())>=1);
