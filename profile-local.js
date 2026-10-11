@@ -14,7 +14,7 @@ host.innerHTML='<div class="local-profile"><h2>Profile</h2><p class="muted-note"
 '<label class="check"><input id="profile-motion" type="checkbox"> Reduce animations</label>'+
 '<label class="check"><input id="profile-text" type="checkbox"> Larger text</label>'+
 '<button id="profile-save" type="button">Save preferences</button><p id="profile-status" role="status" aria-live="polite"></p></section>'+
-'<section><h3>Keep a backup</h3><p class="muted-note">Your progress, review dates and personal notes stay in this browser. You can export them before changing phones or clearing browser data.</p>'+
+'<section><h3>Keep a backup</h3><p class="muted-note">Your progress, revision dates, case-revisit flags and personal notes stay in this browser. You can export them before changing phones or clearing browser data.</p>'+
 '<button id="profile-export" type="button">Export data</button><button class="secondary" id="profile-import-start" type="button">Import backup</button>'+
 '<input id="profile-import-file" type="file" accept=".json,application/json" hidden>'+
 '<small>Exported backups can contain your private notes. Store them securely and do not share them publicly. Before importing, you can review which items will change. Older app backups are supported; missing records are preserved.</small></section>'+
@@ -73,6 +73,7 @@ $("profile-import-file").addEventListener("change",async function(){
   if(info.hasNotes)what.push("personal notes");
   if(info.hasProfile)what.push("profile preferences");
   if(info.hasReview)what.push(info.reviewCards+" scheduled review concepts");
+  if(info.hasCaseReview)what.push(info.caseReviewCount+" case-revisit records (no written answers)");
   var old=info.migratedFrom!==null?"\nThis older backup will be migrated to the current format.":"";
   var permission=window.confirm("Restore these items from the backup?\n\n"+what.join("\n")+
     "\n\nExisting data for those items will be replaced. Items not in the backup will be kept."+old+
