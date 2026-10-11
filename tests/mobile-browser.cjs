@@ -107,7 +107,7 @@ async function run(){
    await page.locator("#law-updates-root .law-tab").filter({hasText:"Motor Vehicles"}).tap();
    assert.ok((await root.innerText()).includes("No-fault compensation"));
    assert.ok((await root.innerText()).includes("₹5 lakh"));
-   assert.equal(await page.locator("#law-updates-root .law-tab").count(),3);
+   assert.equal(await page.locator("#law-updates-root .law-controls .law-tab").count(),3,"Only the three topic tabs are counted");
    assert.equal(errors.length,0,"Law check errors at "+width+"px: "+errors.join("; "));
    await context.close();
   }
