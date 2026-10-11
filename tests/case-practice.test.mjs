@@ -86,3 +86,28 @@ test('App exposes practice route without introducing separate hash navigation or
  assert.ok(source.includes('model.hidden=false'));
  assert.ok(source.includes('no-upload-sentinel')===false);
 });
+
+
+test('IRAC self-check gives case-specific guidance only for criteria the student did not mark',()=>{
+ const sample=Bank.cases.find(c=>c.id==='u2-fraud');
+ const none=Core.missingGuidance(sample,[false,false,false,false]);
+ assert.equal(none.length,4);
+ assert.deepEqual(none.map(x=>x.key),['issue','rule','application','conclusion']);
+ assert.ok(none[1].message.includes('Section'));
+ assert.ok(none[2].message.includes('seller'));
+ const partial=Core.missingGuidance(sample,[true,false,true,false]);
+ assert.deepEqual(partial.map(x=>x.key),['rule','conclusion']);
+ assert.ok(partial[0].message.includes(sample.outline.rule));
+ const complete=Core.missingGuidance(sample,[true,true,true,true]);
+ assert.deepEqual(complete,[]);
+ assert.throws(()=>Core.missingGuidance(sample,[true,false]),/Invalid/);
+ assert.throws(()=>Core.missingGuidance(sample,[true,true,"yes",false]),/Invalid/);
+});
+test('Student feedback is clearly self-reported rather than an essay score',()=>{
+ const view=file('case-practice-view.js');
+ assert.ok(view.includes('core.missingGuidance(c,checks)'));
+ assert.ok(view.includes('aria-live'));
+ assert.ok(view.includes('not an examination mark')||view.includes('Not an examination mark'));
+ assert.ok(view.includes('readOnly=true'));
+ assert.ok(!view.includes('localStorage.setItem'));
+});
