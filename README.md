@@ -1,3 +1,9 @@
+## Version 61 — Simple titles, no menu subtitles
+
+The Home and Student menus now show compact **title-only buttons**, with no descriptive subheadlines, numbering or category labels. Home **Words** is renamed **Learn Words**. Within Learn Words the two choices are **Legal Words** and **Difficult Words**. The second choice retains the same 115 advanced-English entries and the same storage IDs; only the user-facing title has changed. Each menu remains accessible by keyboard or touch with at least 44px targets.
+
+The secondary route kicker has been visually removed. Course descriptions, statutory cautions, model answers, and source citations inside learning content remain intact; removing those would undermine study accuracy. Offline caching is bumped to v61 without resetting local notes or progress.
+
 ## Version 60 — Student hub navigation
 
 Home now has **one Student card** instead of separate cards for Syllabus, Topic Brain Branches, Subjects and Exam Papers & Answers. Selecting **Student** opens an accessible, responsive four-entry hub:
