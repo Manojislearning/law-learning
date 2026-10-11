@@ -16,7 +16,7 @@
     var saved=readSaved();
     return state.items.filter(function(a){
       if(state.tab==="Latest")return true;
-      if(state.tab==="Important")return a.priority>=2;
+      if(state.tab==="Important")return a.priority>=1;
       if(state.tab==="Saved")return saved.includes(a.id);
       return a.category===state.tab;
     });
