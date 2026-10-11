@@ -10,7 +10,7 @@ var otherSemesters={"2":["Constitutional Law – II","Contract – II","Labour L
 var topicsCache=[];
 var courseIndex=0,unitIndex=0,topicIndex=0;
 function E(box,tag,text,cls){
- var n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;box.appendChild(n);return n;
+ var n=window.LawAppCore.ui.node(document,tag,text,cls);box.appendChild(n);return n;
 }
 function B(box,title,caption,go){
  var button=E(box,"button",undefined,"sf-choice");button.type="button";
@@ -131,12 +131,12 @@ var navigatingFromSubject=false;
 window.openSyllabusUnit=function(semester,subject,unit){
  if(semester!==1||!KSLU_FIRST_SEMESTER.courses[subject]||!KSLU_FIRST_SEMESTER.courses[subject].units[unit])return false;
  statePath=[{level:"year",value:1},{level:"semester",value:1},{level:"subject",value:subject},{level:"unit",value:unit}];
- direction="forward";navigatingFromSubject=true;
- if(location.hash!=="#syllabus")location.hash="syllabus";
+ direction="forward";navigatingFromSubject=location.hash!=="#syllabus";
+ if(navigatingFromSubject)window.LawAppCore.router.navigate("syllabus");
  render();return true;
 };
-window.addEventListener("hashchange",function(){
- if(location.hash!=="#syllabus")return;
+window.LawAppCore.router.subscribe(function(route){
+ if(route!=="syllabus")return;
  if(navigatingFromSubject){navigatingFromSubject=false;return;}
  if(statePath.length){statePath=[];direction="forward";render();}
 });
