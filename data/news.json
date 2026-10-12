@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-12T06:11:14Z",
+  "generatedAt": "2026-10-12T15:45:05Z",
   "items": [
+    {
+      "id": "076d519e56d5214e",
+      "title": "Ex-Luthra & Luthra Partner Samarjit G. Pattnaik Launches Specialised Litigation Firm Trinetra Legal LLP",
+      "url": "https://legal.economictimes.indiatimes.com/news/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp/134886335",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-12T07:52:42Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134886335,imgsize-86616,width-1200,height=627,overlay-etlegal,resizemode-75/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp.jpg",
+      "brief": "Samarjit G. Pattnaik, former partner at Karanjawala & Co. and Luthra & Luthra, announces the launch of Trinetra Legal LLP, a specialized firm focusing…"
+    },
+    {
+      "id": "d98b49d8609614ed",
+      "title": "Ex-Luthra & Luthra Partner Samarjit G. Pattnaik Launches Trinetra Legal LLP",
+      "url": "https://legal.economictimes.indiatimes.com/news/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp/134886335",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-12T07:52:42Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134886335,imgsize-86616,width-1200,height=627,overlay-etlegal,resizemode-75/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp.jpg",
+      "brief": "Samarjit G. Pattnaik, former partner at Karanjawala & Co. and Luthra & Luthra, announces the launch of Trinetra Legal LLP, a specialized firm focusing…"
+    },
     {
       "id": "d685c46f7a2c7ed6",
       "title": "Vaibhav Mehta joins Qure.ai as Chief Legal Officer",
@@ -80,17 +102,6 @@
       "brief": "Gujarat Government SOP: The Gujarat government has instituted a stringent time-bound Standard Operating Procedure (SOP) for state departments to act on High Court judgments…"
     },
     {
-      "id": "0789a78a79aef6ca",
-      "title": "SC reserves verdict on pleas challenging HC order striking down attendance mandate for law students",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-reserves-verdict-on-pleas-challenging-hc-order-striking-down-attendance-mandate-for-law-students/134757902",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-07T06:12:56Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134757902,imgsize-150984,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-reserves-verdict-on-pleas-challenging-hc-order-striking-down-attendance-mandate-for-law-students.jpg",
-      "brief": "Supreme Court Attendance Mandate: The Supreme Court has set to review a High Court ruling that prevents law colleges from barring students from exams…"
-    },
-    {
       "id": "41cd237789c1c5b8",
       "title": "Punjab Cabinet clears Ranjitgarh Development Authority Bill",
       "url": "https://legal.economictimes.indiatimes.com/news/law-policy/punjab-cabinet-clears-ranjitgarh-development-authority-bill/134713041",
@@ -100,17 +111,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-134713041,imgsize-194592,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/punjab-cabinet-clears-ranjitgarh-development-authority-bill.jpg",
       "brief": "The Punjab Cabinet, led by Chief Minister Bhagwant Mann, has approved the Ranjitgarh Development Authority Bill, 2026, aimed at eco-tourism and sustainable development around…"
-    },
-    {
-      "id": "31c87150a1996724",
-      "title": "AI has become a necessity for legal teams, says LexisNexis India and Southeast Asia MD Gaythri Raman",
-      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/ai-has-become-a-necessity-for-legal-teams-says-lexisnexis-southeast-asia-md-gaythri-raman/134538292",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-09-28T10:48:34Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134538292,imgsize-470028,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/ai-has-become-a-necessity-for-legal-teams-says-lexisnexis-southeast-asia-md-gaythri-raman.jpg",
-      "brief": "Explore how LexisNexis' Protégé is transforming the legal landscape in India and Southeast Asia with innovative AI solutions and fostering trust in legal tech."
     }
   ]
 }
