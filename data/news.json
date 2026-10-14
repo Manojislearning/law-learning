@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-14T17:21:35Z",
+  "generatedAt": "2026-10-14T21:48:43Z",
   "items": [
+    {
+      "id": "6bfed74edd6dfb72",
+      "title": "Tribunals cannot hold an appeal against CoC-approved resolution plan: NCLAT",
+      "url": "https://legal.economictimes.indiatimes.com/news/regulators/tribunals-cannot-hold-an-appeal-against-coc-approved-resolution-plan-nclat/134948937",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-14T17:59:33Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134948937,imgsize-67096,width-1200,height=627,overlay-etlegal,resizemode-75/regulators/tribunals-cannot-hold-an-appeal-against-coc-approved-resolution-plan-nclat.jpg",
+      "brief": "The NCLAT has ruled that no appeal can be held against resolution plans approved by the Committee of Creditors, emphasizing the restrictive jurisdiction of…"
+    },
+    {
+      "id": "74c92c78efda4242",
+      "title": "SC grants bail to industrialist Sanjay Sureka in money laundering case",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-grants-bail-to-industrialist-sanjay-sureka-in-money-laundering-case/134948344",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-14T17:41:10Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-134948344,imgsize-150984,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-grants-bail-to-industrialist-sanjay-sureka-in-money-laundering-case.jpg",
+      "brief": "The Supreme Court has granted bail to Sanjay Sureka, owner of Concast Steel and Power Limited, in a significant money laundering case involving alleged…"
+    },
     {
       "id": "5e353ece66fd3d3b",
       "title": "Clifford Chance, Cavenagh Law to end Singapore formal law alliance",
@@ -25,17 +47,6 @@
       "brief": "NSEL Case: A special PMLA court in Mumbai has approved the monetisation of assets worth Rs 3,464 crore linked to the NSEL money laundering…"
     },
     {
-      "id": "076d519e56d5214e",
-      "title": "Ex-Luthra & Luthra Partner Samarjit G. Pattnaik Launches Specialised Litigation Firm Trinetra Legal LLP",
-      "url": "https://legal.economictimes.indiatimes.com/news/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp/134886335",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-12T07:52:42Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134886335,imgsize-86616,width-1200,height=627,overlay-etlegal,resizemode-75/industry/ex-luthra-luthra-partner-samarjit-g-pattnaik-launches-specialised-litigation-firm-trinetra-legal-llp.jpg",
-      "brief": "Samarjit G. Pattnaik, former partner at Karanjawala & Co. and Luthra & Luthra, announces the launch of Trinetra Legal LLP, a specialized firm focusing…"
-    },
-    {
       "id": "ddb52e6e66b00f8d",
       "title": "PMLA court directs ED to monetise NSEL assets, distribute Rs 1,950 crore to 63 Moons under settlement scheme",
       "url": "https://legal.economictimes.indiatimes.com/news/litigation/pmla-court-directs-ed-to-monetise-nsel-assets-distribute-rs-1950-crore-to-63-moons-under-settlement-scheme/134874205",
@@ -45,17 +56,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-134874205,imgsize-37094,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/pmla-court-directs-ed-to-monetise-nsel-assets-distribute-rs-1950-crore-to-63-moons-under-settlement-scheme.jpg",
       "brief": "A special PMLA court has directed the Enforcement Directorate to monetise assets in the NSEL payment default case and distribute Rs 1,950 crore to…"
-    },
-    {
-      "id": "bae44688999b22b2",
-      "title": "Right to protest undisputed, but manner of protest must follow law, observes SC",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/right-to-protest-undisputed-but-manner-of-protest-must-follow-law-observes-sc/134873956",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-11T16:41:04Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134873956,imgsize-305274,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/right-to-protest-undisputed-but-manner-of-protest-must-follow-law-observes-sc.jpg",
-      "brief": "The Supreme Court emphasizes that while the right to protest is indisputable, it must be conducted within the confines of the Police Act, ensuring…"
     },
     {
       "id": "2da64b70ebada4d1",
