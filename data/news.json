@@ -1,7 +1,51 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-16T16:47:15Z",
+  "generatedAt": "2026-10-16T21:23:29Z",
   "items": [
+    {
+      "id": "3f8ca53123eb1f7d",
+      "title": "Supreme Court asks Centre to submit final airfare rules by November 16",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-asks-centre-to-submit-final-airfare-rules-by-november-16/135001479",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-16T18:06:18Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135001479,imgsize-100928,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-asks-centre-to-submit-final-airfare-rules-by-november-16.jpg",
+      "brief": "Supreme Court Airfare Rules: The Supreme Court mandates the Indian government to submit final airfare regulations targeting unfair pricing practices by airlines, following a…"
+    },
+    {
+      "id": "f5596e94b1afde91",
+      "title": "Kriti Sanon approaches Delhi HC for protection of personality rights",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/kriti-sanon-approaches-delhi-hc-for-protection-of-personality-rights/135001230",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-16T17:54:49Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135001230,imgsize-368240,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/kriti-sanon-approaches-delhi-hc-for-protection-of-personality-rights.jpg",
+      "brief": "Bollywood actress Kriti Sanon has sought the Delhi High Court's protection against unauthorized use of her personality rights, including AI-generated content. This case highlights…"
+    },
+    {
+      "id": "a5c425aecd955639",
+      "title": "SC issues notices to Nikhil Wagle, Sanjay Raut in contempt plea over remarks against CJI",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-issues-notices-to-nikhil-wagle-sanjay-raut-in-contempt-plea-over-remarks-against-cji/135001181",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-16T17:52:16Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135001181,imgsize-318114,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-issues-notices-to-nikhil-wagle-sanjay-raut-in-contempt-plea-over-remarks-against-cji.jpg",
+      "brief": "The Supreme Court has issued notices to journalist Nikhil Wagle and MP Sanjay Raut following a contempt petition over disparaging remarks about Chief Justice…"
+    },
+    {
+      "id": "a4e71e83d936e71d",
+      "title": "SC eCommittee inaugurates Digital Court Technology Office to strengthen judicial infrastructure",
+      "url": "https://legal.economictimes.indiatimes.com/news/web-stories/sc-ecommittee-inaugurates-digital-court-technology-office-to-strengthen-judicial-infrastructure/135001103",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-16T17:49:48Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135001103,imgsize-100928,width-1200,height=627,overlay-etlegal,resizemode-75/web-stories/sc-ecommittee-inaugurates-digital-court-technology-office-to-strengthen-judicial-infrastructure.jpg",
+      "brief": "The Supreme Court of India inaugurated the Digital Court Technology Office (DCTO) to enhance judicial infrastructure through technology, ensuring improved efficiency and accessibility in…"
+    },
     {
       "id": "6bfed74edd6dfb72",
       "title": "Tribunals cannot hold an appeal against CoC-approved resolution plan: NCLAT",
@@ -34,17 +78,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-134938541,imgsize-78388,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/clifford-chance-cavenagh-law-to-end-singapore-formal-law-alliance.jpg",
       "brief": "Clifford Chance Singapore and Cavenagh Law LLP have mutually decided to end their Formal Law Alliance, allowing both firms to pursue separate strategic directions…"
-    },
-    {
-      "id": "3398c7bd4400fd9c",
-      "title": "Special court allows monetisation of Rs 3,464-crore attached assets for victims of NSEL case",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/special-court-allows-monetisation-of-rs-3464-crore-attached-assets-for-victims-of-nsel-case/134899127",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-12T17:07:36Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134899127,imgsize-219451,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/special-court-allows-monetisation-of-rs-3464-crore-attached-assets-for-victims-of-nsel-case.jpg",
-      "brief": "NSEL Case: A special PMLA court in Mumbai has approved the monetisation of assets worth Rs 3,464 crore linked to the NSEL money laundering…"
     },
     {
       "id": "2da64b70ebada4d1",
