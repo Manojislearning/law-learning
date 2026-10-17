@@ -86,6 +86,10 @@ async function run(){
    if(width===390&&process.env.SHOT){await page.locator('#w-chooser [data-marriage]').tap();await page.locator(".mlc .cw-bar-btn",{hasText:"All cases"}).tap();await page.locator(".mlc-option").first().tap();await page.screenshot({path:process.env.SHOT,fullPage:true});}
    await ctx.close();
   }
+  { const ctx=await browser.newContext({viewport:{width:390,height:780},isMobile:true});await ctx.route(/^https?:\/\/(?!127\.0\.0\.1)/,r=>r.abort());
+    const page=await ctx.newPage();await page.goto(base+"#marriage",{waitUntil:"load"});
+    await page.locator(".mlc .cw-title").waitFor();assert.equal(await page.locator(".mlc").isVisible(),true,"#marriage opens the game directly");
+    assert.equal(await page.locator("#w-chooser").isVisible(),false);await ctx.close(); }
   console.log("Games checks passed at 320, 390 and 768px: chooser, Confusing Words and Marriage Law rounds, explanations, points, revisit list and Back.");
  }finally{await browser.close();server.close();}
 }

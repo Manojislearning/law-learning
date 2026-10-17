@@ -130,5 +130,14 @@ function finish(){
   view.wrong.forEach(function(c){var p=el("article",undefined,"cw-pair",box);el("p",c.facts,"mlc-facts",p);el("p",c.options[c.answer],"cw-pairtitle",p);el("p",c.why,"mlc-why",p);el("p",c.law,"cw-src",p);links(p,c.law);});
  }
 }
+/* Direct link: …/law-learning/#marriage opens this game. */
+function fromLink(){
+ if(location.hash!=="#marriage")return;
+ if(root.LawAppCore&&root.LawAppCore.router)root.LawAppCore.router.navigate("words");
+ if(history.replaceState)history.replaceState(null,"","#words");
+ setTimeout(open,0);
+}
+root.addEventListener("hashchange",fromLink);
+fromLink();
 root.LawMarriageCases={open:open,close:close,count:DATA.length};
 })(window);
