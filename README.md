@@ -1,3 +1,14 @@
+## Version 64 — Real KSLU exam pattern and repeat topics
+
+**Exam Pattern** (Student → Exam Pattern, `#exam`) was a placeholder. It now shows the real Semester I format, read from **45 scanned 3-year LL.B. papers (April 2022 – January 2026)** across all five subjects:
+
+- **Both paper formats.** 80-mark papers are unit-wise (five compulsory questions, each a 10-mark essay plus a 6-mark note/problem, both with OR). 100-mark papers ask any five of Q1–Q8 (16 marks each, Q8 being two short notes) plus a compulsory Q9 of two 10-mark problems. Each format has a 3-hour time plan. Both formats were set in January 2026 under different paper codes, so students should confirm which applies to them.
+- **What KSLU asks, unit by unit.** Every question was tagged to a syllabus unit. Each topic shows how many papers asked it (for example, writs appeared in 9 of 11 Constitutional Law papers) and when it was last asked. Students can tick topics as ready; the tick list is stored on the device under `law-learning-exam-prep-v1` and is included in backups.
+- **Problems that keep coming back.** 42 paraphrased fact patterns that recur in the papers (air hostess retirement, goods left by mistake, promise to marry after the father's death, widow's maintenance claim, and others), each with the rule to apply and a leading authority.
+- **Links to each scanned paper** on the independent KSLU Corner archive.
+
+Counts are historical frequency only and never a prediction. The Semester III list now shows Labour Law – II and Administrative Law, matching the KSLU three-year scheme.
+
 ## Version 63 — Clean Home and expanded Student menu
 
 The Home menu now presents **Law Updates** (renamed from Current Law Check), Law News, Case Practice, Review, **Learn Words** (light card, not black) and Student. The redundant Home **Notes** shortcut and **Profile & backups** shortcut are removed, while study notes and backups remain available without deleting any stored work. **Continue Contract–I** now appears inside Student and still launches the existing Unit V lessons.

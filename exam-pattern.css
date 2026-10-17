@@ -1,0 +1,44 @@
+/* Exam Pattern v64 */
+#exam-view .xp{max-width:690px;margin:0 auto;padding:4px 0 48px}
+.xp-head h2{font-size:clamp(1.6rem,5vw,2.1rem);letter-spacing:-.02em;margin:6px 0 4px}
+.xp-muted{color:var(--muted);font-size:.86rem;line-height:1.55;margin:4px 0 12px}
+.xp-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 12px}
+.xp-chip{min-height:44px;padding:9px 15px;border-radius:999px;border:1px solid var(--line);
+ background:var(--surface);color:var(--text);font:inherit;font-size:.9rem;font-weight:700;cursor:pointer}
+.xp-chip.is-on{background:var(--text);border-color:var(--text);color:#fff}
+.xp-chip:focus-visible,.xp-topic input:focus-visible,.xp-problem summary:focus-visible{outline:3px solid #557cae;outline-offset:2px}
+.xp-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(16px,4vw,22px);margin:12px 0}
+.xp-card h3{font-size:1.15rem;margin:0 0 4px;line-height:1.35}
+.xp-card h4{font-size:.95rem;margin:18px 0 8px}
+.xp-rows{margin:8px 0 0}
+.xp-row{display:grid;grid-template-columns:minmax(96px,32%) 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--line);font-size:.92rem;line-height:1.5}
+.xp-row dt{font-weight:750}.xp-row dd{margin:0}
+.xp-plan{margin:0;padding:0;list-style:none;counter-reset:step}
+.xp-plan li{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:.9rem;line-height:1.45}
+.xp-plan strong{flex:none;font-variant-numeric:tabular-nums}
+.xp-tip{background:var(--soft-warn);border-left:3px solid #ad6324;border-radius:0 10px 10px 0;padding:11px 13px;font-size:.88rem;line-height:1.55;margin:14px 0 0}
+.xp-progress{font-size:.9rem;margin:10px 0 6px}
+.xp-bar{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.xp-bar span{display:block;height:100%;background:var(--good);transition:width .2s}
+@media (prefers-reduced-motion:reduce){.xp-bar span{transition:none}}
+.xp-unit{border-top:1px solid var(--line);padding-top:16px}
+.xp-topics{list-style:none;margin:0;padding:0}
+.xp-topic{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line)}
+.xp-topic:last-child{border-bottom:0}
+.xp-topic label{display:flex;align-items:flex-start;gap:11px;min-height:44px;cursor:pointer;flex:1;min-width:0}
+.xp-topic input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--good)}
+.xp-topic-text{display:flex;flex-direction:column;font-size:.92rem;line-height:1.42;overflow-wrap:anywhere}
+.xp-topic-text small{color:var(--muted);font-size:.76rem;margin-top:3px}
+.xp-topic.is-hot .xp-topic-text>span{font-weight:720}
+.xp-count{flex:none;min-width:46px;text-align:center;font-size:.8rem;font-weight:780;font-variant-numeric:tabular-nums;
+ padding:5px 8px;border-radius:8px;background:var(--surface-2)}
+.xp-topic.is-hot .xp-count{background:var(--text);color:#fff}
+.xp-problem{border-top:1px solid var(--line)}
+.xp-problem summary{cursor:pointer;padding:13px 0;display:flex;flex-direction:column;gap:4px;font-size:.92rem;line-height:1.48;list-style-position:outside}
+.xp-problem summary small{color:var(--muted);font-size:.76rem}
+.xp-problem-body{padding:0 0 12px;font-size:.9rem;line-height:1.58}
+.xp-problem-body p{margin:6px 0}
+.xp-papers summary{cursor:pointer;font-weight:750;min-height:28px}
+.xp-papers ul{columns:2;column-gap:20px;padding-left:18px;font-size:.88rem;line-height:1.9}
+.xp-papers a{color:#275a8a}
+@media (max-width:420px){.xp-papers ul{columns:1}.xp-row{grid-template-columns:1fr;gap:2px}}

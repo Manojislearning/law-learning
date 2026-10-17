@@ -62,3 +62,7 @@ jobs:
         run: |
           node --check tests/vault-reader-mobile.cjs
           node tests/vault-reader-mobile.cjs
+      - name: Verify Exam Pattern at Android widths
+        run: |
+          node --check tests/exam-pattern-mobile.cjs
+          node tests/exam-pattern-mobile.cjs
