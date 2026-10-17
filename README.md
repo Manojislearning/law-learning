@@ -7,7 +7,7 @@
 - **Problems that keep coming back.** 42 paraphrased fact patterns that recur in the papers (air hostess retirement, goods left by mistake, promise to marry after the father's death, widow's maintenance claim, and others), each with the rule to apply and a leading authority.
 - **Links to each scanned paper** on the independent KSLU Corner archive.
 
-Counts are historical frequency only and never a prediction. The Semester III list now shows Labour Law – II and Administrative Law, matching the KSLU three-year scheme.
+Counts are historical frequency only and never a prediction.
 
 ## Version 63 — Clean Home and expanded Student menu
 

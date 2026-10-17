@@ -65,10 +65,9 @@ test("Exam Pattern page is wired, cached offline, backed up and text-only",()=>{
  assert.match(view,/try\{localStorage\.setItem/);
 });
 
-test("Later-semester list matches the KSLU three-year scheme",()=>{
+test("Later-semester list follows KSLU's 2024-25 scheme document",()=>{
  const flow=read("syllabus-flow.js");
  const sem3=flow.match(/"3":\[([^\]]+)\]/)[1];
- assert.match(sem3,/Labour Law – II/);
- assert.match(sem3,/Administrative Law/);
- assert.doesNotMatch(sem3,/Labour Law – I"/);
+ assert.match(sem3,/Jurisprudence/);
+ assert.match(sem3,/Bharatiya Nagarik Suraksha Sanhita/);
 });
