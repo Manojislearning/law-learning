@@ -6,7 +6,7 @@ var doc=root.document,DATA=root.MARRIAGE_CASES;
 var app=doc.querySelector("#words-view .word-v19"),chooser=doc.getElementById("w-chooser");
 if(!app||!chooser||!Array.isArray(DATA)||!DATA.length)return;
 var KEY="law-learning-marriage-v1",ROUND=8;
-var CATS={all:"All",law:"Which law?",valid:"Valid?",convert:"Conversion",age:"Age",divorce:"Divorce",money:"Children & money",state:"State laws"};
+var CATS={all:"All cases",law:"Which law applies?",valid:"Is the marriage valid?",convert:"Conversion",age:"Age",divorce:"Divorce",money:"Children, maintenance & property",other:"Christian, Parsi, Sikh & Buddhist",state:"State laws: Goa & UCC",abroad:"NRI & marriages abroad"};
 
 function el(tag,text,cls,parent){var n=doc.createElement(tag);if(cls)n.className=cls;if(text!==undefined&&text!==null)n.textContent=String(text);if(parent)parent.appendChild(n);return n;}
 function btn(text,cls,parent,fn){var b=el("button",text,cls,parent);b.type="button";if(fn)b.addEventListener("click",fn);return b;}
@@ -35,18 +35,15 @@ function top(title){box.replaceChildren();btn("← Games","w-change-level",box,c
 function home(){
  top("Marriage Law Cases");
  el("p","Interfaith and inter-caste marriages, conversion, age and divorce. Read the facts and pick what the law says.","cw-lead",box);
- var chips=el("div",undefined,"cw-chips",box);chips.setAttribute("role","group");chips.setAttribute("aria-label","Choose a topic");
+ el("p","Tap a topic to play.","cw-pick",box);
+ var bars=el("nav",undefined,"cw-bars",box);bars.setAttribute("aria-label","Choose a topic");
  Object.keys(CATS).forEach(function(k){
-  var n=k==="all"?DATA.length:DATA.filter(function(c){return c.cat===k;}).length;if(!n)return;
-  var b=btn(CATS[k]+" · "+n,"cw-chip"+(view.cat===k?" is-on":""),chips,function(){view.cat=k;home();});
-  b.setAttribute("aria-pressed",view.cat===k?"true":"false");
+  if(k!=="all"&&!DATA.some(function(c){return c.cat===k;}))return;
+  var b=btn(undefined,"cw-bar-btn",bars,function(){view.cat=k;start();});
+  el("strong",CATS[k],"",b);el("span","→","",b).setAttribute("aria-hidden","true");
  });
- var miss=pool().filter(function(c){return store.missed[c.id];}).length;
- var stats=el("div",undefined,"cw-stats",box);
- [[store.best+"/"+ROUND,"Best round"],[store.played,"Rounds played"],[miss,"To revisit"]].forEach(function(s){var c=el("div",undefined,"cw-stat",stats);el("strong",s[0],"",c);el("span",s[1],"",c);});
- var n=Math.min(ROUND,pool().length);
- btn("Play "+n+" cases","cw-primary",box,start);
- el("p","Each correct answer earns 3 points the first time. Law stated as of October 2026; check the current Act before relying on it.","cw-note",box);
+ var miss=DATA.filter(function(c){return store.missed[c.id];}).length;
+ el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(miss?" · "+miss+" to revisit (they come back first)":"")+". Each correct answer earns 3 points once. Law as of October 2026.","cw-note",box);
  var guide=el("details",undefined,"cw-browse",box);
  el("summary","Quick guide: which law applies?",undefined,guide);
  [["Both Hindu, Jain, Sikh or Buddhist","Hindu Marriage Act, 1955 (caste does not matter)"],
@@ -54,6 +51,10 @@ function home(){
   ["Both Muslim (including after genuine conversion)","Muslim personal law; wife's grounds in the 1939 Act"],
   ["One or both Christian, church wedding","Christian Marriage Act, 1872; divorce under the Divorce Act, 1869"],
   ["Residents of Uttarakhand (not Scheduled Tribes)","Uttarakhand Uniform Civil Code, in force since January 2025"],
+  ["Two Sikhs (Anand Karaj)","Anand Marriage Act for the ceremony; divorce under the Hindu Marriage Act"],
+  ["Two Parsis","Parsi Marriage and Divorce Act, 1936; Parsi Matrimonial Courts"],
+  ["Anyone domiciled in Goa","Goa's family law (Portuguese Civil Code)"],
+  ["Indian citizen marrying abroad at an Indian mission","Foreign Marriage Act, 1969"],
   ["Any wife needing maintenance","BNSS, 2023, s.144, whatever her religion"]].forEach(function(r){
   var c=el("div",undefined,"cw-mean",guide);el("dt",r[0],"",c);el("dd",r[1],"",c);
  });
@@ -103,7 +104,19 @@ function explain(parent,c){
  el("p","Why","cw-subject",e);
  el("p",c.why,"mlc-why",e);
  el("p",c.law,"cw-src",e);
+ links(e,c.law);
  return e;
+}
+/* One search link per authority, so the reader can open the Act or judgment. */
+function links(parent,law){
+ var items=String(law||"").split(";").map(function(x){return x.trim();}).filter(function(x){return x&&!/^Muslim personal law|^Goa family law/i.test(x);});
+ if(!items.length)return;
+ var wrap=el("div",undefined,"cw-links",parent);
+ items.forEach(function(item){
+  var q=item.replace(/,\s*(ss?\.|Art\.|Arts\.).*$/,"").replace(/\s*\((Mulla[^)]*)\)$/,"");
+  var a=el("a","Read: "+item+" ↗","cw-link",wrap);
+  a.href="https://indiankanoon.org/search/?formInput="+encodeURIComponent(q);a.target="_blank";a.rel="noopener noreferrer";
+ });
 }
 
 function finish(){
@@ -114,7 +127,7 @@ function finish(){
  var row=el("div",undefined,"cw-row",box);btn("Play again","cw-primary",row,start);btn("Back to topics","cw-secondary",row,home);
  if(view.wrong.length){
   el("h3","Review what you missed","cw-h3",box);
-  view.wrong.forEach(function(c){var p=el("article",undefined,"cw-pair",box);el("p",c.facts,"mlc-facts",p);el("p",c.options[c.answer],"cw-pairtitle",p);el("p",c.why,"mlc-why",p);el("p",c.law,"cw-src",p);});
+  view.wrong.forEach(function(c){var p=el("article",undefined,"cw-pair",box);el("p",c.facts,"mlc-facts",p);el("p",c.options[c.answer],"cw-pairtitle",p);el("p",c.why,"mlc-why",p);el("p",c.law,"cw-src",p);links(p,c.law);});
  }
 }
 root.LawMarriageCases={open:open,close:close,count:DATA.length};

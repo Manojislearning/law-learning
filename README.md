@@ -1,3 +1,7 @@
+## Version 68 — Tap-to-play topics and more marriage cases
+
+Game topics now appear as large full-width bars. Tapping a bar starts that topic straight away, and topics no longer show case counts. Marriage Law Cases grows to 53 scenarios, with new topics covering Christian, Parsi, Sikh and Buddhist law, Goa's civil code, Uttarakhand live-in registration, NRI and foreign marriages (Foreign Marriage Act; Y. Narasimha Rao), Muslim couples married under the Special Marriage Act, mehr, iddat provision and khap panchayats. Each explanation links every Act or judgment to an Indian Kanoon search so it can be read in full. The quick guide also lists which law each community uses.
+
 ## Version 67 — Marriage Law Cases
 
 A fourth game in **Games** covers 35 scenarios on interfaith and inter-caste marriage, conversion, age and divorce, grouped into seven topics: which law applies, validity, conversion, age, divorce, children and money, and State laws. Examples: a Hindu and a Muslim marrying without converting (Special Marriage Act), conversion to take a second wife (Sarla Mudgal; BNS s.82), a spouse's conversion as a divorce ground (HMA s.13(1)(ii)), child marriage being void in Karnataka (2016 amendment), maintenance for divorced Muslim women (Mohd. Abdul Samad, 2024), and Uttarakhand's Uniform Civil Code. Each answer shows why, with the statute or case. Rounds have 8 cases; missed cases return first, and each correct answer earns 3 points once. Progress is stored under `law-learning-marriage-v1`.

@@ -24,7 +24,9 @@ async function run(){
    await page.locator('#w-chooser [data-confuse]').tap();
    assert.match(await page.locator(".cw-title").innerText(),/Confusing Words/);
    const before=await page.evaluate(()=>window.LawPoints.total());
-   await page.getByRole("button",{name:/^Play 10 questions/}).tap();
+   assert.equal(await page.locator(".cw:not(.mlc) .cw-bar-btn").count(),3,"Three tap-to-play sets");
+   assert.doesNotMatch(await page.locator(".cw:not(.mlc) .cw-bars").innerText(),/\d/,"No counts on sets");
+   await page.locator(".cw:not(.mlc) .cw-bar-btn",{hasText:"All pairs"}).tap();
    let right=0;
    for(let i=0;i<10;i++){
     await page.locator(".cw-option").first().waitFor();
@@ -49,8 +51,8 @@ async function run(){
    assert.equal(after-before,right*3,"3 points per first correct answer");
    const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem("law-learning-confusing-v1")));
    assert.equal(Object.keys(stored.missed).length,10-right);assert.equal(stored.played,1);
-   await page.getByRole("button",{name:"Back to pairs"}).tap();
-   assert.match(await page.locator(".cw-stats").innerText(),/To revisit/);
+   await page.getByRole("button",{name:"Choose another set"}).tap();
+   assert.match(await page.locator(".cw:not(.mlc) .cw-note").innerText(),/to revisit/);
    await page.locator("#back-home").tap();
    assert.equal(await page.locator("#w-chooser").isVisible(),true,"Back returns to the Games chooser");
    assert.deepEqual(errors,[]);
@@ -58,7 +60,11 @@ async function run(){
    await page.locator('#w-chooser [data-marriage]').tap();
    assert.match(await page.locator(".mlc .cw-title").innerText(),/Marriage Law Cases/);
    const mBefore=await page.evaluate(()=>window.LawPoints.total());
-   await page.locator(".mlc").getByRole("button",{name:/^Play \d+ cases/}).tap();
+   const bars=page.locator(".mlc .cw-bar-btn");
+   assert.ok(await bars.count()>=9,"Topic bars");
+   assert.doesNotMatch(await page.locator(".mlc .cw-bars").innerText(),/\d/,"No counts on topics");
+   const bh=await bars.first().boundingBox();assert.ok(bh.height>=60&&bh.width>=Math.min(width,650)-40,"Bars are large and full width");
+   await page.locator(".mlc .cw-bar-btn",{hasText:"All cases"}).tap();
    let mRight=0;
    for(let i=0;i<8;i++){
     await page.locator(".mlc-option").first().waitFor();
@@ -67,6 +73,8 @@ async function run(){
     for(let k=0;k<n;k++){const t=await opts.nth(k).innerText();if((i%3===0)?t!==want:t===want){await opts.nth(k).tap();tapped=true;break;}}
     assert.ok(tapped);if(i%3!==0)mRight++;
     assert.ok(await page.locator(".mlc .cw-explain").isVisible(),"Why panel shows");
+    const hrefs=await page.locator(".mlc .cw-explain .cw-link").evaluateAll(a=>a.map(x=>x.href));
+    assert.ok(hrefs.every(h=>h.startsWith("https://indiankanoon.org/search/?formInput=")),"Source links go to Indian Kanoon search");
     if(i===0){const bad=await page.evaluate(()=>[...document.querySelectorAll(".mlc-option,.mlc .cw-primary")].map(e=>e.getBoundingClientRect()).filter(r=>r.height<44||r.right>innerWidth+1).length);assert.equal(bad,0,width+"px marriage control size");}
     await page.locator(".mlc .cw-card .cw-primary").tap();
    }
@@ -75,7 +83,7 @@ async function run(){
    await page.locator("#back-home").tap();
    assert.equal(await page.locator("#w-chooser").isVisible(),true);
    assert.deepEqual(errors,[]);
-   if(width===390&&process.env.SHOT){await page.locator('#w-chooser [data-marriage]').tap();await page.locator(".mlc").getByRole("button",{name:/^Play/}).tap();await page.locator(".mlc-option").first().tap();await page.screenshot({path:process.env.SHOT,fullPage:true});}
+   if(width===390&&process.env.SHOT){await page.locator('#w-chooser [data-marriage]').tap();await page.locator(".mlc .cw-bar-btn",{hasText:"All cases"}).tap();await page.locator(".mlc-option").first().tap();await page.screenshot({path:process.env.SHOT,fullPage:true});}
    await ctx.close();
   }
   console.log("Games checks passed at 320, 390 and 768px: chooser, Confusing Words and Marriage Law rounds, explanations, points, revisit list and Back.");

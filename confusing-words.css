@@ -56,3 +56,14 @@
 .mlc-options{display:grid;grid-template-columns:1fr;gap:9px}
 .mlc-option{text-align:left;font-weight:700;font-size:.95rem;line-height:1.4;padding:12px 14px}
 .mlc-why{font-size:.92rem;line-height:1.6;margin:0 0 8px}
+/* v68: topics as large tap-to-play bars */
+.cw-pick{font-size:.84rem;font-weight:750;color:var(--muted);margin:4px 0 8px}
+.cw-bars{display:grid;grid-template-columns:1fr;gap:10px;margin:0 0 12px}
+#words-view .cw-bars .cw-bar-btn{appearance:none;box-sizing:border-box;flex-direction:row;width:100%;min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:16px 20px;text-align:left;background:#fff;color:var(--text);border:1px solid var(--line);border-radius:16px;font:inherit;cursor:pointer;box-shadow:0 4px 16px rgba(13,19,33,.04)}
+#words-view .cw-bars .cw-bar-btn strong{font-size:clamp(1.02rem,3.6vw,1.2rem);font-weight:800;line-height:1.3}
+#words-view .cw-bars .cw-bar-btn span{font-size:1.35rem;color:#4d688a;flex:none}
+#words-view .cw-bars .cw-bar-btn:hover{border-color:#9eadc3}
+#words-view .cw-bars .cw-bar-btn:focus-visible{outline:3px solid #557cae;outline-offset:2px}
+.cw-links{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.cw-link{color:#275a8a;font-size:.84rem;font-weight:700;text-decoration:underline;line-height:1.45;overflow-wrap:anywhere;min-height:24px}

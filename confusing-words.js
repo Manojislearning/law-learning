@@ -16,7 +16,7 @@ var store=load();
 
 /* All questions, flattened. */
 var ALL=[];DATA.forEach(function(set){set.q.forEach(function(q,i){ALL.push({id:set.id+":"+i,set:set,text:q[0],answer:q[1]});});});
-var GROUPS={all:"All pairs",law:"Law terms",writing:"Legal writing"};
+var GROUPS={all:"All pairs",law:"Law terms",writing:"Legal writing words"};
 var view={group:"all",round:[],pos:0,right:0,streak:0,bestStreak:0,wrongIds:[]};
 
 /* Entry button in the Games chooser. */
@@ -54,20 +54,17 @@ function top(title){
 function home(){
  top("Confusing Words");
  el("p","Words that sound alike or look alike but mean different things in law. Pick the right word for each sentence.","cw-lead",rootEl);
- var chips=el("div",undefined,"cw-chips",rootEl);chips.setAttribute("role","group");chips.setAttribute("aria-label","Choose pairs");
+ el("p","Tap a set to play 10 questions.","cw-pick",rootEl);
+ var bars=el("nav",undefined,"cw-bars",rootEl);bars.setAttribute("aria-label","Choose a set");
  Object.keys(GROUPS).forEach(function(g){
-  var n=g==="all"?DATA.length:DATA.filter(function(s){return s.group===g;}).length;
-  var b=btn(GROUPS[g]+" · "+n,"cw-chip"+(view.group===g?" is-on":""),chips,function(){view.group=g;home();});
-  b.setAttribute("aria-pressed",view.group===g?"true":"false");
+  var b=btn(undefined,"cw-bar-btn",bars,function(){view.group=g;start();});
+  el("strong",GROUPS[g],"",b);el("span","→","",b).setAttribute("aria-hidden","true");
  });
- var stats=el("div",undefined,"cw-stats",rootEl);
- var missedCount=Object.keys(store.missed).filter(function(id){return pool().some(function(q){return q.id===id;});}).length;
- [[store.best+"/"+ROUND,"Best round"],[store.played,"Rounds played"],[missedCount,"To revisit"]].forEach(function(s){var c=el("div",undefined,"cw-stat",stats);el("strong",s[0],"",c);el("span",s[1],"",c);});
- btn("Play "+ROUND+" questions","cw-primary",rootEl,start);
- el("p",missedCount?"Words you missed come back first.":"Each correct answer earns 3 points the first time.","cw-note",rootEl);
+ var missedCount=Object.keys(store.missed).length;
+ el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(missedCount?" · "+missedCount+" to revisit (they come back first)":"")+". Each correct answer earns 3 points once.","cw-note",rootEl);
  var browse=el("details",undefined,"cw-browse",rootEl);
- el("summary","Study all "+DATA.filter(function(s){return view.group==="all"||s.group===view.group;}).length+" pairs",undefined,browse);
- DATA.filter(function(s){return view.group==="all"||s.group===view.group;}).forEach(function(s){pairCard(browse,s,null);});
+ el("summary","Study all the pairs",undefined,browse);
+ DATA.forEach(function(s){pairCard(browse,s,null);});
 }
 
 function pairCard(parent,set,highlight){
@@ -135,7 +132,7 @@ function finish(){
  el("p",view.right===view.round.length?"Perfect round. Try another group of pairs.":view.right>=7?"Good work. The ones you missed will come back next round.":"Keep going. Missed words come back first until you get them right.","cw-lead",rootEl);
  var row=el("div",undefined,"cw-row",rootEl);
  btn("Play again","cw-primary",row,start);
- btn("Back to pairs","cw-secondary",row,home);
+ btn("Choose another set","cw-secondary",row,home);
  if(view.wrongIds.length){
   el("h3","Review what you missed","cw-h3",rootEl);
   var seen={};
