@@ -24,7 +24,7 @@ function search(term){const input=d.getElementById("w-search");input.value=term;
   assert.deepEqual(errors,[],"Application script crashed: "+src);
  }
  assert.equal(w.LawAppCore.router.current(),"words");
- assert.equal(d.querySelectorAll("#w-chooser .w-level").length,2);
+ assert.equal(d.querySelectorAll("#w-chooser .w-level").length,3,"Legal Words, Difficult Words and Confusing Words");
  assert.equal(d.getElementById("w-chooser").hidden,false,"Word selection page is the default");
  assert.equal(d.getElementById("w-practice").hidden,true,"Game must not start before a selection");
  assert.equal(d.querySelector("#w-game input[type=range]"),null,"No slider in the game");

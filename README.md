@@ -1,3 +1,9 @@
+## Version 66 — Games and Confusing Words
+
+**Learn Words** is now **Games** on Home. Inside it, **Legal Words** and **Difficult Words** work as before (same saved progress), and a new third game, **Confusing Words**, covers 46 pairs people mix up: 31 law pairs (void/voidable, coercion/undue influence, theft/extortion, robbery/dacoity, certiorari/prohibition, Article 32/226, void/voidable marriage and more) and 15 legal-writing pairs (principal/principle, precedent/precedence, waive/wave and more).
+
+A round asks 10 fill-in-the-blank questions. After each answer the game shows both meanings, a memory tip and the statute or case. Missed questions come back first in later rounds until answered correctly, and each correct answer earns 3 points once. Progress is stored under `law-learning-confusing-v1` and included in backups.
+
 ## Version 65 — Points, ranks and a shared leaderboard
 
 Study now earns points in one place: +10 for a new word, +15 for writing an answer and then revealing a Case Practice outline, +10 for a changed-facts case, +5 a day for each honest Review attempt (whatever the result), and +2 for marking an Exam Pattern topic ready. Each award is given once, and the record of awards is kept under `law-learning-points-v1` and included in backups.

@@ -7,7 +7,7 @@ test("Home presents concise navigation labels without explanatory subheadlines",
  const home=html.split('<section id="home-view"')[1].split('<section id="student-view"')[0];
  const grid=home.split('<div class="home-grid">')[1].split("</div>")[0];
  const labels=[...grid.matchAll(/<strong>([^<]+)<\/strong>/g)].map(v=>v[1]);
- assert.deepEqual(labels,["Learn Words","Student"]);
+ assert.deepEqual(labels,["Games","Student"]);
  assert.ok(!/<p>|<small>|home-index/.test(grid),"Home navigation must not show secondary subtitles");
  assert.equal((home.match(/data-open="words"/g)||[]).length,1);
  for(const forbidden of ["Two levels:","KSLU · 3-Year LL.B</p>","rounded Markdown cards","Understand how your Semester"])
@@ -28,7 +28,7 @@ test("Student menu lists ten destinations without descriptions",()=>{
  assert.ok(css.includes("min-height:76px"),"Menu is expected to be compact");
 });
 test("Learn Words shows Legal Words and Difficult Words without level names, preserving category and progress storage",()=>{
- assert.ok(core.includes('words:["Legal vocabulary","Learn Words"]'));
+ assert.ok(core.includes('words:["Word games","Games"]'));
  assert.ok(word.includes('<strong>Legal Words</strong>'));
  assert.ok(word.includes('<strong>Difficult Words</strong>'));
  assert.ok(!word.includes('<span>LEVEL 1</span>'));

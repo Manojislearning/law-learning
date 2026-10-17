@@ -59,7 +59,7 @@ test("Exam Pattern page is wired, cached offline, backed up and text-only",()=>{
  assert.ok(html.includes("exam-pattern.css?v=64"));
  assert.doesNotMatch(html,/Official pattern not imported yet/);
  for(const f of ["./kslu-paper-analysis.js?v=64","./exam-pattern.js?v=64","./exam-pattern.css?v=64"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v65"));
+ assert.ok(sw.includes("law-learning-v66"));
  assert.ok(backup.includes('"law-learning-exam-prep-v1"'));
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/try\{localStorage\.setItem/);

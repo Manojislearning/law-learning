@@ -70,3 +70,7 @@ jobs:
         run: |
           node --check tests/ranks-mobile.cjs
           node tests/ranks-mobile.cjs
+      - name: Verify Games and Confusing Words
+        run: |
+          node --check tests/games-mobile.cjs
+          node tests/games-mobile.cjs

@@ -8,7 +8,7 @@
 })(typeof globalThis === "object" ? globalThis : this, function(root) {
   "use strict";
   var APP = "law-learning", VERSION = 4, MAX_BYTES = 1024 * 1024;
-  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1","law-learning-case-review-v1","law-learning-exam-prep-v1","law-learning-points-v1","law-learning-ranks-v1"];
+  var KEYS = ["law-learning-progress-v2","law-learning-notes-v1","law-learning-profile-v1","law-learning-review-v1","law-learning-case-review-v1","law-learning-exam-prep-v1","law-learning-points-v1","law-learning-ranks-v1","law-learning-confusing-v1"];
   var PROGRESS = KEYS[0], NOTES = KEYS[1], PROFILE = KEYS[2], REVIEW=KEYS[3], CASES=KEYS[4];
 
   function fail(message) { throw new Error(message); }

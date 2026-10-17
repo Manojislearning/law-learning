@@ -1,0 +1,52 @@
+/* Confusing Words v66 */
+#words-view .cw[hidden]{display:none!important}
+.cw{max-width:650px;margin:6px auto 40px}
+.cw-title{font-size:clamp(1.5rem,5.5vw,2rem);margin:14px 0 6px;letter-spacing:-.02em}
+.cw-lead{color:var(--muted);font-size:.92rem;line-height:1.6;margin:0 0 14px}
+.cw-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.cw-chip{min-height:44px;padding:9px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--text);font:inherit;font-size:.86rem;font-weight:750;cursor:pointer}
+.cw-chip.is-on{background:var(--text);border-color:var(--text);color:#fff}
+.cw-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 14px}
+.cw-stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:3px}
+.cw-stat strong{font-size:1.25rem;font-variant-numeric:tabular-nums}
+.cw-stat span{font-size:.74rem;color:var(--muted);font-weight:700}
+.cw-primary,.cw-secondary{min-height:50px;width:100%;border-radius:13px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;margin-top:10px}
+.cw-primary{background:var(--text);color:#fff;border:1px solid var(--text)}
+.cw-secondary{background:#fff;color:var(--text);border:1px solid var(--line)}
+.cw-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cw-note{font-size:.82rem;color:var(--muted);text-align:center;margin:10px 0 0}
+.cw-browse{margin-top:20px;border-top:1px solid var(--line);padding-top:12px}
+.cw-browse summary{cursor:pointer;font-weight:800;min-height:34px;display:flex;align-items:center}
+.cw-pair{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px;margin:10px 0}
+.cw-subject{font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.cw-pairtitle{font-size:1.08rem;margin:0 0 10px;overflow-wrap:anywhere}
+.cw-means{margin:0;display:grid;gap:8px}
+.cw-mean{border-radius:11px;background:#f6f8fa;padding:10px 12px}
+.cw-mean dt{font-weight:800;font-size:.92rem;margin-bottom:3px}
+.cw-mean dd{margin:0;font-size:.88rem;line-height:1.55}
+.cw-mean.is-answer{background:#e6f5ec;outline:1px solid #298153}
+.cw-tip{font-size:.88rem;line-height:1.55;margin:10px 0 4px}
+.cw-src{font-size:.76rem;color:var(--muted);margin:0}
+.cw-head{display:flex;justify-content:space-between;gap:10px;font-size:.8rem;font-weight:750;color:var(--muted);margin:14px 0 8px;font-variant-numeric:tabular-nums}
+.cw-bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin-bottom:12px}
+.cw-bar span{display:block;height:100%;background:var(--text);transition:width .25s}
+.cw-card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:clamp(16px,4vw,23px)}
+.cw-sentence{font:500 clamp(1.15rem,4.6vw,1.45rem)/1.5 Georgia,serif;margin:4px 0 16px}
+.cw-blank{display:inline-block;min-width:4ch;padding:0 6px;border-bottom:2px solid var(--text);font-weight:700}
+.cw-blank.is-right{color:#1d6b43;border-color:#298153}
+.cw-blank.is-wrong{color:#1d6b43;border-color:#bd514e}
+.cw-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cw-option{min-height:56px;border:1px solid var(--line);background:#f8f9fb;color:var(--text);border-radius:13px;padding:10px;font:inherit;font-weight:800;font-size:1rem;cursor:pointer;overflow-wrap:anywhere}
+.cw-option.right{background:#e6f5ec;border-color:#298153}
+.cw-option.wrong{background:#fff0ef;border-color:#bd514e}
+.cw-option:disabled{cursor:default}
+.cw-feedback{font-weight:800;margin:14px 0 0}
+.cw-feedback.is-right{color:#1d6b43}.cw-feedback.is-wrong{color:#9b3532}
+.cw-explain{margin-top:12px;background:#fbfcfd}
+.cw-score{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:6px 0}
+.cw-score strong{font-size:2.4rem;font-variant-numeric:tabular-nums}
+.cw-score span{color:var(--muted);font-weight:700}
+.cw-h3{font-size:1.05rem;margin:24px 0 4px}
+.cw-chip:focus-visible,.cw-primary:focus-visible,.cw-secondary:focus-visible,.cw-option:focus-visible{outline:3px solid #557cae;outline-offset:2px}
+@media (max-width:380px){.cw-options{grid-template-columns:1fr}.cw-stats{grid-template-columns:1fr 1fr 1fr}.cw-stat{padding:10px}}
+@media (prefers-reduced-motion:reduce){.cw-bar span{transition:none}}
