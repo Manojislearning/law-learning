@@ -43,7 +43,7 @@ test("Points, ranks and leaderboard are wired, cached, backed up and text-only",
  const app=html.indexOf("./app.js"),pts=html.indexOf("points-core.js"),prof=html.indexOf("profile-local.js"),cfg=html.indexOf("firebase-config.js"),rk=html.indexOf("ranks-view.js");
  assert.ok(app>0&&pts>app&&prof>0&&cfg>prof&&rk>cfg);
  for(const f of ["./points-core.js?v=65","./firebase-config.js?v=65","./ranks-view.js?v=65","./ranks.css?v=65"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v69"));
+ assert.ok(sw.includes("law-learning-v70"));
  for(const k of ["law-learning-points-v1","law-learning-ranks-v1"])assert.ok(backup.includes('"'+k+'"'),k);
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+\//,"Firebase SDK must be pinned to an exact version");
@@ -72,7 +72,7 @@ test("Confusing Words: every question has a blank and a valid answer, wired into
  }
  const html=read("index.html"),sw=read("sw.js"),view=read("confusing-words.js");
  assert.ok(html.indexOf("confusing-words.js")>html.indexOf("word-experience.js"));
- for(const f of ["./confusing-words-data.js?v=66","./confusing-words.js?v=68","./confusing-words.css?v=68"])assert.ok(sw.includes(f),f);
+ for(const f of ["./confusing-words-data.js?v=66","./confusing-words.js?v=70","./confusing-words.css?v=68"])assert.ok(sw.includes(f),f);
  assert.ok(read("backup-core.js").includes('"law-learning-confusing-v1"'));
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML/);
  assert.match(view,/LawPoints\.award\("confuse:"/);
@@ -92,9 +92,31 @@ test("Marriage Law Cases: well-formed scenarios across all topics, wired into Ga
   assert.ok(Number.isInteger(c.answer)&&c.answer<c.options.length,c.id);
  }
  const sw=read("sw.js"),html=read("index.html"),view=read("marriage-law-game.js");
- for(const f of ["./marriage-law-data.js?v=68","./marriage-law-game.js?v=69"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
+ for(const f of ["./marriage-law-data.js?v=70","./marriage-law-game.js?v=70"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
  assert.ok(read("backup-core.js").includes('"law-learning-marriage-v1"'));
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML/);
  assert.match(view,/LawPoints\.award\("marriage:"/);
  assert.match(read("marriage-law-data.js"),/BNS, 2023, s\.82/,"bigamy cites BNS");
+});
+
+test("Round picker gives a fresh mix: unseen first, recent items held back, few repeats of missed",()=>{
+ const ctx={window:{}};vm.runInNewContext(read("game-rounds.js"),ctx);const R=ctx.window.LawRounds;
+ const items=Array.from({length:30},(_,i)=>({id:"c"+i,g:"g"+(i%10)}));const id=x=>x.id;
+ let seed=7;const rand=()=>((seed=(seed*16807)%2147483647)/2147483647);
+ const now=10_000_000;
+ /* First 8 were just shown (user left mid-round); 3 of them were missed. */
+ const seen={},missed={};for(let i=0;i<8;i++)seen["c"+i]=now-60_000;missed.c0=1;missed.c1=1;missed.c2=1;
+ const round=R.pick(items,id,{size:8,seen,missed,maxMissed:2,now,rand}).map(id);
+ assert.equal(round.length,8);assert.equal(new Set(round).size,8);
+ assert.ok(round.every(x=>Number(x.slice(1))>=8),"Nothing shown in the last 20 minutes comes straight back: "+round);
+ /* Later, an old missed item may return, but at most maxMissed of them. */
+ const later=now+R.RECENT+1;const r2=R.pick(items,id,{size:8,seen,missed,maxMissed:2,now:later,rand}).map(id);
+ assert.ok(r2.filter(x=>missed[x]).length<=2);
+ /* Variety: with groups, one item per group where possible. */
+ const r3=R.pick(items,id,{size:8,seen:{},missed:{},now,rand,groupOf:x=>x.g});
+ assert.equal(new Set(r3.map(x=>x.g)).size,8);
+ /* Two fresh starts differ. */
+ const a=R.pick(items,id,{size:8,now,rand}).map(id).join(),b=R.pick(items,id,{size:8,now,rand}).map(id).join();
+ assert.notEqual(a,b);
+ const big={};for(let i=0;i<500;i++)big["k"+i]=i;R.trim(big,400);assert.equal(Object.keys(big).length,400);assert.ok(!("k0" in big)&&("k499" in big));
 });

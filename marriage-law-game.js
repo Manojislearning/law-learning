@@ -11,7 +11,7 @@ var CATS={all:"All cases",law:"Which law applies?",valid:"Is the marriage valid?
 function el(tag,text,cls,parent){var n=doc.createElement(tag);if(cls)n.className=cls;if(text!==undefined&&text!==null)n.textContent=String(text);if(parent)parent.appendChild(n);return n;}
 function btn(text,cls,parent,fn){var b=el("button",text,cls,parent);b.type="button";if(fn)b.addEventListener("click",fn);return b;}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
-function load(){try{var v=JSON.parse(root.localStorage.getItem(KEY)||"{}");return {missed:v&&v.missed&&typeof v.missed==="object"?v.missed:{},best:Number(v&&v.best)||0,played:Number(v&&v.played)||0};}catch(e){return {missed:{},best:0,played:0};}}
+function load(){try{var v=JSON.parse(root.localStorage.getItem(KEY)||"{}");return {missed:v&&v.missed&&typeof v.missed==="object"?v.missed:{},seen:v&&v.seen&&typeof v.seen==="object"?v.seen:{},best:Number(v&&v.best)||0,played:Number(v&&v.played)||0};}catch(e){return {missed:{},seen:{},best:0,played:0};}}
 function save(){try{root.localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
 var store=load(),view={cat:"all",round:[],pos:0,right:0,streak:0,wrong:[]};
 
@@ -43,7 +43,7 @@ function home(){
   el("strong",CATS[k],"",b);el("span","→","",b).setAttribute("aria-hidden","true");
  });
  var miss=DATA.filter(function(c){return store.missed[c.id];}).length;
- el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(miss?" · "+miss+" to revisit (they come back first)":"")+". Each correct answer earns 3 points once. Law as of October 2026.","cw-note",box);
+ el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(miss?" · "+miss+" to revisit (a few return each round)":"")+". Each correct answer earns 3 points once. Law as of October 2026.","cw-note",box);
  var guide=el("details",undefined,"cw-browse",box);
  el("summary","Quick guide: which law applies?",undefined,guide);
  [["Both Hindu, Jain, Sikh or Buddhist","Hindu Marriage Act, 1955 (caste does not matter)"],
@@ -61,15 +61,16 @@ function home(){
 }
 
 function start(){
- var p=pool(),missed=shuffle(p.filter(function(c){return store.missed[c.id];})),fresh=shuffle(p.filter(function(c){return !store.missed[c.id];}));
- view.round=missed.slice(0,Math.ceil(ROUND/2)).concat(fresh);
- view.round=shuffle(view.round.slice(0,Math.min(ROUND,p.length)));
+ /* Fresh mix every start: unseen cases first, at most 2 missed ones, varied topics in "All cases". */
+ var p=pool();
+ view.round=root.LawRounds?root.LawRounds.pick(p,function(c){return c.id;},{size:ROUND,seen:store.seen,missed:store.missed,maxMissed:2,groupOf:view.cat==="all"?function(c){return c.cat;}:null}):shuffle(p).slice(0,ROUND);
  view.pos=0;view.right=0;view.streak=0;view.wrong=[];
  ask();
 }
 
 function ask(){
  var c=view.round[view.pos];if(!c){finish();return;}
+ store.seen[c.id]=Date.now();if(root.LawRounds)root.LawRounds.trim(store.seen,400);save();
  top(null);
  var head=el("div",undefined,"cw-head",box);
  el("span","Case "+(view.pos+1)+" of "+view.round.length,"",head);
@@ -123,7 +124,7 @@ function finish(){
  store.played++;if(view.right>store.best)store.best=view.right;save();
  top("Round complete");
  var s=el("p",undefined,"cw-score",box);el("strong",view.right+"/"+view.round.length,"",s);el("span"," correct","",s);
- el("p",view.wrong.length?"Cases you missed come back first next time.":"Perfect round. Try another topic.","cw-lead",box);
+ el("p",view.wrong.length?"Cases you missed will come back in later rounds, mixed with new ones.":"Perfect round. Try another topic.","cw-lead",box);
  var row=el("div",undefined,"cw-row",box);btn("Play again","cw-primary",row,start);btn("Back to topics","cw-secondary",row,home);
  if(view.wrong.length){
   el("h3","Review what you missed","cw-h3",box);

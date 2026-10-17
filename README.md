@@ -1,3 +1,9 @@
+## Version 70 — A fresh mix every start, and 9 high-yield marriage cases
+
+Every new round now starts with a fresh mix. Unseen and least-recently-seen questions come first. Anything shown in the last 20 minutes is held back, so leaving a round by mistake and starting again does not replay the same cards. Missed items still return, but at most 2–3 per round and mixed with new ones. "All cases" spreads a round across topics. The shared picker lives in `game-rounds.js`.
+
+Marriage Law Cases adds 9 cases that come up often in exams and are easy to get wrong: sapinda and prohibited degrees, the option of puberty (Hindu s.13(2)(iv) compared with Muslim s.2(vii)), husbands claiming maintenance under s.24, divorce after judicial separation by either party, irretrievable breakdown under Article 142 only (Shilpa Sailesh), restitution of conjugal rights, dowry death (BNS s.80), and child custody decided by welfare rather than religion. That brings the total to 62.
+
 ## Version 68 — Tap-to-play topics and more marriage cases
 
 Game topics now appear as large full-width bars. Tapping a bar starts that topic straight away, and topics no longer show case counts. Marriage Law Cases grows to 53 scenarios, with new topics covering Christian, Parsi, Sikh and Buddhist law, Goa's civil code, Uttarakhand live-in registration, NRI and foreign marriages (Foreign Marriage Act; Y. Narasimha Rao), Muslim couples married under the Special Marriage Act, mehr, iddat provision and khap panchayats. Each explanation links every Act or judgment to an Indian Kanoon search so it can be read in full. The quick guide also lists which law each community uses.

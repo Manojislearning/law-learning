@@ -9,7 +9,7 @@ var KEY="law-learning-confusing-v1",ROUND=10;
 
 function el(tag,text,cls,parent){var n=doc.createElement(tag);if(cls)n.className=cls;if(text!==undefined&&text!==null)n.textContent=String(text);if(parent)parent.appendChild(n);return n;}
 function btn(text,cls,parent,fn){var b=el("button",text,cls,parent);b.type="button";if(fn)b.addEventListener("click",fn);return b;}
-function load(){try{var v=JSON.parse(root.localStorage.getItem(KEY)||"{}");return {missed:v&&typeof v.missed==="object"&&v.missed?v.missed:{},best:Number(v&&v.best)||0,played:Number(v&&v.played)||0};}catch(e){return {missed:{},best:0,played:0};}}
+function load(){try{var v=JSON.parse(root.localStorage.getItem(KEY)||"{}");return {missed:v&&typeof v.missed==="object"&&v.missed?v.missed:{},seen:v&&typeof v.seen==="object"&&v.seen?v.seen:{},best:Number(v&&v.best)||0,played:Number(v&&v.played)||0};}catch(e){return {missed:{},seen:{},best:0,played:0};}}
 function save(){try{root.localStorage.setItem(KEY,JSON.stringify(store));}catch(e){}}
 function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 var store=load();
@@ -28,12 +28,9 @@ app.insertBefore(rootEl,chooser.nextSibling);
 
 function pool(){return ALL.filter(function(q){return view.group==="all"||q.set.group===view.group;});}
 function pickRound(){
- var p=pool(),missed=shuffle(p.filter(function(q){return store.missed[q.id];})),fresh=shuffle(p.filter(function(q){return !store.missed[q.id];}));
- var picked=missed.slice(0,Math.ceil(ROUND/2)),used={};picked.forEach(function(q){used[q.set.id]=1;});
- /* Prefer one question per pair so a round covers many pairs. */
- fresh.forEach(function(q){if(picked.length<ROUND&&!used[q.set.id]){picked.push(q);used[q.set.id]=1;}});
- fresh.forEach(function(q){if(picked.length<ROUND&&picked.indexOf(q)<0)picked.push(q);});
- return shuffle(picked).slice(0,ROUND);
+ /* Fresh mix every start: unseen first, at most 3 missed ones, one question per pair where possible. */
+ if(root.LawRounds)return root.LawRounds.pick(pool(),function(q){return q.id;},{size:ROUND,seen:store.seen,missed:store.missed,maxMissed:3,groupOf:function(q){return q.set.id;}});
+ return shuffle(pool()).slice(0,ROUND);
 }
 
 function open(){chooser.hidden=true;rootEl.hidden=false;home();}
@@ -61,7 +58,7 @@ function home(){
   el("strong",GROUPS[g],"",b);el("span","→","",b).setAttribute("aria-hidden","true");
  });
  var missedCount=Object.keys(store.missed).length;
- el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(missedCount?" · "+missedCount+" to revisit (they come back first)":"")+". Each correct answer earns 3 points once.","cw-note",rootEl);
+ el("p","Best round "+store.best+"/"+ROUND+" · "+store.played+" played"+(missedCount?" · "+missedCount+" to revisit (a few return each round)":"")+". Each correct answer earns 3 points once.","cw-note",rootEl);
  var browse=el("details",undefined,"cw-browse",rootEl);
  el("summary","Study all the pairs",undefined,browse);
  DATA.forEach(function(s){pairCard(browse,s,null);});
@@ -85,6 +82,7 @@ function start(){
 
 function question(){
  var q=view.round[view.pos];if(!q){finish();return;}
+ store.seen[q.id]=Date.now();if(root.LawRounds)root.LawRounds.trim(store.seen,400);save();
  top(null);
  var head=el("div",undefined,"cw-head",rootEl);
  el("span","Question "+(view.pos+1)+" of "+view.round.length,"",head);
@@ -129,7 +127,7 @@ function finish(){
  store.played++;if(view.right>store.best)store.best=view.right;save();
  top("Round complete");
  var score=el("p",undefined,"cw-score",rootEl);el("strong",view.right+"/"+view.round.length,"",score);el("span"," correct · best streak "+view.bestStreak,"",score);
- el("p",view.right===view.round.length?"Perfect round. Try another group of pairs.":view.right>=7?"Good work. The ones you missed will come back next round.":"Keep going. Missed words come back first until you get them right.","cw-lead",rootEl);
+ el("p",view.right===view.round.length?"Perfect round. Try another group of pairs.":view.right>=7?"Good work. The ones you missed will come back in later rounds.":"Keep going. Missed words come back in later rounds until you get them right.","cw-lead",rootEl);
  var row=el("div",undefined,"cw-row",rootEl);
  btn("Play again","cw-primary",row,start);
  btn("Choose another set","cw-secondary",row,home);
