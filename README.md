@@ -1,3 +1,9 @@
+## Version 67 — Marriage Law Cases
+
+A fourth game in **Games** covers 37 scenarios on interfaith and inter-caste marriage, conversion, age and divorce, grouped into seven topics: which law applies, validity, conversion, age, divorce, children and money, and State laws. Examples: a Hindu and a Muslim marrying without converting (Special Marriage Act), conversion to take a second wife (Sarla Mudgal; BNS s.82), a spouse's conversion as a divorce ground (HMA s.13(1)(ii)), child marriage being void in Karnataka (2016 amendment), maintenance for divorced Muslim women (Mohd. Abdul Samad, 2024), and Uttarakhand's Uniform Civil Code. Each answer shows why, with the statute or case. Rounds have 8 cases; missed cases return first, and each correct answer earns 3 points once. Progress is stored under `law-learning-marriage-v1`.
+
+The law is stated as of October 2026. Gujarat, Assam and Madhya Pradesh UCC bills were awaiting Presidential assent at that time.
+
 ## Version 66 — Games and Confusing Words
 
 **Learn Words** is now **Games** on Home. Inside it, **Legal Words** and **Difficult Words** work as before (same saved progress), and a new third game, **Confusing Words**, covers 46 pairs people mix up: 31 law pairs (void/voidable, coercion/undue influence, theft/extortion, robbery/dacoity, certiorari/prohibition, Article 32/226, void/voidable marriage and more) and 15 legal-writing pairs (principal/principle, precedent/precedence, waive/wave and more).

@@ -20,7 +20,7 @@ async function run(){
    await page.goto(base+"#home",{waitUntil:"load"});
    await page.locator('#home-view [data-open="words"]').tap();
    await page.waitForFunction(()=>document.getElementById("section-title").textContent==="Games");
-   assert.deepEqual(await page.locator("#w-chooser .w-level strong").allInnerTexts(),["Legal Words","Difficult Words","Confusing Words"]);
+   assert.deepEqual(await page.locator("#w-chooser .w-level strong").allInnerTexts(),["Legal Words","Difficult Words","Confusing Words","Marriage Law Cases"]);
    await page.locator('#w-chooser [data-confuse]').tap();
    assert.match(await page.locator(".cw-title").innerText(),/Confusing Words/);
    const before=await page.evaluate(()=>window.LawPoints.total());
@@ -54,10 +54,31 @@ async function run(){
    await page.locator("#back-home").tap();
    assert.equal(await page.locator("#w-chooser").isVisible(),true,"Back returns to the Games chooser");
    assert.deepEqual(errors,[]);
-   if(width===390&&process.env.SHOT){await page.locator('#w-chooser [data-confuse]').tap();await page.getByRole("button",{name:/^Play 10/}).tap();await page.locator(".cw-option").first().tap();await page.screenshot({path:process.env.SHOT});}
+   /* Marriage Law Cases: play a full round, answering from the data. */
+   await page.locator('#w-chooser [data-marriage]').tap();
+   assert.match(await page.locator(".mlc .cw-title").innerText(),/Marriage Law Cases/);
+   const mBefore=await page.evaluate(()=>window.LawPoints.total());
+   await page.locator(".mlc").getByRole("button",{name:/^Play \d+ cases/}).tap();
+   let mRight=0;
+   for(let i=0;i<8;i++){
+    await page.locator(".mlc-option").first().waitFor();
+    const want=await page.evaluate(()=>{const f=document.querySelector(".mlc-facts").textContent;const c=window.MARRIAGE_CASES.find(x=>x.facts===f);return c.options[c.answer];});
+    const opts=page.locator(".mlc-option");const n=await opts.count();let tapped=false;
+    for(let k=0;k<n;k++){const t=await opts.nth(k).innerText();if((i%3===0)?t!==want:t===want){await opts.nth(k).tap();tapped=true;break;}}
+    assert.ok(tapped);if(i%3!==0)mRight++;
+    assert.ok(await page.locator(".mlc .cw-explain").isVisible(),"Why panel shows");
+    if(i===0){const bad=await page.evaluate(()=>[...document.querySelectorAll(".mlc-option,.mlc .cw-primary")].map(e=>e.getBoundingClientRect()).filter(r=>r.height<44||r.right>innerWidth+1).length);assert.equal(bad,0,width+"px marriage control size");}
+    await page.locator(".mlc .cw-card .cw-primary").tap();
+   }
+   assert.match(await page.locator(".mlc .cw-score").innerText(),new RegExp("^"+mRight+"/8"));
+   assert.equal(await page.evaluate(()=>window.LawPoints.total())-mBefore,mRight*3);
+   await page.locator("#back-home").tap();
+   assert.equal(await page.locator("#w-chooser").isVisible(),true);
+   assert.deepEqual(errors,[]);
+   if(width===390&&process.env.SHOT){await page.locator('#w-chooser [data-marriage]').tap();await page.locator(".mlc").getByRole("button",{name:/^Play/}).tap();await page.locator(".mlc-option").first().tap();await page.screenshot({path:process.env.SHOT,fullPage:true});}
    await ctx.close();
   }
-  console.log("Games checks passed at 320, 390 and 768px: chooser, Confusing Words round, explanations, points, revisit list and Back.");
+  console.log("Games checks passed at 320, 390 and 768px: chooser, Confusing Words and Marriage Law rounds, explanations, points, revisit list and Back.");
  }finally{await browser.close();server.close();}
 }
 run().catch(e=>{console.error(e);process.exitCode=1;server.close();});

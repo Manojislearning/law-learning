@@ -43,7 +43,7 @@ test("Points, ranks and leaderboard are wired, cached, backed up and text-only",
  const app=html.indexOf("./app.js"),pts=html.indexOf("points-core.js"),prof=html.indexOf("profile-local.js"),cfg=html.indexOf("firebase-config.js"),rk=html.indexOf("ranks-view.js");
  assert.ok(app>0&&pts>app&&prof>0&&cfg>prof&&rk>cfg);
  for(const f of ["./points-core.js?v=65","./firebase-config.js?v=65","./ranks-view.js?v=65","./ranks.css?v=65"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v66"));
+ assert.ok(sw.includes("law-learning-v67"));
  for(const k of ["law-learning-points-v1","law-learning-ranks-v1"])assert.ok(backup.includes('"'+k+'"'),k);
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+\//,"Firebase SDK must be pinned to an exact version");
@@ -72,8 +72,29 @@ test("Confusing Words: every question has a blank and a valid answer, wired into
  }
  const html=read("index.html"),sw=read("sw.js"),view=read("confusing-words.js");
  assert.ok(html.indexOf("confusing-words.js")>html.indexOf("word-experience.js"));
- for(const f of ["./confusing-words-data.js?v=66","./confusing-words.js?v=66","./confusing-words.css?v=66"])assert.ok(sw.includes(f),f);
+ for(const f of ["./confusing-words-data.js?v=66","./confusing-words.js?v=66","./confusing-words.css?v=67"])assert.ok(sw.includes(f),f);
  assert.ok(read("backup-core.js").includes('"law-learning-confusing-v1"'));
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML/);
  assert.match(view,/LawPoints\.award\("confuse:"/);
+});
+
+test("Marriage Law Cases: well-formed scenarios across all topics, wired into Games",()=>{
+ const ctx={window:{}};vm.runInNewContext(read("marriage-law-data.js"),ctx);
+ const cases=JSON.parse(JSON.stringify(ctx.window.MARRIAGE_CASES));
+ assert.ok(cases.length>=30);
+ assert.equal(new Set(cases.map(c=>c.id)).size,cases.length);
+ const cats=new Set(cases.map(c=>c.cat));
+ for(const k of ["law","valid","convert","age","divorce","money","state"])assert.ok(cats.has(k),k);
+ for(const c of cases){
+  assert.ok(c.facts.length>20&&c.ask.length>5&&c.why.length>60&&c.law.length>5,c.id);
+  assert.ok(c.options.length>=3&&c.options.length<=4,c.id);
+  assert.equal(new Set(c.options).size,c.options.length,c.id+" duplicate option");
+  assert.ok(Number.isInteger(c.answer)&&c.answer<c.options.length,c.id);
+ }
+ const sw=read("sw.js"),html=read("index.html"),view=read("marriage-law-game.js");
+ for(const f of ["./marriage-law-data.js?v=67","./marriage-law-game.js?v=67"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
+ assert.ok(read("backup-core.js").includes('"law-learning-marriage-v1"'));
+ assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML/);
+ assert.match(view,/LawPoints\.award\("marriage:"/);
+ assert.match(read("marriage-law-data.js"),/BNS, 2023, s\.82/,"bigamy cites BNS");
 });

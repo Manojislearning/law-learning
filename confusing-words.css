@@ -50,3 +50,9 @@
 .cw-chip:focus-visible,.cw-primary:focus-visible,.cw-secondary:focus-visible,.cw-option:focus-visible{outline:3px solid #557cae;outline-offset:2px}
 @media (max-width:380px){.cw-options{grid-template-columns:1fr}.cw-stats{grid-template-columns:1fr 1fr 1fr}.cw-stat{padding:10px}}
 @media (prefers-reduced-motion:reduce){.cw-bar span{transition:none}}
+/* Marriage Law Cases v67 (shares the cw-* look) */
+.mlc-facts{font-size:1rem;line-height:1.6;margin:4px 0 10px}
+.mlc-ask{font:600 clamp(1.05rem,4.2vw,1.25rem)/1.45 Georgia,serif;margin:0 0 14px}
+.mlc-options{display:grid;grid-template-columns:1fr;gap:9px}
+.mlc-option{text-align:left;font-weight:700;font-size:.95rem;line-height:1.4;padding:12px 14px}
+.mlc-why{font-size:.92rem;line-height:1.6;margin:0 0 8px}

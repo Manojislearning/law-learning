@@ -284,8 +284,8 @@ async function run(){
    assert.ok(rect&&rect.height>=44&&rect.x>=0&&rect.x+rect.width<=width+1,"Study-unit link must remain usable at "+width+"px");
    await unit.tap();
    await page.waitForURL(/#syllabus$/);
-   await page.waitForFunction(()=>(document.getElementById("syllabus-detail")?.innerText||"").includes("Unit"),null,{timeout:5000}).catch(()=>{});
-   assert.ok((await page.locator("#syllabus-detail").innerText()).includes("Unit"),"Expected directly mapped syllabus unit");
+   /* The unit eyebrow is uppercased by CSS, so innerText reads "UNIT"; match case-insensitively. */
+   assert.match(await page.locator("#syllabus-detail").innerText(),/\bunit\b/i,"Expected directly mapped syllabus unit");
    assert.equal(errors.length,0,"No case-to-unit browser errors: "+errors.join("; "));
    await context.close();
   }
@@ -352,7 +352,7 @@ async function run(){
     const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
     const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
     await page.goto(address.replace("v=43#practice","v=62#words"),{waitUntil:"load"});
-    assert.equal(await page.locator("#w-chooser .w-level").count(),3);
+    assert.equal(await page.locator("#w-chooser .w-level").count(),4);
     assert.equal(await page.locator("#w-practice").isHidden(),true);
     const advanced=page.locator('#w-chooser [data-wlevel="advanced"]');
     const bounds=await advanced.boundingBox();

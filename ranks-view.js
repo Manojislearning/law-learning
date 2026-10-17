@@ -37,7 +37,7 @@ var nextEl=el("p","","rk-next",card);
 var ladder=el("details",undefined,"rk-ladder",card);
 el("summary","All ranks and how to earn points",undefined,ladder);
 var earn=el("ul",undefined,"rk-earn",ladder);
-[["Learn a new word in Games","+10"],["Get a Confusing Words question right","+3"],["Write an answer, then reveal a Case Practice outline","+15 per case"],
+[["Learn a new word in Games","+10"],["Get a Confusing Words question right","+3"],["Solve a Marriage Law case correctly","+3"],["Write an answer, then reveal a Case Practice outline","+15 per case"],
  ["Changed-facts case after practice","+10"],["Review a concept honestly (any result)","+5 a day"],
  ["Mark an exam topic ready in Exam Pattern","+2"]].forEach(function(r){var li=el("li",undefined,"",earn);el("span",r[0],"",li);el("strong",r[1],"",li);});
 var steps=el("ol",undefined,"rk-steps",ladder);
