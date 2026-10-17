@@ -137,7 +137,7 @@ function fromLink(){
  if(history.replaceState)history.replaceState(null,"","#words");
  setTimeout(open,0);
 }
-root.addEventListener("hashchange",fromLink);
+if(root.LawAppCore&&root.LawAppCore.router)root.LawAppCore.router.subscribe(function(){if(location.hash==="#marriage")fromLink();});
 fromLink();
 root.LawMarriageCases={open:open,close:close,count:DATA.length};
 })(window);
