@@ -1,5 +1,5 @@
 /* Network-first application worker: keep user data in localStorage, never cache stale navigations. */
-const CACHE = "law-learning-v64";
+const CACHE = "law-learning-v65";
 const ASSETS = [
   "./",
   "./index.html",
@@ -57,6 +57,10 @@ const ASSETS = [
   "./kslu-paper-analysis.js?v=64",
   "./exam-pattern.js?v=64",
   "./exam-pattern.css?v=64",
+  "./points-core.js?v=65",
+  "./firebase-config.js?v=65",
+  "./ranks-view.js?v=65",
+  "./ranks.css?v=65",
   "./exam-words-1.js",
   "./exam-words-2.js",
   "./exam-words-3.js",

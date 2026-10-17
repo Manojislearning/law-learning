@@ -66,3 +66,7 @@ jobs:
         run: |
           node --check tests/exam-pattern-mobile.cjs
           node tests/exam-pattern-mobile.cjs
+      - name: Verify points, ranks and leaderboard flow
+        run: |
+          node --check tests/ranks-mobile.cjs
+          node tests/ranks-mobile.cjs

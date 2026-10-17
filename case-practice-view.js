@@ -183,6 +183,7 @@ function draw(){
  var button=B(box,"Reveal reference reasoning →",function(){
   if(draft.value.trim().length<40){warning.textContent="Write at least a short legal explanation (40 characters) before comparing.";return;}
   button.hidden=true;draft.readOnly=true;warning.textContent="";
+  if(root.LawPoints)root.LawPoints.award("case:"+bankKey+":"+c.id,15);
   model.hidden=false;rubric.hidden=false;finishBtn.hidden=false;skip.hidden=true;
   if(typeof model.focus==="function")model.focus();
  });
@@ -297,6 +298,7 @@ function showTransfer(){
  var reveal=B(box,"Compare with transfer reasoning →",function(){
   if(essay.value.trim().length<40){notice.textContent="Explain the changed fact and legal rule in at least 40 characters before comparing.";return;}
   essay.readOnly=true;reveal.hidden=true;notice.textContent="";
+  if(root.LawPoints)root.LawPoints.award("transfer:"+bankKey+":"+(prompt.id||prompt.parentId),10);
   model.hidden=false;next.hidden=false;skip.hidden=true;
   if(typeof model.focus==="function")model.focus();
  });

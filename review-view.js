@@ -26,7 +26,7 @@ function dashboard(){
  }
  E(wrap,"p","CONTRACT–I · SPACED REVISION","review-small");
  E(wrap,"h2","Review what matters");
- E(wrap,"p","Recall the rule first; compare the explanation; then decide whether you remembered it. No points, streak pressure or pretend exam grades.");
+ E(wrap,"p","Recall the rule first; compare the explanation; then decide whether you remembered it. Each honest attempt earns 5 points, whether or not you remembered it. No pretend exam grades.");
  var row=E(wrap,"div",undefined,"review-stats");
  [[summary.due.length,"Due now"],[summary.studied,"Started"],[summary.newCards.length,"Not started"]].forEach(function(item){
   var box=E(row,"div",undefined,"review-stat");E(box,"strong",item[0]);E(box,"small",item[1]);
@@ -58,6 +58,7 @@ function next(){
  var reveal=B(panel,"Show the reference answer →",function(){
   if(area.value.trim().length<8&&!check.checked){notice.textContent="Write a short answer, or confirm that you answered aloud.";return;}
   reveal.hidden=true;area.readOnly=true;check.disabled=true;answer.hidden=false;rating.hidden=false;notice.textContent="";
+  if(root.LawPoints)root.LawPoints.award("review:"+id+":"+new Date().toISOString().slice(0,10),5);
  },"review-main");
  var answer=E(panel,"div",undefined,"review-answer");answer.hidden=true;
  E(answer,"h4","Reference answer");E(answer,"p",item.answer);

@@ -102,7 +102,7 @@ function renderTopics(box){
    var label=add(li,"label");
    var cb=add(label,"input");cb.type="checkbox";cb.checked=!!state.ready[t.id];
    cb.setAttribute("aria-label","Mark ready: "+t.topic);
-   cb.addEventListener("change",function(){if(cb.checked)state.ready[t.id]=true;else delete state.ready[t.id];save(state);refresh();});
+   cb.addEventListener("change",function(){if(cb.checked){state.ready[t.id]=true;if(window.LawPoints)window.LawPoints.award("exam-ready:"+t.id,2);}else delete state.ready[t.id];save(state);refresh();});
    var text=add(label,"span","","xp-topic-text");
    add(text,"span",t.topic);
    var share=t.count/t.of;

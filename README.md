@@ -1,3 +1,11 @@
+## Version 65 — Points, ranks and a shared leaderboard
+
+Study now earns points in one place: +10 for a new word, +15 for writing an answer and then revealing a Case Practice outline, +10 for a changed-facts case, +5 a day for each honest Review attempt (whatever the result), and +2 for marking an Exam Pattern topic ready. Each award is given once, and the record of awards is kept under `law-learning-points-v1` and included in backups.
+
+Points unlock nine ranks, from **Law Fresher** to **Chief Justice**. The Profile screen shows your rank, a progress bar to the next one and the full ladder. Tapping the PTS pill opens Profile.
+
+The **Leaderboard** uses Firebase (Google sign-in and Firestore) once `firebase-config.js` is filled in. Players choose a public name; emails are never shown. Points sync from the device, rise by at most 3,000 per save (matching the security rules), and are restored when signing in on a new phone. Players can remove themselves from the board. The Firebase SDK is loaded only when Profile is opened.
+
 ## Version 64 — Real KSLU exam pattern and repeat topics
 
 **Exam Pattern** (Student → Exam Pattern, `#exam`) was a placeholder. It now shows the real Semester I format, read from **45 scanned 3-year LL.B. papers (April 2022 – January 2026)** across all five subjects:
