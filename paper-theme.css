@@ -1,14 +1,12 @@
 /* Paper & pen theme v71 — notebook paper, ink colours and handwriting fonts.
    Applied when <html> has class "paper" (default on; switch off in Settings). Loaded last so it wins.
-   Fonts are self-hosted Latin subsets (SIL Open Font License, see fonts/OFL-*.txt) so they work offline. */
-@font-face{font-family:"Kalam";src:url("./fonts/Kalam-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Kalam";src:url("./fonts/Kalam-Bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+   Fonts are self-hosted Latin subsets (SIL Open Font License, see fonts/OFL-PatrickHand.txt) so they work offline. */
 @font-face{font-family:"Patrick Hand";src:url("./fonts/PatrickHand-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
 html.paper{
  --bg:#f3ead6; --surface:#fffbf1; --surface-2:#efe5cf; --text:#1f2d4d; --muted:#5f6577; --line:#dccfb2;
  --accent:#1f2d4d; --ink-blue:#1d4f9a; --ink-red:#b23a32; --good:#2c6e43; --soft-good:#e5f1dc; --soft-warn:#fbf0d4;
- --hand:"Kalam","Patrick Hand","Segoe Print","Bradley Hand",cursive;
- --pen:"Patrick Hand","Kalam","Segoe Print","Bradley Hand",system-ui,sans-serif;
+ --hand:"Patrick Hand","Segoe Print","Bradley Hand",system-ui,sans-serif;
+ --pen:"Patrick Hand","Segoe Print","Bradley Hand",system-ui,sans-serif;
 }
 /* Page: cream notebook with faint blue rules and a red margin line showing between cards. */
 html.paper body{
@@ -26,8 +24,8 @@ html.paper input,html.paper textarea,html.paper select{font-size:17px}
 html.paper h1,html.paper h2,html.paper h3,html.paper h4,
 html.paper .home-card strong,html.paper .student-hub-card strong,html.paper .w-level strong,html.paper .cw-bar-btn strong,
 html.paper .cw-title,html.paper .rk-title,html.paper .cw-score strong,html.paper .score-pill strong,html.paper .sf-title{
- font-family:var(--hand);font-weight:700;letter-spacing:0;color:var(--text)}
-html.paper #section-title{font-family:var(--hand);font-weight:700}
+ font-family:var(--hand);font-weight:400;letter-spacing:.01em;color:var(--text)}
+html.paper #section-title{font-family:var(--hand);font-weight:400}
 html.paper .cw-sentence,html.paper .mlc-ask,html.paper .w-term,html.paper .rk-title{font-family:var(--hand)}
 /* Paper sheets: warm white, soft shadow, slightly hand-cut corners. */
 html.paper .home-card,html.paper .student-hub-card,html.paper .content-card,html.paper .w-card,html.paper .w-level,
@@ -97,3 +95,17 @@ html.paper #home-view .home-grid .home-card[data-open="words"]{
 }
 /* Light only: stop phones from auto-darkening the page (e.g. Chrome's forced dark mode). */
 :root{color-scheme:only light}
+
+/* v73: one thin ballpoint hand everywhere — no brush-style bold. Bold is never faked;
+   emphasis comes from size and darker ink instead, like writing with a pen. */
+html.paper,html.paper *{font-synthesis:none}
+html.paper body *{font-weight:400!important}
+html.paper strong,html.paper b,html.paper h1,html.paper h2,html.paper h3,html.paper h4{color:#15203b}
+html.paper h1{font-size:clamp(1.9rem,6.5vw,2.4rem)}
+html.paper h2,html.paper .cw-title,html.paper .rk-title{font-size:clamp(1.7rem,6vw,2.15rem);line-height:1.2}
+html.paper h3{font-size:1.3rem}
+html.paper .home-card strong,html.paper .student-hub-card strong,html.paper .w-level strong,html.paper .cw-bar-btn strong{font-size:clamp(1.3rem,4.4vw,1.5rem)}
+html.paper .cw-sentence,html.paper .mlc-ask{font-size:clamp(1.25rem,4.8vw,1.5rem)}
+html.paper .mlc-ask{text-decoration:underline;text-decoration-color:rgba(29,79,154,.35);text-decoration-thickness:1.5px;text-underline-offset:5px}
+html.paper .cw-option,html.paper .w-option,html.paper .mlc-option{font-size:1.08rem}
+html.paper .cw-subject,html.paper .rk-eyebrow,html.paper .w-eyebrow{letter-spacing:.06em}

@@ -1,3 +1,7 @@
+## Version 73 — Thin pen handwriting
+
+The paper style now uses one thin ballpoint-style hand (Patrick Hand) everywhere. The brush-like Kalam font and faux-bold text are gone. Headings stand out by size and darker ink instead of heavy strokes, and the question in Marriage Law Cases is underlined in blue ink.
+
 ## Version 72 — Paper texture, light only
 
 The paper style now has real paper grain: a fine tileable texture of grain, soft mottling and short fibres (`paper-grain.png`) on the page, and a lighter version (`paper-grain-light.png`) on cards so text stays clean. Both are cached for offline use. The app is light-only, and `color-scheme: only light` stops phones from forcing a dark version.

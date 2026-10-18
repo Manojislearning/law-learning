@@ -105,7 +105,7 @@ async function run(){
     const page=await ctx.newPage();await page.goto(base+"#settings",{waitUntil:"load"});
     assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),true,"Paper style is on by default");
     await page.evaluate(()=>document.fonts.ready);
-    assert.equal(await page.evaluate(()=>document.fonts.check('700 20px "Kalam"')&&document.fonts.check('16px "Patrick Hand"')),true,"Handwriting fonts load from the app itself");
+    assert.equal(await page.evaluate(()=>document.fonts.check('16px "Patrick Hand"')),true,"Handwriting fonts load from the app itself");
     await page.locator("#settings-paper").uncheck();
     assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),false);
     await page.reload({waitUntil:"load"});
