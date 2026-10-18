@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#0d1321" />
-  <meta name="app-version" content="70" />
+  <meta name="app-version" content="71" />
   <meta name="description" content="Installable mobile law-learning app for legal words, syllabus, exam pattern, old papers and notes." />
   <title>Law Learning</title>
   <link rel="manifest" href="./manifest.webmanifest" />
@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="./exam-pattern.css?v=64" />
   <link rel="stylesheet" href="./ranks.css?v=65" />
   <link rel="stylesheet" href="./confusing-words.css?v=68" />
+  <link rel="stylesheet" href="./paper-theme.css?v=71" />
+  <script>try{if(JSON.parse(localStorage.getItem("law-learning-theme-v1")||"{}").paper!==false)document.documentElement.classList.add("paper");}catch(e){document.documentElement.classList.add("paper");}</script>
 </head>
 <body>
   <div class="app-shell">
@@ -71,7 +73,7 @@
           <button class="home-card" data-open="words" type="button"><strong>Games</strong><span class="home-arrow" aria-hidden="true">→</span></button>
           <button class="home-card student-home-card" data-open="student" type="button"><strong>Student</strong><span class="home-arrow" aria-hidden="true">→</span></button>
         </div>
-        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 70 · <a href="./refresh.html?build=70" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
+        <p style="font-size:12px;color:#667180;text-align:center;margin:18px 0 6px;">Build 71 · <a href="./refresh.html?build=71" style="color:#345a87;text-decoration:underline;">Refresh app</a></p>
       </section>
       <section id="student-view" class="main-view" aria-label="Student study resources">
         <div class="student-hub">
@@ -444,6 +446,7 @@
   <script src="./settings-view-v63.js?v=63"></script>
   <script src="./firebase-config.js?v=65"></script>
   <script src="./ranks-view.js?v=65"></script>
+  <script src="./paper-theme.js?v=71"></script>
   <script src="./review-view.js?v=41"></script>
   <script src="./case-practice-data.js?v=42"></script>
   <script src="./torts-case-practice-data.js?v=47"></script>

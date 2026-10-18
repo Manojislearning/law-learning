@@ -1,0 +1,79 @@
+/* Paper & pen theme v71 — notebook paper, ink colours and handwriting fonts.
+   Applied when <html> has class "paper" (default on; switch off in Settings). Loaded last so it wins.
+   Fonts are self-hosted Latin subsets (SIL Open Font License, see fonts/OFL-*.txt) so they work offline. */
+@font-face{font-family:"Kalam";src:url("./fonts/Kalam-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Kalam";src:url("./fonts/Kalam-Bold.woff") format("woff");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Patrick Hand";src:url("./fonts/PatrickHand-Regular.woff") format("woff");font-weight:400;font-style:normal;font-display:swap}
+html.paper{
+ --bg:#f3ead6; --surface:#fffbf1; --surface-2:#efe5cf; --text:#1f2d4d; --muted:#5f6577; --line:#dccfb2;
+ --accent:#1f2d4d; --ink-blue:#1d4f9a; --ink-red:#b23a32; --good:#2c6e43; --soft-good:#e5f1dc; --soft-warn:#fbf0d4;
+ --hand:"Kalam","Patrick Hand","Segoe Print","Bradley Hand",cursive;
+ --pen:"Patrick Hand","Kalam","Segoe Print","Bradley Hand",system-ui,sans-serif;
+}
+/* Page: cream notebook with faint blue rules and a red margin line showing between cards. */
+html.paper body{
+ font-family:var(--pen);font-size:108%;color:var(--text);letter-spacing:.005em;
+ background-color:var(--bg);
+ background-image:
+  linear-gradient(90deg,transparent 10px,rgba(178,58,50,.28) 10px,rgba(178,58,50,.28) 12px,transparent 12px),
+  repeating-linear-gradient(180deg,transparent 0,transparent 31px,rgba(29,79,154,.10) 31px,rgba(29,79,154,.10) 32px),
+  radial-gradient(circle at 20% 10%,rgba(255,255,255,.55),transparent 40rem);
+ background-attachment:fixed;
+}
+html.paper button,html.paper input,html.paper select,html.paper textarea{font-family:var(--pen)}
+html.paper input,html.paper textarea,html.paper select{font-size:17px}
+/* Headings and labels in a pen hand. */
+html.paper h1,html.paper h2,html.paper h3,html.paper h4,
+html.paper .home-card strong,html.paper .student-hub-card strong,html.paper .w-level strong,html.paper .cw-bar-btn strong,
+html.paper .cw-title,html.paper .rk-title,html.paper .cw-score strong,html.paper .score-pill strong,html.paper .sf-title{
+ font-family:var(--hand);font-weight:700;letter-spacing:0;color:var(--text)}
+html.paper #section-title{font-family:var(--hand);font-weight:700}
+html.paper .cw-sentence,html.paper .mlc-ask,html.paper .w-term,html.paper .rk-title{font-family:var(--hand)}
+/* Paper sheets: warm white, soft shadow, slightly hand-cut corners. */
+html.paper .home-card,html.paper .student-hub-card,html.paper .content-card,html.paper .w-card,html.paper .w-level,
+html.paper .cw-card,html.paper .cw-pair,html.paper .cw-bar-btn,html.paper .cw-stat,html.paper .cw-chip,html.paper .cw-secondary,
+html.paper .xp-card,html.paper .rk-card,html.paper .local-profile section,html.paper .settings63-card,
+html.paper .sf-choice,html.paper .sf-info,html.paper .sf-back,html.paper .sb-choice,html.paper .sb-concept,html.paper .sb-back,
+html.paper .review-card,html.paper .review-panel,html.paper .review-stat,html.paper .review-secondary,html.paper .review-choices button,
+html.paper .news-story,html.paper .news-filter,html.paper .news-empty,html.paper .law-tab,html.paper .law-panel,html.paper .law-next,html.paper .law-answer,
+html.paper .exam59-search,html.paper .exam59-question,html.paper .exam59-panel,
+html.paper .cp-writing,html.paper .cp-unit-link,html.paper .cp-panel,html.paper .cp-button,html.paper .cmp-meaning article,html.paper .cmp-example,
+html.paper .w-results,html.paper .w-tabs button,html.paper .w-search,html.paper .w-review,html.paper .w-nav button,html.paper .w-bottomactions button:last-child,
+html.paper .w-change-level,html.paper .rk-btn.rk-quiet,html.paper .rk-input,html.paper .xp-chip:not(.is-on),html.paper #back-home,html.paper .score-pill{
+ background-color:var(--surface)!important;border-color:var(--line)!important;color:var(--text)}
+html.paper .home-card,html.paper .w-card,html.paper .cw-card,html.paper .xp-card,html.paper .rk-card,html.paper .cp-panel,html.paper .review-card,html.paper .news-story,html.paper .cw-bar-btn{
+ box-shadow:0 1px 0 rgba(31,45,77,.06),0 6px 18px rgba(92,70,30,.10)!important;
+ border-radius:16px 18px 15px 19px/18px 15px 19px 16px}
+/* Inner tints that were grey become paper tones. */
+html.paper .w-option,html.paper .cw-option,html.paper .cw-mean,html.paper .w-compare,html.paper .cmp-explore{background-color:#f8f1e1!important;border-color:var(--line)!important}
+html.paper .cw-option.right,html.paper .w-option.right{background-color:var(--soft-good)!important;border-color:#4d8a5e!important}
+html.paper .cw-option.wrong,html.paper .w-option.wrong{background-color:#f8e3dc!important;border-color:var(--ink-red)!important}
+html.paper .cw-mean.is-answer{background-color:var(--soft-good)!important;outline-color:#4d8a5e}
+/* Ink buttons: blue-black pen instead of near-black plastic. */
+html.paper .cw-primary,html.paper .rk-btn:not(.rk-quiet),html.paper .xp-chip.is-on,html.paper .w-btn,html.paper .w-nav button:last-child,
+html.paper .w-tabs button.active,html.paper .w-bottomactions button:first-child,html.paper .local-profile button:not(.secondary){
+ background-color:var(--text)!important;border-color:var(--text)!important;color:#fffbf1!important}
+/* Links and accents in blue ink; underlines like a pen stroke. */
+html.paper a{color:var(--ink-blue)}
+html.paper .cw-link,html.paper .xp-papers a,html.paper .sf-source-link{color:var(--ink-blue)!important;text-decoration-thickness:1.5px;text-underline-offset:3px}
+html.paper .cw-blank{border-bottom:2px solid var(--ink-blue)}
+html.paper .cw-feedback.is-wrong{color:var(--ink-red)}
+html.paper .xp-topic.is-hot .xp-count,html.paper .rk-item.is-top .rk-pos{color:var(--ink-red)}
+html.paper .xp-topic.is-hot .xp-count{background:transparent;border:1.5px solid var(--ink-red);color:var(--ink-red)}
+html.paper .rk-bar span,html.paper .xp-bar span{background:var(--ink-blue)}
+html.paper .cw-bar span{background:var(--ink-blue)}
+html.paper .cw-subject,html.paper .rk-eyebrow,html.paper .xp-muted,html.paper .cw-src{color:var(--muted)}
+/* Highlighter for tips, like a marked line in a notebook. */
+html.paper .cw-tip strong,html.paper .xp-tip strong{background:linear-gradient(transparent 55%,rgba(255,214,90,.7) 55%)}
+html.paper .xp-tip{background:#fbf0d4!important;border-left-color:#c58b2a}
+html.paper :focus-visible{outline-color:var(--ink-blue)!important}
+/* Settings switch added by paper-theme.js */
+.paper-toggle{display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:66px;border-bottom:1px solid var(--line);font-size:1.05rem;font-weight:690;color:var(--text);cursor:pointer}
+.paper-toggle input{width:22px;height:22px;flex:none}
+/* Leftover solid surfaces from older stylesheets. */
+html.paper #home-view .home-grid .home-card[data-open="words"]{background:var(--surface)!important}
+html.paper .w-bottom{background:rgba(255,251,241,.97)!important;border-color:var(--line)!important}
+html.paper .home-contract-start,html.paper .settings63 button,html.paper .settings63-card button{background:var(--text)!important;color:#fffbf1!important;border-color:var(--text)!important}
+html.paper .w-progress-fill,html.paper .w-dots span.done{background:var(--ink-blue)!important}
+html.paper .w-progress,html.paper .w-dots span{background:var(--line)!important}
+html.paper input[type=checkbox],html.paper input[type=radio]{accent-color:var(--ink-blue)}

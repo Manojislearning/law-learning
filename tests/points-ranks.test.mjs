@@ -43,7 +43,7 @@ test("Points, ranks and leaderboard are wired, cached, backed up and text-only",
  const app=html.indexOf("./app.js"),pts=html.indexOf("points-core.js"),prof=html.indexOf("profile-local.js"),cfg=html.indexOf("firebase-config.js"),rk=html.indexOf("ranks-view.js");
  assert.ok(app>0&&pts>app&&prof>0&&cfg>prof&&rk>cfg);
  for(const f of ["./points-core.js?v=65","./firebase-config.js?v=65","./ranks-view.js?v=65","./ranks.css?v=65"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v70"));
+ assert.ok(sw.includes("law-learning-v71"));
  for(const k of ["law-learning-points-v1","law-learning-ranks-v1"])assert.ok(backup.includes('"'+k+'"'),k);
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+\//,"Firebase SDK must be pinned to an exact version");
@@ -119,4 +119,14 @@ test("Round picker gives a fresh mix: unseen first, recent items held back, few 
  const a=R.pick(items,id,{size:8,now,rand}).map(id).join(),b=R.pick(items,id,{size:8,now,rand}).map(id).join();
  assert.notEqual(a,b);
  const big={};for(let i=0;i<500;i++)big["k"+i]=i;R.trim(big,400);assert.equal(Object.keys(big).length,400);assert.ok(!("k0" in big)&&("k499" in big));
+});
+
+test("Paper theme is self-hosted, cached offline and applied before first paint",()=>{
+ const html=read("index.html"),sw=read("sw.js"),css=read("paper-theme.css");
+ assert.doesNotMatch(html,/fonts\.googleapis\.com/,"No external font requests");
+ for(const f of ["Kalam-Regular.woff","Kalam-Bold.woff","PatrickHand-Regular.woff"]){assert.ok(sw.includes("./fonts/"+f),f);assert.ok(css.includes("./fonts/"+f),f);}
+ assert.ok(html.indexOf("paper-theme.css")<html.indexOf("</head>"));
+ assert.match(html,/<script>try\{if\(JSON\.parse\(localStorage\.getItem\("law-learning-theme-v1"\)/,"Class set in head to avoid a flash");
+ assert.ok(read("backup-core.js").includes('"law-learning-theme-v1"'));
+ assert.ok(readFileSync(new URL("../fonts/OFL-Kalam.txt",import.meta.url),"utf8").includes("SIL OPEN FONT LICENSE"));
 });

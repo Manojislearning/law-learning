@@ -100,6 +100,20 @@ async function run(){
     }
     assert.equal(new Set(firsts).size,4,"Each fresh start opens with a different case");
     await ctx.close(); }
+  { /* Paper & pen theme: on by default, fonts self-hosted, switch in Settings persists. */
+    const ctx=await browser.newContext({viewport:{width:390,height:780},isMobile:true,hasTouch:true});await ctx.route(/^https?:\/\/(?!127\.0\.0\.1)/,r=>r.abort());
+    const page=await ctx.newPage();await page.goto(base+"#settings",{waitUntil:"load"});
+    assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),true,"Paper style is on by default");
+    await page.evaluate(()=>document.fonts.ready);
+    assert.equal(await page.evaluate(()=>document.fonts.check('700 20px "Kalam"')&&document.fonts.check('16px "Patrick Hand"')),true,"Handwriting fonts load from the app itself");
+    await page.locator("#settings-paper").uncheck();
+    assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),false);
+    await page.reload({waitUntil:"load"});
+    assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),false,"Choice survives reload");
+    assert.equal(await page.locator("#settings-paper").isChecked(),false);
+    await page.locator("#settings-paper").check();
+    assert.equal(await page.evaluate(()=>document.documentElement.classList.contains("paper")),true);
+    await ctx.close(); }
   console.log("Games checks passed at 320, 390 and 768px: chooser, Confusing Words and Marriage Law rounds, explanations, points, revisit list and Back.");
  }finally{await browser.close();server.close();}
 }

@@ -1,3 +1,7 @@
+## Version 71 — Paper and pen style
+
+The app now looks like a notebook: cream paper with faint ruled lines and a red margin, ink-blue text, and handwriting fonts (Kalam for headings, Patrick Hand for reading). Cards are warm paper sheets, buttons are blue-black ink, links are blue ink, and tips are highlighted like a marked line. The fonts are self-hosted Latin subsets under the SIL Open Font License (see `fonts/`), so the style also works offline. The style is on by default and can be switched off under **Settings → Paper and pen style**; the choice is stored under `law-learning-theme-v1` and included in backups.
+
 ## Version 70 — A fresh mix every start, and 9 high-yield marriage cases
 
 Every new round now starts with a fresh mix. Unseen and least-recently-seen questions come first. Anything shown in the last 20 minutes is held back, so leaving a round by mistake and starting again does not replay the same cards. Missed items still return, but at most 2–3 per round and mixed with new ones. "All cases" spreads a round across topics. The shared picker lives in `game-rounds.js`.

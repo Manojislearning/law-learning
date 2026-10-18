@@ -93,6 +93,7 @@
     var subs=new Set(),started=false,current=null;
     function normalize(route){
       var candidate=String(route||"").replace(/^#/,"").split("?")[0].trim();
+      if(candidate==="marriage")candidate="words"; /* deep link to Marriage Law Cases inside Games */
       return Object.prototype.hasOwnProperty.call(ROUTES,candidate)&&
         (candidate==="home"||!!doc.getElementById(candidate+"-view"))?candidate:"home";
     }
