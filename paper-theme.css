@@ -77,3 +77,23 @@ html.paper .home-contract-start,html.paper .settings63 button,html.paper .settin
 html.paper .w-progress-fill,html.paper .w-dots span.done{background:var(--ink-blue)!important}
 html.paper .w-progress,html.paper .w-dots span{background:var(--line)!important}
 html.paper input[type=checkbox],html.paper input[type=radio]{accent-color:var(--ink-blue)}
+/* v72: real paper grain and fibres (tileable texture) on the page and on every sheet. */
+html.paper body{
+ background-image:
+  linear-gradient(90deg,transparent 10px,rgba(178,58,50,.28) 10px,rgba(178,58,50,.28) 12px,transparent 12px),
+  repeating-linear-gradient(180deg,transparent 0,transparent 31px,rgba(29,79,154,.10) 31px,rgba(29,79,154,.10) 32px),
+  url("./paper-grain.png"),
+  radial-gradient(ellipse at 15% 0%,rgba(255,255,255,.6),transparent 38rem),
+  radial-gradient(ellipse at 100% 100%,rgba(160,120,60,.10),transparent 30rem);
+ background-size:auto,auto,320px 320px,auto,auto;
+}
+html.paper .home-card,html.paper .student-hub-card,html.paper .content-card,html.paper .w-card,html.paper .w-level,
+html.paper .cw-card,html.paper .cw-pair,html.paper .cw-bar-btn,html.paper .xp-card,html.paper .rk-card,html.paper .local-profile section,
+html.paper .settings63-card,html.paper .sf-choice,html.paper .sf-info,html.paper .review-card,html.paper .review-panel,
+html.paper .news-story,html.paper .law-panel,html.paper .exam59-question,html.paper .exam59-panel,html.paper .cp-panel,html.paper .w-bottom,
+html.paper #home-view .home-grid .home-card[data-open="words"]{
+ background-image:url("./paper-grain-light.png"),linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0) 40%)!important;
+ background-size:320px 320px,auto!important;
+}
+/* Light only: stop phones from auto-darkening the page (e.g. Chrome's forced dark mode). */
+:root{color-scheme:only light}

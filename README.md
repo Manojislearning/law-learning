@@ -1,3 +1,7 @@
+## Version 72 — Paper texture, light only
+
+The paper style now has real paper grain: a fine tileable texture of grain, soft mottling and short fibres (`paper-grain.png`) on the page, and a lighter version (`paper-grain-light.png`) on cards so text stays clean. Both are cached for offline use. The app is light-only, and `color-scheme: only light` stops phones from forcing a dark version.
+
 ## Version 71 — Paper and pen style
 
 The app now looks like a notebook: cream paper with faint ruled lines and a red margin, ink-blue text, and handwriting fonts (Kalam for headings, Patrick Hand for reading). Cards are warm paper sheets, buttons are blue-black ink, links are blue ink, and tips are highlighted like a marked line. The fonts are self-hosted Latin subsets under the SIL Open Font License (see `fonts/`), so the style also works offline. The style is on by default and can be switched off under **Settings → Paper and pen style**; the choice is stored under `law-learning-theme-v1` and included in backups.

@@ -43,7 +43,7 @@ test("Points, ranks and leaderboard are wired, cached, backed up and text-only",
  const app=html.indexOf("./app.js"),pts=html.indexOf("points-core.js"),prof=html.indexOf("profile-local.js"),cfg=html.indexOf("firebase-config.js"),rk=html.indexOf("ranks-view.js");
  assert.ok(app>0&&pts>app&&prof>0&&cfg>prof&&rk>cfg);
  for(const f of ["./points-core.js?v=65","./firebase-config.js?v=65","./ranks-view.js?v=65","./ranks.css?v=65"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v71"));
+ assert.ok(sw.includes("law-learning-v72"));
  for(const k of ["law-learning-points-v1","law-learning-ranks-v1"])assert.ok(backup.includes('"'+k+'"'),k);
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+\//,"Firebase SDK must be pinned to an exact version");
@@ -129,4 +129,12 @@ test("Paper theme is self-hosted, cached offline and applied before first paint"
  assert.match(html,/<script>try\{if\(JSON\.parse\(localStorage\.getItem\("law-learning-theme-v1"\)/,"Class set in head to avoid a flash");
  assert.ok(read("backup-core.js").includes('"law-learning-theme-v1"'));
  assert.ok(readFileSync(new URL("../fonts/OFL-Kalam.txt",import.meta.url),"utf8").includes("SIL OPEN FONT LICENSE"));
+});
+
+test("App stays light-only, with a paper texture",()=>{
+ const html=read("index.html"),css=read("paper-theme.css"),sw=read("sw.js");
+ assert.match(html,/<meta name="color-scheme" content="only light"/);
+ assert.match(css,/color-scheme:only light/);
+ for(const f of ["paper-theme.css","styles.css","confusing-words.css","ranks.css","exam-pattern.css"])assert.doesNotMatch(read(f),/prefers-color-scheme:\s*dark/,f);
+ for(const f of ["./paper-grain.png","./paper-grain-light.png"]){assert.ok(sw.includes(f),f);assert.ok(css.includes(f),f);}
 });
