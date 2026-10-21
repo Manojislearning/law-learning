@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-21T17:23:02Z",
+  "generatedAt": "2026-10-21T21:50:37Z",
   "items": [
+    {
+      "id": "b3dce0a4aa1848cb",
+      "title": "Supreme Court upholds Shree Naman Developers' acquisition of Bengaluru, Pune hotel under NCLT proceedings",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-upholds-shree-naman-developers-acquisition-of-bengaluru-pune-hotel-under-nclt-proceedings/135098849",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-21T18:18:20Z",
+      "category": "Karnataka",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135098849,imgsize-100928,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-upholds-shree-naman-developers-acquisition-of-bengaluru-pune-hotel-under-nclt-proceedings.jpg",
+      "brief": "Supreme Court Ruling: The Supreme Court has confirmed the insolvency proceedings against Gstaad Hotels and Neo Capricorn Plaza, facilitating Shree Naman Developers' acquisition of…"
+    },
     {
       "id": "9ccb7e73a63c1501",
       "title": "Delhi HC refuses relief to CJP leaders challenging judicial custody",
@@ -67,28 +78,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135041603,imgsize-77374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute.jpg",
       "brief": "The National Highways Authority of India (NHAI) triumphs in arbitration against Uchit Expressway, rejecting claims of ₹366.53 crore linked to the Chittorgarh–Udaipur highway project…"
-    },
-    {
-      "id": "3f8ca53123eb1f7d",
-      "title": "Supreme Court asks Centre to submit final airfare rules by November 16",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-asks-centre-to-submit-final-airfare-rules-by-november-16/135001479",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-16T18:06:18Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135001479,imgsize-100928,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-asks-centre-to-submit-final-airfare-rules-by-november-16.jpg",
-      "brief": "Supreme Court Airfare Rules: The Supreme Court mandates the Indian government to submit final airfare regulations targeting unfair pricing practices by airlines, following a…"
-    },
-    {
-      "id": "f5596e94b1afde91",
-      "title": "Kriti Sanon approaches Delhi HC for protection of personality rights",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/kriti-sanon-approaches-delhi-hc-for-protection-of-personality-rights/135001230",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-16T17:54:49Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135001230,imgsize-368240,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/kriti-sanon-approaches-delhi-hc-for-protection-of-personality-rights.jpg",
-      "brief": "Bollywood actress Kriti Sanon has sought the Delhi High Court's protection against unauthorized use of her personality rights, including AI-generated content. This case highlights…"
     },
     {
       "id": "6bfed74edd6dfb72",
