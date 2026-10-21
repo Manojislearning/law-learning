@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-21T05:01:19Z",
+  "generatedAt": "2026-10-21T12:03:08Z",
   "items": [
+    {
+      "id": "9ccb7e73a63c1501",
+      "title": "Delhi HC refuses relief to CJP leaders challenging judicial custody",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-hc-refuses-relief-to-cjp-leaders-challenging-judicial-custody/135089289",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-21T10:26:57Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135089289,imgsize-77336,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-refuses-relief-to-cjp-leaders-challenging-judicial-custody.jpg",
+      "brief": "The Delhi High Court declined to grant relief to Cockroach Janta Party leaders Saurav Das and Ashutosh Ranka, who are in judicial custody for…"
+    },
     {
       "id": "0766b61081cc9ef0",
       "title": "Cal HC says inquiry commission headed by retired judge be appointed into Chorbagan stampede",
@@ -80,17 +91,6 @@
       "brief": "Bollywood actress Kriti Sanon has sought the Delhi High Court's protection against unauthorized use of her personality rights, including AI-generated content. This case highlights…"
     },
     {
-      "id": "a5c425aecd955639",
-      "title": "SC issues notices to Nikhil Wagle, Sanjay Raut in contempt plea over remarks against CJI",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-issues-notices-to-nikhil-wagle-sanjay-raut-in-contempt-plea-over-remarks-against-cji/135001181",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-16T17:52:16Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135001181,imgsize-318114,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-issues-notices-to-nikhil-wagle-sanjay-raut-in-contempt-plea-over-remarks-against-cji.jpg",
-      "brief": "The Supreme Court has issued notices to journalist Nikhil Wagle and MP Sanjay Raut following a contempt petition over disparaging remarks about Chief Justice…"
-    },
-    {
       "id": "6bfed74edd6dfb72",
       "title": "Tribunals cannot hold an appeal against CoC-approved resolution plan: NCLAT",
       "url": "https://legal.economictimes.indiatimes.com/news/regulators/tribunals-cannot-hold-an-appeal-against-coc-approved-resolution-plan-nclat/134948937",
@@ -122,17 +122,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-134830266,imgsize-121179,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/siemens-energy-india-says-russian-court-rejects-appeal-44-38-crore-order-stands.jpg",
       "brief": "Siemens Energy India Limited's appeal against a Russian court order to pay ₹44.38 crore has been rejected, concluding all legal proceedings in Russia. The…"
-    },
-    {
-      "id": "10738671543af5ec",
-      "title": "Gujarat govt sets time-bound SOP for action on HC judgments, accountability for delays",
-      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/gujarat-govt-sets-time-bound-sop-for-action-on-hc-judgments-accountability-for-delays/134764130",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-07T11:04:38Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134764130,imgsize-209376,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/gujarat-govt-sets-time-bound-sop-for-action-on-hc-judgments-accountability-for-delays.jpg",
-      "brief": "Gujarat Government SOP: The Gujarat government has instituted a stringent time-bound Standard Operating Procedure (SOP) for state departments to act on High Court judgments…"
     }
   ]
 }
