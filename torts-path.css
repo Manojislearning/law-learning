@@ -1,0 +1,82 @@
+/* Torts Path v74 — Duolingo-style path. Builds on Confusing Words (cw-*) styles and the paper theme variables. */
+#words-view .tp[hidden]{display:none!important}
+.tp{--tp-good:#2c7a4b;--tp-bad:#b23a32;--tp-gold:#c99a1c}
+.tp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 8px}
+.tp-stat{background:var(--surface,#fff);border:1px solid var(--line);border-radius:14px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
+.tp-stat b{font-size:1.2rem;font-variant-numeric:tabular-nums}
+.tp-stat small{font-size:.74rem;color:var(--muted);font-weight:700}
+.tp-goal{margin:0 0 14px}
+.tp-goal span{background:var(--tp-gold)}
+.tp-practise{margin:0 0 6px}
+
+/* Units and lesson nodes */
+.tp-unit{margin:22px 0 6px}
+.tp-unit-head+.tp-nodes{margin-top:40px}
+.tp-unit-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;background:var(--text);color:#fff;border-radius:18px;padding:14px 16px}
+.tp-unit-head .cw-subject{color:rgba(255,255,255,.75);margin:0 0 2px}
+.tp-unit-title{margin:0;font-size:1.15rem;line-height:1.3;color:#fff!important}
+.tp-unit-sub{margin:4px 0 0;font-size:.82rem;line-height:1.45;color:rgba(255,255,255,.82)}
+.tp-notes-btn{flex:none;min-height:44px;padding:8px 14px;border-radius:12px;border:1.5px solid rgba(255,255,255,.7);background:transparent;color:#fff;font:inherit;font-weight:800;cursor:pointer}
+.tp-nodes{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-direction:column;align-items:center;gap:30px}
+.tp-item{position:relative;display:flex;flex-direction:column;align-items:center;width:150px}
+.tp-pos0{transform:translateX(0)}.tp-pos1{transform:translateX(-58px)}.tp-pos2{transform:translateX(0)}.tp-pos3{transform:translateX(58px)}
+.tp-node{width:72px;height:72px;border-radius:50%;border:none;cursor:pointer;font:inherit;font-size:1.5rem;font-weight:900;color:#fff;
+ background:var(--text);box-shadow:0 6px 0 rgba(0,0,0,.28);transition:transform .08s,box-shadow .08s}
+.tp-node:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.28)}
+.tp-node.is-done{background:var(--tp-gold);box-shadow:0 6px 0 #8f6c0e}
+.tp-node.is-current{outline:4px solid var(--tp-gold);outline-offset:4px}
+.tp-node.is-locked{background:#cfcfcf;color:#6b6b6b;box-shadow:0 6px 0 #a9a9a9;cursor:not-allowed}
+.tp-node:focus-visible{outline:3px solid var(--ink-blue,#1d4f9a);outline-offset:5px}
+.tp-start{position:absolute;top:-30px;background:var(--surface,#fff);border:2px solid var(--line);border-radius:10px;padding:2px 9px;font-size:.72rem;font-weight:900;letter-spacing:.06em;color:var(--tp-good);animation:tp-bob 1.6s ease-in-out infinite}
+.tp-node-label{margin-top:10px;font-size:.86rem;font-weight:750;text-align:center;line-height:1.3}
+.tp-node-label.is-locked{color:var(--muted)}
+.tp-hint{position:absolute;top:84px;z-index:2;width:200px;background:var(--text);color:#fff;border-radius:10px;padding:8px 10px;font-size:.8rem;text-align:center}
+.tp-trophy{margin:22px 0 0;text-align:center;font-weight:800}
+@keyframes tp-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
+/* Lesson screen */
+.tp-bar{display:flex;align-items:center;gap:12px;margin:14px 0 14px}
+.tp-x{flex:none;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface,#fff);color:var(--muted);font:inherit;font-size:1.1rem;font-weight:900;cursor:pointer}
+.tp-progress{flex:1;height:14px;margin:0}
+.tp-progress span{background:var(--tp-good);border-radius:99px}
+.tp-hearts{flex:none;font-weight:900;color:var(--tp-bad);font-variant-numeric:tabular-nums;min-width:3ch}
+.tp-hearts.is-hit{animation:tp-shake .4s}
+@keyframes tp-shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.tp-q{font-size:clamp(1.12rem,4.4vw,1.35rem);line-height:1.5;margin:4px 0 16px;overflow-wrap:anywhere}
+.tp-fill{line-height:1.9}
+.tp-blank{min-width:7ch;text-align:center}
+.tp-notelist{margin:0 0 6px;padding-left:20px;display:grid;gap:10px;line-height:1.55}
+.tp-notes ul{margin:0;padding-left:20px;display:grid;gap:8px;line-height:1.55;font-size:.95rem}
+.tp-options{display:grid;gap:10px}
+.tp-tf{grid-template-columns:1fr 1fr}
+.tp-chips{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.tp-option{text-align:left;font-weight:700;line-height:1.4;min-height:54px;border-bottom-width:3px}
+.tp-tf .tp-option,.tp-chips .tp-option{text-align:center}
+html .tp .tp-option.is-picked{border-color:var(--ink-blue,#1d4f9a)!important;background:#e8effa!important;color:var(--text)}
+html .tp .tp-option.wrong{background:#f8e3dc!important;border-color:var(--tp-bad)!important}
+.tp-option:disabled{cursor:default;opacity:1;color:var(--text)}
+.tp-check:disabled{opacity:.4;cursor:not-allowed}
+.tp-match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tp-col{display:grid;gap:10px;align-content:start}
+.tp-m{font-size:.92rem;min-height:58px;text-align:center}
+.tp-m.right{opacity:.55!important}
+.tp-slip{margin:10px 0 0;font-size:.85rem;color:var(--tp-bad);font-weight:700;text-align:center}
+.tp-feedback{margin-top:16px;border-radius:15px;padding:14px 15px;border:2px solid}
+.tp-feedback.is-right{background:#e3f3e6;border-color:var(--tp-good)}
+.tp-feedback.is-wrong{background:#fae5df;border-color:var(--tp-bad)}
+.tp-fb-title{margin:0 0 4px;font-size:1.2rem;font-weight:900}
+.is-right .tp-fb-title{color:var(--tp-good)}.is-wrong .tp-fb-title{color:var(--tp-bad)}
+.tp-fb-answer{margin:0 0 6px;font-weight:800}
+.tp-fb-why{margin:0;font-size:.92rem;line-height:1.55}
+.tp-continue{margin-top:12px}
+html .tp .is-right .tp-continue{background:var(--tp-good)!important;border-color:var(--tp-good)!important;color:#fff!important}
+html .tp .is-wrong .tp-continue{background:var(--tp-bad)!important;border-color:var(--tp-bad)!important;color:#fff!important}
+
+/* Result screens */
+.tp-big{font-size:3.6rem;text-align:center;margin:26px 0 0}
+.tp-center{text-align:center}
+.tp-result{margin:14px 0}
+.tp-perfect{text-align:center;font-weight:800;color:var(--tp-good);margin:6px 0}
+.tp-top-sub{margin-top:14px}
+@media (prefers-reduced-motion:reduce){.tp-start,.tp-hearts.is-hit{animation:none}.tp-node{transition:none}}
+@media (max-width:360px){.tp-pos1{transform:translateX(-40px)}.tp-pos3{transform:translateX(40px)}.tp-match{gap:8px}.tp-m{font-size:.85rem}}

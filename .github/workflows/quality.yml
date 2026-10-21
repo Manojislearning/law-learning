@@ -74,3 +74,7 @@ jobs:
         run: |
           node --check tests/games-mobile.cjs
           node tests/games-mobile.cjs
+      - name: Verify Torts Path lessons
+        run: |
+          node --check tests/torts-path-mobile.cjs
+          node tests/torts-path-mobile.cjs

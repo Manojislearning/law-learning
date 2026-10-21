@@ -352,7 +352,7 @@ async function run(){
     const context=await browser.newContext({viewport:{width,height:760},deviceScaleFactor:2,isMobile:true,hasTouch:true,reducedMotion:"reduce"});
     const page=await context.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));
     await page.goto(address.replace("v=43#practice","v=62#words"),{waitUntil:"load"});
-    assert.equal(await page.locator("#w-chooser .w-level").count(),4);
+    assert.equal(await page.locator("#w-chooser .w-level").count(),5);
     assert.equal(await page.locator("#w-practice").isHidden(),true);
     const advanced=page.locator('#w-chooser [data-wlevel="advanced"]');
     const bounds=await advanced.boundingBox();

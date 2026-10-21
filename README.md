@@ -1,3 +1,15 @@
+## Version 74 — Torts Path, a Duolingo-style game
+
+**Games → Torts Path** teaches the Law of Torts in small steps, in simple English with Karnataka examples (KSRTC bus, Mysuru, Hubballi, Chinnaswamy stadium). It follows the five KSLU Semester I units, with four lessons each (20 lessons, 110 questions):
+
+1. Basics of Tort — what a tort is, injuria and damnum, malice, remedies
+2. Defences and Vicarious Liability — volenti, other defences, master and servant, State liability
+3. Negligence, Nuisance and Strict Liability — duty of care, res ipsa loquitur, nuisance, Rylands and M.C. Mehta
+4. Torts against Person and Property — assault, battery, false imprisonment, malicious prosecution, defamation, trespass
+5. Consumer and Motor Vehicles Law — Consumer Protection Act 2019 and Motor Vehicles Act 1988 (current figures)
+
+How it plays: lessons open one by one along a path. Each starts with 3–4 quick notes, then mixes four question types — pick the answer, true or false, fill in the blank, and match the pairs. Choose, tap **Check**, read the short reason, tap **Continue**. You have 3 hearts per lesson; a wrong answer costs a heart and the question comes back at the end. Finishing gives 10 XP (+5 for a perfect lesson), counts towards a 20 XP daily goal and a day streak, and adds rank points once per lesson. **Notes** on each unit opens the guidebook, and **Practise old lessons** mixes questions from finished lessons. `#torts` opens the game directly. Progress is stored under `law-learning-torts-path-v1` and included in backups.
+
 ## Version 73 — Thin pen handwriting
 
 The paper style now uses one thin ballpoint-style hand (Patrick Hand) everywhere. The brush-like Kalam font and faux-bold text are gone. Headings stand out by size and darker ink instead of heavy strokes, and the question in Marriage Law Cases is underlined in blue ink.

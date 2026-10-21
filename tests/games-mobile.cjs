@@ -20,13 +20,13 @@ async function run(){
    await page.goto(base+"#home",{waitUntil:"load"});
    await page.locator('#home-view [data-open="words"]').tap();
    await page.waitForFunction(()=>document.getElementById("section-title").textContent==="Games");
-   assert.deepEqual(await page.locator("#w-chooser .w-level strong").allInnerTexts(),["Legal Words","Difficult Words","Confusing Words","Marriage Law Cases"]);
+   assert.deepEqual(await page.locator("#w-chooser .w-level strong").allInnerTexts(),["Legal Words","Difficult Words","Confusing Words","Marriage Law Cases","Torts Path"]);
    await page.locator('#w-chooser [data-confuse]').tap();
    assert.match(await page.locator(".cw-title").innerText(),/Confusing Words/);
    const before=await page.evaluate(()=>window.LawPoints.total());
-   assert.equal(await page.locator(".cw:not(.mlc) .cw-bar-btn").count(),3,"Three tap-to-play sets");
-   assert.doesNotMatch(await page.locator(".cw:not(.mlc) .cw-bars").innerText(),/\d/,"No counts on sets");
-   await page.locator(".cw:not(.mlc) .cw-bar-btn",{hasText:"All pairs"}).tap();
+   assert.equal(await page.locator(".cw:not(.mlc):not(.tp) .cw-bar-btn").count(),3,"Three tap-to-play sets");
+   assert.doesNotMatch(await page.locator(".cw:not(.mlc):not(.tp) .cw-bars").innerText(),/\d/,"No counts on sets");
+   await page.locator(".cw:not(.mlc):not(.tp) .cw-bar-btn",{hasText:"All pairs"}).tap();
    let right=0;
    for(let i=0;i<10;i++){
     await page.locator(".cw-option").first().waitFor();
@@ -52,7 +52,7 @@ async function run(){
    const stored=await page.evaluate(()=>JSON.parse(localStorage.getItem("law-learning-confusing-v1")));
    assert.equal(Object.keys(stored.missed).length,10-right);assert.equal(stored.played,1);
    await page.getByRole("button",{name:"Choose another set"}).tap();
-   assert.match(await page.locator(".cw:not(.mlc) .cw-note").innerText(),/to revisit/);
+   assert.match(await page.locator(".cw:not(.mlc):not(.tp) .cw-note").innerText(),/to revisit/);
    await page.locator("#back-home").tap();
    assert.equal(await page.locator("#w-chooser").isVisible(),true,"Back returns to the Games chooser");
    assert.deepEqual(errors,[]);
