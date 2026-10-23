@@ -109,3 +109,54 @@ html.paper .cw-sentence,html.paper .mlc-ask{font-size:clamp(1.25rem,4.8vw,1.5rem
 html.paper .mlc-ask{text-decoration:underline;text-decoration-color:rgba(29,79,154,.35);text-decoration-thickness:1.5px;text-underline-offset:5px}
 html.paper .cw-option,html.paper .w-option,html.paper .mlc-option{font-size:1.08rem}
 html.paper .cw-subject,html.paper .rk-eyebrow,html.paper .w-eyebrow{letter-spacing:.06em}
+
+/* v75: easier reading on phones — whiter paper, no heavy shading, bigger and clearer text.
+   The notebook feel stays (handwritten headings, ink colours, a faint margin line), but the page and
+   cards are near-white, the grain and ruled lines are gone, and reading text uses the phone's own clear font. */
+html.paper{
+ --bg:#fbfaf6; --surface:#ffffff; --surface-2:#f6f4ee; --line:#e3ded2; --muted:#4f5566; --text:#17223f;
+ --read:"Noto Sans","Roboto","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+html.paper body{
+ background-color:var(--bg)!important;
+ background-image:linear-gradient(90deg,transparent 10px,rgba(178,58,50,.14) 10px,rgba(178,58,50,.14) 11px,transparent 11px)!important;
+ background-size:auto!important;background-attachment:scroll;
+}
+html.paper .home-card,html.paper .student-hub-card,html.paper .content-card,html.paper .w-card,html.paper .w-level,
+html.paper .cw-card,html.paper .cw-pair,html.paper .cw-bar-btn,html.paper .xp-card,html.paper .rk-card,html.paper .local-profile section,
+html.paper .settings63-card,html.paper .sf-choice,html.paper .sf-info,html.paper .review-card,html.paper .review-panel,
+html.paper .news-story,html.paper .law-panel,html.paper .exam59-question,html.paper .exam59-panel,html.paper .cp-panel,html.paper .w-bottom,
+html.paper #home-view .home-grid .home-card[data-open="words"]{
+ background-color:#fff!important;background-image:none!important;
+}
+html.paper .home-card,html.paper .w-card,html.paper .cw-card,html.paper .xp-card,html.paper .rk-card,html.paper .cp-panel,html.paper .review-card,html.paper .news-story,html.paper .cw-bar-btn{
+ box-shadow:0 1px 3px rgba(23,34,63,.08)!important}
+html.paper .w-option,html.paper .cw-option,html.paper .cw-mean,html.paper .w-compare,html.paper .cmp-explore{background-color:#f7f6f2!important}
+html.paper .w-bottom{background:rgba(255,255,255,.98)!important}
+
+@media (max-width:700px){
+ /* Everything sized in rem grows by about 12%. */
+ html.paper{font-size:112.5%}
+ html.paper body{font-size:100%;line-height:1.6;letter-spacing:0}
+ /* Clear phone font for reading; handwriting only for titles. */
+ html.paper body,html.paper button,html.paper input,html.paper select,html.paper textarea,
+ html.paper p,html.paper li,html.paper dd,html.paper dt,html.paper td,html.paper th,html.paper span,html.paper label,html.paper summary,
+ html.paper .cw-sentence,html.paper .mlc-ask,html.paper .w-term{font-family:var(--read)!important}
+ html.paper h1,html.paper h2,html.paper h3,html.paper h4,html.paper #section-title,html.paper .cw-title,html.paper .rk-title,html.paper .sf-title,
+ html.paper .home-card strong,html.paper .student-hub-card strong,html.paper .w-level strong,html.paper .cw-bar-btn strong,
+ html.paper .cw-score strong,html.paper .tp-unit-title{font-family:var(--hand)!important}
+ /* Real bold is fine in the phone font (no faux bold in the handwriting). */
+ html.paper strong,html.paper b,html.paper dt,html.paper .cw-option,html.paper .tp-option,html.paper .cw-primary,html.paper .cw-secondary,
+ html.paper .tp-fb-title,html.paper .cw-feedback,html.paper .tp-fb-answer,html.paper .tp-stat b{font-weight:650!important}
+ /* No text smaller than about 15px. */
+ html.paper .cw-subject,html.paper .rk-eyebrow,html.paper .w-eyebrow,html.paper .cw-src,html.paper .cw-note,html.paper .tp-stat small,
+ html.paper .tp-unit-sub,html.paper .tp-start,html.paper small{font-size:max(.84rem,15px)!important}
+ html.paper .cw-lead,html.paper .tp-fb-why,html.paper .mlc-why,html.paper .cw-mean dd,html.paper .tp-notes ul,html.paper .cw-tip{font-size:1rem!important;line-height:1.6}
+ html.paper .cw-sentence,html.paper .mlc-ask,html.paper .tp-q,html.paper .mlc-facts{font-size:1.12rem!important;line-height:1.6}
+ html.paper .cw-option,html.paper .w-option,html.paper .mlc-option,html.paper .tp-option{font-size:1rem!important;line-height:1.45}
+ html.paper .tp-node-label{font-size:.95rem}
+ html.paper .cw-subject{letter-spacing:.03em}
+ html.paper .score-pill span{font-size:13px!important}
+ html.paper .mlc-ask{text-decoration:none}
+ html.paper .cw-muted,html.paper .cw-subject,html.paper .cw-src,html.paper .cw-note{color:#4a5062!important}
+}

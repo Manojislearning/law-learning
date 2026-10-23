@@ -1,3 +1,7 @@
+## Version 75 — Whiter paper and bigger, clearer text on phones
+
+The paper is now near-white with no grain, shading or ruled lines; only a faint red margin line is left. Cards are plain white. On phones (up to 700px wide), all text is about 12% bigger, reading text uses the phone's own clear font (Roboto/Noto Sans) instead of handwriting, nothing is smaller than about 15px, and answer buttons use real bold. Headings keep the handwriting style.
+
 ## Version 74 — Torts Path, a Duolingo-style game
 
 **Games → Torts Path** teaches the Law of Torts in small steps, in simple English with Karnataka examples (KSRTC bus, Mysuru, Hubballi, Chinnaswamy stadium). It follows the five KSLU Semester I units, with four lessons each (20 lessons, 110 questions):
