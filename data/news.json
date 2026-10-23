@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-22T21:45:39Z",
+  "generatedAt": "2026-10-23T05:03:35Z",
   "items": [
+    {
+      "id": "c3b6fec1b03d401e",
+      "title": "Lupin appoints Brian Savage as President, Chief Legal Officer",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/lupin-appoints-brian-savage-as-president-chief-legal-officer/135134002",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-23T04:08:28Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135134002,imgsize-23469,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/lupin-appoints-brian-savage-as-president-chief-legal-officer.jpg",
+      "brief": "Lupin Ltd has announced the appointment of Brian Savage as President and Chief Legal Officer, effective October 22, 2026, enhancing its legal expertise in…"
+    },
+    {
+      "id": "0271749e3c0b2702",
+      "title": "IP & Innovation Conclave 2026 to bring corporate legal leaders together to discuss AI, IP commercialisation",
+      "url": "https://legal.economictimes.indiatimes.com/news/industry/ip-innovation-conclave-2026-to-bring-corporate-legal-leaders-together-to-discuss-ai-ip-commercialisation/135131358",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-23T02:08:25Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135131358,imgsize-27604,width-1200,height=627,overlay-etlegal,resizemode-75/industry/ip-innovation-conclave-2026-to-bring-corporate-legal-leaders-together-to-discuss-ai-ip-commercialisation.jpg",
+      "brief": "Join leading corporate legal experts at the IP & Innovation Conclave 2026 in Mumbai, where the focus will be on artificial intelligence adoption, intellectual…"
+    },
     {
       "id": "b3dce0a4aa1848cb",
       "title": "Supreme Court upholds Shree Naman Developers' acquisition of Bengaluru, Pune hotel under NCLT proceedings",
