@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-24T11:17:12Z",
+  "generatedAt": "2026-10-24T16:05:11Z",
   "items": [
+    {
+      "id": "413fe1d0cbde31b4",
+      "title": "Yes Bank yet to decide on AT-1 bond coupon payment after Supreme Court judgment",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/yes-bank-yet-to-decide-on-at-1-bond-coupon-payment-after-supreme-court-judgment/135170793",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-24T12:43:52Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135170793,imgsize-61946,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/yes-bank-yet-to-decide-on-at-1-bond-coupon-payment-after-supreme-court-judgment.jpg",
+      "brief": "Yes Bank is assessing its options regarding coupon payments on AT-1 bonds following a Supreme Court judgment. The bank will communicate its decision after…"
+    },
+    {
+      "id": "5cd1c455cfd51a58",
+      "title": "Allahabad High Court grants bail to SabPaisa CEO Kumar Manish in GST case",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/allahabad-high-court-grants-bail-to-sabpaisa-ceo-kumar-manish-in-gst-case/135170371",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-24T12:30:23Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135170371,imgsize-639587,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/allahabad-high-court-grants-bail-to-sabpaisa-ceo-kumar-manish-in-gst-case.jpg",
+      "brief": "Kumar Manish, CEO of SRS Live Technologies and SabPaisa, has been granted bail by the Allahabad High Court in a GST case involving alleged…"
+    },
     {
       "id": "3b82f44a941c08e1",
       "title": "Delhi HC rejects Neha Bora's plea against police notice to sign peace bond",
