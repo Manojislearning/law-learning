@@ -1,3 +1,16 @@
+## Version 77 — Law Notes inside the app, and a tidier Student menu
+
+**Law Notes now open inside the app** (Student → Law Notes, or `#lawnotes`) instead of the separate reader page. Notes come from the public LAW-NOTES repository and are bundled into `data/law-notes.json` by a workflow that runs every 3 hours, so they open instantly, work offline, and no longer hit GitHub's hourly reading limit.
+
+- Browse Semester I and II subjects → units → topics, or search the full text of every note.
+- Reading: Save (☆), topic branch Map (◇), Listen, text size A−/A+ (remembered), Previous/Next within a unit, and a contents list on long notes. Links between notes open inside the app.
+- Most topic notes are still outlines. These are marked **OUTLINE**, and instead of an empty page they show help: the matching unit's quick notes and Torts Path for Law of Torts, or Case Practice for other subjects.
+- The top Back button steps back one level at a time (note → unit → subject → Law Notes → Student).
+- Syllabus units have **Read your notes for this unit**.
+- Old reader links (`reader/`, `reader/?file=…`, `reader/?map=1`) redirect into the app; the old reader's offline worker removes itself.
+
+**Student** is grouped into Study, Exams, and You and links, with compact rows. Topic Brain Branches is now the ◇ Map button on each topic note.
+
 ## Version 75 — Whiter paper and bigger, clearer text on phones
 
 The paper is now near-white with no grain, shading or ruled lines; only a faint red margin line is left. Cards are plain white. On phones (up to 700px wide), all text is about 12% bigger, reading text uses the phone's own clear font (Roboto/Noto Sans) instead of handwriting, nothing is smaller than about 15px, and answer buttons use real bold. Headings keep the handwriting style.

@@ -16,6 +16,7 @@
     "law-updates":["Statutory review · First Year","Law Updates"],
     news:["Legal current affairs","Law News"],
     student:["KSLU · Student Resources","Student"],
+    lawnotes:["Your notes · KSLU","Law Notes"],
     syllabus:["KSLU · 3-Year LL.B","Syllabus"],
     subjects:["KSLU · Legal concepts","Subjects"],
     exam:["Exam preparation","Exam Pattern"],
@@ -107,7 +108,7 @@
       });
       var back=doc.getElementById("back-home");
       if(back){
-        var inStudent=["syllabus","subjects","papers","exam","links","profile","settings"].includes(next);
+        var inStudent=["syllabus","subjects","papers","exam","links","profile","settings","lawnotes"].includes(next);
         back.hidden=next==="home";
         back.textContent=inStudent?"← Student":"← Home";
         back.setAttribute("aria-label",inStudent?"Back to Student":"Back to home");
@@ -134,7 +135,7 @@
     function onClick(event){
       var target=event.target;
       if(!target||typeof target.closest!=="function")return;
-      if(target.closest("#back-home")){event.preventDefault();navigate(["syllabus","subjects","papers","exam","links","profile","settings"].includes(current)?"student":"home");return;}
+      if(target.closest("#back-home")){event.preventDefault();navigate(["syllabus","subjects","papers","exam","links","profile","settings","lawnotes"].includes(current)?"student":"home");return;}
       var button=target.closest(".home-card[data-open]");
       if(button){event.preventDefault();navigate(button.dataset.open);}
     }

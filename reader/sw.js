@@ -1,6 +1,8 @@
-/* Cache only the public app shell. Never cache GitHub API requests or private notes. */
-const VERSION='kslu-reader-shell-v11';
-const SHELL=['./','./index.html','./style.css','./minimal.css?v=7','./map.css?v=5','./polish.css?v=2','./map.mjs','./app.mjs','./markdown.mjs','./manifest.webmanifest','./icon.svg'];
-self.addEventListener('install',event=>event.waitUntil(caches.open(VERSION).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('kslu-reader-shell-')&&k!==VERSION).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',event=>{const u=new URL(event.request.url);if(u.origin!==self.location.origin||event.request.method!=='GET'||!u.pathname.includes('/reader/'))return;event.respondWith(fetch(event.request).catch(()=>caches.match(event.request)));});
+/* The separate reader has moved into the main app. This worker removes the old reader cache and unregisters itself. */
+self.addEventListener("install",function(){self.skipWaiting();});
+self.addEventListener("activate",function(event){
+  event.waitUntil(caches.keys().then(function(keys){return Promise.all(keys.filter(function(k){return k.indexOf("law-learning-")!==0;}).map(function(k){return caches.delete(k);}));})
+    .then(function(){return self.registration.unregister();})
+    .then(function(){return self.clients.matchAll();})
+    .then(function(clients){clients.forEach(function(c){c.navigate(c.url);});}));
+});

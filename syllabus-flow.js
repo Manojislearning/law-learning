@@ -234,6 +234,8 @@ function render(){
   var course=KSLU_FIRST_SEMESTER.courses[subject],u=course.units[unit];
   topicsCache=splitTopics(u);
   var e=screen(u.title,course.name+" · "+u.unit,"Choose one core topic.");
+  var notesFolder=sem===1?["Constitutional-Law-I","Contract-I","Law-of-Torts","Family-Law-I---Hindu-Law","Criminal-Law-I---BNS-2023","English-For-Kannada-Medium"][subject]:null;
+  if(notesFolder&&window.LawNotes)B(e,"Read your notes for this unit","Law Notes · "+u.unit+" →",function(){window.LawNotes.openUnit(notesFolder,unit+1);});
   if(sem===1&&subject===3){
     B(e,"Hindu Law Case Practice","15 problems · independent legal reasoning and self-check →",function(){
      if(window.LawCasePracticeUI)window.LawCasePracticeUI.open("hindu");

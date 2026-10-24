@@ -58,10 +58,10 @@ jobs:
         run: |
           node --check tests/mobile-browser.cjs
           node tests/mobile-browser.cjs
-      - name: Verify Vault Reader at Android widths
+      - name: Verify Law Notes inside the app at Android widths
         run: |
-          node --check tests/vault-reader-mobile.cjs
-          node tests/vault-reader-mobile.cjs
+          node --check tests/law-notes-mobile.cjs
+          node tests/law-notes-mobile.cjs
       - name: Verify Exam Pattern at Android widths
         run: |
           node --check tests/exam-pattern-mobile.cjs

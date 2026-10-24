@@ -15,16 +15,16 @@ test("Home presents concise navigation labels without explanatory subheadlines",
  for(const label of ["Law Updates","Law News","Case Practice","Review"])
   assert.ok(home.includes(">"+label+"<"),"Home navigation item missing: "+label);
 });
-test("Student menu lists ten destinations without descriptions",()=>{
- const hub=html.split('<section id="student-view"')[1].split('<section id="words-view"')[0];
- const nav=hub.split('<nav class="student-hub-grid"')[1].split("</nav>")[0];
- assert.deepEqual([...nav.matchAll(/<strong>([^<]+)<\/strong>/g)].map(m=>m[1]),[
-  "Syllabus","Topic Brain Branches","Subjects","Exam Papers &amp; Answers","Law Notes","Exam Pattern","Important Links","Continue Contract–I","Profile","Settings"
+test("Student menu groups nine destinations without descriptions",()=>{
+ const hub=html.split('<section id="student-view"')[1].split('<section id="lawnotes-view"')[0];
+ assert.deepEqual([...hub.matchAll(/<h3 class="student-group">([^<]+)<\/h3>/g)].map(m=>m[1]),["Study","Exams","You and links"]);
+ assert.deepEqual([...hub.matchAll(/<strong>([^<]+)<\/strong>/g)].map(m=>m[1]),[
+  "Law Notes","Syllabus","Subjects","Continue Contract–I","Exam Papers &amp; Answers","Exam Pattern","Profile","Settings","Important Links"
  ]);
- assert.ok(!/<p>|<small>|student-hub-number|student-hub-footnote/.test(nav));
- assert.ok(nav.includes('href="./reader/?map=1"'));
- assert.ok(nav.includes('href="./reader/"'));
- assert.ok(nav.includes('data-open="settings"'));
+ assert.ok(!/<p>|<small>|student-hub-number|student-hub-footnote/.test(hub));
+ assert.ok(!hub.includes('href="./reader/'),"Law Notes open inside the app, not the separate reader");
+ assert.ok(hub.includes('data-open="lawnotes"'));
+ assert.ok(hub.includes('data-open="settings"'));
  assert.ok(css.includes("min-height:76px"),"Menu is expected to be compact");
 });
 test("Learn Words shows Legal Words and Difficult Words without level names, preserving category and progress storage",()=>{

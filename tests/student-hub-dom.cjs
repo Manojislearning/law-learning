@@ -35,11 +35,11 @@ function setup(hash){
  const student=d.querySelector("#student-view");
  assert.equal(home.querySelectorAll('[data-open="student"]').length,1);
  assert.equal(home.querySelectorAll('[data-open="syllabus"],[data-open="subjects"],[data-open="papers"],a[href="./reader/?map=1"]').length,0);
- assert.equal(student.querySelectorAll('.student-hub-card').length,10);
+ assert.equal(student.querySelectorAll('.student-hub-card').length,9);
  assert.equal(home.querySelectorAll('[data-open="notes"],#profile-open,#home-contract-lesson').length,0);
- assert.ok(student.querySelector('a[href="./reader/"]'));
+ assert.ok(student.querySelector('[data-open="lawnotes"]'));
  assert.ok(!home.querySelector('[data-open="exam"],[data-open="links"],a[href="./reader/"]'));
- assert.ok(student.querySelector('a[href="./reader/?map=1"]'));
+ assert.equal(student.querySelectorAll('a[href^="./reader/"]').length,0);
  home.querySelector('[data-open="student"]').click();
  await settle();
  assert.equal(w.LawAppCore.router.current(),"student");

@@ -1,25 +1,12 @@
-# Law Notes — Mobile Reader
+# Law Notes (shared modules)
 
-The public reader lives at https://manojislearning.github.io/law-learning/reader/.
+Law Notes now open inside the main app: **Student → Law Notes** (`#lawnotes`).
+Old reader links such as `reader/?file=…` and `reader/?map=1` redirect there.
 
-## Reading
+This folder keeps the shared pieces the app uses:
 
-- Opens `Manojislearning/LAW-NOTES` automatically in read-only mode. The repository is public. No GitHub access token is requested.
-- Browse Notes → Semester → Subject → Unit → Topic, or search by note title.
-- Default presentation: clean, continuous Markdown rendering.
-- **Markdown** in the note toolbar shows the original source. **Preview** switches back.
-- **Map** appears for individual topic notes, with rounded SVG branches, source links and touch pinch zoom.
-- Home / Previous / Next / Map appear along the bottom on phones. Unit/back navigation appears in the note header.
-- The landing loader uses CSS orbit animations; new notes display animated skeleton lines while they load.
-- Use Android Chrome → Add to Home screen to install.
+- `markdown.mjs` — safe, read-only Markdown (Obsidian subset). All source HTML is escaped.
+- `map.mjs`, `map.css` — the topic branch map (◇ Map on a topic note).
 
-## Privacy and availability
-
-- No credentials, note contents or private repository data are stored by the app.
-- Bookmarks, text size, theme and last-opened filename are stored locally on the device.
-- Only the public app shell is cached for offline use. Content requires internet and public GitHub availability.
-- Read-only: edits belong in the LAW-NOTES Markdown vault.
-
-## Development
-
-The app uses plain HTML/CSS/JavaScript, no build step. CI checks mobile navigation, Markdown view, rounded SVG, pinch zoom, source links and overflow.
+The notes themselves are copied from the public LAW-NOTES repository into `data/law-notes.json`
+by `.github/workflows/law-notes.yml` (every 3 hours, or run it by hand). Edit notes in LAW-NOTES, not here.

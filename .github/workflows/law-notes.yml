@@ -1,0 +1,49 @@
+name: Sync Law Notes into the app
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/law-notes.yml'
+      - 'scripts/sync-law-notes.py'
+  schedule:
+    - cron: '41 */3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: law-notes-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the public LAW-NOTES vault
+        uses: actions/checkout@v4
+        with:
+          repository: Manojislearning/LAW-NOTES
+          path: _law-notes
+          lfs: false
+      - name: Build data/law-notes.json
+        run: python3 scripts/sync-law-notes.py _law-notes "$(git -C _law-notes rev-parse --short HEAD)"
+      - name: Commit only if the notes changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/law-notes.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync Law Notes from LAW-NOTES"
+            for attempt in 1 2 3 4; do
+              git fetch origin main
+              git rebase origin/main
+              if git push origin HEAD:main; then exit 0; fi
+              sleep 3
+            done
+            echo 'Failed to publish notes after four retries' >&2
+            exit 1
+          fi
