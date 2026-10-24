@@ -150,6 +150,7 @@ function ask(){
  header();
  var c=el("article",undefined,"cw-card tp-card",box);
  el("p",LABEL[q.t]||"Question","cw-subject",c);
+ caseBriefs(c,q);
  if(q.t==="match"){match(c,q);return;}
  var pick={i:null},buttons=[],blank=null;
  if(q.t==="fill"){
@@ -179,6 +180,38 @@ function ask(){
  });
  check.disabled=true;
  if(buttons[0])buttons[0].focus({preventScroll:true});
+}
+
+/* Case briefs: when a question names a case, show its facts first, with a link to read the full case. */
+var CASES=Array.isArray(DATA.cases)?DATA.cases:[];
+function casesIn(q){
+ var text=[q.q].concat(q.o||[],(q.pairs||[]).map(function(p){return p.join(" ");})).join(" ");
+ return CASES.filter(function(k){return k.match.some(function(m){return text.indexOf(m)>=0;});});
+}
+function readLink(k,parent){
+ var a=el("a","Read the full case ↗","tp-case-link",parent);
+ a.href="https://indiankanoon.org/search/?formInput="+encodeURIComponent(k.name.replace(/\s*\(.*\)$/,""));
+ a.target="_blank";a.rel="noopener noreferrer";
+ return a;
+}
+function caseBriefs(card,q){
+ var list=casesIn(q);if(!list.length)return;
+ if(list.length===1){
+  var k=list[0],box=el("aside",undefined,"tp-case",card);box.setAttribute("aria-label","Case in brief");
+  el("p","📘 Case in brief","tp-case-label",box);
+  el("p",k.name,"tp-case-name",box);el("p",k.cite,"tp-case-cite",box);
+  el("p",k.facts,"tp-case-facts",box);
+  readLink(k,box);
+  return;
+ }
+ /* Several cases (match questions): one tap opens each brief. */
+ var wrap=el("div",undefined,"tp-cases",card);
+ el("p","📘 Cases in this question — tap one to read the facts","tp-case-label",wrap);
+ list.forEach(function(k){
+  var d=el("details",undefined,"tp-case tp-case-more",wrap);
+  el("summary",k.name,"tp-case-name",d);
+  el("p",k.cite,"tp-case-cite",d);el("p",k.facts,"tp-case-facts",d);readLink(k,d);
+ });
 }
 
 /* Match pairs: tap one on the left, then its partner on the right. */
@@ -228,6 +261,8 @@ function result(card,q,ok,answer,matched){
  el("p",good?(ok?pickPraise():"Done! All pairs matched."):"Wrong answer","tp-fb-title",fb);
  if(!good&&answer)el("p","Right answer: "+answer,"tp-fb-answer",fb);
  if(q.why)el("p",q.why,"tp-fb-why",fb);
+ /* A case named only in the explanation gets its read link here. */
+ var shown=casesIn(q);CASES.filter(function(k){return shown.indexOf(k)<0&&q.why&&k.match.some(function(m){return q.why.indexOf(m)>=0;});}).forEach(function(k){readLink(k,fb).textContent="Read "+k.name+" ↗";});
  var out=!good&&view.hearts<=0;
  var next=btn(out?"See result →":"Continue →","cw-primary tp-continue",fb,function(){if(out)noHearts();else ask();});
  next.focus({preventScroll:true});

@@ -50,10 +50,25 @@ test("current-law figures match the statutory accuracy notes",()=>{
 
 test("Torts Path is wired into the app, offline cache, backups and points",()=>{
  const sw=read("sw.js"),html=read("index.html"),view=read("torts-path-game.js");
- for(const f of ["./torts-path-data.js?v=74","./torts-path-game.js?v=74","./torts-path.css?v=74"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
+ for(const f of ["./torts-path-data.js?v=78","./torts-path-game.js?v=78","./torts-path.css?v=78"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
  assert.ok(html.indexOf("torts-path-data.js")<html.indexOf("torts-path-game.js"));
  assert.ok(read("backup-core.js").includes('"law-learning-torts-path-v1"'));
  assert.match(view,/LawPoints\.award\("torts-path:"/);
  assert.doesNotMatch(view,/innerHTML|addEventListener\("hashchange"/);
  assert.doesNotMatch(read("torts-path.css"),/prefers-color-scheme:\s*dark/);
+});
+
+test("questions that name a case have a brief and a read link",()=>{
+ const text=q=>[q.q,...(q.o||[]),...(q.pairs||[]).flat()].join(" ");
+ const named=/ v [A-Z]|Gloucester|Wagon Mound|Re Polemis|Limpus|Century Insurance|Vidyawati|Kasturi Lal|Nilabati|Rudul Sah|Bhim Singh/;
+ let n=0;
+ for(const u of D.units)for(const l of u.lessons)for(const q of l.qs){
+  const t=text(q);if(!named.test(t))continue;n++;
+  assert.ok(D.cases.some(k=>k.match.some(m=>t.includes(m))),"No brief for: "+t.slice(0,80));
+ }
+ assert.ok(n>=18,"case questions counted: "+n);
+ for(const k of D.cases){assert.ok(k.name&&k.cite&&k.facts.split(/\s+/).length<=60,k.name);}
+ const view=read("torts-path-game.js");
+ assert.match(view,/indiankanoon\.org\/search\/\?formInput=/);
+ assert.match(view,/rel="noopener noreferrer"/);
 });

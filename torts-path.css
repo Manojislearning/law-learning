@@ -80,3 +80,16 @@ html .tp .is-wrong .tp-continue{background:var(--tp-bad)!important;border-color:
 .tp-top-sub{margin-top:14px}
 @media (prefers-reduced-motion:reduce){.tp-start,.tp-hearts.is-hit{animation:none}.tp-node{transition:none}}
 @media (max-width:360px){.tp-pos1{transform:translateX(-40px)}.tp-pos3{transform:translateX(40px)}.tp-match{gap:8px}.tp-m{font-size:.85rem}}
+/* v78 case briefs */
+.tp-case{margin:2px 0 14px;padding:12px 14px;border-radius:14px;background:#eef4fb;border-left:4px solid #557cae;line-height:1.55}
+.tp-case-label{margin:0 0 4px;font-size:.82rem;letter-spacing:.03em;color:#3f5d88}
+.tp-case-name{margin:0;font-size:1.02rem;font-weight:700}
+.tp-case-cite{margin:1px 0 6px;font-size:.84rem;color:var(--muted)}
+.tp-case-facts{margin:0 0 6px;font-size:.98rem}
+.tp-case-link{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-blue,#1d4f9a);font-weight:600;text-underline-offset:3px}
+.tp-cases{margin:2px 0 14px}
+.tp-case-more{margin:0 0 8px;padding:0 14px}
+.tp-case-more summary{min-height:48px;display:flex;align-items:center;cursor:pointer}
+.tp-case-more[open]{padding-bottom:8px}
+html.paper .tp-case-name{font-weight:700!important}
+html.paper .tp-case-link{font-weight:600!important}

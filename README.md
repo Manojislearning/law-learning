@@ -1,3 +1,7 @@
+## Version 78 — Case briefs in Torts Path
+
+When a Torts Path question names a case, a **📘 Case in brief** box comes first: the case name, citation and court, and two or three lines of facts in simple English, with **Read the full case ↗** (an Indian Kanoon search). Match-the-pairs questions with several cases list each one; tap it to read the facts. If a case is named only in the explanation, its read link appears there. 28 cases are covered.
+
 ## Version 77 — Law Notes inside the app, and a tidier Student menu
 
 **Law Notes now open inside the app** (Student → Law Notes, or `#lawnotes`) instead of the separate reader page. Notes come from the public LAW-NOTES repository and are bundled into `data/law-notes.json` by a workflow that runs every 3 hours, so they open instantly, work offline, and no longer hit GitHub's hourly reading limit.
