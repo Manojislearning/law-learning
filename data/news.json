@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-23T21:31:19Z",
+  "generatedAt": "2026-10-24T04:48:12Z",
   "items": [
+    {
+      "id": "3b82f44a941c08e1",
+      "title": "Delhi HC rejects Neha Bora's plea against police notice to sign peace bond",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-hc-rejects-neha-boras-plea-against-police-notice-to-sign-peace-bond/135155798",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-23T21:47:15Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135155798,imgsize-241892,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-rejects-neha-boras-plea-against-police-notice-to-sign-peace-bond.jpg",
+      "brief": "The Delhi High Court has denied Neha Bora's plea against a police notice requiring her to sign a peace bond, citing sufficient evidence for…"
+    },
     {
       "id": "c3b6fec1b03d401e",
       "title": "Lupin appoints Brian Savage as President, Chief Legal Officer",
@@ -89,17 +100,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135041603,imgsize-77374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute.jpg",
       "brief": "The National Highways Authority of India (NHAI) triumphs in arbitration against Uchit Expressway, rejecting claims of ₹366.53 crore linked to the Chittorgarh–Udaipur highway project…"
-    },
-    {
-      "id": "6bfed74edd6dfb72",
-      "title": "Tribunals cannot hold an appeal against CoC-approved resolution plan: NCLAT",
-      "url": "https://legal.economictimes.indiatimes.com/news/regulators/tribunals-cannot-hold-an-appeal-against-coc-approved-resolution-plan-nclat/134948937",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-14T17:59:33Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134948937,imgsize-67096,width-1200,height=627,overlay-etlegal,resizemode-75/regulators/tribunals-cannot-hold-an-appeal-against-coc-approved-resolution-plan-nclat.jpg",
-      "brief": "The NCLAT has ruled that no appeal can be held against resolution plans approved by the Committee of Creditors, emphasizing the restrictive jurisdiction of…"
     },
     {
       "id": "5e353ece66fd3d3b",
