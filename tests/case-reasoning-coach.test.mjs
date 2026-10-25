@@ -52,6 +52,6 @@ test('Only already existing offline modules are updated, not stored state or bac
   assert.ok(html.includes(file),'HTML missing '+file);
   assert.ok(sw.includes(file),'Offline cache missing '+file);
  }
- assert.ok(sw.includes('law-learning-v78'));
+ assert.ok(sw.includes('law-learning-v79'));
  assert.ok(backup.includes('VERSION = 4'));
 });

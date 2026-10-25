@@ -8,6 +8,7 @@ var doc=root.document,DATA=root.TORTS_PATH;
 var app=doc.querySelector("#words-view .word-v19"),chooser=doc.getElementById("w-chooser");
 if(!app||!chooser||!DATA||!Array.isArray(DATA.units)||!DATA.units.length)return;
 var KEY="law-learning-torts-path-v1",HEARTS=3,XP_LESSON=10,XP_PERFECT=5,XP_PRACTICE=5,GOAL=20,PRACTICE_SIZE=8;
+var CASES=Array.isArray(DATA.cases)?DATA.cases:[];
 var LABEL={mcq:"Pick the right answer",tf:"True or false?",fill:"Fill in the blank",match:"Tap the matching pairs"};
 
 function el(tag,text,cls,parent){var n=doc.createElement(tag);if(cls)n.className=cls;if(text!==undefined&&text!==null)n.textContent=String(text);if(parent)parent.appendChild(n);return n;}
@@ -112,7 +113,7 @@ function guide(ui){
  btn("← Path","w-change-level",box,function(){path();});
  el("p","Unit "+(ui+1)+" notes","cw-subject tp-top-sub",box);
  el("h2",u.title,"cw-title",box);
- u.lessons.forEach(function(l){var c=el("article",undefined,"cw-pair tp-notes",box);el("h3",l.title,"cw-pairtitle",c);var ul=el("ul",undefined,"",c);l.notes.forEach(function(n){el("li",n,"",ul);});});
+ u.lessons.forEach(function(l){var c=el("article",undefined,"cw-pair tp-notes",box);el("h3",l.title,"cw-pairtitle",c);var ul=el("ul",undefined,"",c);l.notes.forEach(function(n){el("li",n,"",ul);});noteLinks(c,l.notes);});
 }
 
 /* ───── Lessons ───── */
@@ -142,6 +143,7 @@ function notes(){
  el("p","Quick notes","cw-subject",c);
  el("h2",view.lesson.title,"tp-q",c);
  var ul=el("ul",undefined,"tp-notelist",c);view.lesson.notes.forEach(function(n){el("li",n,"",ul);});
+ noteLinks(c,view.lesson.notes);
  var go=btn("Start lesson →","cw-primary",c,ask);go.focus({preventScroll:true});
 }
 
@@ -183,16 +185,23 @@ function ask(){
 }
 
 /* Case briefs: when a question names a case, show its facts first, with a link to read the full case. */
-var CASES=Array.isArray(DATA.cases)?DATA.cases:[];
 function casesIn(q){
  var text=[q.q].concat(q.o||[],(q.pairs||[]).map(function(p){return p.join(" ");})).join(" ");
  return CASES.filter(function(k){return k.match.some(function(m){return text.indexOf(m)>=0;});});
 }
+/* Google search for the case name, citation and "case", so every case finds a judgment or summary. */
+function caseUrl(k){return "https://www.google.com/search?q="+encodeURIComponent(k.name.replace(/\s*\(.*\)$/,"")+" "+k.cite.replace(/,.*$/,"")+" case");}
 function readLink(k,parent){
- var a=el("a","Read the full case ↗","tp-case-link",parent);
- a.href="https://indiankanoon.org/search/?formInput="+encodeURIComponent(k.name.replace(/\s*\(.*\)$/,""));
- a.target="_blank";a.rel="noopener noreferrer";
+ var a=el("a","Read this case on Google ↗","tp-case-link",parent);
+ a.href=caseUrl(k);a.target="_blank";a.rel="noopener noreferrer";
  return a;
+}
+/* Links for every case named in a block of notes. */
+function noteLinks(parent,texts){
+ var all=texts.join(" "),list=CASES.filter(function(k){return k.match.some(function(m){return all.indexOf(m)>=0;});});
+ if(!list.length)return;
+ var w=el("div",undefined,"tp-note-cases",parent);el("p","📘 Cases in these notes","tp-case-label",w);
+ list.forEach(function(k){var a=readLink(k,w);a.textContent=k.name+" ↗";});
 }
 function caseBriefs(card,q){
  var list=casesIn(q);if(!list.length)return;

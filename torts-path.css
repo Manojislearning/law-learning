@@ -93,3 +93,5 @@ html .tp .is-wrong .tp-continue{background:var(--tp-bad)!important;border-color:
 .tp-case-more[open]{padding-bottom:8px}
 html.paper .tp-case-name{font-weight:700!important}
 html.paper .tp-case-link{font-weight:600!important}
+.tp-note-cases{margin:6px 0 4px;padding:10px 14px;border-radius:14px;background:#eef4fb}
+.tp-note-cases .tp-case-link{display:flex;min-height:44px}

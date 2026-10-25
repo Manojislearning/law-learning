@@ -1,3 +1,7 @@
+## Version 79 — Google links for every Torts case
+
+Case links in Torts Path are now Google searches (case name, year and "case"), so every case finds a judgment or a summary, including old English cases. The quick notes before each lesson, and the unit **Notes** guidebook, now list a link for every case they mention.
+
 ## Version 78 — Case briefs in Torts Path
 
 When a Torts Path question names a case, a **📘 Case in brief** box comes first: the case name, citation and court, and two or three lines of facts in simple English, with **Read the full case ↗** (an Indian Kanoon search). Match-the-pairs questions with several cases list each one; tap it to read the facts. If a case is named only in the explanation, its read link appears there. 28 cases are covered.

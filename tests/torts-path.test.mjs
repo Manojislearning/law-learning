@@ -50,7 +50,7 @@ test("current-law figures match the statutory accuracy notes",()=>{
 
 test("Torts Path is wired into the app, offline cache, backups and points",()=>{
  const sw=read("sw.js"),html=read("index.html"),view=read("torts-path-game.js");
- for(const f of ["./torts-path-data.js?v=78","./torts-path-game.js?v=78","./torts-path.css?v=78"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
+ for(const f of ["./torts-path-data.js?v=78","./torts-path-game.js?v=79","./torts-path.css?v=79"])assert.ok(sw.includes(f)&&html.includes(f.slice(2)),f);
  assert.ok(html.indexOf("torts-path-data.js")<html.indexOf("torts-path-game.js"));
  assert.ok(read("backup-core.js").includes('"law-learning-torts-path-v1"'));
  assert.match(view,/LawPoints\.award\("torts-path:"/);
@@ -69,6 +69,6 @@ test("questions that name a case have a brief and a read link",()=>{
  assert.ok(n>=18,"case questions counted: "+n);
  for(const k of D.cases){assert.ok(k.name&&k.cite&&k.facts.split(/\s+/).length<=60,k.name);}
  const view=read("torts-path-game.js");
- assert.match(view,/indiankanoon\.org\/search\/\?formInput=/);
+ assert.match(view,/https:\/\/www\.google\.com\/search\?q=/);
  assert.match(view,/rel="noopener noreferrer"/);
 });
