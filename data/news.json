@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-26T04:59:51Z",
+  "generatedAt": "2026-10-26T13:19:19Z",
   "items": [
+    {
+      "id": "472b857bec0d9ade",
+      "title": "Legora plans India hiring push as legal AI adoption grows",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/legora-plans-india-hiring-push-as-legal-ai-adoption-grows/135210037",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-26T11:11:05Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135210037,imgsize-775982,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/legora-plans-india-hiring-push-as-legal-ai-adoption-grows.jpg",
+      "brief": "Legora plans to expand its India team, hire legal engineers and deepen local legal content as the $8.8 billion-valued legal AI company targets growing…"
+    },
+    {
+      "id": "517c42774af04b7e",
+      "title": "SC says 14 states so far agree to raise retirement age of judicial officers from 60 to 62 yrs",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-says-14-states-so-far-agree-to-raise-retirement-age-of-judicial-officers-from-60-to-62-yrs/135206447",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-26T07:56:48Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135206447,imgsize-75262,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-says-14-states-so-far-agree-to-raise-retirement-age-of-judicial-officers-from-60-to-62-yrs.jpg",
+      "brief": "The Supreme Court on Monday said 14 states have agreed to raise the retirement age of district judicial officers from 60 to 62 years…"
+    },
     {
       "id": "fcd1f28049277892",
       "title": "GST tribunal allows airlines to claim tax refund on cancelled tickets if fare, GST returned to passengers",
@@ -11,7 +33,7 @@
       "category": "Latest",
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135196451,imgsize-1505434,width-1200,height=627,overlay-etlegal,resizemode-75/web-stories/gst-tribunal-allows-airlines-to-claim-tax-refund-on-cancelled-tickets-if-fare-gst-returned-to-passengers.jpg",
-      "brief": "GST Refund On Cancelled Airline Tickets: The GST Appellate Tribunal allows Singapore Airlines to claim tax refunds on canceled tickets, ruling that airlines can…"
+      "brief": "The case relates to eight GST refund claims totalling ₹45,92,528 by Singapore Airlines for the period between October 2019 and March 2021. During the…"
     },
     {
       "id": "413fe1d0cbde31b4",
@@ -22,7 +44,7 @@
       "category": "Supreme Court",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135170793,imgsize-61946,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/yes-bank-yet-to-decide-on-at-1-bond-coupon-payment-after-supreme-court-judgment.jpg",
-      "brief": "Yes Bank is assessing its options regarding coupon payments on AT-1 bonds following a Supreme Court judgment. The bank will communicate its decision after…"
+      "brief": "The bank said it retains the right to exercise coupon discretion under the terms of its Additional Tier-1 bonds and expects to complete its…"
     },
     {
       "id": "5cd1c455cfd51a58",
@@ -33,7 +55,7 @@
       "category": "Latest",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135170371,imgsize-639587,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/allahabad-high-court-grants-bail-to-sabpaisa-ceo-kumar-manish-in-gst-case.jpg",
-      "brief": "Kumar Manish, CEO of SRS Live Technologies and SabPaisa, has been granted bail by the Allahabad High Court in a GST case involving alleged…"
+      "brief": "The court noted that the investigation was complete, the complaint had been filed and the trial was unlikely to conclude in the near future."
     },
     {
       "id": "3b82f44a941c08e1",
@@ -44,7 +66,7 @@
       "category": "Latest",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135155798,imgsize-241892,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-rejects-neha-boras-plea-against-police-notice-to-sign-peace-bond.jpg",
-      "brief": "The Delhi High Court has denied Neha Bora's plea against a police notice requiring her to sign a peace bond, citing sufficient evidence for…"
+      "brief": "Dismissing Bora's petition challenging the October 17 notice, Justice Subramonium Prasad said the notice met the requirement of law and was \"not based merely…"
     },
     {
       "id": "c3b6fec1b03d401e",
@@ -55,7 +77,7 @@
       "category": "Latest",
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135134002,imgsize-23469,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/lupin-appoints-brian-savage-as-president-chief-legal-officer.jpg",
-      "brief": "Lupin Ltd has announced the appointment of Brian Savage as President and Chief Legal Officer, effective October 22, 2026, enhancing its legal expertise in…"
+      "brief": "Prior to joining Lupin, he worked at Teva Pharmaceuticals, where he held several senior leadership positions, most recently serving as executive vice president and…"
     },
     {
       "id": "b3dce0a4aa1848cb",
@@ -66,7 +88,7 @@
       "category": "Karnataka",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135098849,imgsize-100928,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-upholds-shree-naman-developers-acquisition-of-bengaluru-pune-hotel-under-nclt-proceedings.jpg",
-      "brief": "Supreme Court Ruling: The Supreme Court has confirmed the insolvency proceedings against Gstaad Hotels and Neo Capricorn Plaza, facilitating Shree Naman Developers' acquisition of…"
+      "brief": "The Supreme Court has upheld insolvency proceedings against Gstaad Hotels and Neo Capricorn Plaza. This decision arises while clarifying that disputes over outstanding debt…"
     },
     {
       "id": "9ccb7e73a63c1501",
@@ -77,7 +99,7 @@
       "category": "Latest",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135089289,imgsize-77336,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-refuses-relief-to-cjp-leaders-challenging-judicial-custody.jpg",
-      "brief": "The Delhi High Court declined to grant relief to Cockroach Janta Party leaders Saurav Das and Ashutosh Ranka, who are in judicial custody for…"
+      "brief": "The hearing before the SEM is scheduled later in the day."
     },
     {
       "id": "0766b61081cc9ef0",
@@ -88,7 +110,7 @@
       "category": "Latest",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135080627,imgsize-233232,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/cal-hc-says-inquiry-commission-headed-by-retired-judge-be-appointed-into-chorbagan-stampede.jpg",
-      "brief": "Chorbagan Stampede: The Calcutta High Court mandates an inquiry commission led by a retired judge to investigate the tragic stampede during the Durga Puja…"
+      "brief": "A division bench presided by Chief Justice Ravindra V Ghuge said that a sitting judge of the high court cannot be appointed to head…"
     },
     {
       "id": "b2894f2106683fce",
@@ -99,18 +121,7 @@
       "category": "Latest",
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135048786,imgsize-260337,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/neha-bora-moves-delhi-hc-against-police-notice-to-execute-peace-bond.jpg",
-      "brief": "AISA President Neha Bora has filed a petition against a police notice demanding a peace bond, claiming an infringement on her constitutional rights amid…"
-    },
-    {
-      "id": "9b5ae570246a93be",
-      "title": "Delhi High Court restrains Menarini from using ‘Acne + Scar’ mark in Mankind’s Acnestar trademark suit",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-high-court-restrains-menarini-from-using-acne-scar-mark-in-mankinds-acnestar-trademark-suit/135045920",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-19T10:17:53Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135045920,imgsize-291039,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-high-court-restrains-menarini-from-using-acne-scar-mark-in-mankinds-acnestar-trademark-suit.jpg",
-      "brief": "Trademark Infringement: The Delhi High Court has restrained A. Menarini India and Alaina Healthcare from using the marks 'ACNE + SCAR' and 'ACNESCAR' found…"
+      "brief": "Bora, who has been at the forefront of recent protests against the alleged irregularities in the Election Commission's Special Intensive Revision (SIR) of electoral…"
     },
     {
       "id": "bc4d775cf4c56dc2",
@@ -121,7 +132,7 @@
       "category": "Latest",
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135041603,imgsize-77374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute.jpg",
-      "brief": "The National Highways Authority of India (NHAI) triumphs in arbitration against Uchit Expressway, rejecting claims of ₹366.53 crore linked to the Chittorgarh–Udaipur highway project…"
+      "brief": "The three-member arbitral tribunal under the Society for Affordable Redressal of Disputes (SAROD) allowed claims amounting to ₹14.51 crore, along with a conditional refund…"
     },
     {
       "id": "5e353ece66fd3d3b",
@@ -132,7 +143,7 @@
       "category": "Latest",
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-134938541,imgsize-78388,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/clifford-chance-cavenagh-law-to-end-singapore-formal-law-alliance.jpg",
-      "brief": "Clifford Chance Singapore and Cavenagh Law LLP have mutually decided to end their Formal Law Alliance, allowing both firms to pursue separate strategic directions…"
+      "brief": "Following the cessation of the FLA, Clifford Chance Singapore will continue to operate under its Qualifying Foreign Law Practice (QFLP) licence, which remains unchanged."
     }
   ]
 }
