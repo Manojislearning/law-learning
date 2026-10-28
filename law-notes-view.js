@@ -143,6 +143,8 @@ var SCREENS={
   if(topics.length){section(w,"Key topics");topics.forEach(function(p){row(w,titleOf(p),"",function(){openNote(p);},isOutline(p)?"outline":"");});}
   section(w,"Also");
   if(overview)row(w,"Subject overview","",function(){openNote(overview);});
+  var tlKey={"Law-of-Torts":"torts","Contract-I":"contract","Contract-II---Special-Contracts":"contract","Criminal-Law-I---BNS-2023":"criminal","Constitutional-Law-I":"constitution","Constitutional-Law-II":"constitution","Family-Law-I---Hindu-Law":"family","Family-Law-II---Mohammedan-Law-and-Succession":"family","Property-Law":"property","Labour-Law-I":"labour"}[folder.split("/")[1]];
+  if(tlKey&&root.LAW_TIMELINES)root.LAW_TIMELINES.list.filter(function(t){return t.subject===tlKey;}).forEach(function(t){row(w,"Timeline: "+t.title,t.kind==="steps"?t.events.length+" steps":t.events[0].when+" → "+t.events[t.events.length-1].when,function(){root.LawTimelines.open(t.id);});});
   var books=paths.find(function(p){return dir(p)===folder&&/Books/i.test(base(p));});
   if(books)row(w,"Books and reading","",function(){openNote(books);});
   practiceButtons(w,folder,0);

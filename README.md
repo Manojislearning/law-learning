@@ -1,3 +1,17 @@
+## Version 80 — Timelines
+
+**Student → Timelines** (`#timelines`) shows first-year law in order, in a sketch notebook style: year (or step) boxes on a line, hand-drawn icons with pink pencil highlights, short simple lines, a **Why it matters** note, and **Read on Google ↗** for cases and Acts.
+
+17 timelines cover Semester I and II:
+- **Contract:** how contract law grew (1854–2018), offer to valid contract (9 steps), offer and acceptance by post, special contracts.
+- **Torts:** big moments (Rylands to the 2019 Consumer Act), how to prove negligence, after a road accident.
+- **Constitution:** making of the Constitution, Champakam Dorairajan and Article 15(4), how Article 21 grew.
+- **Family law:** Hindu law reforms, divorce by mutual consent (s.13B), Muslim law.
+- **Criminal law:** IPC to BNS, journey of a criminal case (BNSS), stages of a crime.
+- **Property** and **Labour law** (up to the four Labour Codes in force from 21 November 2025).
+
+Filter by subject. **Test yourself: put in order** asks you to tap up to 5 events or steps in the right order; getting them all right earns 3 points once per timeline. Law Notes subject pages link to that subject's timelines. Progress is stored under `law-learning-timelines-v1` and included in backups.
+
 ## Version 79 — Google links for every Torts case
 
 Case links in Torts Path are now Google searches (case name, year and "case"), so every case finds a judgment or a summary, including old English cases. The quick notes before each lesson, and the unit **Notes** guidebook, now list a link for every case they mention.

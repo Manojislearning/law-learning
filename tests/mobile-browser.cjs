@@ -423,7 +423,7 @@ async function run(){
     await page.waitForURL(/#student$/);
     const student=page.locator("#student-view");
     await student.waitFor({state:"visible"});
-    assert.equal(await student.locator(".student-hub-card").count(),9);
+    assert.equal(await student.locator(".student-hub-card").count(),10);
     assert.equal(await student.locator('[data-open="lawnotes"]').count(),1);
     const rectangles=await student.locator(".student-hub-card").evaluateAll(nodes=>nodes.map(node=>{
       const r=node.getBoundingClientRect();return {left:r.left,right:r.right,height:r.height};

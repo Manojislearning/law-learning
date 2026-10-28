@@ -1,0 +1,67 @@
+/* Timelines v80 — sketch notebook look: grid paper, black ink, pink pencil highlights. */
+.tl{max-width:720px;margin:4px auto 48px;--tl-pink:#ec7fb0;--tl-pink-soft:#fbd3e4;--tl-ink:#1b1b1b}
+.tl-title{font-size:clamp(1.55rem,5.6vw,2.1rem);line-height:1.25;margin:8px 0 6px;outline:none}
+.tl-kicker{margin:12px 0 0;font-size:.82rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.tl-lead{color:var(--muted);line-height:1.6;margin:0 0 14px}
+.tl-sem{font-size:1.12rem;margin:22px 2px 9px;color:var(--muted)}
+.tl-foot{color:var(--muted);font-size:.85rem;line-height:1.55;text-align:center;margin:24px 2px 0}
+.tl-chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 6px}
+.tl-chip{min-height:44px;padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--text);font:inherit;font-size:.95rem;cursor:pointer}
+.tl-chip.is-on{background:var(--tl-ink);border-color:var(--tl-ink);color:#fff}
+.tl-card{display:flex;align-items:center;gap:12px;width:100%;min-height:76px;margin:0 0 10px;padding:10px 14px;text-align:left;border:1px solid var(--line);border-radius:16px;background:#fff;color:var(--text);font:inherit;cursor:pointer}
+.tl-card:focus-visible,.tl-chip:focus-visible,.tl-option:focus-visible,.tl-chosen:focus-visible{outline:3px solid #557cae;outline-offset:2px}
+.tl-card-icon{flex:none;width:52px;height:52px}
+.tl-card-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tl-card-text strong{font-size:1.04rem;line-height:1.35;color:var(--text)}
+.tl-card-text small{font-size:.86rem;color:var(--muted)}
+.tl-arrow{flex:none;font-size:1.3rem;color:#3f5d88}
+/* Icons */
+.tl-icon{display:block;width:100%;height:100%;overflow:visible}
+.tl-hi{stroke:none}
+.tl-ink{fill:none;stroke:var(--tl-ink,#1b1b1b);stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+.tl-ink-text{fill:var(--tl-ink,#1b1b1b);font-family:Georgia,serif;font-weight:700}
+/* The timeline sheet: grid paper like a notebook page */
+.tl-sheet{background-color:#fff;background-image:linear-gradient(rgba(0,0,0,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.045) 1px,transparent 1px);background-size:22px 22px;border:1px solid var(--line);border-radius:18px;padding:6px clamp(14px,4vw,24px) 20px}
+.tl-line{list-style:none;margin:10px 0 0;padding:0 0 0 22px;position:relative}
+.tl-line::before{content:"";position:absolute;left:7px;top:8px;bottom:14px;width:2px;background:var(--tl-ink);border-radius:2px}
+.tl-event{position:relative;margin:0 0 18px}
+.tl-head{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+.tl-dot{position:absolute;left:-21px;top:13px;width:14px;height:14px;border-radius:50%;background:var(--tl-pink);border:2px solid #fff;box-shadow:0 0 0 1.5px var(--tl-pink)}
+.tl-year{display:inline-block;min-width:3.6ch;padding:4px 12px;border:2px solid var(--tl-ink);border-radius:8px;background:#fff;box-shadow:4px 4px 0 var(--tl-pink-soft);font-family:ui-monospace,"Roboto Mono",Consolas,monospace;font-size:1.25rem;font-weight:600;letter-spacing:.02em;color:var(--tl-ink)}
+.is-steps .tl-year{font-family:inherit;font-size:1rem}
+.tl-card-body{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.92);border:1px solid #ece7dc;border-radius:14px;padding:12px}
+.tl-art{flex:none;width:66px;height:66px}
+.tl-text{flex:1;min-width:0}
+.tl-event-title{margin:0 0 4px;font-size:1.06rem;line-height:1.35}
+.tl-event-text{margin:0 0 6px;line-height:1.55}
+.tl-why{margin:6px 0;padding:6px 10px;border-left:3px solid var(--tl-pink);background:#fff4f8;border-radius:0 8px 8px 0;line-height:1.5;font-size:.95rem}
+.tl-link{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-blue,#1d4f9a);text-underline-offset:3px}
+.tl-row{display:grid;grid-template-columns:1fr;gap:4px;margin-top:8px}
+@media(min-width:560px){.tl-row{grid-template-columns:1fr 1fr;gap:10px}}
+/* Put in order */
+.tl-slots{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:8px}
+.tl-slot{min-height:54px;border:2px dashed #cfc7b8;border-radius:12px;display:flex;flex-direction:column;justify-content:center;padding:4px 6px;background:#fff}
+.tl-slot.is-filled{border-style:solid;border-color:var(--tl-ink)}
+.tl-slot.is-right{border-color:#2c7a4b;background:#e3f3e6}
+.tl-slot.is-wrong{border-color:#b23a32;background:#fae5df}
+.tl-slot-num{color:var(--muted);padding-left:8px}
+.tl-slot-note{padding:2px 8px 4px;font-size:.88rem;line-height:1.4}
+.tl-chosen{min-height:44px;text-align:left;border:0;background:transparent;color:var(--text);font:inherit;font-size:1rem;padding:6px 8px;cursor:pointer}
+.tl-pool{display:grid;gap:8px;margin:0 0 6px}
+.tl-option{min-height:54px;text-align:left;padding:10px 14px;border-radius:12px;border:1px solid var(--line);border-bottom-width:3px;background:#fff7fb;color:var(--text);font:inherit;font-size:1rem;cursor:pointer}
+.tl-result-text{font-size:1.1rem;margin:12px 0 4px}
+.tl-result-text.is-right{color:#2c7a4b}.tl-result-text.is-wrong{color:#b23a32}
+html.paper .tl-card,html.paper .tl-chip:not(.is-on),html.paper .tl-option,html.paper .tl-slot{background-color:#fff}
+html.paper .tl-option{background-color:#fff7fb}
+html.paper .tl-card-text strong,html.paper .tl-event-title,html.paper .tl-why strong,html.paper .tl-result-text{font-weight:700!important}
+html.paper .tl-year{font-weight:600!important}
+html.paper .tl-event-title,html.paper .tl-title{color:#15203b}
+@media(max-width:380px){.tl-art{width:54px;height:54px}.tl-card-body{gap:9px;padding:10px}}
+/* v80 layout: icon sits beside the year, text uses the full card width */
+.tl-head{justify-content:space-between}
+.tl-head .tl-art{width:60px;height:60px;margin-right:4px}
+.tl-card-body{display:block}
+.tl-list-title{display:none}
+.tl-list .tl-lead{margin-top:12px}
+html.paper .tl-event-title{font-family:var(--read,system-ui)!important;font-size:1.08rem}
+.cw-primary:disabled{opacity:.45;cursor:not-allowed}

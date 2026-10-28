@@ -43,7 +43,7 @@ test("Points, ranks and leaderboard are wired, cached, backed up and text-only",
  const app=html.indexOf("./app.js"),pts=html.indexOf("points-core.js"),prof=html.indexOf("profile-local.js"),cfg=html.indexOf("firebase-config.js"),rk=html.indexOf("ranks-view.js");
  assert.ok(app>0&&pts>app&&prof>0&&cfg>prof&&rk>cfg);
  for(const f of ["./points-core.js?v=65","./firebase-config.js?v=65","./ranks-view.js?v=65","./ranks.css?v=65"])assert.ok(sw.includes(f),f);
- assert.ok(sw.includes("law-learning-v79"));
+ assert.ok(sw.includes("law-learning-v80"));
  for(const k of ["law-learning-points-v1","law-learning-ranks-v1"])assert.ok(backup.includes('"'+k+'"'),k);
  assert.doesNotMatch(view,/innerHTML|insertAdjacentHTML|document\.write/);
  assert.match(view,/www\.gstatic\.com\/firebasejs\/\d+\.\d+\.\d+\//,"Firebase SDK must be pinned to an exact version");

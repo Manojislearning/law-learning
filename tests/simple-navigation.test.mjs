@@ -15,11 +15,11 @@ test("Home presents concise navigation labels without explanatory subheadlines",
  for(const label of ["Law Updates","Law News","Case Practice","Review"])
   assert.ok(home.includes(">"+label+"<"),"Home navigation item missing: "+label);
 });
-test("Student menu groups nine destinations without descriptions",()=>{
+test("Student menu groups ten destinations without descriptions",()=>{
  const hub=html.split('<section id="student-view"')[1].split('<section id="lawnotes-view"')[0];
  assert.deepEqual([...hub.matchAll(/<h3 class="student-group">([^<]+)<\/h3>/g)].map(m=>m[1]),["Study","Exams","You and links"]);
  assert.deepEqual([...hub.matchAll(/<strong>([^<]+)<\/strong>/g)].map(m=>m[1]),[
-  "Law Notes","Syllabus","Subjects","Continue Contract–I","Exam Papers &amp; Answers","Exam Pattern","Profile","Settings","Important Links"
+  "Law Notes","Timelines","Syllabus","Subjects","Continue Contract–I","Exam Papers &amp; Answers","Exam Pattern","Profile","Settings","Important Links"
  ]);
  assert.ok(!/<p>|<small>|student-hub-number|student-hub-footnote/.test(hub));
  assert.ok(!hub.includes('href="./reader/'),"Law Notes open inside the app, not the separate reader");
