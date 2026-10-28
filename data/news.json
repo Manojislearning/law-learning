@@ -1,7 +1,51 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-28T05:56:12Z",
+  "generatedAt": "2026-10-28T13:14:17Z",
   "items": [
+    {
+      "id": "cbc9417cb3211ec4",
+      "title": "Supreme Court upholds exclusion of ECL Finance, IDBI Trusteeship from Saha Infratech insolvency CoC",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-upholds-exclusion-of-ecl-finance-idbi-trusteeship-from-saha-infratech-insolvency-coc/135262505",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-28T11:48:37Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135262505,imgsize-191442,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-upholds-exclusion-of-ecl-finance-idbi-trusteeship-from-saha-infratech-insolvency-coc.jpg",
+      "brief": "A bench of Justice J. B. Pardiwala and Justice K. Vinod Chandran dismissed appeals filed by the debenture holder and the debenture trustee against…"
+    },
+    {
+      "id": "1e7b7f1a525702fd",
+      "title": "DPDP framework needs clearer cyber security benchmarks, say legal experts",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/dpdp-framework-needs-clearer-cyber-security-benchmarks-say-legal-experts/135260160",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-28T09:52:44Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135260160,imgsize-51790,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/dpdp-framework-needs-clearer-cyber-security-benchmarks-say-legal-experts.jpg",
+      "brief": "Experts flag gaps in assessing negligence, prescribing security standards and coordinating breach reporting as organisations face increasingly sophisticated cyber threats."
+    },
+    {
+      "id": "6880ec68692691bc",
+      "title": "Anthropic's accrued legal expenses jump 69% to $1.3 billion",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/anthropics-accrued-legal-expenses-jump-69-to-1-3-billion/135256932",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-28T08:11:25Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135256932,imgsize-26516,width-1200,height=627,overlay-etlegal,resizemode-75/international/anthropics-accrued-legal-expenses-jump-69-to-1-3-billion.jpg",
+      "brief": "AI company separately reports $1.2 billion in current liabilities linked to its $1.5 billion authors’ copyright settlement"
+    },
+    {
+      "id": "bae419b577ffe837",
+      "title": "Schaeffler India faces ₹13.85 crore penalty in GST case; plans to appeal",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/schaeffler-india-faces-13-85-crore-penalty-in-gst-case-plans-to-appeal/135256038",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-28T07:09:02Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135256038,imgsize-101047,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/schaeffler-india-faces-13-85-crore-penalty-in-gst-case-plans-to-appeal.jpg",
+      "brief": "The order relates to the disallowance of 10% excess input tax credit (ITC) availed at the company's Madhya Pradesh warehouse, according to the filing."
+    },
     {
       "id": "472b857bec0d9ade",
       "title": "Legora plans India hiring push as legal AI adoption grows",
@@ -47,28 +91,6 @@
       "brief": "The bank said it retains the right to exercise coupon discretion under the terms of its Additional Tier-1 bonds and expects to complete its…"
     },
     {
-      "id": "5cd1c455cfd51a58",
-      "title": "Allahabad High Court grants bail to SabPaisa CEO Kumar Manish in GST case",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/allahabad-high-court-grants-bail-to-sabpaisa-ceo-kumar-manish-in-gst-case/135170371",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-24T12:30:23Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135170371,imgsize-639587,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/allahabad-high-court-grants-bail-to-sabpaisa-ceo-kumar-manish-in-gst-case.jpg",
-      "brief": "The court noted that the investigation was complete, the complaint had been filed and the trial was unlikely to conclude in the near future."
-    },
-    {
-      "id": "3b82f44a941c08e1",
-      "title": "Delhi HC rejects Neha Bora's plea against police notice to sign peace bond",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-hc-rejects-neha-boras-plea-against-police-notice-to-sign-peace-bond/135155798",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-23T21:47:15Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135155798,imgsize-241892,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-rejects-neha-boras-plea-against-police-notice-to-sign-peace-bond.jpg",
-      "brief": "Dismissing Bora's petition challenging the October 17 notice, Justice Subramonium Prasad said the notice met the requirement of law and was \"not based merely…"
-    },
-    {
       "id": "c3b6fec1b03d401e",
       "title": "Lupin appoints Brian Savage as President, Chief Legal Officer",
       "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/lupin-appoints-brian-savage-as-president-chief-legal-officer/135134002",
@@ -89,17 +111,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135041603,imgsize-77374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute.jpg",
       "brief": "The three-member arbitral tribunal under the Society for Affordable Redressal of Disputes (SAROD) allowed claims amounting to ₹14.51 crore, along with a conditional refund…"
-    },
-    {
-      "id": "5e353ece66fd3d3b",
-      "title": "Clifford Chance, Cavenagh Law to end Singapore formal law alliance",
-      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/clifford-chance-cavenagh-law-to-end-singapore-formal-law-alliance/134938541",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-14T10:01:10Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-134938541,imgsize-78388,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/clifford-chance-cavenagh-law-to-end-singapore-formal-law-alliance.jpg",
-      "brief": "Following the cessation of the FLA, Clifford Chance Singapore will continue to operate under its Qualifying Foreign Law Practice (QFLP) licence, which remains unchanged."
     }
   ]
 }
