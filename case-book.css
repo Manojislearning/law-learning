@@ -1,0 +1,52 @@
+/* Case Book v81 — case links everywhere, the case sheet, and the Case Book screen. */
+/* A case name inside any text: looks like an underlined link, behaves like a button. */
+.case-link{display:inline;padding:0;margin:0;border:0;background:none;font:inherit;color:var(--ink-blue,#1d4f9a);text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:3px;text-decoration-color:rgba(29,79,154,.45);cursor:pointer;text-align:inherit;line-height:inherit;letter-spacing:inherit}
+.case-link::after{content:" ⓘ";font-size:.8em;text-decoration:none;color:#3f5d88}
+.case-link:focus-visible,.cb-word:focus-visible,.cb-row:focus-visible,.cb-chip:focus-visible{outline:3px solid #557cae;outline-offset:2px;border-radius:4px}
+html.cb-open,html.cb-open body{overflow:hidden}
+.cb-overlay{position:fixed;inset:0;z-index:120;background:rgba(15,20,35,.45);display:flex;align-items:flex-end;justify-content:center}
+.cb-overlay[hidden]{display:none}
+.cb-sheet{width:100%;max-width:640px;max-height:92vh;max-height:92dvh;display:flex;flex-direction:column;background:#fff;color:var(--text,#17223f);border-radius:20px 20px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+@media(min-width:700px){.cb-overlay{align-items:center}.cb-sheet{border-radius:20px;max-height:86vh}}
+.cb-bar{display:flex;align-items:center;gap:8px;padding:8px 10px;border-bottom:1px solid var(--line,#e3ded2);flex:none}
+.cb-bar-title{flex:1;text-align:center;color:var(--muted);font-size:.9rem;letter-spacing:.04em;text-transform:uppercase}
+.cb-back,.cb-close{min-width:48px;min-height:44px;border:0;border-radius:12px;background:#f3f1ea;color:var(--text);font:inherit;font-size:1rem;cursor:pointer;padding:0 12px}
+.cb-close{font-size:1.4rem}
+.cb-back[hidden]{visibility:hidden;display:block}
+.cb-body{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 18px 28px;line-height:1.6}
+.cb-kicker{margin:0;font-size:.82rem;color:var(--muted);letter-spacing:.03em}
+.cb-title{margin:4px 0 2px;font-size:1.45rem;line-height:1.3;outline:none}
+.cb-cite{margin:0 0 12px;color:var(--muted);font-size:.92rem}
+.cb-rule{margin:0 0 14px;padding:10px 14px;border-radius:12px;background:#fff4f8;border-left:4px solid #ec7fb0}
+.cb-rule strong{display:block;font-size:.85rem;letter-spacing:.03em;text-transform:uppercase;color:#a33c6e}
+.cb-rule p{margin:2px 0 0;font-size:1.02rem}
+.cb-part{margin:0 0 12px}
+.cb-part h3,.cb-exam h3{margin:0 0 2px;font-size:1rem}
+.cb-part p{margin:0}
+.cb-exam{margin:6px 0 14px;padding:12px 14px;border-radius:14px;background:#eef4fb;border:1px solid #c9d8ec}
+.cb-exam p{margin:4px 0 8px}
+.cb-copy{min-height:44px;padding:8px 16px;border-radius:10px;border:1px solid #9fb6d6;background:#fff;color:var(--text);font:inherit;cursor:pointer}
+.cb-verify{margin:0 0 12px;padding:8px 12px;border-radius:10px;background:#fff7df;font-size:.92rem}
+/* Difficult word inside a summary */
+.cb-word{display:inline;padding:0 2px;margin:0;border:0;border-bottom:2px dotted #3f6fb0;background:#eef4fb;border-radius:3px;font:inherit;color:#1d4f9a;cursor:pointer;line-height:inherit;text-align:inherit}
+.cb-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.cb-chip{min-height:40px;padding:6px 12px;border-radius:999px;border:1px solid #c9d8ec;background:#eef4fb;color:#1d4f9a;font:inherit;font-size:.92rem;cursor:pointer}
+.cb-links{display:flex;flex-wrap:wrap;gap:4px 18px;margin:4px 0 12px}
+.cb-link{display:inline-flex;align-items:center;min-height:44px;color:var(--ink-blue,#1d4f9a);text-underline-offset:3px}
+.cb-meaning{font-size:1.08rem;margin:6px 0 12px}
+.cb-row{display:flex;flex-direction:column;gap:2px;width:100%;min-height:56px;margin:0 0 8px;padding:10px 14px;text-align:left;border:1px solid var(--line,#e3ded2);border-radius:14px;background:#fff;color:var(--text);font:inherit;cursor:pointer}
+.cb-row strong{font-size:1rem;line-height:1.35}
+.cb-row small{font-size:.86rem;line-height:1.45;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+/* Case Book screen */
+.cb-page{max-width:720px;margin:4px auto 48px}
+.cb-lead{color:var(--muted);line-height:1.6;margin:12px 0}
+.cb-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 10px}
+.cb-tab{min-height:48px;border-radius:12px;border:1.5px solid var(--line);background:#fff;color:var(--text);font:inherit;cursor:pointer}
+.cb-tab.is-on{background:#1b1b1b;border-color:#1b1b1b;color:#fff}
+.cb-search input{width:100%;box-sizing:border-box;min-height:52px;border-radius:14px;border:1.5px solid var(--line);background:#fff;color:var(--text);padding:0 16px;font:inherit;font-size:1.02rem}
+.cb-filter{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+.cb-count{color:var(--muted);margin:12px 2px 8px;font-size:.92rem}
+html.paper .cb-title,html.paper .cb-part h3,html.paper .cb-exam h3,html.paper .cb-row strong,html.paper .cb-rule strong{font-family:var(--read,system-ui)!important;font-weight:700!important}
+html.paper .cb-row,html.paper .cb-tab:not(.is-on),html.paper .cb-search input{background-color:#fff}
+html.paper .case-link,html.paper .cb-word{font-weight:inherit!important}
+.cb-filter .tl-chip.is-on{background:#1b1b1b;border-color:#1b1b1b;color:#fff}

@@ -1,3 +1,15 @@
+## Version 81 — Case Book: every case is a link
+
+**Every case name anywhere in the app is now a link** (underlined, with ⓘ) — in Torts Path, Timelines, Law Notes, Marriage Law Cases, exam answers and more. Tapping it opens an exam-ready summary:
+
+- **In one line** — the principle to remember
+- **Facts, Issue, Held** — short and in simple English
+- **✍ Write this in your exam** — two or three ready lines, with a **Copy** button
+- **Difficult words** — dotted blue words (e.g. *res ipsa loquitur*, *coparcener*, *basic structure*) open a meaning page with an exam tip, and that page links back to every case that uses the word
+- **Related cases**, and **Read on Google ↗ / Indian Kanoon ↗**
+
+94 cases and 86 words. **Student → Case Book** (`#cases`) lists them all with search (facts too), subject filters and the full word list; `#cases?c=donoghue` opens a case directly. Unanswered quiz questions and answer buttons are never turned into links, so they don't give away answers.
+
 ## Version 80 — Timelines
 
 **Student → Timelines** (`#timelines`) shows first-year law in order, in a sketch notebook style: year (or step) boxes on a line, hand-drawn icons with pink pencil highlights, short simple lines, a **Why it matters** note, and **Read on Google ↗** for cases and Acts.
