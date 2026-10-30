@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-10-30T06:02:09Z",
+  "generatedAt": "2026-10-30T13:12:32Z",
   "items": [
+    {
+      "id": "e0c99863fd995e20",
+      "title": "Supreme Court sets aside APTEL review order on DVC Sinking Fund, imposes costs on Maithan Alloys and SAIL",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-sets-aside-aptel-review-order-on-dvc-sinking-fund-imposes-costs-on-maithan-alloys-and-sail/135359068",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-10-30T11:33:17Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135359068,imgsize-241167,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-sets-aside-aptel-review-order-on-dvc-sinking-fund-imposes-costs-on-maithan-alloys-and-sail.jpg",
+      "brief": "The dispute concerned whether DVC could recover through tariff both depreciation on its assets and contributions to a Sinking Fund created to redeem bonds…"
+    },
     {
       "id": "cbc9417cb3211ec4",
       "title": "Supreme Court upholds exclusion of ECL Finance, IDBI Trusteeship from Saha Infratech insolvency CoC",
@@ -23,17 +34,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135260160,imgsize-51790,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/dpdp-framework-needs-clearer-cyber-security-benchmarks-say-legal-experts.jpg",
       "brief": "Experts flag gaps in assessing negligence, prescribing security standards and coordinating breach reporting as organisations face increasingly sophisticated cyber threats."
-    },
-    {
-      "id": "6880ec68692691bc",
-      "title": "Anthropic's accrued legal expenses jump 69% to $1.3 billion",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/anthropics-accrued-legal-expenses-jump-69-to-1-3-billion/135256932",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-28T08:11:25Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135256932,imgsize-26516,width-1200,height=627,overlay-etlegal,resizemode-75/international/anthropics-accrued-legal-expenses-jump-69-to-1-3-billion.jpg",
-      "brief": "AI company separately reports $1.2 billion in current liabilities linked to its $1.5 billion authors’ copyright settlement"
     },
     {
       "id": "bae419b577ffe837",
@@ -89,17 +89,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135134002,imgsize-23469,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/lupin-appoints-brian-savage-as-president-chief-legal-officer.jpg",
       "brief": "Prior to joining Lupin, he worked at Teva Pharmaceuticals, where he held several senior leadership positions, most recently serving as executive vice president and…"
-    },
-    {
-      "id": "bc4d775cf4c56dc2",
-      "title": "Arbitral tribunal rejects ₹366.53 crore claims against NHAI in highway dispute",
-      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute/135041603",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-19T06:28:16Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135041603,imgsize-77374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/arbitral-tribunal-rejects-366-53-crore-claims-against-nhai-in-highway-dispute.jpg",
-      "brief": "The three-member arbitral tribunal under the Society for Affordable Redressal of Disputes (SAROD) allowed claims amounting to ₹14.51 crore, along with a conditional refund…"
     }
   ]
 }
