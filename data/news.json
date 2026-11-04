@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-04T06:42:18Z",
+  "generatedAt": "2026-11-04T19:54:43Z",
   "items": [
+    {
+      "id": "cb820043acc630e2",
+      "title": "Australia argues in court that social media ban is needed to protect children's brains",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/australia-argues-in-court-that-social-media-ban-is-needed-to-protect-childrens-brains/135530774",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-04T08:01:07Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135530774,imgsize-9747493,width-1200,height=627,overlay-etlegal,resizemode-75/international/australia-argues-in-court-that-social-media-ban-is-needed-to-protect-childrens-brains.jpg",
+      "brief": "The Australian government is fighting in the High Court two constitutional challenges to the ban that took effect last year on young children holding…"
+    },
+    {
+      "id": "9b85d7eeec42a734",
+      "title": "Saraf and Partners advises Eternal on AdOnMo-Mygate merger; Anoma Legal, Kaizen Law advise Mygate, AdOnMo",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/saraf-and-partners-advises-eternal-on-adonmo-mygate-merger-anoma-legal-kaizen-law-advise-mygate-adonmo/135530036",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-04T07:42:21Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135530036,imgsize-3450,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/saraf-and-partners-advises-eternal-on-adonmo-mygate-merger-anoma-legal-kaizen-law-advise-mygate-adonmo.jpg",
+      "brief": "The proposed all-stock merger values the combined entity at around Rs 3,500 crore, with Eternal and other AdOnMo investors receiving an equity stake in…"
+    },
     {
       "id": "798c7866c7dbfd11",
       "title": "AI training on copyrighted works may violate derivative rights, US court told",
