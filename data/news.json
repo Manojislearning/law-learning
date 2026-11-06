@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-05T20:06:47Z",
+  "generatedAt": "2026-11-06T07:00:23Z",
   "items": [
+    {
+      "id": "88f23ae6e8f02263",
+      "title": "SKV Law Offices represents Tata Power as Bombay HC quashes acquisition of 84 hectares for private entity",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/skv-law-offices-represents-tata-power-as-bombay-hc-quashes-acquisition-of-84-hectares-for-private-entity/135592686",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-06T03:54:15Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135592686,imgsize-2027676,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/skv-law-offices-represents-tata-power-as-bombay-hc-quashes-acquisition-of-84-hectares-for-private-entity.jpg",
+      "brief": "The court held that the Maharashtra Industrial Development Act cannot be used to acquire land purely for a private company, ruling that the proposed…"
+    },
+    {
+      "id": "07a8f5c9137308bc",
+      "title": "Expert Take: Legal AI Training – What Lawyers Need to Know Before Using AI in Legal Practice",
+      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-legal-ai-training-what-lawyers-need-to-know-before-using-ai-in-legal-practice/135592298",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-06T03:41:29Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135592298,imgsize-14184,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-legal-ai-training-what-lawyers-need-to-know-before-using-ai-in-legal-practice.jpg",
+      "brief": "AI can draft in seconds what once took a junior a week. But speed without training is a risk no lawyer can afford."
+    },
     {
       "id": "9b85d7eeec42a734",
       "title": "Saraf and Partners advises Eternal on AdOnMo-Mygate merger; Anoma Legal, Kaizen Law advise Mygate, AdOnMo",
