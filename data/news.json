@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-07T22:01:36Z",
+  "generatedAt": "2026-11-08T06:20:10Z",
   "items": [
+    {
+      "id": "d1dd330e79068458",
+      "title": "Prince Harry seeks to appeal after losing case against UK tabloid",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/prince-harry-seeks-to-appeal-after-losing-case-against-uk-tabloid/135652149",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-08T05:21:58Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/img-size-1349960/135652149.cms",
+      "brief": "Prince Harry on Friday launched a legal challenge after losing a privacy case against the publisher of the British tabloid the Daily Mail. The…"
+    },
     {
       "id": "41b1fe29ff59db3c",
       "title": "Constitution is a continuing responsibility, says CJI Surya Kant",
@@ -10,7 +21,7 @@
       "publishedAt": "2026-11-06T16:58:53Z",
       "category": "Supreme Court",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135615091,imgsize-467334,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/constitution-is-a-continuing-responsibility-says-cji-surya-kant.jpg",
+      "image": "https://etimg.etb2bimg.com/thumb/img-size-467334/135615091.cms",
       "brief": "The CJI was addressing the first national conference organised by the SC, ST & OBC Advocates Association on \"The Life, Struggle, and Constitutional Legacy…"
     },
     {
