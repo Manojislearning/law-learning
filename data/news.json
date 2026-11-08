@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-08T06:20:10Z",
+  "generatedAt": "2026-11-08T13:40:11Z",
   "items": [
+    {
+      "id": "f8b55ba5bfcff2a8",
+      "title": "Companies must retain accountability as autonomous AI agents take on business decisions, say legal experts",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/companies-must-retain-accountability-as-autonomous-ai-agents-take-on-business-decisions-say-legal-experts/135652742",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-08T06:20:26Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135652742,imgsize-201924,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/companies-must-retain-accountability-as-autonomous-ai-agents-take-on-business-decisions-say-legal-experts.jpg",
+      "brief": "General counsel and legal advisers flag growing risks around contractual liability, data protection and regulatory compliance as enterprises deploy AI agents capable of independently…"
+    },
     {
       "id": "d1dd330e79068458",
       "title": "Prince Harry seeks to appeal after losing case against UK tabloid",
@@ -10,7 +21,7 @@
       "publishedAt": "2026-11-08T05:21:58Z",
       "category": "Latest",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/img-size-1349960/135652149.cms",
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135652149,imgsize-1349960,width-1200,height=627,overlay-etlegal,resizemode-75/international/prince-harry-seeks-to-appeal-after-losing-case-against-uk-tabloid.jpg",
       "brief": "Prince Harry on Friday launched a legal challenge after losing a privacy case against the publisher of the British tabloid the Daily Mail. The…"
     },
     {
@@ -21,7 +32,7 @@
       "publishedAt": "2026-11-06T16:58:53Z",
       "category": "Supreme Court",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/img-size-467334/135615091.cms",
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135615091,imgsize-467334,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/constitution-is-a-continuing-responsibility-says-cji-surya-kant.jpg",
       "brief": "The CJI was addressing the first national conference organised by the SC, ST & OBC Advocates Association on \"The Life, Struggle, and Constitutional Legacy…"
     },
     {
