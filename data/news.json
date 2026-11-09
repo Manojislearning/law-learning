@@ -1,7 +1,51 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-09T06:53:40Z",
+  "generatedAt": "2026-11-09T22:31:42Z",
   "items": [
+    {
+      "id": "49c2afcff436b4b4",
+      "title": "Adams & Reese, Skaggs Faucette lead Elvis rights holders’ copyright battle against Suno",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/adams-reese-skaggs-faucette-lead-elvis-rights-holders-copyright-battle-against-suno/135689125",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-09T17:16:06Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135689125,imgsize-1082132,width-1200,height=627,overlay-etlegal,resizemode-75/international/adams-reese-skaggs-faucette-lead-elvis-rights-holders-copyright-battle-against-suno.jpg",
+      "brief": "The 15 plaintiffs allege unauthorised use of Elvis Presley’s voice and 859 copyrighted musical works, seeking damages and an order covering training datasets, internal…"
+    },
+    {
+      "id": "22cdeb37579d0823",
+      "title": "Vaca Daffan, Conn Law, Clarkson Law Firm-led Anthropic class action clears key legal hurdles",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/vaca-daffan-conn-law-clarkson-law-firm-led-anthropic-class-action-clears-key-legal-hurdles/135688716",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-09T17:00:01Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135688716,imgsize-32178,width-1200,height=627,overlay-etlegal,resizemode-75/international/vaca-daffan-conn-law-clarkson-law-firm-led-anthropic-class-action-clears-key-legal-hurdles.jpg",
+      "brief": "A US federal court has allowed key claims in a proposed class action against Anthropic over its marketing of Claude Max subscriptions to proceed…"
+    },
+    {
+      "id": "629783a0279aa3be",
+      "title": "Legal Affairs department reviews over 27,000 files under special campaign",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/legal-affairs-department-reviews-over-27000-files-under-special-campaign/135688131",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-09T16:33:51Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135688131,imgsize-972369,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/legal-affairs-department-reviews-over-27000-files-under-special-campaign.jpg",
+      "brief": "According to the statement, the campaign aims to improve administrative efficiency, reduce pendency, promote cleanliness and strengthen record management across the department and its…"
+    },
+    {
+      "id": "879b2ec03189874e",
+      "title": "Delhi HC rejects Unity Bank appeal, upholds BharatPe shareholder protection",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-hc-rejects-unity-bank-appeal-upholds-bharatpe-shareholder-protection/135674031",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-09T06:54:42Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135674031,imgsize-50939,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-rejects-unity-bank-appeal-upholds-bharatpe-shareholder-protection.jpg",
+      "brief": "\"No directive of the RBI stands breached thereby,\" the bench said."
+    },
     {
       "id": "8b5f610c9bfaeb91",
       "title": "OpenAI copyright case draws 55 amicus briefs as court allows interventions",
@@ -47,17 +91,6 @@
       "brief": "General counsel and legal advisers flag growing risks around contractual liability, data protection and regulatory compliance as enterprises deploy AI agents capable of independently…"
     },
     {
-      "id": "d1dd330e79068458",
-      "title": "Prince Harry seeks to appeal after losing case against UK tabloid",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/prince-harry-seeks-to-appeal-after-losing-case-against-uk-tabloid/135652149",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-08T05:21:58Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135652149,imgsize-1349960,width-1200,height=627,overlay-etlegal,resizemode-75/international/prince-harry-seeks-to-appeal-after-losing-case-against-uk-tabloid.jpg",
-      "brief": "Prince Harry on Friday launched a legal challenge after losing a privacy case against the publisher of the British tabloid the Daily Mail. The…"
-    },
-    {
       "id": "41b1fe29ff59db3c",
       "title": "Constitution is a continuing responsibility, says CJI Surya Kant",
       "url": "https://legal.economictimes.indiatimes.com/news/litigation/constitution-is-a-continuing-responsibility-says-cji-surya-kant/135615091",
@@ -78,17 +111,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135592686,imgsize-2027676,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/skv-law-offices-represents-tata-power-as-bombay-hc-quashes-acquisition-of-84-hectares-for-private-entity.jpg",
       "brief": "The court held that the Maharashtra Industrial Development Act cannot be used to acquire land purely for a private company, ruling that the proposed…"
-    },
-    {
-      "id": "9b85d7eeec42a734",
-      "title": "Saraf and Partners advises Eternal on AdOnMo-Mygate merger; Anoma Legal, Kaizen Law advise Mygate, AdOnMo",
-      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/saraf-and-partners-advises-eternal-on-adonmo-mygate-merger-anoma-legal-kaizen-law-advise-mygate-adonmo/135530036",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-04T07:42:21Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135530036,imgsize-3450,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/saraf-and-partners-advises-eternal-on-adonmo-mygate-merger-anoma-legal-kaizen-law-advise-mygate-adonmo.jpg",
-      "brief": "The proposed all-stock merger values the combined entity at around Rs 3,500 crore, with Eternal and other AdOnMo investors receiving an equity stake in…"
     },
     {
       "id": "e6de0a87a2eec121",
