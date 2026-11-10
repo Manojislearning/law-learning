@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-10T07:30:13Z",
+  "generatedAt": "2026-11-10T19:52:09Z",
   "items": [
     {
       "id": "49c2afcff436b4b4",
@@ -45,28 +45,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135674031,imgsize-50939,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-hc-rejects-unity-bank-appeal-upholds-bharatpe-shareholder-protection.jpg",
       "brief": "\"No directive of the RBI stands breached thereby,\" the bench said."
-    },
-    {
-      "id": "8b5f610c9bfaeb91",
-      "title": "OpenAI copyright case draws 55 amicus briefs as court allows interventions",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/openai-copyright-case-draws-55-amicus-briefs-as-court-allows-interventions/135672017",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-09T05:30:58Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135672017,imgsize-23846,width-1200,height=627,overlay-etlegal,resizemode-75/international/openai-copyright-case-draws-55-amicus-briefs-as-court-allows-interventions.jpg",
-      "brief": "US district court grants 55 motions seeking permission to file amicus curiae briefs in the copyright infringement litigation against OpenAI, bringing together publishers, authors…"
-    },
-    {
-      "id": "ff7a4957ac53f7a1",
-      "title": "US law professors urge court to reject blanket fair-use exemption for AI training",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/us-law-professors-urge-court-to-reject-blanket-fair-use-exemption-for-ai-training/135671886",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-09T05:22:15Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135671886,imgsize-74242,width-1200,height=627,overlay-etlegal,resizemode-75/international/us-law-professors-urge-court-to-reject-blanket-fair-use-exemption-for-ai-training.jpg",
-      "brief": "Seven US law professors have urged a federal court in New York to reject a blanket fair-use exemption for using copyrighted books to train…"
     },
     {
       "id": "b717a6b2aa88bdc1",
