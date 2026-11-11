@@ -1,28 +1,83 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-11T06:47:12Z",
+  "generatedAt": "2026-11-11T19:44:12Z",
   "items": [
     {
-      "id": "49c2afcff436b4b4",
-      "title": "Adams & Reese, Skaggs Faucette lead Elvis rights holders’ copyright battle against Suno",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/adams-reese-skaggs-faucette-lead-elvis-rights-holders-copyright-battle-against-suno/135689125",
+      "id": "b1e0fa8579051973",
+      "title": "India's Yes Bank bondholders press for compliance with top court's AT-1 order",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/indias-yes-bank-bondholders-press-for-compliance-with-top-courts-at-1-order/135744026",
       "source": "ET LegalWorld",
-      "publishedAt": "2026-11-09T17:16:06Z",
+      "publishedAt": "2026-11-11T16:42:21Z",
       "category": "Latest",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135689125,imgsize-1082132,width-1200,height=627,overlay-etlegal,resizemode-75/international/adams-reese-skaggs-faucette-lead-elvis-rights-holders-copyright-battle-against-suno.jpg",
-      "brief": "The 15 plaintiffs allege unauthorised use of Elvis Presley’s voice and 859 copyrighted musical works, seeking damages and an order covering training datasets, internal…"
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135744026,imgsize-114932,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/indias-yes-bank-bondholders-press-for-compliance-with-top-courts-at-1-order.jpg",
+      "brief": "Last month, the ​Supreme Court upheld a 2023 Bombay High Court ruling that set aside ⁠Yes Bank's write-off of 84 billion rupees ($896.02 million)…"
     },
     {
-      "id": "22cdeb37579d0823",
-      "title": "Vaca Daffan, Conn Law, Clarkson Law Firm-led Anthropic class action clears key legal hurdles",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/vaca-daffan-conn-law-clarkson-law-firm-led-anthropic-class-action-clears-key-legal-hurdles/135688716",
+      "id": "e9c6b727f15b0a1b",
+      "title": "Expert Take: Management is not ownership – Why the law is with Mallika Srinivasan and Lakshmi Venu",
+      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-management-is-not-ownership-why-the-law-is-with-mallika-srinivasan-and-lakshmi-venu/135743791",
       "source": "ET LegalWorld",
-      "publishedAt": "2026-11-09T17:00:01Z",
+      "publishedAt": "2026-11-11T16:36:39Z",
       "category": "Latest",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135688716,imgsize-32178,width-1200,height=627,overlay-etlegal,resizemode-75/international/vaca-daffan-conn-law-clarkson-law-firm-led-anthropic-class-action-clears-key-legal-hurdles.jpg",
-      "brief": "A US federal court has allowed key claims in a proposed class action against Anthropic over its marketing of Claude Max subscriptions to proceed…"
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135743791,imgsize-218192,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-management-is-not-ownership-why-the-law-is-with-mallika-srinivasan-and-lakshmi-venu.jpg",
+      "brief": "A brand-sharing pact cannot be dressed up as a division of family wealth. On the text, the statute and the settled case law, their…"
+    },
+    {
+      "id": "6e9267942933608c",
+      "title": "OpenAI seeks to seal internal project codenames, employee identities in Apple litigation",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/openai-seeks-to-seal-internal-project-codenames-employee-identities-in-apple-litigation/135730828",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-11T08:30:10Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135730828,imgsize-32788,width-1200,height=627,overlay-etlegal,resizemode-75/international/openai-seeks-to-seal-internal-project-codenames-employee-identities-in-apple-litigation.jpg",
+      "brief": "In a November 10 filing before the US District Court for the Northern District of California, OpenAI Foundation, OpenAI Group PBC and io Products…"
+    },
+    {
+      "id": "f40935a4c66eabae",
+      "title": "Weil Gotshal votes to dissolve, ending top law firm's 95-year run",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/weil-gotshal-votes-to-dissolve-ending-top-law-firms-95-year-run/135730578",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-11T08:20:27Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135730578,imgsize-84173,width-1200,height=627,overlay-etlegal,resizemode-75/international/weil-gotshal-votes-to-dissolve-ending-top-law-firms-95-year-run.jpg",
+      "brief": "A three-person wind-down committee, which includes the firm's general counsel Robert Carangelo, leader of its tax department Paul Wessel, and Patricia Ferrari, an independent…"
+    },
+    {
+      "id": "e49e00465bd1be31",
+      "title": "Appeals court limits order for LinkedIn to disclose journalists' communications in leak probe",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/appeals-court-limits-order-for-linkedin-to-disclose-journalists-communications-in-leak-probe/135728875",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-11T07:10:24Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135728875,imgsize-2042067,width-1200,height=627,overlay-etlegal,resizemode-75/international/appeals-court-limits-order-for-linkedin-to-disclose-journalists-communications-in-leak-probe.jpg",
+      "brief": "A three-judge panel from the 4th U.S. Circuit Court of Appeals said the government isn't entitled to a \"blanket\" order for LinkedIn to disclose…"
+    },
+    {
+      "id": "9c3ddaceb867ec04",
+      "title": "US judge says Trump's $10 billion BBC defamation case can proceed",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/us-judge-says-trumps-10-billion-bbc-defamation-case-can-proceed/135728764",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-11T07:06:31Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135728764,imgsize-1250118,width-1200,height=627,overlay-etlegal,resizemode-75/international/us-judge-says-trumps-10-billion-bbc-defamation-case-can-proceed.jpg",
+      "brief": "The case is one of several Trump has privately filed against the news media as part of a wider pressure campaign against coverage he…"
+    },
+    {
+      "id": "5b6cdfd255867cbf",
+      "title": "Delhi High Court declares November 16 holiday for Chhath Puja; cases to be taken up on November 17",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-high-court-declares-november-16-holiday-for-chhath-puja-cases-to-be-taken-up-on-november-17/135728674",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-11T07:04:06Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135728674,imgsize-338100,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-high-court-declares-november-16-holiday-for-chhath-puja-cases-to-be-taken-up-on-november-17.jpg",
+      "brief": "The High Court issued a notification on Wednesday declaring Monday, November 16, as a holiday for the High Court as well as courts subordinate…"
     },
     {
       "id": "629783a0279aa3be",
@@ -122,17 +177,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135359068,imgsize-241167,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-sets-aside-aptel-review-order-on-dvc-sinking-fund-imposes-costs-on-maithan-alloys-and-sail.jpg",
       "brief": "The dispute concerned whether DVC could recover through tariff both depreciation on its assets and contributions to a Sinking Fund created to redeem bonds…"
-    },
-    {
-      "id": "1e7b7f1a525702fd",
-      "title": "DPDP framework needs clearer cyber security benchmarks, say legal experts",
-      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/dpdp-framework-needs-clearer-cyber-security-benchmarks-say-legal-experts/135260160",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-28T09:52:44Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135260160,imgsize-51790,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/dpdp-framework-needs-clearer-cyber-security-benchmarks-say-legal-experts.jpg",
-      "brief": "Experts flag gaps in assessing negligence, prescribing security standards and coordinating breach reporting as organisations face increasingly sophisticated cyber threats."
     }
   ]
 }
