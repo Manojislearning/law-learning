@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-12T07:25:41Z",
+  "generatedAt": "2026-11-12T20:08:10Z",
   "items": [
     {
       "id": "b1e0fa8579051973",
@@ -14,28 +14,6 @@
       "brief": "Last month, the ​Supreme Court upheld a 2023 Bombay High Court ruling that set aside ⁠Yes Bank's write-off of 84 billion rupees ($896.02 million)…"
     },
     {
-      "id": "e9c6b727f15b0a1b",
-      "title": "Expert Take: Management is not ownership – Why the law is with Mallika Srinivasan and Lakshmi Venu",
-      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-management-is-not-ownership-why-the-law-is-with-mallika-srinivasan-and-lakshmi-venu/135743791",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-11T16:36:39Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135743791,imgsize-218192,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-management-is-not-ownership-why-the-law-is-with-mallika-srinivasan-and-lakshmi-venu.jpg",
-      "brief": "A brand-sharing pact cannot be dressed up as a division of family wealth. On the text, the statute and the settled case law, their…"
-    },
-    {
-      "id": "6e9267942933608c",
-      "title": "OpenAI seeks to seal internal project codenames, employee identities in Apple litigation",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/openai-seeks-to-seal-internal-project-codenames-employee-identities-in-apple-litigation/135730828",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-11T08:30:10Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135730828,imgsize-32788,width-1200,height=627,overlay-etlegal,resizemode-75/international/openai-seeks-to-seal-internal-project-codenames-employee-identities-in-apple-litigation.jpg",
-      "brief": "In a November 10 filing before the US District Court for the Northern District of California, OpenAI Foundation, OpenAI Group PBC and io Products…"
-    },
-    {
       "id": "f40935a4c66eabae",
       "title": "Weil Gotshal votes to dissolve, ending top law firm's 95-year run",
       "url": "https://legal.economictimes.indiatimes.com/news/international/weil-gotshal-votes-to-dissolve-ending-top-law-firms-95-year-run/135730578",
@@ -45,28 +23,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135730578,imgsize-84173,width-1200,height=627,overlay-etlegal,resizemode-75/international/weil-gotshal-votes-to-dissolve-ending-top-law-firms-95-year-run.jpg",
       "brief": "A three-person wind-down committee, which includes the firm's general counsel Robert Carangelo, leader of its tax department Paul Wessel, and Patricia Ferrari, an independent…"
-    },
-    {
-      "id": "e49e00465bd1be31",
-      "title": "Appeals court limits order for LinkedIn to disclose journalists' communications in leak probe",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/appeals-court-limits-order-for-linkedin-to-disclose-journalists-communications-in-leak-probe/135728875",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-11T07:10:24Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135728875,imgsize-2042067,width-1200,height=627,overlay-etlegal,resizemode-75/international/appeals-court-limits-order-for-linkedin-to-disclose-journalists-communications-in-leak-probe.jpg",
-      "brief": "A three-judge panel from the 4th U.S. Circuit Court of Appeals said the government isn't entitled to a \"blanket\" order for LinkedIn to disclose…"
-    },
-    {
-      "id": "9c3ddaceb867ec04",
-      "title": "US judge says Trump's $10 billion BBC defamation case can proceed",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/us-judge-says-trumps-10-billion-bbc-defamation-case-can-proceed/135728764",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-11T07:06:31Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135728764,imgsize-1250118,width-1200,height=627,overlay-etlegal,resizemode-75/international/us-judge-says-trumps-10-billion-bbc-defamation-case-can-proceed.jpg",
-      "brief": "The case is one of several Trump has privately filed against the news media as part of a wider pressure campaign against coverage he…"
     },
     {
       "id": "5b6cdfd255867cbf",
@@ -166,17 +122,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135409629,imgsize-39116,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/blue-star-wins-dubai-court-ruling-in-oman-shareholder-dispute.jpg",
       "brief": "Dubai Court of Appeal dismisses W.J. Towell’s application to annul arbitration award that rejected its ₹100-crore-plus claim against the Indian air-conditioning and commercial refrigeration…"
-    },
-    {
-      "id": "e0c99863fd995e20",
-      "title": "Supreme Court sets aside APTEL review order on DVC Sinking Fund, imposes costs on Maithan Alloys and SAIL",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/supreme-court-sets-aside-aptel-review-order-on-dvc-sinking-fund-imposes-costs-on-maithan-alloys-and-sail/135359068",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-30T11:33:17Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135359068,imgsize-241167,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/supreme-court-sets-aside-aptel-review-order-on-dvc-sinking-fund-imposes-costs-on-maithan-alloys-and-sail.jpg",
-      "brief": "The dispute concerned whether DVC could recover through tariff both depreciation on its assets and contributions to a Sinking Fund created to redeem bonds…"
     }
   ]
 }
