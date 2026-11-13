@@ -1,7 +1,40 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-13T06:57:23Z",
+  "generatedAt": "2026-11-13T19:52:40Z",
   "items": [
+    {
+      "id": "5bfcbc181a0f2302",
+      "title": "Yes Bank files Supreme Court petition seeking review of AT-1 bond order",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/yes-bank-files-supreme-court-petition-seeking-review-of-at-1-bond-order/135815131",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-13T19:08:04Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135815131,imgsize-81018,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/yes-bank-files-supreme-court-petition-seeking-review-of-at-1-bond-order.jpg",
+      "brief": "Last month, the Supreme Court dealt a blow to Yes Bank by upholding a Bombay High Court ruling setting aside the write-off of its…"
+    },
+    {
+      "id": "b807ac5b6ce07366",
+      "title": "Nvidia's Huang turns to Paul Weiss, law firm that inked deal with Trump",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/nvidias-huang-turns-to-paul-weiss-law-firm-that-inked-deal-with-trump/135815033",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-13T19:02:04Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135815033,imgsize-50884,width-1200,height=627,overlay-etlegal,resizemode-75/international/nvidias-huang-turns-to-paul-weiss-law-firm-that-inked-deal-with-trump.jpg",
+      "brief": "Paul Weiss, Nvidia and a spokesperson for Huang had no immediate comment on Friday about the nature of the law firm's work for Huang."
+    },
+    {
+      "id": "f8a580a0f88abec0",
+      "title": "Megaspeed hires US law firm to audit GPU inventory, verify export control compliance",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/megaspeed-hires-us-law-firm-to-audit-gpu-inventory-verify-export-control-compliance/135793570",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-13T07:11:41Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135793570,imgsize-502804,width-1200,height=627,overlay-etlegal,resizemode-75/international/megaspeed-hires-us-law-firm-to-audit-gpu-inventory-verify-export-control-compliance.jpg",
+      "brief": "The statement was issued by Tan Yong Pong James, chairman and chief executive officer of Megaspeed International."
+    },
     {
       "id": "ac2499c04346aa20",
       "title": "FIFA loses New York court ruling against European soccer body UEFA in World Cup investor case",
