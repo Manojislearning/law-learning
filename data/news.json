@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-13T19:52:40Z",
+  "generatedAt": "2026-11-14T06:45:07Z",
   "items": [
+    {
+      "id": "1c4f9e5c08ca36e0",
+      "title": "Expert Take: What the Supreme Court's Ravva ruling signals to oil investors",
+      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-what-the-supreme-courts-ravva-ruling-signals-to-oil-investors/135816064",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-13T20:40:46Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135816064,imgsize-40601,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-what-the-supreme-courts-ravva-ruling-signals-to-oil-investors.jpg",
+      "brief": "Professor Amir-Ullah Khan, Economist and Research Director at CDPP, Adjunct Professor at TISS and Manipal University writes, \"These cases underline why contractual clarity, timely…"
+    },
+    {
+      "id": "0fa0ac595397d656",
+      "title": "YES Bank moves Supreme Court review petition against verdict on ₹8,415 crore AT-1 bonds",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/yes-bank-moves-supreme-court-review-petition-against-verdict-on-8415-crore-at-1-bonds/135815734",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-13T19:49:31Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135815734,imgsize-114932,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/yes-bank-moves-supreme-court-review-petition-against-verdict-on-8415-crore-at-1-bonds.jpg",
+      "brief": "The review petition concerns AT-1 bonds aggregating ₹8,415 crore."
+    },
     {
       "id": "5bfcbc181a0f2302",
       "title": "Yes Bank files Supreme Court petition seeking review of AT-1 bond order",
@@ -155,17 +177,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135468363,imgsize-1984257,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-judges-urge-legal-fraternity-to-celebrate-deepawali-responsibly.jpg",
       "brief": "Justices Manmohan and Sanjeev Sachdeva participated in the 'Deepawali Festival Celebration' organised by the New Delhi Bar Association in the Patiala House district courts…"
-    },
-    {
-      "id": "d6b4b63b54ccd8f2",
-      "title": "Blue Star wins Dubai court ruling in Oman shareholder dispute",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/blue-star-wins-dubai-court-ruling-in-oman-shareholder-dispute/135409629",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-10-31T18:23:26Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135409629,imgsize-39116,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/blue-star-wins-dubai-court-ruling-in-oman-shareholder-dispute.jpg",
-      "brief": "Dubai Court of Appeal dismisses W.J. Towell’s application to annul arbitration award that rejected its ₹100-crore-plus claim against the Indian air-conditioning and commercial refrigeration…"
     }
   ]
 }
