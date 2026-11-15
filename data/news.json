@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-15T06:49:58Z",
+  "generatedAt": "2026-11-15T18:58:20Z",
   "items": [
+    {
+      "id": "1df3343dfe2714da",
+      "title": "Legal AI firms face adoption, integration test as competition intensifies",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/legal-ai-firms-face-adoption-integration-test-as-competition-intensifies/135858156",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-15T16:15:05Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135858156,imgsize-203296,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/legal-ai-firms-face-adoption-integration-test-as-competition-intensifies.jpg",
+      "brief": "Legora's Heather Paterson says sustained adoption and post-deployment support will determine winners in the legal AI market; Indian law firms are increasingly assessing tools…"
+    },
+    {
+      "id": "df271da6b86a4bee",
+      "title": "Homebuyers' body FPCE seeks national appellate tribunal for real estate, similar to NCLAT, NGT",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/homebuyers-body-fpce-seeks-national-appellate-tribunal-for-real-estate-similar-to-nclat-ngt/135857776",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-15T14:10:17Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135857776,imgsize-112022,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/homebuyers-body-fpce-seeks-national-appellate-tribunal-for-real-estate-similar-to-nclat-ngt.jpg",
+      "brief": "In a statement on Sunday, the Forum for People's Collective Efforts (FPCE) further pitched for a binding statutory agreement for sale, exit provision to…"
+    },
     {
       "id": "1c4f9e5c08ca36e0",
       "title": "Expert Take: What the Supreme Court's Ravva ruling signals to oil investors",
@@ -56,17 +78,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135793570,imgsize-502804,width-1200,height=627,overlay-etlegal,resizemode-75/international/megaspeed-hires-us-law-firm-to-audit-gpu-inventory-verify-export-control-compliance.jpg",
       "brief": "The statement was issued by Tan Yong Pong James, chairman and chief executive officer of Megaspeed International."
-    },
-    {
-      "id": "ac2499c04346aa20",
-      "title": "FIFA loses New York court ruling against European soccer body UEFA in World Cup investor case",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/fifa-loses-new-york-court-ruling-against-european-soccer-body-uefa-in-world-cup-investor-case/135792395",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-13T06:21:43Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135792395,imgsize-102900,width-1200,height=627,overlay-etlegal,resizemode-75/international/fifa-loses-new-york-court-ruling-against-european-soccer-body-uefa-in-world-cup-investor-case.jpg",
-      "brief": "UEFA filed court documents in August as part of wider strategy to remove Infantino as FIFA president, which includes a potential criminal complaint against…"
     },
     {
       "id": "b1e0fa8579051973",
