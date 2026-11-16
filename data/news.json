@@ -1,7 +1,18 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-16T06:49:14Z",
+  "generatedAt": "2026-11-16T22:20:12Z",
   "items": [
+    {
+      "id": "ae9f24543adb387e",
+      "title": "RBI flags risk to future bank rescues in Supreme Court review plea on YES Bank’s Rs 8,415-crore AT-1 bonds",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/rbi-flags-risk-to-future-bank-rescues-in-supreme-court-review-plea-on-yes-banks-rs-8415-crore-at-1-bonds/135891179",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-16T13:31:02Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135891179,imgsize-168400,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/rbi-flags-risk-to-future-bank-rescues-in-supreme-court-review-plea-on-yes-banks-rs-8415-crore-at-1-bonds.jpg",
+      "brief": "The Reserve Bank of India is concerned that the Supreme Court's ruling overturning the Rs 8,415-crore AT-1 bond write-off at YES Bank could create…"
+    },
     {
       "id": "1df3343dfe2714da",
       "title": "Legal AI firms face adoption, integration test as competition intensifies",
@@ -56,17 +67,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135815131,imgsize-81018,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/yes-bank-files-supreme-court-petition-seeking-review-of-at-1-bond-order.jpg",
       "brief": "Last month, the Supreme Court dealt a blow to Yes Bank by upholding a Bombay High Court ruling setting aside the write-off of its…"
-    },
-    {
-      "id": "b807ac5b6ce07366",
-      "title": "Nvidia's Huang turns to Paul Weiss, law firm that inked deal with Trump",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/nvidias-huang-turns-to-paul-weiss-law-firm-that-inked-deal-with-trump/135815033",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-13T19:02:04Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135815033,imgsize-50884,width-1200,height=627,overlay-etlegal,resizemode-75/international/nvidias-huang-turns-to-paul-weiss-law-firm-that-inked-deal-with-trump.jpg",
-      "brief": "Paul Weiss, Nvidia and a spokesperson for Huang had no immediate comment on Friday about the nature of the law firm's work for Huang."
     },
     {
       "id": "f8a580a0f88abec0",
@@ -177,17 +177,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135592686,imgsize-2027676,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/skv-law-offices-represents-tata-power-as-bombay-hc-quashes-acquisition-of-84-hectares-for-private-entity.jpg",
       "brief": "The court held that the Maharashtra Industrial Development Act cannot be used to acquire land purely for a private company, ruling that the proposed…"
-    },
-    {
-      "id": "e6de0a87a2eec121",
-      "title": "SC judges urge legal fraternity to celebrate Deepawali responsibly",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/sc-judges-urge-legal-fraternity-to-celebrate-deepawali-responsibly/135468363",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-02T16:48:45Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135468363,imgsize-1984257,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-judges-urge-legal-fraternity-to-celebrate-deepawali-responsibly.jpg",
-      "brief": "Justices Manmohan and Sanjeev Sachdeva participated in the 'Deepawali Festival Celebration' organised by the New Delhi Bar Association in the Patiala House district courts…"
     }
   ]
 }
