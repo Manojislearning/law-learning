@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-19T07:39:17Z",
+  "generatedAt": "2026-11-19T20:48:48Z",
   "items": [
     {
       "id": "cbb9eaf504eb43e1",
@@ -32,7 +32,7 @@
       "publishedAt": "2026-11-18T10:50:30Z",
       "category": "Supreme Court",
       "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/img-size-203226/135960694.cms",
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135960694,imgsize-203226,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/sc-stresses-on-uniformity-in-retirement-age-of-district-judicial-officers-reserves-verdict.jpg",
       "brief": "The bench granted two weeks to states, which have either not yet agreed to raise the retirement age to 62 or are in the…"
     },
     {
@@ -65,7 +65,7 @@
       "publishedAt": "2026-11-16T13:31:02Z",
       "category": "Supreme Court",
       "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/img-size-168400/135891179.cms",
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135891179,imgsize-168400,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/rbi-flags-risk-to-future-bank-rescues-in-supreme-court-review-plea-on-yes-banks-rs-8415-crore-at-1-bonds.jpg",
       "brief": "The Reserve Bank of India is concerned that the Supreme Court's ruling overturning the Rs 8,415-crore AT-1 bond write-off at YES Bank could create…"
     },
     {
@@ -113,17 +113,6 @@
       "brief": "Last month, the Supreme Court dealt a blow to Yes Bank by upholding a Bombay High Court ruling setting aside the write-off of its…"
     },
     {
-      "id": "f8a580a0f88abec0",
-      "title": "Megaspeed hires US law firm to audit GPU inventory, verify export control compliance",
-      "url": "https://legal.economictimes.indiatimes.com/news/international/megaspeed-hires-us-law-firm-to-audit-gpu-inventory-verify-export-control-compliance/135793570",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-13T07:11:41Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135793570,imgsize-502804,width-1200,height=627,overlay-etlegal,resizemode-75/international/megaspeed-hires-us-law-firm-to-audit-gpu-inventory-verify-export-control-compliance.jpg",
-      "brief": "The statement was issued by Tan Yong Pong James, chairman and chief executive officer of Megaspeed International."
-    },
-    {
       "id": "b1e0fa8579051973",
       "title": "India's Yes Bank bondholders press for compliance with top court's AT-1 order",
       "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/indias-yes-bank-bondholders-press-for-compliance-with-top-courts-at-1-order/135744026",
@@ -131,19 +120,8 @@
       "publishedAt": "2026-11-11T16:42:21Z",
       "category": "Latest",
       "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/img-size-114932/135744026.cms",
+      "image": "https://etimg.etb2bimg.com/thumb/msid-135744026,imgsize-114932,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/indias-yes-bank-bondholders-press-for-compliance-with-top-courts-at-1-order.jpg",
       "brief": "Last month, the ​Supreme Court upheld a 2023 Bombay High Court ruling that set aside ⁠Yes Bank's write-off of 84 billion rupees ($896.02 million)…"
-    },
-    {
-      "id": "5b6cdfd255867cbf",
-      "title": "Delhi High Court declares November 16 holiday for Chhath Puja; cases to be taken up on November 17",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/delhi-high-court-declares-november-16-holiday-for-chhath-puja-cases-to-be-taken-up-on-november-17/135728674",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-11T07:04:06Z",
-      "category": "Latest",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135728674,imgsize-338100,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/delhi-high-court-declares-november-16-holiday-for-chhath-puja-cases-to-be-taken-up-on-november-17.jpg",
-      "brief": "The High Court issued a notification on Wednesday declaring Monday, November 16, as a holiday for the High Court as well as courts subordinate…"
     },
     {
       "id": "629783a0279aa3be",
