@@ -1,7 +1,51 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-19T20:48:48Z",
+  "generatedAt": "2026-11-20T07:29:54Z",
   "items": [
+    {
+      "id": "492825ad7137b8ee",
+      "title": "Former SC judge Justice Rajesh Bindal takes charge as NCLAT Chairperson",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/former-sc-judge-justice-rajesh-bindal-takes-charge-as-nclat-chairperson/136012783",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-20T04:06:15Z",
+      "category": "Supreme Court",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136012783,imgsize-62199,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/former-sc-judge-justice-rajesh-bindal-takes-charge-as-nclat-chairperson.jpg",
+      "brief": "Former Supreme Court judge Justice Rajesh Bindal on Thursday assumed charge as the Chairperson of the National Company Law Appellate Tribunal (NCLAT)."
+    },
+    {
+      "id": "af993cfc2d63d868",
+      "title": "Govt proposes amendments to CSR framework under companies law",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/govt-proposes-amendments-to-csr-framework-under-companies-law/136012758",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-20T04:05:27Z",
+      "category": "Legislation",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136012758,imgsize-124102,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/govt-proposes-amendments-to-csr-framework-under-companies-law.jpg",
+      "brief": "Besides, one-off events, financing of government schemes, corpus fund contributions and in-kind contributions of a company's own products, other than immediate disaster relief, are…"
+    },
+    {
+      "id": "0cd658ae93cee0fd",
+      "title": "Allied Blenders moves Bombay High Court against order terminating arbitration with Defence Ministry's CSD",
+      "url": "https://legal.economictimes.indiatimes.com/news/litigation/allied-blenders-moves-bombay-high-court-against-order-terminating-arbitration-with-defence-ministrys-csd/136012328",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-20T03:56:19Z",
+      "category": "Latest",
+      "priority": 1,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136012328,imgsize-90976,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/allied-blenders-moves-bombay-high-court-against-order-terminating-arbitration-with-defence-ministrys-csd.jpg",
+      "brief": "The company has filed an appeal under Section 37 of the Arbitration and Conciliation Act, 1996, challenging the arbitrator's finding that no arbitration agreement…"
+    },
+    {
+      "id": "540882f12b20be23",
+      "title": "OpenAI copyright litigation sees revised schedule for summary judgment filings",
+      "url": "https://legal.economictimes.indiatimes.com/news/international/openai-copyright-litigation-sees-revised-schedule-for-summary-judgment-filings/136011429",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-20T03:22:48Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136011429,imgsize-23846,width-1200,height=627,overlay-etlegal,resizemode-75/international/openai-copyright-litigation-sees-revised-schedule-for-summary-judgment-filings.jpg",
+      "brief": "The filing was submitted by counsel from Faegre Drinker Biddle & Reath, Morrison & Foerster and Susman Godfrey, representing Microsoft, OpenAI, The New York…"
+    },
     {
       "id": "cbb9eaf504eb43e1",
       "title": "Kalpataru Projects pays ₹1.07 crore penalty imposed by Dubai court over alleged employment, immigration violations",
