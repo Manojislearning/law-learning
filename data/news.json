@@ -1,7 +1,40 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-22T19:50:55Z",
+  "generatedAt": "2026-11-23T07:53:39Z",
   "items": [
+    {
+      "id": "03085d181d106368",
+      "title": "RailTel bags ₹27 crore order for Andhra Pradesh Legal AI platform",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/railtel-bags-27-crore-order-for-andhra-pradesh-legal-ai-platform/136089311",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-23T04:31:34Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136089311,imgsize-216262,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/railtel-bags-27-crore-order-for-andhra-pradesh-legal-ai-platform.jpg",
+      "brief": "The estimated order value is ₹27,02,56,350, inclusive of taxes. The project is scheduled to be completed by May 9, 2029."
+    },
+    {
+      "id": "6ed62d1200e9fd31",
+      "title": "Persistent Systems says employee data may have been leaked in law firm cyber incident",
+      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/persistent-systems-says-employee-data-may-have-been-leaked-in-law-firm-cyber-incident/136089237",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-23T04:27:47Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136089237,imgsize-82374,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/persistent-systems-says-employee-data-may-have-been-leaked-in-law-firm-cyber-incident.jpg",
+      "brief": "\"We hereby wish to inform that our systems are secure, and our business operations continue to be normal,\" said Persistent Systems."
+    },
+    {
+      "id": "0f76527569fa3be0",
+      "title": "India's food regulator to take Bisleri to court over water quality finding",
+      "url": "https://legal.economictimes.indiatimes.com/news/regulators/indias-food-regulator-to-take-bisleri-to-court-over-water-quality-finding/136089062",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-23T04:12:53Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136089062,imgsize-211697,width-1200,height=627,overlay-etlegal,resizemode-75/regulators/indias-food-regulator-to-take-bisleri-to-court-over-water-quality-finding.jpg",
+      "brief": "India's food safety regulator will take Bisleri International, maker of the country's best-known bottled water brand, to court after a sample of its packaged…"
+    },
     {
       "id": "cbc7181d3cbc276c",
       "title": "RailTel bags Rs 27 crore order to develop AI-powered legal platform for Andhra Pradesh government",
