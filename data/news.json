@@ -1,7 +1,29 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-24T22:37:00Z",
+  "generatedAt": "2026-11-25T08:51:39Z",
   "items": [
+    {
+      "id": "02e30f70bb74ff1b",
+      "title": "Why India’s agentic AI boom needs both strong corporate governance and a light legal floor",
+      "url": "https://legal.economictimes.indiatimes.com/news/law-policy/why-indias-agentic-ai-boom-needs-both-strong-corporate-governance-and-a-light-legal-floor/136148701",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-25T04:59:05Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136148701,imgsize-72088,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/why-indias-agentic-ai-boom-needs-both-strong-corporate-governance-and-a-light-legal-floor.jpg",
+      "brief": "As AI agents make autonomous financial and legal decisions in India, corporate self-governance isn't enough. India needs a light, principle-based law setting clear liability…"
+    },
+    {
+      "id": "fabd778784984bd3",
+      "title": "Expert Take: Sovereignty, Citizens' Rights and Corporate Accountability in the Age of Digital Infrastructure",
+      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-sovereignty-citizens-rights-and-corporate-accountability-in-the-age-of-digital-infrastructure/136148241",
+      "source": "ET LegalWorld",
+      "publishedAt": "2026-11-25T04:45:12Z",
+      "category": "Latest",
+      "priority": 0,
+      "image": "https://etimg.etb2bimg.com/thumb/msid-136148241,imgsize-626161,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-sovereignty-citizens-rights-and-corporate-accountability-in-the-age-of-digital-infrastructure.jpg",
+      "brief": "L. Viswanathan, Partner & Naman Lodha, Senior Associate, Cyril Amarchand Mangaldas, writes, \"The future of digital governance will not be secured by choosing between…"
+    },
     {
       "id": "f2fc00e14495ec63",
       "title": "CJI stresses constitutional morality, integrity in legal profession",
@@ -199,17 +221,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135815734,imgsize-114932,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/yes-bank-moves-supreme-court-review-petition-against-verdict-on-8415-crore-at-1-bonds.jpg",
       "brief": "The review petition concerns AT-1 bonds aggregating ₹8,415 crore."
-    },
-    {
-      "id": "5bfcbc181a0f2302",
-      "title": "Yes Bank files Supreme Court petition seeking review of AT-1 bond order",
-      "url": "https://legal.economictimes.indiatimes.com/news/litigation/yes-bank-files-supreme-court-petition-seeking-review-of-at-1-bond-order/135815131",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-13T19:08:04Z",
-      "category": "Supreme Court",
-      "priority": 1,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135815131,imgsize-81018,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/yes-bank-files-supreme-court-petition-seeking-review-of-at-1-bond-order.jpg",
-      "brief": "Last month, the Supreme Court dealt a blow to Yes Bank by upholding a Bombay High Court ruling setting aside the write-off of its…"
     }
   ]
 }
