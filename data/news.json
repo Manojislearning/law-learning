@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "generatedAt": "2026-11-25T21:50:43Z",
+  "generatedAt": "2026-11-26T08:37:40Z",
   "items": [
     {
       "id": "02e30f70bb74ff1b",
@@ -12,17 +12,6 @@
       "priority": 0,
       "image": "https://etimg.etb2bimg.com/thumb/msid-136148701,imgsize-72088,width-1200,height=627,overlay-etlegal,resizemode-75/law-policy/why-indias-agentic-ai-boom-needs-both-strong-corporate-governance-and-a-light-legal-floor.jpg",
       "brief": "As AI agents make autonomous financial and legal decisions in India, corporate self-governance isn't enough. India needs a light, principle-based law setting clear liability…"
-    },
-    {
-      "id": "fabd778784984bd3",
-      "title": "Expert Take: Sovereignty, Citizens' Rights and Corporate Accountability in the Age of Digital Infrastructure",
-      "url": "https://legal.economictimes.indiatimes.com/news/opinions/expert-take-sovereignty-citizens-rights-and-corporate-accountability-in-the-age-of-digital-infrastructure/136148241",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-25T04:45:12Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-136148241,imgsize-626161,width-1200,height=627,overlay-etlegal,resizemode-75/opinions/expert-take-sovereignty-citizens-rights-and-corporate-accountability-in-the-age-of-digital-infrastructure.jpg",
-      "brief": "L. Viswanathan, Partner & Naman Lodha, Senior Associate, Cyril Amarchand Mangaldas, writes, \"The future of digital governance will not be secured by choosing between…"
     },
     {
       "id": "f2fc00e14495ec63",
@@ -188,17 +177,6 @@
       "priority": 1,
       "image": "https://etimg.etb2bimg.com/thumb/msid-135891179,imgsize-168400,width-1200,height=627,overlay-etlegal,resizemode-75/litigation/rbi-flags-risk-to-future-bank-rescues-in-supreme-court-review-plea-on-yes-banks-rs-8415-crore-at-1-bonds.jpg",
       "brief": "The Reserve Bank of India is concerned that the Supreme Court's ruling overturning the Rs 8,415-crore AT-1 bond write-off at YES Bank could create…"
-    },
-    {
-      "id": "1df3343dfe2714da",
-      "title": "Legal AI firms face adoption, integration test as competition intensifies",
-      "url": "https://legal.economictimes.indiatimes.com/news/corporate-business/legal-ai-firms-face-adoption-integration-test-as-competition-intensifies/135858156",
-      "source": "ET LegalWorld",
-      "publishedAt": "2026-11-15T16:15:05Z",
-      "category": "Latest",
-      "priority": 0,
-      "image": "https://etimg.etb2bimg.com/thumb/msid-135858156,imgsize-203296,width-1200,height=627,overlay-etlegal,resizemode-75/corporate-business/legal-ai-firms-face-adoption-integration-test-as-competition-intensifies.jpg",
-      "brief": "Legora's Heather Paterson says sustained adoption and post-deployment support will determine winners in the legal AI market; Indian law firms are increasingly assessing tools…"
     },
     {
       "id": "df271da6b86a4bee",
